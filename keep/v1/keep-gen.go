@@ -198,179 +198,141 @@ type NotesPermissionsService struct {
 
 // Attachment: An attachment to a note.
 type Attachment struct {
-	// MimeType: The MIME types (IANA media types) in which the attachment
-	// is available.
+	// MimeType: The MIME types (IANA media types) in which the attachment is
+	// available.
 	MimeType []string `json:"mimeType,omitempty"`
-
 	// Name: The resource name;
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MimeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod Attachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreatePermissionsRequest: The request to add one or more
-// permissions on the note. Currently, only the `WRITER` role may be
-// specified. If adding a permission fails, then the entire request
-// fails and no changes are made.
+// BatchCreatePermissionsRequest: The request to add one or more permissions on
+// the note. Currently, only the `WRITER` role may be specified. If adding a
+// permission fails, then the entire request fails and no changes are made.
 type BatchCreatePermissionsRequest struct {
 	// Requests: The request message specifying the resources to create.
 	Requests []*CreatePermissionRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreatePermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreatePermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreatePermissionsResponse: The response for creating permissions
-// on a note.
+// BatchCreatePermissionsResponse: The response for creating permissions on a
+// note.
 type BatchCreatePermissionsResponse struct {
 	// Permissions: Permissions created.
 	Permissions []*Permission `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreatePermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreatePermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchDeletePermissionsRequest: The request to remove one or more
-// permissions from a note. A permission with the `OWNER` role can't be
-// removed. If removing a permission fails, then the entire request
-// fails and no changes are made. Returns a 400 bad request error if a
-// specified permission does not exist on the note.
+// BatchDeletePermissionsRequest: The request to remove one or more permissions
+// from a note. A permission with the `OWNER` role can't be removed. If
+// removing a permission fails, then the entire request fails and no changes
+// are made. Returns a 400 bad request error if a specified permission does not
+// exist on the note.
 type BatchDeletePermissionsRequest struct {
 	// Names: Required. The names of the permissions to delete. Format:
 	// `notes/{note}/permissions/{permission}`
 	Names []string `json:"names,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Names") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Names") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchDeletePermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeletePermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CreatePermissionRequest: The request to add a single permission on
-// the note.
+// CreatePermissionRequest: The request to add a single permission on the note.
 type CreatePermissionRequest struct {
-	// Parent: Required. The parent note where this permission will be
-	// created. Format: `notes/{note}`
+	// Parent: Required. The parent note where this permission will be created.
+	// Format: `notes/{note}`
 	Parent string `json:"parent,omitempty"`
-
-	// Permission: Required. The permission to create. One of
-	// Permission.email, User.email or Group.email must be supplied.
+	// Permission: Required. The permission to create. One of Permission.email,
+	// User.email or Group.email must be supplied.
 	Permission *Permission `json:"permission,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Parent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Parent") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreatePermissionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreatePermissionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -382,215 +344,165 @@ type Family struct {
 type Group struct {
 	// Email: The group email.
 	Email string `json:"email,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Group) MarshalJSON() ([]byte, error) {
 	type NoMethod Group
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContent: The list of items for a single list note.
 type ListContent struct {
-	// ListItems: The items in the list. The number of items must be less
-	// than 1,000.
+	// ListItems: The items in the list. The number of items must be less than
+	// 1,000.
 	ListItems []*ListItem `json:"listItems,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ListItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ListItems") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ListItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListContent) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListItem: A single list item in a note's list.
 type ListItem struct {
 	// Checked: Whether this item has been checked off or not.
 	Checked bool `json:"checked,omitempty"`
-
-	// ChildListItems: If set, list of list items nested under this list
-	// item. Only one level of nesting is allowed.
+	// ChildListItems: If set, list of list items nested under this list item. Only
+	// one level of nesting is allowed.
 	ChildListItems []*ListItem `json:"childListItems,omitempty"`
-
-	// Text: The text of this item. Length must be less than 1,000
-	// characters.
+	// Text: The text of this item. Length must be less than 1,000 characters.
 	Text *TextContent `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Checked") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Checked") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Checked") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Checked") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListItem) MarshalJSON() ([]byte, error) {
 	type NoMethod ListItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListNotesResponse: The response when listing a page of notes.
 type ListNotesResponse struct {
 	// NextPageToken: Next page's `page_token` field.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Notes: A page of notes.
 	Notes []*Note `json:"notes,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListNotesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListNotesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Note: A single note.
 type Note struct {
 	// Attachments: Output only. The attachments attached to this note.
 	Attachments []*Attachment `json:"attachments,omitempty"`
-
 	// Body: The body of the note.
 	Body *Section `json:"body,omitempty"`
-
 	// CreateTime: Output only. When this note was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Name: Output only. The resource name of this note. See general note
-	// on identifiers in KeepService.
+	// Name: Output only. The resource name of this note. See general note on
+	// identifiers in KeepService.
 	Name string `json:"name,omitempty"`
-
-	// Permissions: Output only. The list of permissions set on the note.
-	// Contains at least one entry for the note owner.
+	// Permissions: Output only. The list of permissions set on the note. Contains
+	// at least one entry for the note owner.
 	Permissions []*Permission `json:"permissions,omitempty"`
-
-	// Title: The title of the note. Length must be less than 1,000
-	// characters.
+	// Title: The title of the note. Length must be less than 1,000 characters.
 	Title string `json:"title,omitempty"`
-
-	// TrashTime: Output only. When this note was trashed. If `trashed`, the
-	// note is eventually deleted. If the note is not trashed, this field is
-	// not set (and the trashed field is `false`).
+	// TrashTime: Output only. When this note was trashed. If `trashed`, the note
+	// is eventually deleted. If the note is not trashed, this field is not set
+	// (and the trashed field is `false`).
 	TrashTime string `json:"trashTime,omitempty"`
-
-	// Trashed: Output only. `true` if this note has been trashed. If
-	// trashed, the note is eventually deleted.
+	// Trashed: Output only. `true` if this note has been trashed. If trashed, the
+	// note is eventually deleted.
 	Trashed bool `json:"trashed,omitempty"`
-
 	// UpdateTime: Output only. When this note was last modified.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Note) MarshalJSON() ([]byte, error) {
 	type NoMethod Note
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Permission: A single permission on the note. Associates a `member`
-// with a `role`.
+// Permission: A single permission on the note. Associates a `member` with a
+// `role`.
 type Permission struct {
-	// Deleted: Output only. Whether this member has been deleted. If the
-	// member is recovered, this value is set to false and the recovered
-	// member retains the role on the note.
+	// Deleted: Output only. Whether this member has been deleted. If the member is
+	// recovered, this value is set to false and the recovered member retains the
+	// role on the note.
 	Deleted bool `json:"deleted,omitempty"`
-
-	// Email: The email associated with the member. If set on create, the
-	// `email` field in the `User` or `Group` message must either be empty
-	// or match this field. On read, may be unset if the member does not
-	// have an associated email.
+	// Email: The email associated with the member. If set on create, the `email`
+	// field in the `User` or `Group` message must either be empty or match this
+	// field. On read, may be unset if the member does not have an associated
+	// email.
 	Email string `json:"email,omitempty"`
-
 	// Family: Output only. The Google Family to which this role applies.
 	Family *Family `json:"family,omitempty"`
-
 	// Group: Output only. The group to which this role applies.
 	Group *Group `json:"group,omitempty"`
-
 	// Name: Output only. The resource name.
 	Name string `json:"name,omitempty"`
-
 	// Role: The role granted by this permission. The role determines the
 	// entity’s ability to read, write, and share notes.
 	//
@@ -598,127 +510,98 @@ type Permission struct {
 	//   "ROLE_UNSPECIFIED" - An undefined role.
 	//   "OWNER" - A role granting full access. This role cannot be added or
 	// removed. Defined by the creator of the note.
-	//   "WRITER" - A role granting the ability to contribute content and
-	// modify note permissions.
+	//   "WRITER" - A role granting the ability to contribute content and modify
+	// note permissions.
 	Role string `json:"role,omitempty"`
-
 	// User: Output only. The user to whom this role applies.
 	User *User `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Deleted") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Deleted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deleted") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Deleted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Permission) MarshalJSON() ([]byte, error) {
 	type NoMethod Permission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Section: The content of the note.
 type Section struct {
 	// List: Used if this section's content is a list.
 	List *ListContent `json:"list,omitempty"`
-
-	// Text: Used if this section's content is a block of text. The length
-	// of the text content must be less than 20,000 characters.
+	// Text: Used if this section's content is a block of text. The length of the
+	// text content must be less than 20,000 characters.
 	Text *TextContent `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "List") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "List") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "List") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "List") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Section) MarshalJSON() ([]byte, error) {
 	type NoMethod Section
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TextContent: The block of text for a single text section or list
-// item.
+// TextContent: The block of text for a single text section or list item.
 type TextContent struct {
-	// Text: The text of the note. The limits on this vary with the specific
-	// field using this type.
+	// Text: The text of the note. The limits on this vary with the specific field
+	// using this type.
 	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TextContent) MarshalJSON() ([]byte, error) {
 	type NoMethod TextContent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // User: Describes a single user.
 type User struct {
 	// Email: The user's email.
 	Email string `json:"email,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "keep.media.download":
 
 type MediaDownloadCall struct {
 	s            *Service
@@ -729,10 +612,9 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Gets an attachment. To download attachment media via REST
-// requires the alt=media query parameter. Returns a 400 bad request
-// error if attachment media is not available in the requested MIME
-// type.
+// Download: Gets an attachment. To download attachment media via REST requires
+// the alt=media query parameter. Returns a 400 bad request error if attachment
+// media is not available in the requested MIME type.
 //
 // - name: The name of the attachment.
 func (r *MediaService) Download(name string) *MediaDownloadCall {
@@ -741,43 +623,39 @@ func (r *MediaService) Download(name string) *MediaDownloadCall {
 	return c
 }
 
-// MimeType sets the optional parameter "mimeType": The IANA MIME type
-// format requested. The requested MIME type must be one specified in
-// the attachment.mime_type. Required when downloading attachment media
-// and ignored otherwise.
+// MimeType sets the optional parameter "mimeType": The IANA MIME type format
+// requested. The requested MIME type must be one specified in the
+// attachment.mime_type. Required when downloading attachment media and ignored
+// otherwise.
 func (c *MediaDownloadCall) MimeType(mimeType string) *MediaDownloadCall {
 	c.urlParams_.Set("mimeType", mimeType)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do and Download
-// methods. Any pending HTTP request will be aborted if the provided
-// context is canceled.
+// Context sets the context to be used in this call's Do and Download methods.
 func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *MediaDownloadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -786,12 +664,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 }
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -828,12 +701,10 @@ func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Respon
 }
 
 // Do executes the "keep.media.download" call.
-// Exactly one of *Attachment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Attachment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attachment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -864,43 +735,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*Attachment, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an attachment. To download attachment media via REST requires the alt=media query parameter. Returns a 400 bad request error if attachment media is not available in the requested MIME type.",
-	//   "flatPath": "v1/notes/{notesId}/attachments/{attachmentsId}",
-	//   "httpMethod": "GET",
-	//   "id": "keep.media.download",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "mimeType": {
-	//       "description": "The IANA MIME type format requested. The requested MIME type must be one specified in the attachment.mime_type. Required when downloading attachment media and ignored otherwise.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. The name of the attachment.",
-	//       "location": "path",
-	//       "pattern": "^notes/[^/]+/attachments/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Attachment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep",
-	//     "https://www.googleapis.com/auth/keep.readonly"
-	//   ],
-	//   "supportsMediaDownload": true,
-	//   "useMediaDownloadService": true
-	// }
-
 }
-
-// method id "keep.notes.create":
 
 type NotesCreateCall struct {
 	s          *Service
@@ -918,23 +753,21 @@ func (r *NotesService) Create(note *Note) *NotesCreateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NotesCreateCall) Fields(s ...googleapi.Field) *NotesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NotesCreateCall) Context(ctx context.Context) *NotesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NotesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -943,18 +776,12 @@ func (c *NotesCreateCall) Header() http.Header {
 }
 
 func (c *NotesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.note)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/notes")
@@ -968,12 +795,10 @@ func (c *NotesCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "keep.notes.create" call.
-// Exactly one of *Note or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Note.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *NotesCreateCall) Do(opts ...googleapi.CallOption) (*Note, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1004,28 +829,7 @@ func (c *NotesCreateCall) Do(opts ...googleapi.CallOption) (*Note, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new note.",
-	//   "flatPath": "v1/notes",
-	//   "httpMethod": "POST",
-	//   "id": "keep.notes.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/notes",
-	//   "request": {
-	//     "$ref": "Note"
-	//   },
-	//   "response": {
-	//     "$ref": "Note"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
-	//   ]
-	// }
-
 }
-
-// method id "keep.notes.delete":
 
 type NotesDeleteCall struct {
 	s          *Service
@@ -1035,9 +839,9 @@ type NotesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a note. Caller must have the `OWNER` role on the note
-// to delete. Deleting a note removes the resource immediately and
-// cannot be undone. Any collaborators will lose access to the note.
+// Delete: Deletes a note. Caller must have the `OWNER` role on the note to
+// delete. Deleting a note removes the resource immediately and cannot be
+// undone. Any collaborators will lose access to the note.
 //
 // - name: Name of the note to delete.
 func (r *NotesService) Delete(name string) *NotesDeleteCall {
@@ -1047,23 +851,21 @@ func (r *NotesService) Delete(name string) *NotesDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NotesDeleteCall) Fields(s ...googleapi.Field) *NotesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NotesDeleteCall) Context(ctx context.Context) *NotesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NotesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1072,12 +874,7 @@ func (c *NotesDeleteCall) Header() http.Header {
 }
 
 func (c *NotesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1095,12 +892,10 @@ func (c *NotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "keep.notes.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *NotesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1131,35 +926,7 @@ func (c *NotesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a note. Caller must have the `OWNER` role on the note to delete. Deleting a note removes the resource immediately and cannot be undone. Any collaborators will lose access to the note.",
-	//   "flatPath": "v1/notes/{notesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "keep.notes.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the note to delete.",
-	//       "location": "path",
-	//       "pattern": "^notes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
-	//   ]
-	// }
-
 }
-
-// method id "keep.notes.get":
 
 type NotesGetCall struct {
 	s            *Service
@@ -1180,33 +947,29 @@ func (r *NotesService) Get(name string) *NotesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NotesGetCall) Fields(s ...googleapi.Field) *NotesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *NotesGetCall) IfNoneMatch(entityTag string) *NotesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NotesGetCall) Context(ctx context.Context) *NotesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NotesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1215,12 +978,7 @@ func (c *NotesGetCall) Header() http.Header {
 }
 
 func (c *NotesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1241,12 +999,10 @@ func (c *NotesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "keep.notes.get" call.
-// Exactly one of *Note or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Note.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *NotesGetCall) Do(opts ...googleapi.CallOption) (*Note, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1277,36 +1033,7 @@ func (c *NotesGetCall) Do(opts ...googleapi.CallOption) (*Note, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a note.",
-	//   "flatPath": "v1/notes/{notesId}",
-	//   "httpMethod": "GET",
-	//   "id": "keep.notes.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the resource.",
-	//       "location": "path",
-	//       "pattern": "^notes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Note"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep",
-	//     "https://www.googleapis.com/auth/keep.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "keep.notes.list":
 
 type NotesListCall struct {
 	s            *Service
@@ -1317,73 +1044,66 @@ type NotesListCall struct {
 }
 
 // List: Lists notes. Every list call returns a page of results with
-// `page_size` as the upper bound of returned items. A `page_size` of
-// zero allows the server to choose the upper bound. The
-// ListNotesResponse contains at most `page_size` entries. If there are
-// more things left to list, it provides a `next_page_token` value.
-// (Page tokens are opaque values.) To get the next page of results,
-// copy the result's `next_page_token` into the next request's
-// `page_token`. Repeat until the `next_page_token` returned with a page
-// of results is empty. ListNotes return consistent results in the face
-// of concurrent changes, or signals that it cannot with an ABORTED
-// error.
+// `page_size` as the upper bound of returned items. A `page_size` of zero
+// allows the server to choose the upper bound. The ListNotesResponse contains
+// at most `page_size` entries. If there are more things left to list, it
+// provides a `next_page_token` value. (Page tokens are opaque values.) To get
+// the next page of results, copy the result's `next_page_token` into the next
+// request's `page_token`. Repeat until the `next_page_token` returned with a
+// page of results is empty. ListNotes return consistent results in the face of
+// concurrent changes, or signals that it cannot with an ABORTED error.
 func (r *NotesService) List() *NotesListCall {
 	c := &NotesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter for list results.
-// If no filter is supplied, the `trashed` filter is applied by default.
-// Valid fields to filter by are: `create_time`, `update_time`,
-// `trash_time`, and `trashed`. Filter syntax follows the Google AIP
-// filtering spec (https://aip.dev/160).
+// Filter sets the optional parameter "filter": Filter for list results. If no
+// filter is supplied, the `trashed` filter is applied by default. Valid fields
+// to filter by are: `create_time`, `update_time`, `trash_time`, and `trashed`.
+// Filter syntax follows the Google AIP filtering spec (https://aip.dev/160).
 func (c *NotesListCall) Filter(filter string) *NotesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return.
 func (c *NotesListCall) PageSize(pageSize int64) *NotesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The previous
-// page's `next_page_token` field.
+// PageToken sets the optional parameter "pageToken": The previous page's
+// `next_page_token` field.
 func (c *NotesListCall) PageToken(pageToken string) *NotesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NotesListCall) Fields(s ...googleapi.Field) *NotesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *NotesListCall) IfNoneMatch(entityTag string) *NotesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NotesListCall) Context(ctx context.Context) *NotesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NotesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1392,12 +1112,7 @@ func (c *NotesListCall) Header() http.Header {
 }
 
 func (c *NotesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1415,12 +1130,11 @@ func (c *NotesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "keep.notes.list" call.
-// Exactly one of *ListNotesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListNotesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListNotesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *NotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1451,40 +1165,6 @@ func (c *NotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesResponse, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists notes. Every list call returns a page of results with `page_size` as the upper bound of returned items. A `page_size` of zero allows the server to choose the upper bound. The ListNotesResponse contains at most `page_size` entries. If there are more things left to list, it provides a `next_page_token` value. (Page tokens are opaque values.) To get the next page of results, copy the result's `next_page_token` into the next request's `page_token`. Repeat until the `next_page_token` returned with a page of results is empty. ListNotes return consistent results in the face of concurrent changes, or signals that it cannot with an ABORTED error.",
-	//   "flatPath": "v1/notes",
-	//   "httpMethod": "GET",
-	//   "id": "keep.notes.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filter for list results. If no filter is supplied, the `trashed` filter is applied by default. Valid fields to filter by are: `create_time`, `update_time`, `trash_time`, and `trashed`. Filter syntax follows the [Google AIP filtering spec](https://aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The previous page's `next_page_token` field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/notes",
-	//   "response": {
-	//     "$ref": "ListNotesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep",
-	//     "https://www.googleapis.com/auth/keep.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1492,7 +1172,7 @@ func (c *NotesListCall) Do(opts ...googleapi.CallOption) (*ListNotesResponse, er
 // The provided context supersedes any context provided to the Context method.
 func (c *NotesListCall) Pages(ctx context.Context, f func(*ListNotesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1508,8 +1188,6 @@ func (c *NotesListCall) Pages(ctx context.Context, f func(*ListNotesResponse) er
 	}
 }
 
-// method id "keep.notes.permissions.batchCreate":
-
 type NotesPermissionsBatchCreateCall struct {
 	s                             *Service
 	parent                        string
@@ -1519,15 +1197,13 @@ type NotesPermissionsBatchCreateCall struct {
 	header_                       http.Header
 }
 
-// BatchCreate: Creates one or more permissions on the note. Only
-// permissions with the `WRITER` role may be created. If adding any
-// permission fails, then the entire request fails and no changes are
-// made.
+// BatchCreate: Creates one or more permissions on the note. Only permissions
+// with the `WRITER` role may be created. If adding any permission fails, then
+// the entire request fails and no changes are made.
 //
-//   - parent: The parent resource shared by all Permissions being
-//     created. Format: `notes/{note}` If this is set, the parent field in
-//     the CreatePermission messages must either be empty or match this
-//     field.
+//   - parent: The parent resource shared by all Permissions being created.
+//     Format: `notes/{note}` If this is set, the parent field in the
+//     CreatePermission messages must either be empty or match this field.
 func (r *NotesPermissionsService) BatchCreate(parent string, batchcreatepermissionsrequest *BatchCreatePermissionsRequest) *NotesPermissionsBatchCreateCall {
 	c := &NotesPermissionsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1536,23 +1212,21 @@ func (r *NotesPermissionsService) BatchCreate(parent string, batchcreatepermissi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NotesPermissionsBatchCreateCall) Fields(s ...googleapi.Field) *NotesPermissionsBatchCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NotesPermissionsBatchCreateCall) Context(ctx context.Context) *NotesPermissionsBatchCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NotesPermissionsBatchCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1561,18 +1235,12 @@ func (c *NotesPermissionsBatchCreateCall) Header() http.Header {
 }
 
 func (c *NotesPermissionsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreatepermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/permissions:batchCreate")
@@ -1589,12 +1257,11 @@ func (c *NotesPermissionsBatchCreateCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "keep.notes.permissions.batchCreate" call.
-// Exactly one of *BatchCreatePermissionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *BatchCreatePermissionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchCreatePermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *NotesPermissionsBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreatePermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1625,38 +1292,7 @@ func (c *NotesPermissionsBatchCreateCall) Do(opts ...googleapi.CallOption) (*Bat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates one or more permissions on the note. Only permissions with the `WRITER` role may be created. If adding any permission fails, then the entire request fails and no changes are made.",
-	//   "flatPath": "v1/notes/{notesId}/permissions:batchCreate",
-	//   "httpMethod": "POST",
-	//   "id": "keep.notes.permissions.batchCreate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "The parent resource shared by all Permissions being created. Format: `notes/{note}` If this is set, the parent field in the CreatePermission messages must either be empty or match this field.",
-	//       "location": "path",
-	//       "pattern": "^notes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/permissions:batchCreate",
-	//   "request": {
-	//     "$ref": "BatchCreatePermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BatchCreatePermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
-	//   ]
-	// }
-
 }
-
-// method id "keep.notes.permissions.batchDelete":
 
 type NotesPermissionsBatchDeleteCall struct {
 	s                             *Service
@@ -1667,17 +1303,16 @@ type NotesPermissionsBatchDeleteCall struct {
 	header_                       http.Header
 }
 
-// BatchDelete: Deletes one or more permissions on the note. The
-// specified entities will immediately lose access. A permission with
-// the `OWNER` role can't be removed. If removing a permission fails,
-// then the entire request fails and no changes are made. Returns a 400
-// bad request error if a specified permission does not exist on the
-// note.
+// BatchDelete: Deletes one or more permissions on the note. The specified
+// entities will immediately lose access. A permission with the `OWNER` role
+// can't be removed. If removing a permission fails, then the entire request
+// fails and no changes are made. Returns a 400 bad request error if a
+// specified permission does not exist on the note.
 //
-//   - parent: The parent resource shared by all permissions being
-//     deleted. Format: `notes/{note}` If this is set, the parent of all
-//     of the permissions specified in the DeletePermissionRequest
-//     messages must match this field.
+//   - parent: The parent resource shared by all permissions being deleted.
+//     Format: `notes/{note}` If this is set, the parent of all of the
+//     permissions specified in the DeletePermissionRequest messages must match
+//     this field.
 func (r *NotesPermissionsService) BatchDelete(parent string, batchdeletepermissionsrequest *BatchDeletePermissionsRequest) *NotesPermissionsBatchDeleteCall {
 	c := &NotesPermissionsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1686,23 +1321,21 @@ func (r *NotesPermissionsService) BatchDelete(parent string, batchdeletepermissi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *NotesPermissionsBatchDeleteCall) Fields(s ...googleapi.Field) *NotesPermissionsBatchDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *NotesPermissionsBatchDeleteCall) Context(ctx context.Context) *NotesPermissionsBatchDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *NotesPermissionsBatchDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1711,18 +1344,12 @@ func (c *NotesPermissionsBatchDeleteCall) Header() http.Header {
 }
 
 func (c *NotesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeletepermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/permissions:batchDelete")
@@ -1739,12 +1366,10 @@ func (c *NotesPermissionsBatchDeleteCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "keep.notes.permissions.batchDelete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *NotesPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1775,33 +1400,4 @@ func (c *NotesPermissionsBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Emp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes one or more permissions on the note. The specified entities will immediately lose access. A permission with the `OWNER` role can't be removed. If removing a permission fails, then the entire request fails and no changes are made. Returns a 400 bad request error if a specified permission does not exist on the note.",
-	//   "flatPath": "v1/notes/{notesId}/permissions:batchDelete",
-	//   "httpMethod": "POST",
-	//   "id": "keep.notes.permissions.batchDelete",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "The parent resource shared by all permissions being deleted. Format: `notes/{note}` If this is set, the parent of all of the permissions specified in the DeletePermissionRequest messages must match this field.",
-	//       "location": "path",
-	//       "pattern": "^notes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/permissions:batchDelete",
-	//   "request": {
-	//     "$ref": "BatchDeletePermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/keep"
-	//   ]
-	// }
-
 }

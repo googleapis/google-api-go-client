@@ -178,64 +178,50 @@ type LocationsQuestionsAnswersService struct {
 
 // Answer: Represents an answer to a question
 type Answer struct {
-	// Author: Output only. The author of the answer. Will only be set
-	// during list operations.
+	// Author: Output only. The author of the answer. Will only be set during list
+	// operations.
 	Author *Author `json:"author,omitempty"`
-
-	// CreateTime: Output only. The timestamp for when the answer was
-	// written. Only retrieved during ListResponse fetching.
+	// CreateTime: Output only. The timestamp for when the answer was written. Only
+	// retrieved during ListResponse fetching.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Name: Output only. The unique name for the answer
 	// locations/*/questions/*/answers/*
 	Name string `json:"name,omitempty"`
-
-	// Text: Required. The text of the answer. It should contain at least
-	// one non-whitespace character. The maximum length is 4096 characters.
+	// Text: Required. The text of the answer. It should contain at least one
+	// non-whitespace character. The maximum length is 4096 characters.
 	Text string `json:"text,omitempty"`
-
 	// UpdateTime: Output only. The timestamp for when the answer was last
 	// modified.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// UpvoteCount: Output only. The number of upvotes for the answer.
 	UpvoteCount int64 `json:"upvoteCount,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Author") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Answer) MarshalJSON() ([]byte, error) {
 	type NoMethod Answer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Author: Represents the author of a question or answer
 type Author struct {
 	// DisplayName: The display name of the user
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ProfilePhotoUri: The profile photo URI of the user.
 	ProfilePhotoUri string `json:"profilePhotoUri,omitempty"`
-
 	// Type: The type of user the author is.
 	//
 	// Possible values:
@@ -244,219 +230,167 @@ type Author struct {
 	//   "LOCAL_GUIDE" - A Local Guide
 	//   "MERCHANT" - The owner/manager of the location
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Author) MarshalJSON() ([]byte, error) {
 	type NoMethod Author
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ListAnswersResponse: Response message for
-// QuestionsAndAnswers.ListAnswers
+// ListAnswersResponse: Response message for QuestionsAndAnswers.ListAnswers
 type ListAnswersResponse struct {
 	// Answers: The requested answers.
 	Answers []*Answer `json:"answers,omitempty"`
-
-	// NextPageToken: If the number of answers exceeds the requested max
-	// page size, this field is populated with a token to fetch the next
-	// page of answers on a subsequent call. If there are no more answers,
-	// this field is not present in the response.
+	// NextPageToken: If the number of answers exceeds the requested max page size,
+	// this field is populated with a token to fetch the next page of answers on a
+	// subsequent call. If there are no more answers, this field is not present in
+	// the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// TotalSize: The total number of answers posted for this question
-	// across all pages.
+	// TotalSize: The total number of answers posted for this question across all
+	// pages.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Answers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Answers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Answers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Answers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAnswersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAnswersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListQuestionsResponse: Response message for
 // QuestionsAndAnswers.ListQuestions
 type ListQuestionsResponse struct {
-	// NextPageToken: If the number of questions exceeds the requested max
-	// page size, this field is populated with a token to fetch the next
-	// page of questions on a subsequent call. If there are no more
-	// questions, this field is not present in the response.
+	// NextPageToken: If the number of questions exceeds the requested max page
+	// size, this field is populated with a token to fetch the next page of
+	// questions on a subsequent call. If there are no more questions, this field
+	// is not present in the response.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Questions: The requested questions,
 	Questions []*Question `json:"questions,omitempty"`
-
-	// TotalSize: The total number of questions posted for this location
-	// across all pages.
+	// TotalSize: The total number of questions posted for this location across all
+	// pages.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListQuestionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQuestionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Question: Represents a single question and some of its answers.
 type Question struct {
 	// Author: Output only. The author of the question.
 	Author *Author `json:"author,omitempty"`
-
-	// CreateTime: Output only. The timestamp for when the question was
-	// written.
+	// CreateTime: Output only. The timestamp for when the question was written.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// Name: Immutable. The unique name for the question.
-	// locations/*/questions/* This field will be ignored if set during
-	// question creation.
+	// Name: Immutable. The unique name for the question. locations/*/questions/*
+	// This field will be ignored if set during question creation.
 	Name string `json:"name,omitempty"`
-
-	// Text: Required. The text of the question. It should contain at least
-	// three words and the total length should be greater than or equal to
-	// 10 characters. The maximum length is 4096 characters.
+	// Text: Required. The text of the question. It should contain at least three
+	// words and the total length should be greater than or equal to 10 characters.
+	// The maximum length is 4096 characters.
 	Text string `json:"text,omitempty"`
-
 	// TopAnswers: Output only. A list of answers to the question, sorted by
-	// upvotes. This may not be a complete list of answers depending on the
-	// request parameters (answers_per_question)
+	// upvotes. This may not be a complete list of answers depending on the request
+	// parameters (answers_per_question)
 	TopAnswers []*Answer `json:"topAnswers,omitempty"`
-
-	// TotalAnswerCount: Output only. The total number of answers posted for
-	// this question.
+	// TotalAnswerCount: Output only. The total number of answers posted for this
+	// question.
 	TotalAnswerCount int64 `json:"totalAnswerCount,omitempty"`
-
 	// UpdateTime: Output only. The timestamp for when the question was last
 	// modified.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// UpvoteCount: Output only. The number of upvotes for the question.
 	UpvoteCount int64 `json:"upvoteCount,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Author") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Question) MarshalJSON() ([]byte, error) {
 	type NoMethod Question
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UpsertAnswerRequest: Request message for
-// QuestionsAndAnswers.UpsertAnswer
+// UpsertAnswerRequest: Request message for QuestionsAndAnswers.UpsertAnswer
 type UpsertAnswerRequest struct {
 	// Answer: Required. The new answer.
 	Answer *Answer `json:"answer,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Answer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Answer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UpsertAnswerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpsertAnswerRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "mybusinessqanda.locations.questions.create":
 
 type LocationsQuestionsCreateCall struct {
 	s          *Service
@@ -478,23 +412,21 @@ func (r *LocationsQuestionsService) Create(parent string, question *Question) *L
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsCreateCall) Fields(s ...googleapi.Field) *LocationsQuestionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsCreateCall) Context(ctx context.Context) *LocationsQuestionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -503,18 +435,12 @@ func (c *LocationsQuestionsCreateCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.question)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}")
@@ -531,12 +457,10 @@ func (c *LocationsQuestionsCreateCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "mybusinessqanda.locations.questions.create" call.
-// Exactly one of *Question or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Question.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Question.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsQuestionsCreateCall) Do(opts ...googleapi.CallOption) (*Question, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -567,35 +491,7 @@ func (c *LocationsQuestionsCreateCall) Do(opts ...googleapi.CallOption) (*Questi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Adds a question for the specified location.",
-	//   "flatPath": "v1/locations/{locationsId}/questions",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessqanda.locations.questions.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the location to write a question for.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}",
-	//   "request": {
-	//     "$ref": "Question"
-	//   },
-	//   "response": {
-	//     "$ref": "Question"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessqanda.locations.questions.delete":
 
 type LocationsQuestionsDeleteCall struct {
 	s          *Service
@@ -615,23 +511,21 @@ func (r *LocationsQuestionsService) Delete(name string) *LocationsQuestionsDelet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsDeleteCall) Fields(s ...googleapi.Field) *LocationsQuestionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsDeleteCall) Context(ctx context.Context) *LocationsQuestionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -640,12 +534,7 @@ func (c *LocationsQuestionsDeleteCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -663,12 +552,10 @@ func (c *LocationsQuestionsDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "mybusinessqanda.locations.questions.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsQuestionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -699,32 +586,7 @@ func (c *LocationsQuestionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a specific question written by the current user.",
-	//   "flatPath": "v1/locations/{locationsId}/questions/{questionsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "mybusinessqanda.locations.questions.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the question to delete.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessqanda.locations.questions.list":
 
 type LocationsQuestionsListCall struct {
 	s            *Service
@@ -735,9 +597,9 @@ type LocationsQuestionsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns the paginated list of questions and some of its answers
-// for a specified location. This operation is only valid if the
-// specified location is verified.
+// List: Returns the paginated list of questions and some of its answers for a
+// specified location. This operation is only valid if the specified location
+// is verified.
 //
 // - parent: The name of the location to fetch questions for.
 func (r *LocationsQuestionsService) List(parent string) *LocationsQuestionsListCall {
@@ -746,74 +608,69 @@ func (r *LocationsQuestionsService) List(parent string) *LocationsQuestionsListC
 	return c
 }
 
-// AnswersPerQuestion sets the optional parameter "answersPerQuestion":
-// How many answers to fetch per question. The default and maximum
+// AnswersPerQuestion sets the optional parameter "answersPerQuestion": How
+// many answers to fetch per question. The default and maximum
 // `answers_per_question` values are 10.
 func (c *LocationsQuestionsListCall) AnswersPerQuestion(answersPerQuestion int64) *LocationsQuestionsListCall {
 	c.urlParams_.Set("answersPerQuestion", fmt.Sprint(answersPerQuestion))
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter constraining
-// the questions to return. The only filter currently supported is
+// Filter sets the optional parameter "filter": A filter constraining the
+// questions to return. The only filter currently supported is
 // "ignore_answered=true"
 func (c *LocationsQuestionsListCall) Filter(filter string) *LocationsQuestionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to return
-// the questions. Valid options include 'update_time desc' and
-// 'upvote_count desc', which will return the questions sorted
-// descendingly by the requested field. The default sort order is
-// 'update_time desc'.
+// OrderBy sets the optional parameter "orderBy": The order to return the
+// questions. Valid options include 'update_time desc' and 'upvote_count desc',
+// which will return the questions sorted descendingly by the requested field.
+// The default sort order is 'update_time desc'.
 func (c *LocationsQuestionsListCall) OrderBy(orderBy string) *LocationsQuestionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": How many questions
-// to fetch per page. The default and maximum `page_size` values are 10.
+// PageSize sets the optional parameter "pageSize": How many questions to fetch
+// per page. The default and maximum `page_size` values are 10.
 func (c *LocationsQuestionsListCall) PageSize(pageSize int64) *LocationsQuestionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If specified, the
-// next page of questions is retrieved.
+// PageToken sets the optional parameter "pageToken": If specified, the next
+// page of questions is retrieved.
 func (c *LocationsQuestionsListCall) PageToken(pageToken string) *LocationsQuestionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsListCall) Fields(s ...googleapi.Field) *LocationsQuestionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsQuestionsListCall) IfNoneMatch(entityTag string) *LocationsQuestionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsListCall) Context(ctx context.Context) *LocationsQuestionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -822,12 +679,7 @@ func (c *LocationsQuestionsListCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -848,12 +700,11 @@ func (c *LocationsQuestionsListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "mybusinessqanda.locations.questions.list" call.
-// Exactly one of *ListQuestionsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListQuestionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListQuestionsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsQuestionsListCall) Do(opts ...googleapi.CallOption) (*ListQuestionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -884,56 +735,6 @@ func (c *LocationsQuestionsListCall) Do(opts ...googleapi.CallOption) (*ListQues
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the paginated list of questions and some of its answers for a specified location. This operation is only valid if the specified location is verified.",
-	//   "flatPath": "v1/locations/{locationsId}/questions",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessqanda.locations.questions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "answersPerQuestion": {
-	//       "description": "Optional. How many answers to fetch per question. The default and maximum `answers_per_question` values are 10.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filter": {
-	//       "description": "Optional. A filter constraining the questions to return. The only filter currently supported is \"ignore_answered=true\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. The order to return the questions. Valid options include 'update_time desc' and 'upvote_count desc', which will return the questions sorted descendingly by the requested field. The default sort order is 'update_time desc'.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. How many questions to fetch per page. The default and maximum `page_size` values are 10.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. If specified, the next page of questions is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the location to fetch questions for.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}",
-	//   "response": {
-	//     "$ref": "ListQuestionsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -941,7 +742,7 @@ func (c *LocationsQuestionsListCall) Do(opts ...googleapi.CallOption) (*ListQues
 // The provided context supersedes any context provided to the Context method.
 func (c *LocationsQuestionsListCall) Pages(ctx context.Context, f func(*ListQuestionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -957,8 +758,6 @@ func (c *LocationsQuestionsListCall) Pages(ctx context.Context, f func(*ListQues
 	}
 }
 
-// method id "mybusinessqanda.locations.questions.patch":
-
 type LocationsQuestionsPatchCall struct {
 	s          *Service
 	name       string
@@ -970,9 +769,8 @@ type LocationsQuestionsPatchCall struct {
 
 // Patch: Updates a specific question written by the current user.
 //
-//   - name: Immutable. The unique name for the question.
-//     locations/*/questions/* This field will be ignored if set during
-//     question creation.
+//   - name: Immutable. The unique name for the question. locations/*/questions/*
+//     This field will be ignored if set during question creation.
 func (r *LocationsQuestionsService) Patch(name string, question *Question) *LocationsQuestionsPatchCall {
 	c := &LocationsQuestionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -980,31 +778,29 @@ func (r *LocationsQuestionsService) Patch(name string, question *Question) *Loca
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// specific fields to update. Only question text can be updated.
+// UpdateMask sets the optional parameter "updateMask": Required. The specific
+// fields to update. Only question text can be updated.
 func (c *LocationsQuestionsPatchCall) UpdateMask(updateMask string) *LocationsQuestionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsPatchCall) Fields(s ...googleapi.Field) *LocationsQuestionsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsPatchCall) Context(ctx context.Context) *LocationsQuestionsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1013,18 +809,12 @@ func (c *LocationsQuestionsPatchCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.question)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1041,12 +831,10 @@ func (c *LocationsQuestionsPatchCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "mybusinessqanda.locations.questions.patch" call.
-// Exactly one of *Question or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Question.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Question.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsQuestionsPatchCall) Do(opts ...googleapi.CallOption) (*Question, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1077,41 +865,7 @@ func (c *LocationsQuestionsPatchCall) Do(opts ...googleapi.CallOption) (*Questio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a specific question written by the current user.",
-	//   "flatPath": "v1/locations/{locationsId}/questions/{questionsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessqanda.locations.questions.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The unique name for the question. locations/*/questions/* This field will be ignored if set during question creation.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The specific fields to update. Only question text can be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "Question"
-	//   },
-	//   "response": {
-	//     "$ref": "Question"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessqanda.locations.questions.answers.delete":
 
 type LocationsQuestionsAnswersDeleteCall struct {
 	s          *Service
@@ -1131,23 +885,21 @@ func (r *LocationsQuestionsAnswersService) Delete(name string) *LocationsQuestio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsAnswersDeleteCall) Fields(s ...googleapi.Field) *LocationsQuestionsAnswersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsAnswersDeleteCall) Context(ctx context.Context) *LocationsQuestionsAnswersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsAnswersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1156,12 +908,7 @@ func (c *LocationsQuestionsAnswersDeleteCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsAnswersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1179,12 +926,10 @@ func (c *LocationsQuestionsAnswersDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "mybusinessqanda.locations.questions.answers.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsQuestionsAnswersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1215,32 +960,7 @@ func (c *LocationsQuestionsAnswersDeleteCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes the answer written by the current user to a question.",
-	//   "flatPath": "v1/locations/{locationsId}/questions/{questionsId}/answers:delete",
-	//   "httpMethod": "DELETE",
-	//   "id": "mybusinessqanda.locations.questions.answers.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the question to delete an answer for.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/answers:delete",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessqanda.locations.questions.answers.list":
 
 type LocationsQuestionsAnswersListCall struct {
 	s            *Service
@@ -1260,58 +980,53 @@ func (r *LocationsQuestionsAnswersService) List(parent string) *LocationsQuestio
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The order to return
-// the answers. Valid options include 'update_time desc' and
-// 'upvote_count desc', which will return the answers sorted
-// descendingly by the requested field. The default sort order is
-// 'update_time desc'.
+// OrderBy sets the optional parameter "orderBy": The order to return the
+// answers. Valid options include 'update_time desc' and 'upvote_count desc',
+// which will return the answers sorted descendingly by the requested field.
+// The default sort order is 'update_time desc'.
 func (c *LocationsQuestionsAnswersListCall) OrderBy(orderBy string) *LocationsQuestionsAnswersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": How many answers to
-// fetch per page. The default and maximum `page_size` values are 10.
+// PageSize sets the optional parameter "pageSize": How many answers to fetch
+// per page. The default and maximum `page_size` values are 10.
 func (c *LocationsQuestionsAnswersListCall) PageSize(pageSize int64) *LocationsQuestionsAnswersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If specified, the
-// next page of answers is retrieved.
+// PageToken sets the optional parameter "pageToken": If specified, the next
+// page of answers is retrieved.
 func (c *LocationsQuestionsAnswersListCall) PageToken(pageToken string) *LocationsQuestionsAnswersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsAnswersListCall) Fields(s ...googleapi.Field) *LocationsQuestionsAnswersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *LocationsQuestionsAnswersListCall) IfNoneMatch(entityTag string) *LocationsQuestionsAnswersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsAnswersListCall) Context(ctx context.Context) *LocationsQuestionsAnswersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsAnswersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1320,12 +1035,7 @@ func (c *LocationsQuestionsAnswersListCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsAnswersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1346,12 +1056,11 @@ func (c *LocationsQuestionsAnswersListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "mybusinessqanda.locations.questions.answers.list" call.
-// Exactly one of *ListAnswersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAnswersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAnswersResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *LocationsQuestionsAnswersListCall) Do(opts ...googleapi.CallOption) (*ListAnswersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1382,45 +1091,6 @@ func (c *LocationsQuestionsAnswersListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the paginated list of answers for a specified question.",
-	//   "flatPath": "v1/locations/{locationsId}/questions/{questionsId}/answers",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessqanda.locations.questions.answers.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "orderBy": {
-	//       "description": "Optional. The order to return the answers. Valid options include 'update_time desc' and 'upvote_count desc', which will return the answers sorted descendingly by the requested field. The default sort order is 'update_time desc'.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. How many answers to fetch per page. The default and maximum `page_size` values are 10.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. If specified, the next page of answers is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the question to fetch answers for.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/answers",
-	//   "response": {
-	//     "$ref": "ListAnswersResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1428,7 +1098,7 @@ func (c *LocationsQuestionsAnswersListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *LocationsQuestionsAnswersListCall) Pages(ctx context.Context, f func(*ListAnswersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1444,8 +1114,6 @@ func (c *LocationsQuestionsAnswersListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "mybusinessqanda.locations.questions.answers.upsert":
-
 type LocationsQuestionsAnswersUpsertCall struct {
 	s                   *Service
 	parent              string
@@ -1455,9 +1123,8 @@ type LocationsQuestionsAnswersUpsertCall struct {
 	header_             http.Header
 }
 
-// Upsert: Creates an answer or updates the existing answer written by
-// the user for the specified question. A user can only create one
-// answer per question.
+// Upsert: Creates an answer or updates the existing answer written by the user
+// for the specified question. A user can only create one answer per question.
 //
 // - parent: The name of the question to write an answer for.
 func (r *LocationsQuestionsAnswersService) Upsert(parent string, upsertanswerrequest *UpsertAnswerRequest) *LocationsQuestionsAnswersUpsertCall {
@@ -1468,23 +1135,21 @@ func (r *LocationsQuestionsAnswersService) Upsert(parent string, upsertanswerreq
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *LocationsQuestionsAnswersUpsertCall) Fields(s ...googleapi.Field) *LocationsQuestionsAnswersUpsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *LocationsQuestionsAnswersUpsertCall) Context(ctx context.Context) *LocationsQuestionsAnswersUpsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *LocationsQuestionsAnswersUpsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1493,18 +1158,12 @@ func (c *LocationsQuestionsAnswersUpsertCall) Header() http.Header {
 }
 
 func (c *LocationsQuestionsAnswersUpsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.upsertanswerrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/answers:upsert")
@@ -1521,12 +1180,10 @@ func (c *LocationsQuestionsAnswersUpsertCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "mybusinessqanda.locations.questions.answers.upsert" call.
-// Exactly one of *Answer or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Answer.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Answer.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *LocationsQuestionsAnswersUpsertCall) Do(opts ...googleapi.CallOption) (*Answer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1557,30 +1214,4 @@ func (c *LocationsQuestionsAnswersUpsertCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an answer or updates the existing answer written by the user for the specified question. A user can only create one answer per question.",
-	//   "flatPath": "v1/locations/{locationsId}/questions/{questionsId}/answers:upsert",
-	//   "httpMethod": "POST",
-	//   "id": "mybusinessqanda.locations.questions.answers.upsert",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the question to write an answer for.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/questions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/answers:upsert",
-	//   "request": {
-	//     "$ref": "UpsertAnswerRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Answer"
-	//   }
-	// }
-
 }

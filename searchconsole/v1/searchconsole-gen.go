@@ -244,48 +244,39 @@ type UrlTestingToolsMobileFriendlyTestService struct {
 	s *Service
 }
 
-// AmpInspectionResult: AMP inspection result of the live page or the
-// current information from Google's index, depending on whether you
-// requested a live inspection or not.
+// AmpInspectionResult: AMP inspection result of the live page or the current
+// information from Google's index, depending on whether you requested a live
+// inspection or not.
 type AmpInspectionResult struct {
 	// AmpIndexStatusVerdict: Index status of the AMP URL.
 	//
 	// Possible values:
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
-	//   "PASS" - Equivalent to "Valid" for the page or item in Search
-	// Console.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search Console.
 	//   "PARTIAL" - Reserved, no longer in use.
-	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
-	// Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in Search
+	// Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
 	// Console.
 	AmpIndexStatusVerdict string `json:"ampIndexStatusVerdict,omitempty"`
-
-	// AmpUrl: URL of the AMP that was inspected. If the submitted URL is a
-	// desktop page that refers to an AMP version, the AMP version will be
-	// inspected.
+	// AmpUrl: URL of the AMP that was inspected. If the submitted URL is a desktop
+	// page that refers to an AMP version, the AMP version will be inspected.
 	AmpUrl string `json:"ampUrl,omitempty"`
-
-	// IndexingState: Whether or not the page blocks indexing through a
-	// noindex rule.
+	// IndexingState: Whether or not the page blocks indexing through a noindex
+	// rule.
 	//
 	// Possible values:
 	//   "AMP_INDEXING_STATE_UNSPECIFIED" - Unknown indexing status.
 	//   "AMP_INDEXING_ALLOWED" - Indexing allowed.
-	//   "BLOCKED_DUE_TO_NOINDEX" - Indexing not allowed, 'noindex'
-	// detected.
+	//   "BLOCKED_DUE_TO_NOINDEX" - Indexing not allowed, 'noindex' detected.
 	//   "BLOCKED_DUE_TO_EXPIRED_UNAVAILABLE_AFTER" - Indexing not allowed,
 	// 'unavailable_after' date expired.
 	IndexingState string `json:"indexingState,omitempty"`
-
-	// Issues: A list of zero or more AMP issues found for the inspected
-	// URL.
+	// Issues: A list of zero or more AMP issues found for the inspected URL.
 	Issues []*AmpIssue `json:"issues,omitempty"`
-
-	// LastCrawlTime: Last time this AMP version was crawled by Google.
-	// Absent if the URL was never crawled successfully.
+	// LastCrawlTime: Last time this AMP version was crawled by Google. Absent if
+	// the URL was never crawled successfully.
 	LastCrawlTime string `json:"lastCrawlTime,omitempty"`
-
 	// PageFetchState: Whether or not Google could fetch the AMP.
 	//
 	// Possible values:
@@ -302,63 +293,51 @@ type AmpInspectionResult struct {
 	//   "INTERNAL_CRAWL_ERROR" - Internal error.
 	//   "INVALID_URL" - Invalid URL.
 	PageFetchState string `json:"pageFetchState,omitempty"`
-
-	// RobotsTxtState: Whether or not the page is blocked to Google by a
-	// robots.txt rule.
+	// RobotsTxtState: Whether or not the page is blocked to Google by a robots.txt
+	// rule.
 	//
 	// Possible values:
-	//   "ROBOTS_TXT_STATE_UNSPECIFIED" - Unknown robots.txt state,
-	// typically because the page wasn't fetched or found, or because
-	// robots.txt itself couldn't be reached.
+	//   "ROBOTS_TXT_STATE_UNSPECIFIED" - Unknown robots.txt state, typically
+	// because the page wasn't fetched or found, or because robots.txt itself
+	// couldn't be reached.
 	//   "ALLOWED" - Crawl allowed by robots.txt.
 	//   "DISALLOWED" - Crawl blocked by robots.txt.
 	RobotsTxtState string `json:"robotsTxtState,omitempty"`
-
-	// Verdict: The status of the most severe error on the page. If a page
-	// has both warnings and errors, the page status is error. Error status
-	// means the page cannot be shown in Search results.
+	// Verdict: The status of the most severe error on the page. If a page has both
+	// warnings and errors, the page status is error. Error status means the page
+	// cannot be shown in Search results.
 	//
 	// Possible values:
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
-	//   "PASS" - Equivalent to "Valid" for the page or item in Search
-	// Console.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search Console.
 	//   "PARTIAL" - Reserved, no longer in use.
-	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
-	// Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in Search
+	// Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
 	// Console.
 	Verdict string `json:"verdict,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AmpIndexStatusVerdict") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AmpIndexStatusVerdict") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AmpIndexStatusVerdict") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AmpInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod AmpInspectionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AmpIssue: AMP issue.
 type AmpIssue struct {
 	// IssueMessage: Brief description of this issue.
 	IssueMessage string `json:"issueMessage,omitempty"`
-
 	// Severity: Severity of this issue: WARNING or ERROR.
 	//
 	// Possible values:
@@ -366,62 +345,46 @@ type AmpIssue struct {
 	//   "WARNING" - Warning.
 	//   "ERROR" - Error.
 	Severity string `json:"severity,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IssueMessage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IssueMessage") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IssueMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AmpIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod AmpIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ApiDataRow struct {
-	Clicks float64 `json:"clicks,omitempty"`
-
-	Ctr float64 `json:"ctr,omitempty"`
-
-	Impressions float64 `json:"impressions,omitempty"`
-
-	Keys []string `json:"keys,omitempty"`
-
-	Position float64 `json:"position,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Clicks") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	Clicks      float64  `json:"clicks,omitempty"`
+	Ctr         float64  `json:"ctr,omitempty"`
+	Impressions float64  `json:"impressions,omitempty"`
+	Keys        []string `json:"keys,omitempty"`
+	Position    float64  `json:"position,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Clicks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Clicks") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApiDataRow) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDataRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ApiDataRow) UnmarshalJSON(data []byte) error {
@@ -444,12 +407,12 @@ func (s *ApiDataRow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ApiDimensionFilter: A filter test to be applied to each row in the
-// data set, where a match can return the row. Filters are string
-// comparisons, and values and dimension names are not case-sensitive.
-// Individual filters are either AND'ed or OR'ed within their parent
-// filter group, according to the group's group type. You do not need to
-// group by a specified dimension to filter against it.
+// ApiDimensionFilter: A filter test to be applied to each row in the data set,
+// where a match can return the row. Filters are string comparisons, and values
+// and dimension names are not case-sensitive. Individual filters are either
+// AND'ed or OR'ed within their parent filter group, according to the group's
+// group type. You do not need to group by a specified dimension to filter
+// against it.
 type ApiDimensionFilter struct {
 	// Possible values:
 	//   "QUERY"
@@ -457,10 +420,8 @@ type ApiDimensionFilter struct {
 	//   "COUNTRY"
 	//   "DEVICE"
 	//   "SEARCH_APPEARANCE"
-	Dimension string `json:"dimension,omitempty"`
-
+	Dimension  string `json:"dimension,omitempty"`
 	Expression string `json:"expression,omitempty"`
-
 	// Possible values:
 	//   "EQUALS"
 	//   "NOT_EQUALS"
@@ -469,203 +430,162 @@ type ApiDimensionFilter struct {
 	//   "INCLUDING_REGEX"
 	//   "EXCLUDING_REGEX"
 	Operator string `json:"operator,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApiDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDimensionFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ApiDimensionFilterGroup: A set of dimension value filters to test
-// against each row. Only rows that pass all filter groups will be
-// returned. All results within a filter group are either AND'ed or
-// OR'ed together, depending on the group type selected. All filter
-// groups are AND'ed together.
+// ApiDimensionFilterGroup: A set of dimension value filters to test against
+// each row. Only rows that pass all filter groups will be returned. All
+// results within a filter group are either AND'ed or OR'ed together, depending
+// on the group type selected. All filter groups are AND'ed together.
 type ApiDimensionFilterGroup struct {
 	Filters []*ApiDimensionFilter `json:"filters,omitempty"`
-
 	// Possible values:
 	//   "AND"
 	GroupType string `json:"groupType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Filters") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Filters") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Filters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ApiDimensionFilterGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDimensionFilterGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BlockedResource: Blocked resource.
 type BlockedResource struct {
 	// Url: URL of the blocked resource.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlockedResource) MarshalJSON() ([]byte, error) {
 	type NoMethod BlockedResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectedItems: Rich Results items grouped by type.
 type DetectedItems struct {
 	// Items: List of Rich Results items.
 	Items []*Item `json:"items,omitempty"`
-
 	// RichResultType: Rich Results type
 	RichResultType string `json:"richResultType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DetectedItems) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectedItems
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Image: Describe image data.
 type Image struct {
-	// Data: Image data in format determined by the mime type. Currently,
-	// the format will always be "image/png", but this might change in the
-	// future.
+	// Data: Image data in format determined by the mime type. Currently, the
+	// format will always be "image/png", but this might change in the future.
 	Data string `json:"data,omitempty"`
-
 	// MimeType: The mime-type of the image data.
 	MimeType string `json:"mimeType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Data") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Data") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// IndexStatusInspectionResult: Results of index status inspection for
-// either the live page or the version in Google's index, depending on
-// whether you requested a live inspection or not. For more information,
-// see the Index coverage report documentation
+// IndexStatusInspectionResult: Results of index status inspection for either
+// the live page or the version in Google's index, depending on whether you
+// requested a live inspection or not. For more information, see the Index
+// coverage report documentation
 // (https://support.google.com/webmasters/answer/7440203).
 type IndexStatusInspectionResult struct {
-	// CoverageState: Could Google find and index the page. More details
-	// about page indexing appear in 'indexing_state'.
+	// CoverageState: Could Google find and index the page. More details about page
+	// indexing appear in 'indexing_state'.
 	CoverageState string `json:"coverageState,omitempty"`
-
-	// CrawledAs: Primary crawler that was used by Google to crawl your
-	// site.
+	// CrawledAs: Primary crawler that was used by Google to crawl your site.
 	//
 	// Possible values:
 	//   "CRAWLING_USER_AGENT_UNSPECIFIED" - Unknown user agent.
 	//   "DESKTOP" - Desktop user agent.
 	//   "MOBILE" - Mobile user agent.
 	CrawledAs string `json:"crawledAs,omitempty"`
-
-	// GoogleCanonical: The URL of the page that Google selected as
-	// canonical. If the page was not indexed, this field is absent.
+	// GoogleCanonical: The URL of the page that Google selected as canonical. If
+	// the page was not indexed, this field is absent.
 	GoogleCanonical string `json:"googleCanonical,omitempty"`
-
-	// IndexingState: Whether or not the page blocks indexing through a
-	// noindex rule.
+	// IndexingState: Whether or not the page blocks indexing through a noindex
+	// rule.
 	//
 	// Possible values:
 	//   "INDEXING_STATE_UNSPECIFIED" - Unknown indexing status.
 	//   "INDEXING_ALLOWED" - Indexing allowed.
 	//   "BLOCKED_BY_META_TAG" - Indexing not allowed, 'noindex' detected in
 	// 'robots' meta tag.
-	//   "BLOCKED_BY_HTTP_HEADER" - Indexing not allowed, 'noindex' detected
-	// in 'X-Robots-Tag' http header.
+	//   "BLOCKED_BY_HTTP_HEADER" - Indexing not allowed, 'noindex' detected in
+	// 'X-Robots-Tag' http header.
 	//   "BLOCKED_BY_ROBOTS_TXT" - Reserved, no longer in use.
 	IndexingState string `json:"indexingState,omitempty"`
-
-	// LastCrawlTime: Last time this URL was crawled by Google using the
-	// primary crawler
+	// LastCrawlTime: Last time this URL was crawled by Google using the primary
+	// crawler
 	// (https://support.google.com/webmasters/answer/7440203#primary_crawler).
 	// Absent if the URL was never crawled successfully.
 	LastCrawlTime string `json:"lastCrawlTime,omitempty"`
-
-	// PageFetchState: Whether or not Google could retrieve the page from
-	// your server. Equivalent to "page fetch"
-	// (https://support.google.com/webmasters/answer/9012289#index_coverage)
-	// in the URL inspection report.
+	// PageFetchState: Whether or not Google could retrieve the page from your
+	// server. Equivalent to "page fetch"
+	// (https://support.google.com/webmasters/answer/9012289#index_coverage) in the
+	// URL inspection report.
 	//
 	// Possible values:
 	//   "PAGE_FETCH_STATE_UNSPECIFIED" - Unknown fetch state.
@@ -681,68 +601,54 @@ type IndexStatusInspectionResult struct {
 	//   "INTERNAL_CRAWL_ERROR" - Internal error.
 	//   "INVALID_URL" - Invalid URL.
 	PageFetchState string `json:"pageFetchState,omitempty"`
-
-	// ReferringUrls: URLs that link to the inspected URL, directly and
-	// indirectly.
+	// ReferringUrls: URLs that link to the inspected URL, directly and indirectly.
 	ReferringUrls []string `json:"referringUrls,omitempty"`
-
-	// RobotsTxtState: Whether or not the page is blocked to Google by a
-	// robots.txt rule.
+	// RobotsTxtState: Whether or not the page is blocked to Google by a robots.txt
+	// rule.
 	//
 	// Possible values:
-	//   "ROBOTS_TXT_STATE_UNSPECIFIED" - Unknown robots.txt state,
-	// typically because the page wasn't fetched or found, or because
-	// robots.txt itself couldn't be reached.
+	//   "ROBOTS_TXT_STATE_UNSPECIFIED" - Unknown robots.txt state, typically
+	// because the page wasn't fetched or found, or because robots.txt itself
+	// couldn't be reached.
 	//   "ALLOWED" - Crawl allowed by robots.txt.
 	//   "DISALLOWED" - Crawl blocked by robots.txt.
 	RobotsTxtState string `json:"robotsTxtState,omitempty"`
-
-	// Sitemap: Any sitemaps that this URL was listed in, as known by
-	// Google. Not guaranteed to be an exhaustive list, especially if Google
-	// did not discover this URL through a sitemap. Absent if no sitemaps
-	// were found.
+	// Sitemap: Any sitemaps that this URL was listed in, as known by Google. Not
+	// guaranteed to be an exhaustive list, especially if Google did not discover
+	// this URL through a sitemap. Absent if no sitemaps were found.
 	Sitemap []string `json:"sitemap,omitempty"`
-
 	// UserCanonical: The URL that your page or site declares as canonical
 	// (https://developers.google.com/search/docs/advanced/crawling/consolidate-duplicate-urls?#define-canonical).
 	// If you did not declare a canonical URL, this field is absent.
 	UserCanonical string `json:"userCanonical,omitempty"`
-
-	// Verdict: High level verdict about whether the URL *is* indexed
-	// (indexed status), or *can be* indexed (live inspection).
+	// Verdict: High level verdict about whether the URL *is* indexed (indexed
+	// status), or *can be* indexed (live inspection).
 	//
 	// Possible values:
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
-	//   "PASS" - Equivalent to "Valid" for the page or item in Search
-	// Console.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search Console.
 	//   "PARTIAL" - Reserved, no longer in use.
-	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
-	// Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in Search
+	// Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
 	// Console.
 	Verdict string `json:"verdict,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CoverageState") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CoverageState") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CoverageState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IndexStatusInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexStatusInspectionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InspectUrlIndexRequest: Index inspection request.
@@ -750,39 +656,31 @@ type InspectUrlIndexRequest struct {
 	// InspectionUrl: Required. URL to inspect. Must be under the property
 	// specified in "site_url".
 	InspectionUrl string `json:"inspectionUrl,omitempty"`
-
 	// LanguageCode: Optional. An IETF BCP-47
-	// (https://en.wikipedia.org/wiki/IETF_language_tag) language code
-	// representing the requested language for translated issue messages,
-	// e.g. "en-US", "or "de-CH". Default value is "en-US".
+	// (https://en.wikipedia.org/wiki/IETF_language_tag) language code representing
+	// the requested language for translated issue messages, e.g. "en-US", "or
+	// "de-CH". Default value is "en-US".
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// SiteUrl: Required. The URL of the property as defined in Search
-	// Console. **Examples:** `http://www.example.com/` for a URL-prefix
-	// property, or `sc-domain:example.com` for a Domain property.
+	// SiteUrl: Required. The URL of the property as defined in Search Console.
+	// **Examples:** `http://www.example.com/` for a URL-prefix property, or
+	// `sc-domain:example.com` for a Domain property.
 	SiteUrl string `json:"siteUrl,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InspectionUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InspectionUrl") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InspectionUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InspectUrlIndexRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InspectUrlIndexRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InspectUrlIndexResponse: Index-Status inspection response.
@@ -790,64 +688,48 @@ type InspectUrlIndexResponse struct {
 	// InspectionResult: URL inspection results.
 	InspectionResult *UrlInspectionResult `json:"inspectionResult,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "InspectionResult") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InspectionResult") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InspectionResult") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InspectUrlIndexResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InspectUrlIndexResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Item: A specific rich result found on the page.
 type Item struct {
-	// Issues: A list of zero or more rich result issues found for this
-	// instance.
+	// Issues: A list of zero or more rich result issues found for this instance.
 	Issues []*RichResultsIssue `json:"issues,omitempty"`
-
 	// Name: The user-provided name of this item.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Issues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Issues") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Issues") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Item) MarshalJSON() ([]byte, error) {
 	type NoMethod Item
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileFriendlyIssue: Mobile-friendly issue.
@@ -855,91 +737,75 @@ type MobileFriendlyIssue struct {
 	// Rule: Rule violated.
 	//
 	// Possible values:
-	//   "MOBILE_FRIENDLY_RULE_UNSPECIFIED" - Unknown rule. Sorry, we don't
-	// have any description for the rule that was broken.
-	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile
-	// devices are being used. [Learn more]
+	//   "MOBILE_FRIENDLY_RULE_UNSPECIFIED" - Unknown rule. Sorry, we don't have
+	// any description for the rule that was broken.
+	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile devices are
+	// being used. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#flash_usage).
-	//   "CONFIGURE_VIEWPORT" - Viewport is not specified using the meta
-	// viewport tag. [Learn more]
+	//   "CONFIGURE_VIEWPORT" - Viewport is not specified using the meta viewport
+	// tag. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#viewport_not_configured).
-	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn
-	// more]
+	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#fixed-width_viewport).
-	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn
-	// more]
+	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#content_not_sized_to_viewport).
-	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading
-	// on a small screen. [Learn More]
+	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading on a
+	// small screen. [Learn More]
 	// (https://support.google.com/webmasters/answer/6352293#small_font_size).
-	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each
-	// other. [Learn more]
+	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each other.
+	// [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close).
 	Rule string `json:"rule,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Rule") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Rule") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Rule") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Rule") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MobileFriendlyIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileFriendlyIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileUsabilityInspectionResult: Mobile-usability inspection results.
 type MobileUsabilityInspectionResult struct {
-	// Issues: A list of zero or more mobile-usability issues detected for
-	// this URL.
+	// Issues: A list of zero or more mobile-usability issues detected for this
+	// URL.
 	Issues []*MobileUsabilityIssue `json:"issues,omitempty"`
-
 	// Verdict: High-level mobile-usability inspection result for this URL.
 	//
 	// Possible values:
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
-	//   "PASS" - Equivalent to "Valid" for the page or item in Search
-	// Console.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search Console.
 	//   "PARTIAL" - Reserved, no longer in use.
-	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
-	// Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in Search
+	// Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
 	// Console.
 	Verdict string `json:"verdict,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Issues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Issues") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Issues") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MobileUsabilityInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileUsabilityInspectionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MobileUsabilityIssue: Mobile-usability issue.
@@ -947,31 +813,27 @@ type MobileUsabilityIssue struct {
 	// IssueType: Mobile-usability issue type.
 	//
 	// Possible values:
-	//   "MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED" - Unknown issue. Sorry,
-	// we don't have any description for the rule that was broken.
-	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile
-	// devices are being used. [Learn more]
+	//   "MOBILE_USABILITY_ISSUE_TYPE_UNSPECIFIED" - Unknown issue. Sorry, we don't
+	// have any description for the rule that was broken.
+	//   "USES_INCOMPATIBLE_PLUGINS" - Plugins incompatible with mobile devices are
+	// being used. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#flash_usage#error-list).
-	//   "CONFIGURE_VIEWPORT" - Viewport is not specified using the meta
-	// viewport tag. [Learn more]
+	//   "CONFIGURE_VIEWPORT" - Viewport is not specified using the meta viewport
+	// tag. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#viewport_not_configured#error-list).
-	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn
-	// more]
+	//   "FIXED_WIDTH_VIEWPORT" - Viewport defined to a fixed width. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#fixed-width_viewport#error-list).
-	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn
-	// more]
+	//   "SIZE_CONTENT_TO_VIEWPORT" - Content not sized to viewport. [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#content_not_sized_to_viewport#error-list).
-	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading
-	// on a small screen. [Learn More]
+	//   "USE_LEGIBLE_FONT_SIZES" - Font size is too small for easy reading on a
+	// small screen. [Learn More]
 	// (https://support.google.com/webmasters/answer/6352293#small_font_size#error-list).
-	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each
-	// other. [Learn more]
+	//   "TAP_TARGETS_TOO_CLOSE" - Touch elements are too close to each other.
+	// [Learn more]
 	// (https://support.google.com/webmasters/answer/6352293#touch_elements_too_close#error-list).
 	IssueType string `json:"issueType,omitempty"`
-
 	// Message: Additional information regarding the issue.
 	Message string `json:"message,omitempty"`
-
 	// Severity: Not returned; reserved for future use.
 	//
 	// Possible values:
@@ -979,242 +841,191 @@ type MobileUsabilityIssue struct {
 	//   "WARNING" - Warning.
 	//   "ERROR" - Error.
 	Severity string `json:"severity,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IssueType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IssueType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IssueType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MobileUsabilityIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod MobileUsabilityIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceIssue: Information about a resource with issue.
 type ResourceIssue struct {
 	// BlockedResource: Describes a blocked resource issue.
 	BlockedResource *BlockedResource `json:"blockedResource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BlockedResource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlockedResource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BlockedResource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ResourceIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RichResultsInspectionResult: Rich-Results inspection result,
-// including any rich results found at this URL.
+// RichResultsInspectionResult: Rich-Results inspection result, including any
+// rich results found at this URL.
 type RichResultsInspectionResult struct {
-	// DetectedItems: A list of zero or more rich results detected on this
-	// page. Rich results that cannot even be parsed due to syntactic issues
-	// will not be listed here.
+	// DetectedItems: A list of zero or more rich results detected on this page.
+	// Rich results that cannot even be parsed due to syntactic issues will not be
+	// listed here.
 	DetectedItems []*DetectedItems `json:"detectedItems,omitempty"`
-
 	// Verdict: High-level rich results inspection result for this URL.
 	//
 	// Possible values:
 	//   "VERDICT_UNSPECIFIED" - Unknown verdict.
-	//   "PASS" - Equivalent to "Valid" for the page or item in Search
-	// Console.
+	//   "PASS" - Equivalent to "Valid" for the page or item in Search Console.
 	//   "PARTIAL" - Reserved, no longer in use.
-	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in
-	// Search Console.
+	//   "FAIL" - Equivalent to "Error" or "Invalid" for the page or item in Search
+	// Console.
 	//   "NEUTRAL" - Equivalent to "Excluded" for the page or item in Search
 	// Console.
 	Verdict string `json:"verdict,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DetectedItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DetectedItems") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DetectedItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RichResultsInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod RichResultsInspectionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RichResultsIssue: Severity and status of a single issue affecting a
-// single rich result instance on a page.
+// RichResultsIssue: Severity and status of a single issue affecting a single
+// rich result instance on a page.
 type RichResultsIssue struct {
 	// IssueMessage: Rich Results issue type.
 	IssueMessage string `json:"issueMessage,omitempty"`
-
-	// Severity: Severity of this issue: WARNING, or ERROR. Items with an
-	// issue of status ERROR cannot appear with rich result features in
-	// Google Search results.
+	// Severity: Severity of this issue: WARNING, or ERROR. Items with an issue of
+	// status ERROR cannot appear with rich result features in Google Search
+	// results.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unknown severity.
 	//   "WARNING" - Warning.
 	//   "ERROR" - Error.
 	Severity string `json:"severity,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IssueMessage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IssueMessage") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IssueMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RichResultsIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod RichResultsIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RunMobileFriendlyTestRequest: Mobile-friendly test request.
 type RunMobileFriendlyTestRequest struct {
-	// RequestScreenshot: Whether or not screenshot is requested. Default is
-	// false.
+	// RequestScreenshot: Whether or not screenshot is requested. Default is false.
 	RequestScreenshot bool `json:"requestScreenshot,omitempty"`
-
 	// Url: URL for inspection.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RequestScreenshot")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RequestScreenshot") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestScreenshot") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RequestScreenshot") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunMobileFriendlyTestRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunMobileFriendlyTestRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RunMobileFriendlyTestResponse: Mobile-friendly test response,
-// including mobile-friendly issues and resource issues.
+// RunMobileFriendlyTestResponse: Mobile-friendly test response, including
+// mobile-friendly issues and resource issues.
 type RunMobileFriendlyTestResponse struct {
-	// MobileFriendliness: Test verdict, whether the page is mobile friendly
-	// or not.
+	// MobileFriendliness: Test verdict, whether the page is mobile friendly or
+	// not.
 	//
 	// Possible values:
-	//   "MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED" - Internal error when
-	// running this test. Please try running the test again.
+	//   "MOBILE_FRIENDLY_TEST_RESULT_UNSPECIFIED" - Internal error when running
+	// this test. Please try running the test again.
 	//   "MOBILE_FRIENDLY" - The page is mobile friendly.
 	//   "NOT_MOBILE_FRIENDLY" - The page is not mobile friendly.
 	MobileFriendliness string `json:"mobileFriendliness,omitempty"`
-
 	// MobileFriendlyIssues: List of mobile-usability issues.
 	MobileFriendlyIssues []*MobileFriendlyIssue `json:"mobileFriendlyIssues,omitempty"`
-
 	// ResourceIssues: Information about embedded resources issues.
 	ResourceIssues []*ResourceIssue `json:"resourceIssues,omitempty"`
-
 	// Screenshot: Screenshot of the requested URL.
 	Screenshot *Image `json:"screenshot,omitempty"`
-
-	// TestStatus: Final state of the test, can be either complete or an
-	// error.
+	// TestStatus: Final state of the test, can be either complete or an error.
 	TestStatus *TestStatus `json:"testStatus,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "MobileFriendliness")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MobileFriendliness") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MobileFriendliness") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MobileFriendliness") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunMobileFriendlyTestResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RunMobileFriendlyTestResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type SearchAnalyticsQueryRequest struct {
-	// AggregationType: [Optional; Default is \"auto\"] How data is
-	// aggregated. If aggregated by property, all data for the same property
-	// is aggregated; if aggregated by page, all data is aggregated by
-	// canonical URI. If you filter or group by page, choose AUTO; otherwise
-	// you can aggregate either by property or by page, depending on how you
-	// want your data calculated; see the help documentation to learn how
-	// data is calculated differently by site versus by page. **Note:** If
-	// you group or filter by page, you cannot aggregate by property. If you
-	// specify any value other than AUTO, the aggregation type in the result
-	// will match the requested type, or if you request an invalid type, you
-	// will get an error. The API will never change your aggregation type if
-	// the requested type is invalid.
+	// AggregationType: [Optional; Default is \"auto\"] How data is aggregated. If
+	// aggregated by property, all data for the same property is aggregated; if
+	// aggregated by page, all data is aggregated by canonical URI. If you filter
+	// or group by page, choose AUTO; otherwise you can aggregate either by
+	// property or by page, depending on how you want your data calculated; see the
+	// help documentation to learn how data is calculated differently by site
+	// versus by page. **Note:** If you group or filter by page, you cannot
+	// aggregate by property. If you specify any value other than AUTO, the
+	// aggregation type in the result will match the requested type, or if you
+	// request an invalid type, you will get an error. The API will never change
+	// your aggregation type if the requested type is invalid.
 	//
 	// Possible values:
 	//   "AUTO"
@@ -1222,27 +1033,23 @@ type SearchAnalyticsQueryRequest struct {
 	//   "BY_PAGE"
 	//   "BY_NEWS_SHOWCASE_PANEL"
 	AggregationType string `json:"aggregationType,omitempty"`
-
-	// DataState: The data state to be fetched, can be full or all, the
-	// latter including full and partial data.
+	// DataState: The data state to be fetched, can be full or all, the latter
+	// including full and partial data.
 	//
 	// Possible values:
 	//   "DATA_STATE_UNSPECIFIED" - Default value, should not be used.
 	//   "FINAL" - Include full final data only, without partial.
 	//   "ALL" - Include all data, full and partial.
 	DataState string `json:"dataState,omitempty"`
-
-	// DimensionFilterGroups: [Optional] Zero or more filters to apply to
-	// the dimension grouping values; for example, 'query contains \"buy\"'
-	// to see only data where the query string contains the substring
-	// \"buy\" (not case-sensitive). You can filter by a dimension without
-	// grouping by it.
+	// DimensionFilterGroups: [Optional] Zero or more filters to apply to the
+	// dimension grouping values; for example, 'query contains \"buy\"' to see only
+	// data where the query string contains the substring \"buy\" (not
+	// case-sensitive). You can filter by a dimension without grouping by it.
 	DimensionFilterGroups []*ApiDimensionFilterGroup `json:"dimensionFilterGroups,omitempty"`
-
 	// Dimensions: [Optional] Zero or more dimensions to group results by.
-	// Dimensions are the group-by values in the Search Analytics page.
-	// Dimensions are combined to create a unique row key for each row.
-	// Results are grouped in the order that you supply these dimensions.
+	// Dimensions are the group-by values in the Search Analytics page. Dimensions
+	// are combined to create a unique row key for each row. Results are grouped in
+	// the order that you supply these dimensions.
 	//
 	// Possible values:
 	//   "DATE"
@@ -1252,18 +1059,14 @@ type SearchAnalyticsQueryRequest struct {
 	//   "DEVICE"
 	//   "SEARCH_APPEARANCE"
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// EndDate: [Required] End date of the requested date range, in
-	// YYYY-MM-DD format, in PST (UTC - 8:00). Must be greater than or equal
-	// to the start date. This value is included in the range.
+	// EndDate: [Required] End date of the requested date range, in YYYY-MM-DD
+	// format, in PST (UTC - 8:00). Must be greater than or equal to the start
+	// date. This value is included in the range.
 	EndDate string `json:"endDate,omitempty"`
-
-	// RowLimit: [Optional; Default is 1000] The maximum number of rows to
-	// return. Must be a number from 1 to 25,000 (inclusive).
+	// RowLimit: [Optional; Default is 1000] The maximum number of rows to return.
+	// Must be a number from 1 to 25,000 (inclusive).
 	RowLimit int64 `json:"rowLimit,omitempty"`
-
-	// SearchType: [Optional; Default is \"web\"] The search type to filter
-	// for.
+	// SearchType: [Optional; Default is \"web\"] The search type to filter for.
 	//
 	// Possible values:
 	//   "WEB"
@@ -1273,18 +1076,15 @@ type SearchAnalyticsQueryRequest struct {
 	//   "DISCOVER" - Discover.
 	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
 	SearchType string `json:"searchType,omitempty"`
-
-	// StartDate:  [Required] Start date of the requested date range, in
-	// YYYY-MM-DD format, in PST time (UTC - 8:00). Must be less than or
-	// equal to the end date. This value is included in the range.
+	// StartDate:  [Required] Start date of the requested date range, in YYYY-MM-DD
+	// format, in PST time (UTC - 8:00). Must be less than or equal to the end
+	// date. This value is included in the range.
 	StartDate string `json:"startDate,omitempty"`
-
-	// StartRow: [Optional; Default is 0] Zero-based index of the first row
-	// in the response. Must be a non-negative number.
+	// StartRow: [Optional; Default is 0] Zero-based index of the first row in the
+	// response. Must be a non-negative number.
 	StartRow int64 `json:"startRow,omitempty"`
-
-	// Type: Optional. [Optional; Default is \"web\"] Type of report: search
-	// type, or either Discover or Gnews.
+	// Type: Optional. [Optional; Default is \"web\"] Type of report: search type,
+	// or either Discover or Gnews.
 	//
 	// Possible values:
 	//   "WEB"
@@ -1294,35 +1094,27 @@ type SearchAnalyticsQueryRequest struct {
 	//   "DISCOVER" - Discover.
 	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchAnalyticsQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchAnalyticsQueryRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchAnalyticsQueryResponse: A list of rows, one per result, grouped
-// by key. Metrics in each row are aggregated for all data grouped by
-// that key either by page or property, as specified by the aggregation
-// type parameter.
+// SearchAnalyticsQueryResponse: A list of rows, one per result, grouped by
+// key. Metrics in each row are aggregated for all data grouped by that key
+// either by page or property, as specified by the aggregation type parameter.
 type SearchAnalyticsQueryResponse struct {
 	// ResponseAggregationType: How the results were aggregated.
 	//
@@ -1332,196 +1124,153 @@ type SearchAnalyticsQueryResponse struct {
 	//   "BY_PAGE"
 	//   "BY_NEWS_SHOWCASE_PANEL"
 	ResponseAggregationType string `json:"responseAggregationType,omitempty"`
-
-	// Rows: A list of rows grouped by the key values in the order given in
-	// the query.
+	// Rows: A list of rows grouped by the key values in the order given in the
+	// query.
 	Rows []*ApiDataRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ResponseAggregationType") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ResponseAggregationType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResponseAggregationType")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ResponseAggregationType") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchAnalyticsQueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchAnalyticsQueryResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SitemapsListResponse: List of sitemaps.
 type SitemapsListResponse struct {
-	// Sitemap: Contains detailed information about a specific URL submitted
-	// as a sitemap (https://support.google.com/webmasters/answer/156184).
+	// Sitemap: Contains detailed information about a specific URL submitted as a
+	// sitemap (https://support.google.com/webmasters/answer/156184).
 	Sitemap []*WmxSitemap `json:"sitemap,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Sitemap") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Sitemap") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Sitemap") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Sitemap") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SitemapsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SitemapsListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SitesListResponse: List of sites with access level information.
 type SitesListResponse struct {
-	// SiteEntry: Contains permission level information about a Search
-	// Console site. For more information, see Permissions in Search Console
+	// SiteEntry: Contains permission level information about a Search Console
+	// site. For more information, see Permissions in Search Console
 	// (https://support.google.com/webmasters/answer/2451999).
 	SiteEntry []*WmxSite `json:"siteEntry,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "SiteEntry") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SiteEntry") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SiteEntry") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SitesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SitesListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestStatus: Final state of the test, including error details if
-// necessary.
+// TestStatus: Final state of the test, including error details if necessary.
 type TestStatus struct {
 	// Details: Error details if applicable.
 	Details string `json:"details,omitempty"`
-
 	// Status: Status of the test.
 	//
 	// Possible values:
-	//   "TEST_STATUS_UNSPECIFIED" - Internal error when running this test.
-	// Please try running the test again.
+	//   "TEST_STATUS_UNSPECIFIED" - Internal error when running this test. Please
+	// try running the test again.
 	//   "COMPLETE" - Inspection has completed without errors.
-	//   "INTERNAL_ERROR" - Inspection terminated in an error state. This
-	// indicates a problem in Google's infrastructure, not a user error.
-	// Please try again later.
-	//   "PAGE_UNREACHABLE" - Google can not access the URL because of a
-	// user error such as a robots.txt blockage, a 403 or 500 code etc.
-	// Please make sure that the URL provided is accessible by Googlebot and
-	// is not password protected.
+	//   "INTERNAL_ERROR" - Inspection terminated in an error state. This indicates
+	// a problem in Google's infrastructure, not a user error. Please try again
+	// later.
+	//   "PAGE_UNREACHABLE" - Google can not access the URL because of a user error
+	// such as a robots.txt blockage, a 403 or 500 code etc. Please make sure that
+	// the URL provided is accessible by Googlebot and is not password protected.
 	Status string `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod TestStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlInspectionResult: URL inspection result, including all inspection
 // results.
 type UrlInspectionResult struct {
-	// AmpResult: Result of the AMP analysis. Absent if the page is not an
-	// AMP page.
+	// AmpResult: Result of the AMP analysis. Absent if the page is not an AMP
+	// page.
 	AmpResult *AmpInspectionResult `json:"ampResult,omitempty"`
-
 	// IndexStatusResult: Result of the index status analysis.
 	IndexStatusResult *IndexStatusInspectionResult `json:"indexStatusResult,omitempty"`
-
 	// InspectionResultLink: Link to Search Console URL inspection.
 	InspectionResultLink string `json:"inspectionResultLink,omitempty"`
-
 	// MobileUsabilityResult: Result of the Mobile usability analysis.
 	MobileUsabilityResult *MobileUsabilityInspectionResult `json:"mobileUsabilityResult,omitempty"`
-
-	// RichResultsResult: Result of the Rich Results analysis. Absent if
-	// there are no rich results found.
+	// RichResultsResult: Result of the Rich Results analysis. Absent if there are
+	// no rich results found.
 	RichResultsResult *RichResultsInspectionResult `json:"richResultsResult,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AmpResult") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AmpResult") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AmpResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UrlInspectionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlInspectionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// WmxSite: Contains permission level information about a Search Console
-// site. For more information, see Permissions in Search Console
+// WmxSite: Contains permission level information about a Search Console site.
+// For more information, see Permissions in Search Console
 // (https://support.google.com/webmasters/answer/2451999).
 type WmxSite struct {
 	// PermissionLevel: The user's permission level for the site.
@@ -1529,74 +1278,55 @@ type WmxSite struct {
 	// Possible values:
 	//   "SITE_PERMISSION_LEVEL_UNSPECIFIED"
 	//   "SITE_OWNER" - Owner has complete access to the site.
-	//   "SITE_FULL_USER" - Full users can access all data, and perform most
-	// of the operations.
-	//   "SITE_RESTRICTED_USER" - Restricted users can access most of the
-	// data, and perform some operations.
-	//   "SITE_UNVERIFIED_USER" - Unverified user has no access to site's
-	// data.
+	//   "SITE_FULL_USER" - Full users can access all data, and perform most of the
+	// operations.
+	//   "SITE_RESTRICTED_USER" - Restricted users can access most of the data, and
+	// perform some operations.
+	//   "SITE_UNVERIFIED_USER" - Unverified user has no access to site's data.
 	PermissionLevel string `json:"permissionLevel,omitempty"`
-
 	// SiteUrl: The URL of the site.
 	SiteUrl string `json:"siteUrl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "PermissionLevel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PermissionLevel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PermissionLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *WmxSite) MarshalJSON() ([]byte, error) {
 	type NoMethod WmxSite
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// WmxSitemap: Contains detailed information about a specific URL
-// submitted as a sitemap
-// (https://support.google.com/webmasters/answer/156184).
+// WmxSitemap: Contains detailed information about a specific URL submitted as
+// a sitemap (https://support.google.com/webmasters/answer/156184).
 type WmxSitemap struct {
 	// Contents: The various content types in the sitemap.
 	Contents []*WmxSitemapContent `json:"contents,omitempty"`
-
-	// Errors: Number of errors in the sitemap. These are issues with the
-	// sitemap itself that need to be fixed before it can be processed
-	// correctly.
+	// Errors: Number of errors in the sitemap. These are issues with the sitemap
+	// itself that need to be fixed before it can be processed correctly.
 	Errors int64 `json:"errors,omitempty,string"`
-
 	// IsPending: If true, the sitemap has not been processed.
 	IsPending bool `json:"isPending,omitempty"`
-
 	// IsSitemapsIndex: If true, the sitemap is a collection of sitemaps.
 	IsSitemapsIndex bool `json:"isSitemapsIndex,omitempty"`
-
-	// LastDownloaded: Date & time in which this sitemap was last
-	// downloaded. Date format is in RFC 3339 format (yyyy-mm-dd).
-	LastDownloaded string `json:"lastDownloaded,omitempty"`
-
-	// LastSubmitted: Date & time in which this sitemap was submitted. Date
+	// LastDownloaded: Date & time in which this sitemap was last downloaded. Date
 	// format is in RFC 3339 format (yyyy-mm-dd).
+	LastDownloaded string `json:"lastDownloaded,omitempty"`
+	// LastSubmitted: Date & time in which this sitemap was submitted. Date format
+	// is in RFC 3339 format (yyyy-mm-dd).
 	LastSubmitted string `json:"lastSubmitted,omitempty"`
-
 	// Path: The url of the sitemap.
 	Path string `json:"path,omitempty"`
-
 	// Type: The type of the sitemap. For example: `rssFeed`.
 	//
 	// Possible values:
@@ -1608,36 +1338,28 @@ type WmxSitemap struct {
 	//   "PATTERN_SITEMAP" - Unsupported sitemap types.
 	//   "OCEANFRONT"
 	Type string `json:"type,omitempty"`
-
 	// Warnings: Number of warnings for the sitemap. These are generally
 	// non-critical issues with URLs in the sitemaps.
 	Warnings int64 `json:"warnings,omitempty,string"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Contents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Contents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *WmxSitemap) MarshalJSON() ([]byte, error) {
 	type NoMethod WmxSitemap
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // WmxSitemapContent: Information about the various content types in the
@@ -1645,12 +1367,9 @@ func (s *WmxSitemap) MarshalJSON() ([]byte, error) {
 type WmxSitemapContent struct {
 	// Indexed: *Deprecated; do not use.*
 	Indexed int64 `json:"indexed,omitempty,string"`
-
 	// Submitted: The number of URLs in the sitemap (of the content type).
 	Submitted int64 `json:"submitted,omitempty,string"`
-
-	// Type: The specific type of content in this sitemap. For example:
-	// `web`.
+	// Type: The specific type of content in this sitemap. For example: `web`.
 	//
 	// Possible values:
 	//   "WEB"
@@ -1663,31 +1382,23 @@ type WmxSitemapContent struct {
 	//   "IOS_APP"
 	//   "DATA_FEED_ELEMENT" - Unsupported content type.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Indexed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Indexed") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Indexed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Indexed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *WmxSitemapContent) MarshalJSON() ([]byte, error) {
 	type NoMethod WmxSitemapContent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "webmasters.searchanalytics.query":
 
 type SearchanalyticsQueryCall struct {
 	s                           *Service
@@ -1698,13 +1409,12 @@ type SearchanalyticsQueryCall struct {
 	header_                     http.Header
 }
 
-// Query: Query your data with filters and parameters that you define.
-// Returns zero or more rows grouped by the row keys that you define.
-// You must define a date range of one or more days. When date is one of
-// the group by values, any days without data are omitted from the
-// result list. If you need to know which days have data, issue a broad
-// date range query grouped by date for any metric, and see which day
-// rows are returned.
+// Query: Query your data with filters and parameters that you define. Returns
+// zero or more rows grouped by the row keys that you define. You must define a
+// date range of one or more days. When date is one of the group by values, any
+// days without data are omitted from the result list. If you need to know
+// which days have data, issue a broad date range query grouped by date for any
+// metric, and see which day rows are returned.
 //
 //   - siteUrl: The site's URL, including protocol. For example:
 //     `http://www.example.com/`.
@@ -1716,23 +1426,21 @@ func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryreque
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SearchanalyticsQueryCall) Fields(s ...googleapi.Field) *SearchanalyticsQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SearchanalyticsQueryCall) Context(ctx context.Context) *SearchanalyticsQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SearchanalyticsQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1741,18 +1449,12 @@ func (c *SearchanalyticsQueryCall) Header() http.Header {
 }
 
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchanalyticsqueryrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webmasters/v3/sites/{siteUrl}/searchAnalytics/query")
@@ -1769,12 +1471,11 @@ func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "webmasters.searchanalytics.query" call.
-// Exactly one of *SearchAnalyticsQueryResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SearchAnalyticsQueryResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchAnalyticsQueryResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SearchanalyticsQueryCall) Do(opts ...googleapi.CallOption) (*SearchAnalyticsQueryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1805,38 +1506,7 @@ func (c *SearchanalyticsQueryCall) Do(opts ...googleapi.CallOption) (*SearchAnal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Query your data with filters and parameters that you define. Returns zero or more rows grouped by the row keys that you define. You must define a date range of one or more days. When date is one of the group by values, any days without data are omitted from the result list. If you need to know which days have data, issue a broad date range query grouped by date for any metric, and see which day rows are returned.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}/searchAnalytics/query",
-	//   "httpMethod": "POST",
-	//   "id": "webmasters.searchanalytics.query",
-	//   "parameterOrder": [
-	//     "siteUrl"
-	//   ],
-	//   "parameters": {
-	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}/searchAnalytics/query",
-	//   "request": {
-	//     "$ref": "SearchAnalyticsQueryRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "SearchAnalyticsQueryResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters",
-	//     "https://www.googleapis.com/auth/webmasters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sitemaps.delete":
 
 type SitemapsDeleteCall struct {
 	s          *Service
@@ -1847,9 +1517,9 @@ type SitemapsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a sitemap from the Sitemaps report. Does not stop
-// Google from crawling this sitemap or the URLs that were previously
-// crawled in the deleted sitemap.
+// Delete: Deletes a sitemap from the Sitemaps report. Does not stop Google
+// from crawling this sitemap or the URLs that were previously crawled in the
+// deleted sitemap.
 //
 //   - feedpath: The URL of the actual sitemap. For example:
 //     `http://www.example.com/sitemap.xml`.
@@ -1863,23 +1533,21 @@ func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDelet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitemapsDeleteCall) Fields(s ...googleapi.Field) *SitemapsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitemapsDeleteCall) Context(ctx context.Context) *SitemapsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitemapsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1888,12 +1556,7 @@ func (c *SitemapsDeleteCall) Header() http.Header {
 }
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1923,38 +1586,7 @@ func (c *SitemapsDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a sitemap from the Sitemaps report. Does not stop Google from crawling this sitemap or the URLs that were previously crawled in the deleted sitemap.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
-	//   "httpMethod": "DELETE",
-	//   "id": "webmasters.sitemaps.delete",
-	//   "parameterOrder": [
-	//     "siteUrl",
-	//     "feedpath"
-	//   ],
-	//   "parameters": {
-	//     "feedpath": {
-	//       "description": "The URL of the actual sitemap. For example: `http://www.example.com/sitemap.xml`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sitemaps.get":
 
 type SitemapsGetCall struct {
 	s            *Service
@@ -1980,33 +1612,29 @@ func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitemapsGetCall) Fields(s ...googleapi.Field) *SitemapsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SitemapsGetCall) IfNoneMatch(entityTag string) *SitemapsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitemapsGetCall) Context(ctx context.Context) *SitemapsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitemapsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2015,12 +1643,7 @@ func (c *SitemapsGetCall) Header() http.Header {
 }
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2042,12 +1665,10 @@ func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "webmasters.sitemaps.get" call.
-// Exactly one of *WmxSitemap or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *WmxSitemap.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *WmxSitemap.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SitemapsGetCall) Do(opts ...googleapi.CallOption) (*WmxSitemap, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2078,42 +1699,7 @@ func (c *SitemapsGetCall) Do(opts ...googleapi.CallOption) (*WmxSitemap, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves information about a specific sitemap.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
-	//   "httpMethod": "GET",
-	//   "id": "webmasters.sitemaps.get",
-	//   "parameterOrder": [
-	//     "siteUrl",
-	//     "feedpath"
-	//   ],
-	//   "parameters": {
-	//     "feedpath": {
-	//       "description": "The URL of the actual sitemap. For example: `http://www.example.com/sitemap.xml`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
-	//   "response": {
-	//     "$ref": "WmxSitemap"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters",
-	//     "https://www.googleapis.com/auth/webmasters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sitemaps.list":
 
 type SitemapsListCall struct {
 	s            *Service
@@ -2124,9 +1710,9 @@ type SitemapsListCall struct {
 	header_      http.Header
 }
 
-// List:  Lists the sitemaps-entries (/webmaster-tools/v3/sitemaps)
-// submitted for this site, or included in the sitemap index file (if
-// `sitemapIndex` is specified in the request).
+// List:  Lists the sitemaps-entries (/webmaster-tools/v3/sitemaps) submitted
+// for this site, or included in the sitemap index file (if `sitemapIndex` is
+// specified in the request).
 //
 //   - siteUrl: The site's URL, including protocol. For example:
 //     `http://www.example.com/`.
@@ -2136,42 +1722,37 @@ func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	return c
 }
 
-// SitemapIndex sets the optional parameter "sitemapIndex": A URL of a
-// site's sitemap index. For example:
-// `http://www.example.com/sitemapindex.xml`.
+// SitemapIndex sets the optional parameter "sitemapIndex": A URL of a site's
+// sitemap index. For example: `http://www.example.com/sitemapindex.xml`.
 func (c *SitemapsListCall) SitemapIndex(sitemapIndex string) *SitemapsListCall {
 	c.urlParams_.Set("sitemapIndex", sitemapIndex)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitemapsListCall) Fields(s ...googleapi.Field) *SitemapsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SitemapsListCall) IfNoneMatch(entityTag string) *SitemapsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitemapsListCall) Context(ctx context.Context) *SitemapsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitemapsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2180,12 +1761,7 @@ func (c *SitemapsListCall) Header() http.Header {
 }
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2206,12 +1782,11 @@ func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "webmasters.sitemaps.list" call.
-// Exactly one of *SitemapsListResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SitemapsListResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SitemapsListResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *SitemapsListCall) Do(opts ...googleapi.CallOption) (*SitemapsListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2242,40 +1817,7 @@ func (c *SitemapsListCall) Do(opts ...googleapi.CallOption) (*SitemapsListRespon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": " Lists the [sitemaps-entries](/webmaster-tools/v3/sitemaps) submitted for this site, or included in the sitemap index file (if `sitemapIndex` is specified in the request).",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps",
-	//   "httpMethod": "GET",
-	//   "id": "webmasters.sitemaps.list",
-	//   "parameterOrder": [
-	//     "siteUrl"
-	//   ],
-	//   "parameters": {
-	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sitemapIndex": {
-	//       "description": " A URL of a site's sitemap index. For example: `http://www.example.com/sitemapindex.xml`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps",
-	//   "response": {
-	//     "$ref": "SitemapsListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters",
-	//     "https://www.googleapis.com/auth/webmasters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sitemaps.submit":
 
 type SitemapsSubmitCall struct {
 	s          *Service
@@ -2300,23 +1842,21 @@ func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitemapsSubmitCall) Fields(s ...googleapi.Field) *SitemapsSubmitCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitemapsSubmitCall) Context(ctx context.Context) *SitemapsSubmitCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitemapsSubmitCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2325,12 +1865,7 @@ func (c *SitemapsSubmitCall) Header() http.Header {
 }
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2360,38 +1895,7 @@ func (c *SitemapsSubmitCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Submits a sitemap for a site.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
-	//   "httpMethod": "PUT",
-	//   "id": "webmasters.sitemaps.submit",
-	//   "parameterOrder": [
-	//     "siteUrl",
-	//     "feedpath"
-	//   ],
-	//   "parameters": {
-	//     "feedpath": {
-	//       "description": "The URL of the actual sitemap. For example: `http://www.example.com/sitemap.xml`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "siteUrl": {
-	//       "description": "The site's URL, including protocol. For example: `http://www.example.com/`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}/sitemaps/{feedpath}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sites.add":
 
 type SitesAddCall struct {
 	s          *Service
@@ -2411,23 +1915,21 @@ func (r *SitesService) Add(siteUrl string) *SitesAddCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitesAddCall) Fields(s ...googleapi.Field) *SitesAddCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitesAddCall) Context(ctx context.Context) *SitesAddCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitesAddCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2436,12 +1938,7 @@ func (c *SitesAddCall) Header() http.Header {
 }
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2470,31 +1967,7 @@ func (c *SitesAddCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": " Adds a site to the set of the user's sites in Search Console.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}",
-	//   "httpMethod": "PUT",
-	//   "id": "webmasters.sites.add",
-	//   "parameterOrder": [
-	//     "siteUrl"
-	//   ],
-	//   "parameters": {
-	//     "siteUrl": {
-	//       "description": "The URL of the site to add.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sites.delete":
 
 type SitesDeleteCall struct {
 	s          *Service
@@ -2504,8 +1977,7 @@ type SitesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete:  Removes a site from the set of the user's Search Console
-// sites.
+// Delete:  Removes a site from the set of the user's Search Console sites.
 //
 //   - siteUrl: The URI of the property as defined in Search Console.
 //     **Examples:** `http://www.example.com/` or `sc-domain:example.com`.
@@ -2516,23 +1988,21 @@ func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitesDeleteCall) Fields(s ...googleapi.Field) *SitesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitesDeleteCall) Context(ctx context.Context) *SitesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2541,12 +2011,7 @@ func (c *SitesDeleteCall) Header() http.Header {
 }
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2575,31 +2040,7 @@ func (c *SitesDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": " Removes a site from the set of the user's Search Console sites.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}",
-	//   "httpMethod": "DELETE",
-	//   "id": "webmasters.sites.delete",
-	//   "parameterOrder": [
-	//     "siteUrl"
-	//   ],
-	//   "parameters": {
-	//     "siteUrl": {
-	//       "description": "The URI of the property as defined in Search Console. **Examples:** `http://www.example.com/` or `sc-domain:example.com`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sites.get":
 
 type SitesGetCall struct {
 	s            *Service
@@ -2621,33 +2062,29 @@ func (r *SitesService) Get(siteUrl string) *SitesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitesGetCall) Fields(s ...googleapi.Field) *SitesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SitesGetCall) IfNoneMatch(entityTag string) *SitesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitesGetCall) Context(ctx context.Context) *SitesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2656,12 +2093,7 @@ func (c *SitesGetCall) Header() http.Header {
 }
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2682,12 +2114,10 @@ func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "webmasters.sites.get" call.
-// Exactly one of *WmxSite or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *WmxSite.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *WmxSite.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*WmxSite, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2718,35 +2148,7 @@ func (c *SitesGetCall) Do(opts ...googleapi.CallOption) (*WmxSite, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": " Retrieves information about specific site.",
-	//   "flatPath": "webmasters/v3/sites/{siteUrl}",
-	//   "httpMethod": "GET",
-	//   "id": "webmasters.sites.get",
-	//   "parameterOrder": [
-	//     "siteUrl"
-	//   ],
-	//   "parameters": {
-	//     "siteUrl": {
-	//       "description": "The URI of the property as defined in Search Console. **Examples:** `http://www.example.com/` or `sc-domain:example.com`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webmasters/v3/sites/{siteUrl}",
-	//   "response": {
-	//     "$ref": "WmxSite"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters",
-	//     "https://www.googleapis.com/auth/webmasters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "webmasters.sites.list":
 
 type SitesListCall struct {
 	s            *Service
@@ -2763,33 +2165,29 @@ func (r *SitesService) List() *SitesListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SitesListCall) Fields(s ...googleapi.Field) *SitesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SitesListCall) IfNoneMatch(entityTag string) *SitesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SitesListCall) Context(ctx context.Context) *SitesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SitesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2798,12 +2196,7 @@ func (c *SitesListCall) Header() http.Header {
 }
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2821,12 +2214,11 @@ func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "webmasters.sites.list" call.
-// Exactly one of *SitesListResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SitesListResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SitesListResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2857,26 +2249,7 @@ func (c *SitesListCall) Do(opts ...googleapi.CallOption) (*SitesListResponse, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": " Lists the user's Search Console sites.",
-	//   "flatPath": "webmasters/v3/sites",
-	//   "httpMethod": "GET",
-	//   "id": "webmasters.sites.list",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "webmasters/v3/sites",
-	//   "response": {
-	//     "$ref": "SitesListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters",
-	//     "https://www.googleapis.com/auth/webmasters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "searchconsole.urlInspection.index.inspect":
 
 type UrlInspectionIndexInspectCall struct {
 	s                      *Service
@@ -2894,23 +2267,21 @@ func (r *UrlInspectionIndexService) Inspect(inspecturlindexrequest *InspectUrlIn
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UrlInspectionIndexInspectCall) Fields(s ...googleapi.Field) *UrlInspectionIndexInspectCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UrlInspectionIndexInspectCall) Context(ctx context.Context) *UrlInspectionIndexInspectCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UrlInspectionIndexInspectCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2919,18 +2290,12 @@ func (c *UrlInspectionIndexInspectCall) Header() http.Header {
 }
 
 func (c *UrlInspectionIndexInspectCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inspecturlindexrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/urlInspection/index:inspect")
@@ -2944,12 +2309,11 @@ func (c *UrlInspectionIndexInspectCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "searchconsole.urlInspection.index.inspect" call.
-// Exactly one of *InspectUrlIndexResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *InspectUrlIndexResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *UrlInspectionIndexInspectCall) Do(opts ...googleapi.CallOption) (*InspectUrlIndexResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2980,29 +2344,7 @@ func (c *UrlInspectionIndexInspectCall) Do(opts ...googleapi.CallOption) (*Inspe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Index inspection.",
-	//   "flatPath": "v1/urlInspection/index:inspect",
-	//   "httpMethod": "POST",
-	//   "id": "searchconsole.urlInspection.index.inspect",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/urlInspection/index:inspect",
-	//   "request": {
-	//     "$ref": "InspectUrlIndexRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "InspectUrlIndexResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/webmasters",
-	//     "https://www.googleapis.com/auth/webmasters.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "searchconsole.urlTestingTools.mobileFriendlyTest.run":
 
 type UrlTestingToolsMobileFriendlyTestRunCall struct {
 	s                            *Service
@@ -3020,23 +2362,21 @@ func (r *UrlTestingToolsMobileFriendlyTestService) Run(runmobilefriendlytestrequ
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) Fields(s ...googleapi.Field) *UrlTestingToolsMobileFriendlyTestRunCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) Context(ctx context.Context) *UrlTestingToolsMobileFriendlyTestRunCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3045,18 +2385,12 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 }
 
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runmobilefriendlytestrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/urlTestingTools/mobileFriendlyTest:run")
@@ -3070,12 +2404,11 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "searchconsole.urlTestingTools.mobileFriendlyTest.run" call.
-// Exactly one of *RunMobileFriendlyTestResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *RunMobileFriendlyTestResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunMobileFriendlyTestResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) Do(opts ...googleapi.CallOption) (*RunMobileFriendlyTestResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3106,20 +2439,4 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Runs Mobile-Friendly Test for a given URL.",
-	//   "flatPath": "v1/urlTestingTools/mobileFriendlyTest:run",
-	//   "httpMethod": "POST",
-	//   "id": "searchconsole.urlTestingTools.mobileFriendlyTest.run",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/urlTestingTools/mobileFriendlyTest:run",
-	//   "request": {
-	//     "$ref": "RunMobileFriendlyTestRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RunMobileFriendlyTestResponse"
-	//   }
-	// }
-
 }

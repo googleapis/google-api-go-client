@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -272,611 +272,480 @@ type ProjectsLocationsCatalogsOperationsService struct {
 	s *Service
 }
 
-// GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It
-// should only be used for payload formats that can't be represented as
-// JSON, such as raw binary or an HTML page. This message can be used
-// both in streaming and non-streaming API methods in the request as
-// well as the response. It can be used as a top-level request field,
-// which is convenient if one wants to extract parameters from either
-// the URL or HTTP template into the request fields and also want access
-// to the raw HTTP body. Example: message GetResourceRequest { // A
-// unique request id. string request_id = 1; // The raw HTTP body is
-// bound to this field. google.api.HttpBody http_body = 2; } service
-// ResourceService { rpc GetResource(GetResourceRequest) returns
-// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody)
-// returns (google.protobuf.Empty); } Example with streaming methods:
-// service CaldavService { rpc GetCalendar(stream google.api.HttpBody)
-// returns (stream google.api.HttpBody); rpc UpdateCalendar(stream
-// google.api.HttpBody) returns (stream google.api.HttpBody); } Use of
-// this type only changes how the request and response bodies are
-// handled, all other features will continue to work unchanged.
+// GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It should
+// only be used for payload formats that can't be represented as JSON, such as
+// raw binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
 type GoogleApiHttpBody struct {
-	// ContentType: The HTTP Content-Type header value specifying the
-	// content type of the body.
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
 	ContentType string `json:"contentType,omitempty"`
-
 	// Data: The HTTP request/response body as raw binary.
 	Data string `json:"data,omitempty"`
-
-	// Extensions: Application specific response metadata. Must be set in
-	// the first response for streaming APIs.
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
 	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleApiHttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiHttpBody
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1alphaRejoinCatalogMetadata: Metadata
-// for TriggerCatalogRejoin method.
+// GoogleCloudRecommendationengineV1alphaRejoinCatalogMetadata: Metadata for
+// TriggerCatalogRejoin method.
 type GoogleCloudRecommendationengineV1alphaRejoinCatalogMetadata struct {
 }
 
 // GoogleCloudRecommendationengineV1alphaRejoinCatalogResponse: Response
 // message for TriggerCatalogRejoin method.
 type GoogleCloudRecommendationengineV1alphaRejoinCatalogResponse struct {
-	// RejoinedUserEventsCount: Number of user events that were joined with
-	// latest catalog items.
+	// RejoinedUserEventsCount: Number of user events that were joined with latest
+	// catalog items.
 	RejoinedUserEventsCount int64 `json:"rejoinedUserEventsCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RejoinedUserEventsCount") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RejoinedUserEventsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RejoinedUserEventsCount")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RejoinedUserEventsCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1alphaRejoinCatalogResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1alphaRejoinCatalogResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1alphaTuningMetadata: Metadata
-// associated with a tune operation.
+// GoogleCloudRecommendationengineV1alphaTuningMetadata: Metadata associated
+// with a tune operation.
 type GoogleCloudRecommendationengineV1alphaTuningMetadata struct {
-	// RecommendationModel: The resource name of the recommendation model
-	// that this tune applies to. Format:
-	// projects/{project_number}/locations/{location_id}/catalogs/{catalog_id
-	// }/eventStores/{event_store_id}/recommendationModels/{recommendation_mo
-	// del_id}
+	// RecommendationModel: The resource name of the recommendation model that this
+	// tune applies to. Format:
+	// projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/event
+	// Stores/{event_store_id}/recommendationModels/{recommendation_model_id}
 	RecommendationModel string `json:"recommendationModel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "RecommendationModel")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RecommendationModel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RecommendationModel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RecommendationModel") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1alphaTuningMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1alphaTuningMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1alphaTuningResponse: Response
-// associated with a tune operation.
+// GoogleCloudRecommendationengineV1alphaTuningResponse: Response associated
+// with a tune operation.
 type GoogleCloudRecommendationengineV1alphaTuningResponse struct {
 }
 
-// GoogleCloudRecommendationengineV1beta1BigQuerySource: BigQuery source
-// import data from.
+// GoogleCloudRecommendationengineV1beta1BigQuerySource: BigQuery source import
+// data from.
 type GoogleCloudRecommendationengineV1beta1BigQuerySource struct {
-	// DataSchema: Optional. The schema to use when parsing the data from
-	// the source. Supported values for catalog imports: 1:
+	// DataSchema: Optional. The schema to use when parsing the data from the
+	// source. Supported values for catalog imports: 1:
 	// "catalog_recommendations_ai" using
 	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#json
 	// (Default for catalogItems.import) 2: "catalog_merchant_center" using
-	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#mc
-	// Supported values for user event imports: 1:
-	// "user_events_recommendations_ai" using
+	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#mc Supported
+	// values for user event imports: 1: "user_events_recommendations_ai" using
 	// https://cloud.google.com/recommendations-ai/docs/manage-user-events#import
 	// (Default for userEvents.import) 2. "user_events_ga360" using
 	// https://support.google.com/analytics/answer/3437719?hl=en
 	DataSchema string `json:"dataSchema,omitempty"`
-
 	// DatasetId: Required. The BigQuery data set to copy the data from.
 	DatasetId string `json:"datasetId,omitempty"`
-
-	// GcsStagingDir: Optional. Intermediate Cloud Storage directory used
-	// for the import. Can be specified if one wants to have the BigQuery
-	// export to a specific Cloud Storage directory.
+	// GcsStagingDir: Optional. Intermediate Cloud Storage directory used for the
+	// import. Can be specified if one wants to have the BigQuery export to a
+	// specific Cloud Storage directory.
 	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
-
 	// ProjectId: Optional. The project id (can be project # or id) that the
-	// BigQuery source is in. If not specified, inherits the project id from
-	// the parent request.
+	// BigQuery source is in. If not specified, inherits the project id from the
+	// parent request.
 	ProjectId string `json:"projectId,omitempty"`
-
 	// TableId: Required. The BigQuery table to copy the data from.
 	TableId string `json:"tableId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataSchema") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataSchema") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1BigQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1BigQuerySource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1Catalog: The catalog
-// configuration. Next ID: 5.
+// GoogleCloudRecommendationengineV1beta1Catalog: The catalog configuration.
+// Next ID: 5.
 type GoogleCloudRecommendationengineV1beta1Catalog struct {
-	// CatalogItemLevelConfig: Required. The catalog item level
-	// configuration.
+	// CatalogItemLevelConfig: Required. The catalog item level configuration.
 	CatalogItemLevelConfig *GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig `json:"catalogItemLevelConfig,omitempty"`
-
 	// DefaultEventStoreId: Required. The ID of the default event store.
 	DefaultEventStoreId string `json:"defaultEventStoreId,omitempty"`
-
 	// DisplayName: Required. The catalog display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: The fully qualified resource name of the catalog.
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CatalogItemLevelConfig") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CatalogItemLevelConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CatalogItemLevelConfig")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CatalogItemLevelConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1Catalog) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1Catalog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1CatalogInlineSource: The inline
-// source for the input config for ImportCatalogItems method.
+// GoogleCloudRecommendationengineV1beta1CatalogInlineSource: The inline source
+// for the input config for ImportCatalogItems method.
 type GoogleCloudRecommendationengineV1beta1CatalogInlineSource struct {
 	// CatalogItems: Optional. A list of catalog items to update/create.
 	// Recommended max of 10k items.
 	CatalogItems []*GoogleCloudRecommendationengineV1beta1CatalogItem `json:"catalogItems,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CatalogItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CatalogItems") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CatalogItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1CatalogInlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1CatalogInlineSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1CatalogItem: CatalogItem
-// captures all metadata information of items to be recommended.
+// GoogleCloudRecommendationengineV1beta1CatalogItem: CatalogItem captures all
+// metadata information of items to be recommended.
 type GoogleCloudRecommendationengineV1beta1CatalogItem struct {
 	// CategoryHierarchies: Required. Catalog item categories. This field is
-	// repeated for supporting one catalog item belonging to several
-	// parallel category hierarchies. For example, if a shoes product
-	// belongs to both ["Shoes & Accessories" -> "Shoes"] and ["Sports &
-	// Fitness" -> "Athletic Clothing" -> "Shoes"], it could be represented
-	// as: "categoryHierarchies": [ { "categories": ["Shoes & Accessories",
-	// "Shoes"]}, { "categories": ["Sports & Fitness", "Athletic Clothing",
-	// "Shoes"] } ]
+	// repeated for supporting one catalog item belonging to several parallel
+	// category hierarchies. For example, if a shoes product belongs to both
+	// ["Shoes & Accessories" -> "Shoes"] and ["Sports & Fitness" -> "Athletic
+	// Clothing" -> "Shoes"], it could be represented as: "categoryHierarchies": [
+	// { "categories": ["Shoes & Accessories", "Shoes"]}, { "categories": ["Sports
+	// & Fitness", "Athletic Clothing", "Shoes"] } ]
 	CategoryHierarchies []*GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy `json:"categoryHierarchies,omitempty"`
-
-	// Description: Optional. Catalog item description. UTF-8 encoded string
-	// with a length limit of 5 KiB.
+	// Description: Optional. Catalog item description. UTF-8 encoded string with a
+	// length limit of 5 KiB.
 	Description string `json:"description,omitempty"`
-
-	// Id: Required. Catalog item identifier. UTF-8 encoded string with a
-	// length limit of 128 bytes. This id must be unique among all catalog
-	// items within the same catalog. It should also be used when logging
-	// user events in order for the user events to be joined with the
-	// Catalog.
+	// Id: Required. Catalog item identifier. UTF-8 encoded string with a length
+	// limit of 128 bytes. This id must be unique among all catalog items within
+	// the same catalog. It should also be used when logging user events in order
+	// for the user events to be joined with the Catalog.
 	Id string `json:"id,omitempty"`
-
-	// ItemAttributes: Optional. Highly encouraged. Extra catalog item
-	// attributes to be included in the recommendation model. For example,
-	// for retail products, this could include the store name, vendor,
-	// style, color, etc. These are very strong signals for recommendation
-	// model, thus we highly recommend providing the item attributes here.
+	// ItemAttributes: Optional. Highly encouraged. Extra catalog item attributes
+	// to be included in the recommendation model. For example, for retail
+	// products, this could include the store name, vendor, style, color, etc.
+	// These are very strong signals for recommendation model, thus we highly
+	// recommend providing the item attributes here.
 	ItemAttributes *GoogleCloudRecommendationengineV1beta1FeatureMap `json:"itemAttributes,omitempty"`
-
-	// ItemGroupId: Optional. Variant group identifier for prediction
-	// results. UTF-8 encoded string with a length limit of 128 bytes. This
-	// field must be enabled before it can be used. Learn more
+	// ItemGroupId: Optional. Variant group identifier for prediction results.
+	// UTF-8 encoded string with a length limit of 128 bytes. This field must be
+	// enabled before it can be used. Learn more
 	// (/recommendations-ai/docs/catalog#item-group-id).
 	ItemGroupId string `json:"itemGroupId,omitempty"`
-
-	// LanguageCode: Optional. Deprecated. The model automatically detects
-	// the text language. Your catalog can include text in different
-	// languages, but duplicating catalog items to provide text in multiple
-	// languages can result in degraded model performance.
+	// LanguageCode: Optional. Deprecated. The model automatically detects the text
+	// language. Your catalog can include text in different languages, but
+	// duplicating catalog items to provide text in multiple languages can result
+	// in degraded model performance.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// ProductMetadata: Optional. Metadata specific to retail products.
 	ProductMetadata *GoogleCloudRecommendationengineV1beta1ProductCatalogItem `json:"productMetadata,omitempty"`
-
-	// Tags: Optional. Filtering tags associated with the catalog item. Each
-	// tag should be a UTF-8 encoded string with a length limit of 1 KiB.
-	// This tag can be used for filtering recommendation results by passing
-	// the tag as part of the predict request filter.
+	// Tags: Optional. Filtering tags associated with the catalog item. Each tag
+	// should be a UTF-8 encoded string with a length limit of 1 KiB. This tag can
+	// be used for filtering recommendation results by passing the tag as part of
+	// the predict request filter.
 	Tags []string `json:"tags,omitempty"`
-
-	// Title: Required. Catalog item title. UTF-8 encoded string with a
-	// length limit of 1 KiB.
+	// Title: Required. Catalog item title. UTF-8 encoded string with a length
+	// limit of 1 KiB.
 	Title string `json:"title,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CategoryHierarchies")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CategoryHierarchies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CategoryHierarchies") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CategoryHierarchies") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1CatalogItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1CatalogItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy:
-// Category represents catalog item category hierarchy.
+// GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy: Category
+// represents catalog item category hierarchy.
 type GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy struct {
-	// Categories: Required. Catalog item categories. Each category should
-	// be a UTF-8 encoded string with a length limit of 2 KiB. Note that the
-	// order in the list denotes the specificity (from least to most
-	// specific).
+	// Categories: Required. Catalog item categories. Each category should be a
+	// UTF-8 encoded string with a length limit of 2 KiB. Note that the order in
+	// the list denotes the specificity (from least to most specific).
 	Categories []string `json:"categories,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Categories") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Categories") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Categories") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig:
-// Configures the catalog level that users send events to, and the level
-// at which predictions are made.
+// GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig: Configures the
+// catalog level that users send events to, and the level at which predictions
+// are made.
 type GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig struct {
-	// EventItemLevel: Optional. Level of the catalog at which events are
-	// uploaded. See
-	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels
+	// EventItemLevel: Optional. Level of the catalog at which events are uploaded.
+	// See https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels
 	// for more details.
 	//
 	// Possible values:
-	//   "CATALOG_ITEM_LEVEL_UNSPECIFIED" - Unknown value - should never be
-	// used.
+	//   "CATALOG_ITEM_LEVEL_UNSPECIFIED" - Unknown value - should never be used.
 	//   "VARIANT" - Catalog items are at variant level.
 	//   "MASTER" - Catalog items are at master level.
 	EventItemLevel string `json:"eventItemLevel,omitempty"`
-
-	// PredictItemLevel: Optional. Level of the catalog at which predictions
-	// are made. See
-	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels
-	// for more details.
+	// PredictItemLevel: Optional. Level of the catalog at which predictions are
+	// made. See
+	// https://cloud.google.com/recommendations-ai/docs/catalog#catalog-levels for
+	// more details.
 	//
 	// Possible values:
-	//   "CATALOG_ITEM_LEVEL_UNSPECIFIED" - Unknown value - should never be
-	// used.
+	//   "CATALOG_ITEM_LEVEL_UNSPECIFIED" - Unknown value - should never be used.
 	//   "VARIANT" - Catalog items are at variant level.
 	//   "MASTER" - Catalog items are at master level.
 	PredictItemLevel string `json:"predictItemLevel,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EventItemLevel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventItemLevel") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EventItemLevel") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1CatalogItemLevelConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrati
-// onRequest: Request message for the
-// `CreatePredictionApiKeyRegistration` method.
+// GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationReque
+// st: Request message for the `CreatePredictionApiKeyRegistration` method.
 type GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest struct {
-	// PredictionApiKeyRegistration: Required. The prediction API key
-	// registration.
+	// PredictionApiKeyRegistration: Required. The prediction API key registration.
 	PredictionApiKeyRegistration *GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration `json:"predictionApiKeyRegistration,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "PredictionApiKeyRegistration") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "PredictionApiKeyRegistration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "PredictionApiKeyRegistration") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PredictionApiKeyRegistration") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1EventDetail: User event details
-// shared by all recommendation types.
+// GoogleCloudRecommendationengineV1beta1EventDetail: User event details shared
+// by all recommendation types.
 type GoogleCloudRecommendationengineV1beta1EventDetail struct {
-	// EventAttributes: Optional. Extra user event features to include in
-	// the recommendation model. For product recommendation, an example of
-	// extra user information is traffic_channel, i.e. how user arrives at
-	// the site. Users can arrive at the site by coming to the site
-	// directly, or coming through Google search, and etc.
+	// EventAttributes: Optional. Extra user event features to include in the
+	// recommendation model. For product recommendation, an example of extra user
+	// information is traffic_channel, i.e. how user arrives at the site. Users can
+	// arrive at the site by coming to the site directly, or coming through Google
+	// search, and etc.
 	EventAttributes *GoogleCloudRecommendationengineV1beta1FeatureMap `json:"eventAttributes,omitempty"`
-
 	// ExperimentIds: Optional. A list of identifiers for the independent
-	// experiment groups this user event belongs to. This is used to
-	// distinguish between user events associated with different experiment
-	// setups (e.g. using Recommendation Engine system, using different
-	// recommendation models).
+	// experiment groups this user event belongs to. This is used to distinguish
+	// between user events associated with different experiment setups (e.g. using
+	// Recommendation Engine system, using different recommendation models).
 	ExperimentIds []string `json:"experimentIds,omitempty"`
-
-	// PageViewId: Optional. A unique id of a web page view. This should be
-	// kept the same for all user events triggered from the same pageview.
-	// For example, an item detail page view could trigger multiple events
-	// as the user is browsing the page. The `pageViewId` property should be
-	// kept the same for all these events so that they can be grouped
-	// together properly. This `pageViewId` will be automatically generated
-	// if using the JavaScript pixel.
+	// PageViewId: Optional. A unique id of a web page view. This should be kept
+	// the same for all user events triggered from the same pageview. For example,
+	// an item detail page view could trigger multiple events as the user is
+	// browsing the page. The `pageViewId` property should be kept the same for all
+	// these events so that they can be grouped together properly. This
+	// `pageViewId` will be automatically generated if using the JavaScript pixel.
 	PageViewId string `json:"pageViewId,omitempty"`
-
 	// RecommendationToken: Optional. Recommendation token included in the
-	// recommendation prediction response. This field enables accurate
-	// attribution of recommendation model performance. This token enables
-	// us to accurately attribute page view or purchase back to the event
-	// and the particular predict response containing this clicked/purchased
-	// item. If user clicks on product K in the recommendation results, pass
-	// the `PredictResponse.recommendationToken` property as a url parameter
-	// to product K's page. When recording events on product K's page, log
-	// the PredictResponse.recommendation_token to this field. Optional, but
-	// highly encouraged for user events that are the result of a
-	// recommendation prediction query.
+	// recommendation prediction response. This field enables accurate attribution
+	// of recommendation model performance. This token enables us to accurately
+	// attribute page view or purchase back to the event and the particular predict
+	// response containing this clicked/purchased item. If user clicks on product K
+	// in the recommendation results, pass the
+	// `PredictResponse.recommendationToken` property as a url parameter to product
+	// K's page. When recording events on product K's page, log the
+	// PredictResponse.recommendation_token to this field. Optional, but highly
+	// encouraged for user events that are the result of a recommendation
+	// prediction query.
 	RecommendationToken string `json:"recommendationToken,omitempty"`
-
-	// ReferrerUri: Optional. The referrer url of the current page. When
-	// using the JavaScript pixel, this value is filled in automatically.
+	// ReferrerUri: Optional. The referrer url of the current page. When using the
+	// JavaScript pixel, this value is filled in automatically.
 	ReferrerUri string `json:"referrerUri,omitempty"`
-
-	// Uri: Optional. Complete url (window.location.href) of the user's
-	// current page. When using the JavaScript pixel, this value is filled
-	// in automatically. Maximum length 5KB.
+	// Uri: Optional. Complete url (window.location.href) of the user's current
+	// page. When using the JavaScript pixel, this value is filled in
+	// automatically. Maximum length 5KB.
 	Uri string `json:"uri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EventAttributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventAttributes") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EventAttributes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1EventDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1EventDetail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1FeatureMap: FeatureMap
-// represents extra features that customers want to include in the
-// recommendation model for catalogs/user events as
-// categorical/numerical features.
+// GoogleCloudRecommendationengineV1beta1FeatureMap: FeatureMap represents
+// extra features that customers want to include in the recommendation model
+// for catalogs/user events as categorical/numerical features.
 type GoogleCloudRecommendationengineV1beta1FeatureMap struct {
-	// CategoricalFeatures: Categorical features that can take on one of a
-	// limited number of possible values. Some examples would be the
-	// brand/maker of a product, or country of a customer. Feature names and
-	// values must be UTF-8 encoded strings. For example: `{ "colors":
-	// {"value": ["yellow", "green"]}, "sizes": {"value":["S", "M"]}`
+	// CategoricalFeatures: Categorical features that can take on one of a limited
+	// number of possible values. Some examples would be the brand/maker of a
+	// product, or country of a customer. Feature names and values must be UTF-8
+	// encoded strings. For example: `{ "colors": {"value": ["yellow", "green"]},
+	// "sizes": {"value":["S", "M"]}`
 	CategoricalFeatures map[string]GoogleCloudRecommendationengineV1beta1FeatureMapStringList `json:"categoricalFeatures,omitempty"`
-
 	// NumericalFeatures: Numerical features. Some examples would be the
-	// height/weight of a product, or age of a customer. Feature names must
-	// be UTF-8 encoded strings. For example: `{ "lengths_cm":
-	// {"value":[2.3, 15.4]}, "heights_cm": {"value":[8.1, 6.4]} }`
+	// height/weight of a product, or age of a customer. Feature names must be
+	// UTF-8 encoded strings. For example: `{ "lengths_cm": {"value":[2.3, 15.4]},
+	// "heights_cm": {"value":[8.1, 6.4]} }`
 	NumericalFeatures map[string]GoogleCloudRecommendationengineV1beta1FeatureMapFloatList `json:"numericalFeatures,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CategoricalFeatures")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CategoricalFeatures") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CategoricalFeatures") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CategoricalFeatures") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1FeatureMap) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1FeatureMap
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1FeatureMapFloatList: A list of
-// float features.
+// GoogleCloudRecommendationengineV1beta1FeatureMapFloatList: A list of float
+// features.
 type GoogleCloudRecommendationengineV1beta1FeatureMapFloatList struct {
 	// Value: Float feature value.
 	Value []float64 `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1FeatureMapFloatList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) UnmarshalJSON(data []byte) error {
@@ -896,765 +765,600 @@ func (s *GoogleCloudRecommendationengineV1beta1FeatureMapFloatList) UnmarshalJSO
 	return nil
 }
 
-// GoogleCloudRecommendationengineV1beta1FeatureMapStringList: A list of
-// string features.
+// GoogleCloudRecommendationengineV1beta1FeatureMapStringList: A list of string
+// features.
 type GoogleCloudRecommendationengineV1beta1FeatureMapStringList struct {
 	// Value: String feature value with a length limit of 128 bytes.
 	Value []string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1FeatureMapStringList) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1FeatureMapStringList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommendationengineV1beta1GcsSource: Google Cloud Storage
 // location for input content. format.
 type GoogleCloudRecommendationengineV1beta1GcsSource struct {
-	// InputUris: Required. Google Cloud Storage URIs to input files. URI
-	// can be up to 2000 characters long. URIs can match the full object
-	// path (for example, `gs://bucket/directory/object.json`) or a pattern
-	// matching one or more files, such as `gs://bucket/directory/*.json`. A
-	// request can contain at most 100 files, and each file can be up to 2
-	// GB. See Importing catalog information
-	// (/recommendations-ai/docs/upload-catalog) for the expected file
+	// InputUris: Required. Google Cloud Storage URIs to input files. URI can be up
+	// to 2000 characters long. URIs can match the full object path (for example,
+	// `gs://bucket/directory/object.json`) or a pattern matching one or more
+	// files, such as `gs://bucket/directory/*.json`. A request can contain at most
+	// 100 files, and each file can be up to 2 GB. See Importing catalog
+	// information (/recommendations-ai/docs/upload-catalog) for the expected file
 	// format and setup instructions.
 	InputUris []string `json:"inputUris,omitempty"`
-
-	// JsonSchema: Optional. The schema to use when parsing the data from
-	// the source. Supported values for catalog imports: 1:
+	// JsonSchema: Optional. The schema to use when parsing the data from the
+	// source. Supported values for catalog imports: 1:
 	// "catalog_recommendations_ai" using
 	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#json
 	// (Default for catalogItems.import) 2: "catalog_merchant_center" using
-	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#mc
-	// Supported values for user events imports: 1:
-	// "user_events_recommendations_ai" using
+	// https://cloud.google.com/recommendations-ai/docs/upload-catalog#mc Supported
+	// values for user events imports: 1: "user_events_recommendations_ai" using
 	// https://cloud.google.com/recommendations-ai/docs/manage-user-events#import
 	// (Default for userEvents.import) 2. "user_events_ga360" using
 	// https://support.google.com/analytics/answer/3437719?hl=en
 	JsonSchema string `json:"jsonSchema,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputUris") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputUris") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputUris") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1GcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1Image: Catalog item
-// thumbnail/detail image.
+// GoogleCloudRecommendationengineV1beta1Image: Catalog item thumbnail/detail
+// image.
 type GoogleCloudRecommendationengineV1beta1Image struct {
 	// Height: Optional. Height of the image in number of pixels.
 	Height int64 `json:"height,omitempty"`
-
 	// Uri: Required. URL of the image with a length limit of 5 KiB.
 	Uri string `json:"uri,omitempty"`
-
 	// Width: Optional. Width of the image in number of pixels.
 	Width int64 `json:"width,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Height") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Height") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Height") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1Image) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1Image
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest:
-// Request message for Import methods.
+// GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest: Request
+// message for Import methods.
 type GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest struct {
-	// ErrorsConfig: Optional. The desired location of errors incurred
-	// during the Import.
+	// ErrorsConfig: Optional. The desired location of errors incurred during the
+	// Import.
 	ErrorsConfig *GoogleCloudRecommendationengineV1beta1ImportErrorsConfig `json:"errorsConfig,omitempty"`
-
 	// InputConfig: Required. The desired input location of the data.
 	InputConfig *GoogleCloudRecommendationengineV1beta1InputConfig `json:"inputConfig,omitempty"`
-
 	// RequestId: Optional. Unique identifier provided by client, within the
 	// ancestor dataset scope. Ensures idempotency and used for request
-	// deduplication. Server-generated if unspecified. Up to 128 characters
-	// long. This is returned as google.longrunning.Operation.name in the
-	// response.
+	// deduplication. Server-generated if unspecified. Up to 128 characters long.
+	// This is returned as google.longrunning.Operation.name in the response.
 	RequestId string `json:"requestId,omitempty"`
-
 	// UpdateMask: Optional. Indicates which fields in the provided imported
 	// 'items' to update. If not set, will by default update all fields.
 	UpdateMask string `json:"updateMask,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorsConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorsConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorsConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ImportCatalogItemsResponse:
-// Response of the ImportCatalogItemsRequest. If the long running
-// operation is done, then this message is returned by the
-// google.longrunning.Operations.response field if the operation was
-// successful.
+// GoogleCloudRecommendationengineV1beta1ImportCatalogItemsResponse: Response
+// of the ImportCatalogItemsRequest. If the long running operation is done,
+// then this message is returned by the google.longrunning.Operations.response
+// field if the operation was successful.
 type GoogleCloudRecommendationengineV1beta1ImportCatalogItemsResponse struct {
-	// ErrorSamples: A sample of errors encountered while processing the
-	// request.
+	// ErrorSamples: A sample of errors encountered while processing the request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
-
-	// ErrorsConfig: Echoes the destination for the complete errors in the
-	// request if set.
+	// ErrorsConfig: Echoes the destination for the complete errors in the request
+	// if set.
 	ErrorsConfig *GoogleCloudRecommendationengineV1beta1ImportErrorsConfig `json:"errorsConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorSamples") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ImportCatalogItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ImportCatalogItemsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ImportErrorsConfig:
-// Configuration of destination for Import related errors.
+// GoogleCloudRecommendationengineV1beta1ImportErrorsConfig: Configuration of
+// destination for Import related errors.
 type GoogleCloudRecommendationengineV1beta1ImportErrorsConfig struct {
-	// GcsPrefix: Google Cloud Storage path for import errors. This must be
-	// an empty, existing Cloud Storage bucket. Import errors will be
-	// written to a file in this bucket, one per line, as a JSON-encoded
-	// `google.rpc.Status` message.
+	// GcsPrefix: Google Cloud Storage path for import errors. This must be an
+	// empty, existing Cloud Storage bucket. Import errors will be written to a
+	// file in this bucket, one per line, as a JSON-encoded `google.rpc.Status`
+	// message.
 	GcsPrefix string `json:"gcsPrefix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsPrefix") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsPrefix") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ImportErrorsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ImportErrorsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ImportMetadata: Metadata
-// related to the progress of the Import operation. This will be
-// returned by the google.longrunning.Operation.metadata field.
+// GoogleCloudRecommendationengineV1beta1ImportMetadata: Metadata related to
+// the progress of the Import operation. This will be returned by the
+// google.longrunning.Operation.metadata field.
 type GoogleCloudRecommendationengineV1beta1ImportMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// FailureCount: Count of entries that encountered errors while
-	// processing.
+	// FailureCount: Count of entries that encountered errors while processing.
 	FailureCount int64 `json:"failureCount,omitempty,string"`
-
 	// OperationName: Name of the operation.
 	OperationName string `json:"operationName,omitempty"`
-
 	// RequestId: Id of the request / operation. This is parroting back the
 	// requestId that was passed in the request.
 	RequestId string `json:"requestId,omitempty"`
-
 	// SuccessCount: Count of entries that were processed successfully.
 	SuccessCount int64 `json:"successCount,omitempty,string"`
-
-	// UpdateTime: Operation last update time. If the operation is done,
-	// this is also the finish time.
+	// UpdateTime: Operation last update time. If the operation is done, this is
+	// also the finish time.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ImportMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ImportMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest:
-// Request message for the ImportUserEvents request.
+// GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest: Request
+// message for the ImportUserEvents request.
 type GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest struct {
-	// ErrorsConfig: Optional. The desired location of errors incurred
-	// during the Import.
+	// ErrorsConfig: Optional. The desired location of errors incurred during the
+	// Import.
 	ErrorsConfig *GoogleCloudRecommendationengineV1beta1ImportErrorsConfig `json:"errorsConfig,omitempty"`
-
 	// InputConfig: Required. The desired input location of the data.
 	InputConfig *GoogleCloudRecommendationengineV1beta1InputConfig `json:"inputConfig,omitempty"`
-
 	// RequestId: Optional. Unique identifier provided by client, within the
-	// ancestor dataset scope. Ensures idempotency for expensive long
-	// running operations. Server-generated if unspecified. Up to 128
-	// characters long. This is returned as
-	// google.longrunning.Operation.name in the response. Note that this
-	// field must not be set if the desired input config is
+	// ancestor dataset scope. Ensures idempotency for expensive long running
+	// operations. Server-generated if unspecified. Up to 128 characters long. This
+	// is returned as google.longrunning.Operation.name in the response. Note that
+	// this field must not be set if the desired input config is
 	// catalog_inline_source.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorsConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorsConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorsConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ImportUserEventsResponse:
-// Response of the ImportUserEventsRequest. If the long running
-// operation was successful, then this message is returned by the
-// google.longrunning.Operations.response field if the operation was
-// successful.
+// GoogleCloudRecommendationengineV1beta1ImportUserEventsResponse: Response of
+// the ImportUserEventsRequest. If the long running operation was successful,
+// then this message is returned by the google.longrunning.Operations.response
+// field if the operation was successful.
 type GoogleCloudRecommendationengineV1beta1ImportUserEventsResponse struct {
-	// ErrorSamples: A sample of errors encountered while processing the
-	// request.
+	// ErrorSamples: A sample of errors encountered while processing the request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
-
-	// ErrorsConfig: Echoes the destination for the complete errors if this
-	// field was set in the request.
+	// ErrorsConfig: Echoes the destination for the complete errors if this field
+	// was set in the request.
 	ErrorsConfig *GoogleCloudRecommendationengineV1beta1ImportErrorsConfig `json:"errorsConfig,omitempty"`
-
 	// ImportSummary: Aggregated statistics of user event import status.
 	ImportSummary *GoogleCloudRecommendationengineV1beta1UserEventImportSummary `json:"importSummary,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorSamples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorSamples") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorSamples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ImportUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ImportUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1InputConfig: The input config
-// source.
+// GoogleCloudRecommendationengineV1beta1InputConfig: The input config source.
 type GoogleCloudRecommendationengineV1beta1InputConfig struct {
 	// BigQuerySource: BigQuery input source.
 	BigQuerySource *GoogleCloudRecommendationengineV1beta1BigQuerySource `json:"bigQuerySource,omitempty"`
-
-	// CatalogInlineSource: The Inline source for the input content for
-	// Catalog items.
+	// CatalogInlineSource: The Inline source for the input content for Catalog
+	// items.
 	CatalogInlineSource *GoogleCloudRecommendationengineV1beta1CatalogInlineSource `json:"catalogInlineSource,omitempty"`
-
 	// GcsSource: Google Cloud Storage location for the input content.
 	GcsSource *GoogleCloudRecommendationengineV1beta1GcsSource `json:"gcsSource,omitempty"`
-
 	// UserEventInlineSource: The Inline source for the input content for
 	// UserEvents.
 	UserEventInlineSource *GoogleCloudRecommendationengineV1beta1UserEventInlineSource `json:"userEventInlineSource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BigQuerySource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BigQuerySource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BigQuerySource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1InputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse:
-// Response message for ListCatalogItems method.
+// GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse: Response
+// message for ListCatalogItems method.
 type GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse struct {
 	// CatalogItems: The catalog items.
 	CatalogItems []*GoogleCloudRecommendationengineV1beta1CatalogItem `json:"catalogItems,omitempty"`
-
-	// NextPageToken: If empty, the list is complete. If nonempty, the token
-	// to pass to the next request's ListCatalogItemRequest.page_token.
+	// NextPageToken: If empty, the list is complete. If nonempty, the token to
+	// pass to the next request's ListCatalogItemRequest.page_token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CatalogItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CatalogItems") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CatalogItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ListCatalogsResponse: Response
-// for ListCatalogs method.
+// GoogleCloudRecommendationengineV1beta1ListCatalogsResponse: Response for
+// ListCatalogs method.
 type GoogleCloudRecommendationengineV1beta1ListCatalogsResponse struct {
 	// Catalogs: Output only. All the customer's catalogs.
 	Catalogs []*GoogleCloudRecommendationengineV1beta1Catalog `json:"catalogs,omitempty"`
-
-	// NextPageToken: Pagination token, if not returned indicates the last
-	// page.
+	// NextPageToken: Pagination token, if not returned indicates the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Catalogs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Catalogs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ListCatalogsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ListCatalogsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistration
-// sResponse: Response message for the
-// `ListPredictionApiKeyRegistrations`.
+// GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsRespon
+// se: Response message for the `ListPredictionApiKeyRegistrations`.
 type GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse struct {
-	// NextPageToken: If empty, the list is complete. If nonempty, pass the
-	// token to the next request's
-	// `ListPredictionApiKeysRegistrationsRequest.pageToken`.
+	// NextPageToken: If empty, the list is complete. If nonempty, pass the token
+	// to the next request's `ListPredictionApiKeysRegistrationsRequest.pageToken`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// PredictionApiKeyRegistrations: The list of registered API keys.
 	PredictionApiKeyRegistrations []*GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration `json:"predictionApiKeyRegistrations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ListUserEventsResponse:
-// Response message for ListUserEvents method.
+// GoogleCloudRecommendationengineV1beta1ListUserEventsResponse: Response
+// message for ListUserEvents method.
 type GoogleCloudRecommendationengineV1beta1ListUserEventsResponse struct {
-	// NextPageToken: If empty, the list is complete. If nonempty, the token
-	// to pass to the next request's ListUserEvents.page_token.
+	// NextPageToken: If empty, the list is complete. If nonempty, the token to
+	// pass to the next request's ListUserEvents.page_token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// UserEvents: The user events.
 	UserEvents []*GoogleCloudRecommendationengineV1beta1UserEvent `json:"userEvents,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ListUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ListUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1PredictRequest: Request message
-// for Predict method. Full resource name of the format:
-// `{name=projects/*/locations/global/catalogs/default_catalog/eventStore
-// s/default_event_store/placements/*}` The id of the recommendation
-// engine placement. This id is used to identify the set of models that
-// will be used to make the prediction. We currently support three
-// placements with the following IDs by default: // * `shopping_cart`:
-// Predicts items frequently bought together with one or more catalog
-// items in the same shopping session. Commonly displayed after
-// `add-to-cart` event, on product detail pages, or on the shopping cart
-// page. * `home_page`: Predicts the next product that a user will most
-// likely engage with or purchase based on the shopping or viewing
+// GoogleCloudRecommendationengineV1beta1PredictRequest: Request message for
+// Predict method. Full resource name of the format:
+// `{name=projects/*/locations/global/catalogs/default_catalog/eventStores/defau
+// lt_event_store/placements/*}` The id of the recommendation engine placement.
+// This id is used to identify the set of models that will be used to make the
+// prediction. We currently support three placements with the following IDs by
+// default: // * `shopping_cart`: Predicts items frequently bought together
+// with one or more catalog items in the same shopping session. Commonly
+// displayed after `add-to-cart` event, on product detail pages, or on the
+// shopping cart page. * `home_page`: Predicts the next product that a user
+// will most likely engage with or purchase based on the shopping or viewing
 // history of the specified `userId` or `visitorId`. For example -
-// Recommendations for you. * `product_detail`: Predicts the next
-// product that a user will most likely engage with or purchase. The
-// prediction is based on the shopping or viewing history of the
-// specified `userId` or `visitorId` and its relevance to a specified
-// `CatalogItem`. Typically used on product detail pages. For example -
-// More items like this. * `recently_viewed_default`: Returns up to 75
-// items recently viewed by the specified `userId` or `visitorId`, most
-// recent ones first. Returns nothing if neither of them has viewed any
-// items yet. For example - Recently viewed. The full list of available
-// placements can be seen at
+// Recommendations for you. * `product_detail`: Predicts the next product that
+// a user will most likely engage with or purchase. The prediction is based on
+// the shopping or viewing history of the specified `userId` or `visitorId` and
+// its relevance to a specified `CatalogItem`. Typically used on product detail
+// pages. For example - More items like this. * `recently_viewed_default`:
+// Returns up to 75 items recently viewed by the specified `userId` or
+// `visitorId`, most recent ones first. Returns nothing if neither of them has
+// viewed any items yet. For example - Recently viewed. The full list of
+// available placements can be seen at
 // https://console.cloud.google.com/recommendation/catalogs/default_catalog/placements
 type GoogleCloudRecommendationengineV1beta1PredictRequest struct {
-	// DryRun: Optional. Use dryRun mode for this prediction query. If set
-	// to true, a fake model will be used that returns arbitrary catalog
-	// items. Note that the dryRun mode should only be used for testing the
-	// API, or if the model is not ready.
+	// DryRun: Optional. Use dryRun mode for this prediction query. If set to true,
+	// a fake model will be used that returns arbitrary catalog items. Note that
+	// the dryRun mode should only be used for testing the API, or if the model is
+	// not ready.
 	DryRun bool `json:"dryRun,omitempty"`
-
-	// Filter: Optional. Filter for restricting prediction results. Accepts
-	// values for tags and the `filterOutOfStockItems` flag. * Tag
-	// expressions. Restricts predictions to items that match all of the
-	// specified tags. Boolean operators `OR` and `NOT` are supported if the
-	// expression is enclosed in parentheses, and must be separated from the
-	// tag values by a space. `-"tagA" is also supported and is equivalent
-	// to `NOT "tagA". Tag values must be double quoted UTF-8 encoded
-	// strings with a size limit of 1 KiB. * filterOutOfStockItems.
-	// Restricts predictions to items that do not have a stockState value of
-	// OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue") tag="New-Arrival"
-	// tag=(NOT "promotional") * filterOutOfStockItems tag=(-"promotional")
-	// * filterOutOfStockItems If your filter blocks all prediction results,
-	// nothing will be returned. If you want generic (unfiltered) popular
-	// items to be returned instead, set `strictFiltering` to false in
-	// `PredictRequest.params`.
+	// Filter: Optional. Filter for restricting prediction results. Accepts values
+	// for tags and the `filterOutOfStockItems` flag. * Tag expressions. Restricts
+	// predictions to items that match all of the specified tags. Boolean operators
+	// `OR` and `NOT` are supported if the expression is enclosed in parentheses,
+	// and must be separated from the tag values by a space. `-"tagA" is also
+	// supported and is equivalent to `NOT "tagA". Tag values must be double
+	// quoted UTF-8 encoded strings with a size limit of 1 KiB. *
+	// filterOutOfStockItems. Restricts predictions to items that do not have a
+	// stockState value of OUT_OF_STOCK. Examples: * tag=("Red" OR "Blue")
+	// tag="New-Arrival" tag=(NOT "promotional") * filterOutOfStockItems
+	// tag=(-"promotional") * filterOutOfStockItems If your filter blocks all
+	// prediction results, nothing will be returned. If you want generic
+	// (unfiltered) popular items to be returned instead, set `strictFiltering` to
+	// false in `PredictRequest.params`.
 	Filter string `json:"filter,omitempty"`
-
-	// Labels: Optional. The labels for the predict request. * Label keys
-	// can contain lowercase letters, digits and hyphens, must start with a
-	// letter, and must end with a letter or digit. * Non-zero label values
-	// can contain lowercase letters, digits and hyphens, must start with a
-	// letter, and must end with a letter or digit. * No more than 64 labels
-	// can be associated with a given request. See https://goo.gl/xmQnxf for
-	// more information on and examples of labels.
+	// Labels: Optional. The labels for the predict request. * Label keys can
+	// contain lowercase letters, digits and hyphens, must start with a letter, and
+	// must end with a letter or digit. * Non-zero label values can contain
+	// lowercase letters, digits and hyphens, must start with a letter, and must
+	// end with a letter or digit. * No more than 64 labels can be associated with
+	// a given request. See https://goo.gl/xmQnxf for more information on and
+	// examples of labels.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// PageSize: Optional. Maximum number of results to return per page. Set
-	// this property to the number of prediction results required. If zero,
-	// the service will choose a reasonable default.
+	// PageSize: Optional. Maximum number of results to return per page. Set this
+	// property to the number of prediction results required. If zero, the service
+	// will choose a reasonable default.
 	PageSize int64 `json:"pageSize,omitempty"`
-
 	// PageToken: Optional. The previous PredictResponse.next_page_token.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// Params: Optional. Additional domain specific parameters for the
-	// predictions. Allowed values: * `returnCatalogItem`: Boolean. If set
-	// to true, the associated catalogItem object will be returned in the
+	// Params: Optional. Additional domain specific parameters for the predictions.
+	// Allowed values: * `returnCatalogItem`: Boolean. If set to true, the
+	// associated catalogItem object will be returned in the
 	// `PredictResponse.PredictionResult.itemMetadata` object in the method
-	// response. * `returnItemScore`: Boolean. If set to true, the
-	// prediction 'score' corresponding to each returned item will be set in
-	// the `metadata` field in the prediction response. The given 'score'
-	// indicates the probability of an item being clicked/purchased given
-	// the user's context and history. * `strictFiltering`: Boolean. True by
-	// default. If set to false, the service will return generic
-	// (unfiltered) popular items instead of empty if your filter blocks all
-	// prediction results. * `priceRerankLevel`: String. Default empty. If
-	// set to be non-empty, then it needs to be one of
-	// {'no-price-reranking', 'low-price-reranking',
-	// 'medium-price-reranking', 'high-price-reranking'}. This gives request
-	// level control and adjust prediction results based on product price. *
-	// `diversityLevel`: String. Default empty. If set to be non-empty, then
-	// it needs to be one of {'no-diversity', 'low-diversity',
-	// 'medium-diversity', 'high-diversity', 'auto-diversity'}. This gives
-	// request level control and adjust prediction results based on product
-	// category.
+	// response. * `returnItemScore`: Boolean. If set to true, the prediction
+	// 'score' corresponding to each returned item will be set in the `metadata`
+	// field in the prediction response. The given 'score' indicates the
+	// probability of an item being clicked/purchased given the user's context and
+	// history. * `strictFiltering`: Boolean. True by default. If set to false, the
+	// service will return generic (unfiltered) popular items instead of empty if
+	// your filter blocks all prediction results. * `priceRerankLevel`: String.
+	// Default empty. If set to be non-empty, then it needs to be one of
+	// {'no-price-reranking', 'low-price-reranking', 'medium-price-reranking',
+	// 'high-price-reranking'}. This gives request level control and adjust
+	// prediction results based on product price. * `diversityLevel`: String.
+	// Default empty. If set to be non-empty, then it needs to be one of
+	// {'no-diversity', 'low-diversity', 'medium-diversity', 'high-diversity',
+	// 'auto-diversity'}. This gives request level control and adjust prediction
+	// results based on product category.
 	Params googleapi.RawMessage `json:"params,omitempty"`
-
-	// UserEvent: Required. Context about the user, what they are looking at
-	// and what action they took to trigger the predict request. Note that
-	// this user event detail won't be ingested to userEvent logs. Thus, a
-	// separate userEvent write request is required for event logging. Don't
-	// set UserInfo.visitor_id or UserInfo.user_id to the same fixed ID for
-	// different users. If you are trying to receive non-personalized
-	// recommendations (not recommended; this can negatively impact model
-	// performance), instead set UserInfo.visitor_id to a random unique ID
-	// and leave UserInfo.user_id unset.
+	// UserEvent: Required. Context about the user, what they are looking at and
+	// what action they took to trigger the predict request. Note that this user
+	// event detail won't be ingested to userEvent logs. Thus, a separate userEvent
+	// write request is required for event logging. Don't set UserInfo.visitor_id
+	// or UserInfo.user_id to the same fixed ID for different users. If you are
+	// trying to receive non-personalized recommendations (not recommended; this
+	// can negatively impact model performance), instead set UserInfo.visitor_id to
+	// a random unique ID and leave UserInfo.user_id unset.
 	UserEvent *GoogleCloudRecommendationengineV1beta1UserEvent `json:"userEvent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DryRun") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PredictRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PredictRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1PredictResponse: Response
-// message for predict method.
+// GoogleCloudRecommendationengineV1beta1PredictResponse: Response message for
+// predict method.
 type GoogleCloudRecommendationengineV1beta1PredictResponse struct {
 	// DryRun: True if the dryRun property was set in the request.
 	DryRun bool `json:"dryRun,omitempty"`
-
-	// ItemsMissingInCatalog: IDs of items in the request that were missing
-	// from the catalog.
+	// ItemsMissingInCatalog: IDs of items in the request that were missing from
+	// the catalog.
 	ItemsMissingInCatalog []string `json:"itemsMissingInCatalog,omitempty"`
-
 	// Metadata: Additional domain specific prediction response metadata.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// NextPageToken: If empty, the list is complete. If nonempty, the token
-	// to pass to the next request's PredictRequest.page_token.
+	// NextPageToken: If empty, the list is complete. If nonempty, the token to
+	// pass to the next request's PredictRequest.page_token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// RecommendationToken: A unique recommendation token. This should be
-	// included in the user event logs resulting from this recommendation,
-	// which enables accurate attribution of recommendation model
-	// performance.
+	// RecommendationToken: A unique recommendation token. This should be included
+	// in the user event logs resulting from this recommendation, which enables
+	// accurate attribution of recommendation model performance.
 	RecommendationToken string `json:"recommendationToken,omitempty"`
-
-	// Results: A list of recommended items. The order represents the
-	// ranking (from the most relevant item to the least).
+	// Results: A list of recommended items. The order represents the ranking (from
+	// the most relevant item to the least).
 	Results []*GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult `json:"results,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "DryRun") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DryRun") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PredictResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PredictResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult:
-//
-//	PredictionResult represents the recommendation prediction results.
+// PredictionResult represents the recommendation prediction results.
 type GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult struct {
 	// Id: ID of the recommended catalog item
 	Id string `json:"id,omitempty"`
-
-	// ItemMetadata: Additional item metadata / annotations. Possible
-	// values: * `catalogItem`: JSON representation of the catalogItem. Will
-	// be set if `returnCatalogItem` is set to true in
-	// `PredictRequest.params`. * `score`: Prediction score in double value.
-	// Will be set if `returnItemScore` is set to true in
-	// `PredictRequest.params`.
+	// ItemMetadata: Additional item metadata / annotations. Possible values: *
+	// `catalogItem`: JSON representation of the catalogItem. Will be set if
+	// `returnCatalogItem` is set to true in `PredictRequest.params`. * `score`:
+	// Prediction score in double value. Will be set if `returnItemScore` is set to
+	// true in `PredictRequest.params`.
 	ItemMetadata googleapi.RawMessage `json:"itemMetadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PredictResponsePredictionResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration:
@@ -1663,132 +1367,101 @@ type GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration struct {
 	// ApiKey: The API key.
 	ApiKey string `json:"apiKey,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ApiKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "ApiKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ProductCatalogItem:
-// ProductCatalogItem captures item metadata specific to retail
-// products.
+// GoogleCloudRecommendationengineV1beta1ProductCatalogItem: ProductCatalogItem
+// captures item metadata specific to retail products.
 type GoogleCloudRecommendationengineV1beta1ProductCatalogItem struct {
 	// AvailableQuantity: Optional. The available quantity of the item.
 	AvailableQuantity int64 `json:"availableQuantity,omitempty,string"`
-
-	// CanonicalProductUri: Optional. Canonical URL directly linking to the
-	// item detail page with a length limit of 5 KiB..
+	// CanonicalProductUri: Optional. Canonical URL directly linking to the item
+	// detail page with a length limit of 5 KiB..
 	CanonicalProductUri string `json:"canonicalProductUri,omitempty"`
-
-	// Costs: Optional. A map to pass the costs associated with the product.
-	// For example: {"manufacturing": 45.5} The profit of selling this item
-	// is computed like so: * If 'exactPrice' is provided, profit =
-	// displayPrice - sum(costs) * If 'priceRange' is provided, profit =
-	// minPrice - sum(costs)
+	// Costs: Optional. A map to pass the costs associated with the product. For
+	// example: {"manufacturing": 45.5} The profit of selling this item is computed
+	// like so: * If 'exactPrice' is provided, profit = displayPrice - sum(costs) *
+	// If 'priceRange' is provided, profit = minPrice - sum(costs)
 	Costs map[string]float64 `json:"costs,omitempty"`
-
-	// CurrencyCode: Optional. Only required if the price is set. Currency
-	// code for price/costs. Use three-character ISO-4217 code.
+	// CurrencyCode: Optional. Only required if the price is set. Currency code for
+	// price/costs. Use three-character ISO-4217 code.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// ExactPrice: Optional. The exact product price.
 	ExactPrice *GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice `json:"exactPrice,omitempty"`
-
 	// Images: Optional. Product images for the catalog item.
 	Images []*GoogleCloudRecommendationengineV1beta1Image `json:"images,omitempty"`
-
 	// PriceRange: Optional. The product price range.
 	PriceRange *GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange `json:"priceRange,omitempty"`
-
-	// StockState: Optional. Online stock state of the catalog item. Default
-	// is `IN_STOCK`.
+	// StockState: Optional. Online stock state of the catalog item. Default is
+	// `IN_STOCK`.
 	//
 	// Possible values:
-	//   "STOCK_STATE_UNSPECIFIED" - Default item stock status. Should never
-	// be used.
+	//   "STOCK_STATE_UNSPECIFIED" - Default item stock status. Should never be
+	// used.
 	//   "IN_STOCK" - Item in stock.
 	//   "OUT_OF_STOCK" - Item out of stock.
 	//   "PREORDER" - Item that is in pre-order state.
-	//   "BACKORDER" - Item that is back-ordered (i.e. temporarily out of
-	// stock).
+	//   "BACKORDER" - Item that is back-ordered (i.e. temporarily out of stock).
 	StockState string `json:"stockState,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvailableQuantity")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AvailableQuantity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvailableQuantity") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AvailableQuantity") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ProductCatalogItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice:
-// Exact product price.
+// GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice: Exact
+// product price.
 type GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice struct {
 	// DisplayPrice: Optional. Display price of the product.
 	DisplayPrice float64 `json:"displayPrice,omitempty"`
-
-	// OriginalPrice: Optional. Price of the product without any discount.
-	// If zero, by default set to be the 'displayPrice'.
+	// OriginalPrice: Optional. Price of the product without any discount. If zero,
+	// by default set to be the 'displayPrice'.
 	OriginalPrice float64 `json:"originalPrice,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayPrice") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayPrice") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice) UnmarshalJSON(data []byte) error {
@@ -1807,37 +1480,30 @@ func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItemExactPrice) Unm
 	return nil
 }
 
-// GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange:
-// Product price range when there are a range of prices for different
-// variations of the same product.
+// GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange: Product
+// price range when there are a range of prices for different variations of the
+// same product.
 type GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange struct {
 	// Max: Required. The maximum product price.
 	Max float64 `json:"max,omitempty"`
-
 	// Min: Required. The minimum product price.
 	Min float64 `json:"min,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Max") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Max") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Max") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Max") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange) UnmarshalJSON(data []byte) error {
@@ -1859,79 +1525,62 @@ func (s *GoogleCloudRecommendationengineV1beta1ProductCatalogItemPriceRange) Unm
 // GoogleCloudRecommendationengineV1beta1ProductDetail: Detailed product
 // information associated with a user event.
 type GoogleCloudRecommendationengineV1beta1ProductDetail struct {
-	// AvailableQuantity: Optional. Quantity of the products in stock when a
-	// user event happens. Optional. If provided, this overrides the
-	// available quantity in Catalog for this event. and can only be set if
-	// `stock_status` is set to `IN_STOCK`. Note that if an item is out of
-	// stock, you must set the `stock_state` field to be `OUT_OF_STOCK`.
-	// Leaving this field unspecified / as zero is not sufficient to mark
-	// the item out of stock.
+	// AvailableQuantity: Optional. Quantity of the products in stock when a user
+	// event happens. Optional. If provided, this overrides the available quantity
+	// in Catalog for this event. and can only be set if `stock_status` is set to
+	// `IN_STOCK`. Note that if an item is out of stock, you must set the
+	// `stock_state` field to be `OUT_OF_STOCK`. Leaving this field unspecified /
+	// as zero is not sufficient to mark the item out of stock.
 	AvailableQuantity int64 `json:"availableQuantity,omitempty"`
-
-	// CurrencyCode: Optional. Currency code for price/costs. Use
-	// three-character ISO-4217 code. Required only if originalPrice or
-	// displayPrice is set.
+	// CurrencyCode: Optional. Currency code for price/costs. Use three-character
+	// ISO-4217 code. Required only if originalPrice or displayPrice is set.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// DisplayPrice: Optional. Display price of the product (e.g. discounted
-	// price). If provided, this will override the display price in Catalog
-	// for this product.
+	// price). If provided, this will override the display price in Catalog for
+	// this product.
 	DisplayPrice float64 `json:"displayPrice,omitempty"`
-
-	// Id: Required. Catalog item ID. UTF-8 encoded string with a length
-	// limit of 128 characters.
+	// Id: Required. Catalog item ID. UTF-8 encoded string with a length limit of
+	// 128 characters.
 	Id string `json:"id,omitempty"`
-
-	// ItemAttributes: Optional. Extra features associated with a product in
-	// the user event.
+	// ItemAttributes: Optional. Extra features associated with a product in the
+	// user event.
 	ItemAttributes *GoogleCloudRecommendationengineV1beta1FeatureMap `json:"itemAttributes,omitempty"`
-
-	// OriginalPrice: Optional. Original price of the product. If provided,
-	// this will override the original price in Catalog for this product.
+	// OriginalPrice: Optional. Original price of the product. If provided, this
+	// will override the original price in Catalog for this product.
 	OriginalPrice float64 `json:"originalPrice,omitempty"`
-
-	// Quantity: Optional. Quantity of the product associated with the user
-	// event. For example, this field will be 2 if two products are added to
-	// the shopping cart for `add-to-cart` event. Required for
-	// `add-to-cart`, `add-to-list`, `remove-from-cart`, `checkout-start`,
-	// `purchase-complete`, `refund` event types.
+	// Quantity: Optional. Quantity of the product associated with the user event.
+	// For example, this field will be 2 if two products are added to the shopping
+	// cart for `add-to-cart` event. Required for `add-to-cart`, `add-to-list`,
+	// `remove-from-cart`, `checkout-start`, `purchase-complete`, `refund` event
+	// types.
 	Quantity int64 `json:"quantity,omitempty"`
-
-	// StockState: Optional. Item stock state. If provided, this overrides
-	// the stock state in Catalog for items in this event.
+	// StockState: Optional. Item stock state. If provided, this overrides the
+	// stock state in Catalog for items in this event.
 	//
 	// Possible values:
-	//   "STOCK_STATE_UNSPECIFIED" - Default item stock status. Should never
-	// be used.
+	//   "STOCK_STATE_UNSPECIFIED" - Default item stock status. Should never be
+	// used.
 	//   "IN_STOCK" - Item in stock.
 	//   "OUT_OF_STOCK" - Item out of stock.
 	//   "PREORDER" - Item that is in pre-order state.
-	//   "BACKORDER" - Item that is back-ordered (i.e. temporarily out of
-	// stock).
+	//   "BACKORDER" - Item that is back-ordered (i.e. temporarily out of stock).
 	StockState string `json:"stockState,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvailableQuantity")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AvailableQuantity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvailableQuantity") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AvailableQuantity") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ProductDetail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductDetail) UnmarshalJSON(data []byte) error {
@@ -1950,135 +1599,105 @@ func (s *GoogleCloudRecommendationengineV1beta1ProductDetail) UnmarshalJSON(data
 	return nil
 }
 
-// GoogleCloudRecommendationengineV1beta1ProductEventDetail:
-// ProductEventDetail captures user event information specific to retail
-// products.
+// GoogleCloudRecommendationengineV1beta1ProductEventDetail: ProductEventDetail
+// captures user event information specific to retail products.
 type GoogleCloudRecommendationengineV1beta1ProductEventDetail struct {
-	// CartId: Optional. The id or name of the associated shopping cart.
-	// This id is used to associate multiple items added or present in the
-	// cart before purchase. This can only be set for `add-to-cart`,
-	// `remove-from-cart`, `checkout-start`, `purchase-complete`, or
-	// `shopping-cart-page-view` events.
+	// CartId: Optional. The id or name of the associated shopping cart. This id is
+	// used to associate multiple items added or present in the cart before
+	// purchase. This can only be set for `add-to-cart`, `remove-from-cart`,
+	// `checkout-start`, `purchase-complete`, or `shopping-cart-page-view` events.
 	CartId string `json:"cartId,omitempty"`
-
-	// ListId: Required for `add-to-list` and `remove-from-list` events. The
-	// id or name of the list that the item is being added to or removed
-	// from. Other event types should not set this field.
+	// ListId: Required for `add-to-list` and `remove-from-list` events. The id or
+	// name of the list that the item is being added to or removed from. Other
+	// event types should not set this field.
 	ListId string `json:"listId,omitempty"`
-
-	// PageCategories: Required for `category-page-view` events. At least
-	// one of search_query or page_categories is required for `search`
-	// events. Other event types should not set this field. The categories
-	// associated with a category page. Category pages include special pages
-	// such as sales or promotions. For instance, a special sale page may
-	// have the category hierarchy: categories : ["Sales", "2017 Black
-	// Friday Deals"].
+	// PageCategories: Required for `category-page-view` events. At least one of
+	// search_query or page_categories is required for `search` events. Other event
+	// types should not set this field. The categories associated with a category
+	// page. Category pages include special pages such as sales or promotions. For
+	// instance, a special sale page may have the category hierarchy: categories :
+	// ["Sales", "2017 Black Friday Deals"].
 	PageCategories []*GoogleCloudRecommendationengineV1beta1CatalogItemCategoryHierarchy `json:"pageCategories,omitempty"`
-
-	// ProductDetails: The main product details related to the event. This
-	// field is required for the following event types: * `add-to-cart` *
-	// `add-to-list` * `checkout-start` * `detail-page-view` *
-	// `purchase-complete` * `refund` * `remove-from-cart` *
-	// `remove-from-list` This field is optional for the following event
-	// types: * `page-visit` * `shopping-cart-page-view` - note that
-	// 'product_details' should be set for this unless the shopping cart is
+	// ProductDetails: The main product details related to the event. This field is
+	// required for the following event types: * `add-to-cart` * `add-to-list` *
+	// `checkout-start` * `detail-page-view` * `purchase-complete` * `refund` *
+	// `remove-from-cart` * `remove-from-list` This field is optional for the
+	// following event types: * `page-visit` * `shopping-cart-page-view` - note
+	// that 'product_details' should be set for this unless the shopping cart is
 	// empty. * `search` (highly encouraged) In a `search` event, this field
-	// represents the products returned to the end user on the current page
-	// (the end user may have not finished broswing the whole page yet).
-	// When a new page is returned to the end user, after
-	// pagination/filtering/ordering even for the same query, a new SEARCH
-	// event with different product_details is desired. The end user may
-	// have not finished broswing the whole page yet. This field is not
-	// allowed for the following event types: * `category-page-view` *
-	// `home-page-view`
+	// represents the products returned to the end user on the current page (the
+	// end user may have not finished broswing the whole page yet). When a new page
+	// is returned to the end user, after pagination/filtering/ordering even for
+	// the same query, a new SEARCH event with different product_details is
+	// desired. The end user may have not finished broswing the whole page yet.
+	// This field is not allowed for the following event types: *
+	// `category-page-view` * `home-page-view`
 	ProductDetails []*GoogleCloudRecommendationengineV1beta1ProductDetail `json:"productDetails,omitempty"`
-
-	// PurchaseTransaction: Optional. A transaction represents the entire
-	// purchase transaction. Required for `purchase-complete` events.
-	// Optional for `checkout-start` events. Other event types should not
-	// set this field.
+	// PurchaseTransaction: Optional. A transaction represents the entire purchase
+	// transaction. Required for `purchase-complete` events. Optional for
+	// `checkout-start` events. Other event types should not set this field.
 	PurchaseTransaction *GoogleCloudRecommendationengineV1beta1PurchaseTransaction `json:"purchaseTransaction,omitempty"`
-
-	// SearchQuery: At least one of search_query or page_categories is
-	// required for `search` events. Other event types should not set this
-	// field. The user's search query as UTF-8 encoded text with a length
-	// limit of 5 KiB.
+	// SearchQuery: At least one of search_query or page_categories is required for
+	// `search` events. Other event types should not set this field. The user's
+	// search query as UTF-8 encoded text with a length limit of 5 KiB.
 	SearchQuery string `json:"searchQuery,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CartId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CartId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CartId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1ProductEventDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1ProductEventDetail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1PurchaseTransaction: A
-// transaction represents the entire purchase transaction.
+// GoogleCloudRecommendationengineV1beta1PurchaseTransaction: A transaction
+// represents the entire purchase transaction.
 type GoogleCloudRecommendationengineV1beta1PurchaseTransaction struct {
-	// Costs: Optional. All the costs associated with the product. These can
-	// be manufacturing costs, shipping expenses not borne by the end user,
-	// or any other costs. Total product cost such that profit = revenue -
-	// (sum(taxes) + sum(costs)) If product_cost is not set, then profit =
-	// revenue - tax - shipping - sum(CatalogItem.costs). If
-	// CatalogItem.cost is not specified for one of the items,
-	// CatalogItem.cost based profit *cannot* be calculated for this
-	// Transaction.
+	// Costs: Optional. All the costs associated with the product. These can be
+	// manufacturing costs, shipping expenses not borne by the end user, or any
+	// other costs. Total product cost such that profit = revenue - (sum(taxes) +
+	// sum(costs)) If product_cost is not set, then profit = revenue - tax -
+	// shipping - sum(CatalogItem.costs). If CatalogItem.cost is not specified for
+	// one of the items, CatalogItem.cost based profit *cannot* be calculated for
+	// this Transaction.
 	Costs map[string]float64 `json:"costs,omitempty"`
-
-	// CurrencyCode: Required. Currency code. Use three-character ISO-4217
-	// code. This field is not required if the event type is `refund`.
+	// CurrencyCode: Required. Currency code. Use three-character ISO-4217 code.
+	// This field is not required if the event type is `refund`.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// Id: Optional. The transaction ID with a length limit of 128 bytes.
 	Id string `json:"id,omitempty"`
-
 	// Revenue: Required. Total revenue or grand total associated with the
-	// transaction. This value include shipping, tax, or other adjustments
-	// to total revenue that you want to include as part of your revenue
-	// calculations. This field is not required if the event type is
-	// `refund`.
+	// transaction. This value include shipping, tax, or other adjustments to total
+	// revenue that you want to include as part of your revenue calculations. This
+	// field is not required if the event type is `refund`.
 	Revenue float64 `json:"revenue,omitempty"`
-
 	// Taxes: Optional. All the taxes associated with the transaction.
 	Taxes map[string]float64 `json:"taxes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Costs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Costs") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Costs") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PurchaseTransaction) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PurchaseTransaction
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PurchaseTransaction) UnmarshalJSON(data []byte) error {
@@ -2095,411 +1714,326 @@ func (s *GoogleCloudRecommendationengineV1beta1PurchaseTransaction) UnmarshalJSO
 	return nil
 }
 
-// GoogleCloudRecommendationengineV1beta1PurgeUserEventsMetadata:
-// Metadata related to the progress of the PurgeUserEvents operation.
-// This will be returned by the google.longrunning.Operation.metadata
-// field.
+// GoogleCloudRecommendationengineV1beta1PurgeUserEventsMetadata: Metadata
+// related to the progress of the PurgeUserEvents operation. This will be
+// returned by the google.longrunning.Operation.metadata field.
 type GoogleCloudRecommendationengineV1beta1PurgeUserEventsMetadata struct {
 	// CreateTime: Operation create time.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// OperationName: The ID of the request / operation.
 	OperationName string `json:"operationName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PurgeUserEventsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PurgeUserEventsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest: Request
 // message for PurgeUserEvents method.
 type GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest struct {
-	// Filter: Required. The filter string to specify the events to be
-	// deleted. Empty string filter is not allowed. The eligible fields for
-	// filtering are: * `eventType`: UserEvent.eventType field of type
-	// string. * `eventTime`: in ISO 8601 "zulu" format. * `visitorId`:
-	// field of type string. Specifying this will delete all events
-	// associated with a visitor. * `userId`: field of type string.
-	// Specifying this will delete all events associated with a user.
+	// Filter: Required. The filter string to specify the events to be deleted.
+	// Empty string filter is not allowed. The eligible fields for filtering are: *
+	// `eventType`: UserEvent.eventType field of type string. * `eventTime`: in ISO
+	// 8601 "zulu" format. * `visitorId`: field of type string. Specifying this
+	// will delete all events associated with a visitor. * `userId`: field of type
+	// string. Specifying this will delete all events associated with a user.
 	// Examples: * Deleting all events in a time range: `eventTime >
 	// "2012-04-23T18:25:43.511Z" eventTime < "2012-04-23T18:30:43.511Z" *
 	// Deleting specific eventType in time range: `eventTime >
-	// "2012-04-23T18:25:43.511Z" eventType = "detail-page-view" * Deleting
-	// all events for a specific visitor: `visitorId = "visitor1024" The
-	// filtering fields are assumed to have an implicit AND.
+	// "2012-04-23T18:25:43.511Z" eventType = "detail-page-view" * Deleting all
+	// events for a specific visitor: `visitorId = "visitor1024" The filtering
+	// fields are assumed to have an implicit AND.
 	Filter string `json:"filter,omitempty"`
-
-	// Force: Optional. The default value is false. Override this flag to
-	// true to actually perform the purge. If the field is not set to true,
-	// a sampling of events to be deleted will be returned.
+	// Force: Optional. The default value is false. Override this flag to true to
+	// actually perform the purge. If the field is not set to true, a sampling of
+	// events to be deleted will be returned.
 	Force bool `json:"force,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1PurgeUserEventsResponse:
-// Response of the PurgeUserEventsRequest. If the long running operation
-// is successfully done, then this message is returned by the
+// GoogleCloudRecommendationengineV1beta1PurgeUserEventsResponse: Response of
+// the PurgeUserEventsRequest. If the long running operation is successfully
+// done, then this message is returned by the
 // google.longrunning.Operations.response field.
 type GoogleCloudRecommendationengineV1beta1PurgeUserEventsResponse struct {
-	// PurgedEventsCount: The total count of events purged as a result of
-	// the operation.
+	// PurgedEventsCount: The total count of events purged as a result of the
+	// operation.
 	PurgedEventsCount int64 `json:"purgedEventsCount,omitempty,string"`
-
 	// UserEventsSample: A sampling of events deleted (or will be deleted)
-	// depending on the `force` property in the request. Max of 500 items
-	// will be returned.
+	// depending on the `force` property in the request. Max of 500 items will be
+	// returned.
 	UserEventsSample []*GoogleCloudRecommendationengineV1beta1UserEvent `json:"userEventsSample,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PurgedEventsCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "PurgedEventsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PurgedEventsCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "PurgedEventsCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1PurgeUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1PurgeUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1RejoinUserEventsMetadata:
-// Metadata for RejoinUserEvents method.
+// GoogleCloudRecommendationengineV1beta1RejoinUserEventsMetadata: Metadata for
+// RejoinUserEvents method.
 type GoogleCloudRecommendationengineV1beta1RejoinUserEventsMetadata struct {
 }
 
-// GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest:
-// Request message for CatalogRejoin method.
+// GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest: Request
+// message for CatalogRejoin method.
 type GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest struct {
-	// UserEventRejoinScope: Required. The type of the catalog rejoin to
-	// define the scope and range of the user events to be rejoined with
-	// catalog items.
+	// UserEventRejoinScope: Required. The type of the catalog rejoin to define the
+	// scope and range of the user events to be rejoined with catalog items.
 	//
 	// Possible values:
-	//   "USER_EVENT_REJOIN_SCOPE_UNSPECIFIED" - Rejoin catalogs with all
-	// events including both joined events and unjoined events.
+	//   "USER_EVENT_REJOIN_SCOPE_UNSPECIFIED" - Rejoin catalogs with all events
+	// including both joined events and unjoined events.
 	//   "JOINED_EVENTS" - Only rejoin catalogs with joined events.
 	//   "UNJOINED_EVENTS" - Only rejoin catalogs with unjoined events.
 	UserEventRejoinScope string `json:"userEventRejoinScope,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "UserEventRejoinScope") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "UserEventRejoinScope") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UserEventRejoinScope") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "UserEventRejoinScope") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1RejoinUserEventsResponse:
-// Response message for RejoinUserEvents method.
+// GoogleCloudRecommendationengineV1beta1RejoinUserEventsResponse: Response
+// message for RejoinUserEvents method.
 type GoogleCloudRecommendationengineV1beta1RejoinUserEventsResponse struct {
-	// RejoinedUserEventsCount: Number of user events that were joined with
-	// latest catalog items.
+	// RejoinedUserEventsCount: Number of user events that were joined with latest
+	// catalog items.
 	RejoinedUserEventsCount int64 `json:"rejoinedUserEventsCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RejoinedUserEventsCount") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RejoinedUserEventsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RejoinedUserEventsCount")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RejoinedUserEventsCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1RejoinUserEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1RejoinUserEventsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1UserEvent: UserEvent captures
-// all metadata information recommendation engine needs to know about
-// how end users interact with customers' website.
+// GoogleCloudRecommendationengineV1beta1UserEvent: UserEvent captures all
+// metadata information recommendation engine needs to know about how end users
+// interact with customers' website.
 type GoogleCloudRecommendationengineV1beta1UserEvent struct {
 	// EventDetail: Optional. User event detailed information common across
 	// different recommendation types.
 	EventDetail *GoogleCloudRecommendationengineV1beta1EventDetail `json:"eventDetail,omitempty"`
-
-	// EventSource: Optional. This field should *not* be set when using
-	// JavaScript pixel or the Recommendations AI Tag. Defaults to
-	// `EVENT_SOURCE_UNSPECIFIED`.
+	// EventSource: Optional. This field should *not* be set when using JavaScript
+	// pixel or the Recommendations AI Tag. Defaults to `EVENT_SOURCE_UNSPECIFIED`.
 	//
 	// Possible values:
 	//   "EVENT_SOURCE_UNSPECIFIED" - Unspecified event source.
-	//   "AUTOML" - The event is ingested via a javascript pixel or
-	// Recommendations AI Tag through automl datalayer or JS Macros.
-	//   "ECOMMERCE" - The event is ingested via Recommendations AI Tag
-	// through Enhanced Ecommerce datalayer.
+	//   "AUTOML" - The event is ingested via a javascript pixel or Recommendations
+	// AI Tag through automl datalayer or JS Macros.
+	//   "ECOMMERCE" - The event is ingested via Recommendations AI Tag through
+	// Enhanced Ecommerce datalayer.
 	//   "BATCH_UPLOAD" - The event is ingested via Import user events API.
 	EventSource string `json:"eventSource,omitempty"`
-
-	// EventTime: Optional. Only required for ImportUserEvents method.
-	// Timestamp of user event created.
+	// EventTime: Optional. Only required for ImportUserEvents method. Timestamp of
+	// user event created.
 	EventTime string `json:"eventTime,omitempty"`
-
-	// EventType: Required. User event type. Allowed values are: *
-	// `add-to-cart` Products being added to cart. * `add-to-list` Items
-	// being added to a list (shopping list, favorites etc). *
-	// `category-page-view` Special pages such as sale or promotion pages
-	// viewed. * `checkout-start` User starting a checkout process. *
-	// `detail-page-view` Products detail page viewed. * `home-page-view`
-	// Homepage viewed. * `page-visit` Generic page visits not included in
-	// the event types above. * `purchase-complete` User finishing a
+	// EventType: Required. User event type. Allowed values are: * `add-to-cart`
+	// Products being added to cart. * `add-to-list` Items being added to a list
+	// (shopping list, favorites etc). * `category-page-view` Special pages such as
+	// sale or promotion pages viewed. * `checkout-start` User starting a checkout
+	// process. * `detail-page-view` Products detail page viewed. *
+	// `home-page-view` Homepage viewed. * `page-visit` Generic page visits not
+	// included in the event types above. * `purchase-complete` User finishing a
 	// purchase. * `refund` Purchased items being refunded or returned. *
-	// `remove-from-cart` Products being removed from cart. *
-	// `remove-from-list` Items being removed from a list. * `search`
-	// Product search. * `shopping-cart-page-view` User viewing a shopping
-	// cart. * `impression` List of items displayed. Used by Google Tag
-	// Manager.
+	// `remove-from-cart` Products being removed from cart. * `remove-from-list`
+	// Items being removed from a list. * `search` Product search. *
+	// `shopping-cart-page-view` User viewing a shopping cart. * `impression` List
+	// of items displayed. Used by Google Tag Manager.
 	EventType string `json:"eventType,omitempty"`
-
-	// ProductEventDetail: Optional. Retail product specific user event
-	// metadata. This field is required for the following event types: *
-	// `add-to-cart` * `add-to-list` * `category-page-view` *
-	// `checkout-start` * `detail-page-view` * `purchase-complete` *
-	// `refund` * `remove-from-cart` * `remove-from-list` * `search` This
-	// field is optional for the following event types: * `page-visit` *
-	// `shopping-cart-page-view` - note that 'product_event_detail' should
-	// be set for this unless the shopping cart is empty. This field is not
+	// ProductEventDetail: Optional. Retail product specific user event metadata.
+	// This field is required for the following event types: * `add-to-cart` *
+	// `add-to-list` * `category-page-view` * `checkout-start` * `detail-page-view`
+	// * `purchase-complete` * `refund` * `remove-from-cart` * `remove-from-list` *
+	// `search` This field is optional for the following event types: *
+	// `page-visit` * `shopping-cart-page-view` - note that 'product_event_detail'
+	// should be set for this unless the shopping cart is empty. This field is not
 	// allowed for the following event types: * `home-page-view`
 	ProductEventDetail *GoogleCloudRecommendationengineV1beta1ProductEventDetail `json:"productEventDetail,omitempty"`
-
 	// UserInfo: Required. User information.
 	UserInfo *GoogleCloudRecommendationengineV1beta1UserInfo `json:"userInfo,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "EventDetail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EventDetail") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EventDetail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1UserEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1UserEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1UserEventImportSummary: A
-// summary of import result. The UserEventImportSummary summarizes the
-// import status for user events.
+// GoogleCloudRecommendationengineV1beta1UserEventImportSummary: A summary of
+// import result. The UserEventImportSummary summarizes the import status for
+// user events.
 type GoogleCloudRecommendationengineV1beta1UserEventImportSummary struct {
-	// JoinedEventsCount: Count of user events imported with complete
-	// existing catalog information.
+	// JoinedEventsCount: Count of user events imported with complete existing
+	// catalog information.
 	JoinedEventsCount int64 `json:"joinedEventsCount,omitempty,string"`
-
 	// UnjoinedEventsCount: Count of user events imported, but with catalog
 	// information not found in the imported catalog.
 	UnjoinedEventsCount int64 `json:"unjoinedEventsCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "JoinedEventsCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "JoinedEventsCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "JoinedEventsCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "JoinedEventsCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1UserEventImportSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1UserEventImportSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1UserEventInlineSource: The
-// inline source for the input config for ImportUserEvents method.
+// GoogleCloudRecommendationengineV1beta1UserEventInlineSource: The inline
+// source for the input config for ImportUserEvents method.
 type GoogleCloudRecommendationengineV1beta1UserEventInlineSource struct {
-	// UserEvents: Optional. A list of user events to import. Recommended
-	// max of 10k items.
+	// UserEvents: Optional. A list of user events to import. Recommended max of
+	// 10k items.
 	UserEvents []*GoogleCloudRecommendationengineV1beta1UserEvent `json:"userEvents,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "UserEvents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UserEvents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "UserEvents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1UserEventInlineSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1UserEventInlineSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRecommendationengineV1beta1UserInfo: Information of end
-// users.
+// GoogleCloudRecommendationengineV1beta1UserInfo: Information of end users.
 type GoogleCloudRecommendationengineV1beta1UserInfo struct {
-	// DirectUserRequest: Optional. Indicates if the request is made
-	// directly from the end user in which case the user_agent and
-	// ip_address fields can be populated from the HTTP request. This should
-	// *not* be set when using the javascript pixel. This flag should be set
-	// only if the API request is made directly from the end user such as a
-	// mobile app (and not if a gateway or a server is processing and
-	// pushing the user events).
+	// DirectUserRequest: Optional. Indicates if the request is made directly from
+	// the end user in which case the user_agent and ip_address fields can be
+	// populated from the HTTP request. This should *not* be set when using the
+	// javascript pixel. This flag should be set only if the API request is made
+	// directly from the end user such as a mobile app (and not if a gateway or a
+	// server is processing and pushing the user events).
 	DirectUserRequest bool `json:"directUserRequest,omitempty"`
-
-	// IpAddress: Optional. IP address of the user. This could be either
-	// IPv4 (e.g. 104.133.9.80) or IPv6 (e.g.
-	// 2001:0db8:85a3:0000:0000:8a2e:0370:7334). This should *not* be set
-	// when using the javascript pixel or if `direct_user_request` is set.
-	// Used to extract location information for personalization.
+	// IpAddress: Optional. IP address of the user. This could be either IPv4 (e.g.
+	// 104.133.9.80) or IPv6 (e.g. 2001:0db8:85a3:0000:0000:8a2e:0370:7334). This
+	// should *not* be set when using the javascript pixel or if
+	// `direct_user_request` is set. Used to extract location information for
+	// personalization.
 	IpAddress string `json:"ipAddress,omitempty"`
-
 	// UserAgent: Optional. User agent as included in the HTTP header. UTF-8
-	// encoded string with a length limit of 1 KiB. This should *not* be set
-	// when using the JavaScript pixel or if `directUserRequest` is set.
+	// encoded string with a length limit of 1 KiB. This should *not* be set when
+	// using the JavaScript pixel or if `directUserRequest` is set.
 	UserAgent string `json:"userAgent,omitempty"`
-
-	// UserId: Optional. Unique identifier for logged-in user with a length
-	// limit of 128 bytes. Required only for logged-in users. Don't set for
-	// anonymous users. Don't set the field to the same fixed ID for
-	// different users. This mixes the event history of those users
-	// together, which results in degraded model quality.
+	// UserId: Optional. Unique identifier for logged-in user with a length limit
+	// of 128 bytes. Required only for logged-in users. Don't set for anonymous
+	// users. Don't set the field to the same fixed ID for different users. This
+	// mixes the event history of those users together, which results in degraded
+	// model quality.
 	UserId string `json:"userId,omitempty"`
-
-	// VisitorId: Required. A unique identifier for tracking visitors with a
-	// length limit of 128 bytes. For example, this could be implemented
-	// with an HTTP cookie, which should be able to uniquely identify a
-	// visitor on a single device. This unique identifier should not change
-	// if the visitor logs in or out of the website. Maximum length 128
-	// bytes. Cannot be empty. Don't set the field to the same fixed ID for
-	// different users. This mixes the event history of those users
-	// together, which results in degraded model quality.
+	// VisitorId: Required. A unique identifier for tracking visitors with a length
+	// limit of 128 bytes. For example, this could be implemented with an HTTP
+	// cookie, which should be able to uniquely identify a visitor on a single
+	// device. This unique identifier should not change if the visitor logs in or
+	// out of the website. Maximum length 128 bytes. Cannot be empty. Don't set the
+	// field to the same fixed ID for different users. This mixes the event history
+	// of those users together, which results in degraded model quality.
 	VisitorId string `json:"visitorId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DirectUserRequest")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DirectUserRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DirectUserRequest") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DirectUserRequest") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudRecommendationengineV1beta1UserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecommendationengineV1beta1UserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningListOperationsResponse: The response message for
@@ -2507,156 +2041,120 @@ func (s *GoogleCloudRecommendationengineV1beta1UserInfo) MarshalJSON() ([]byte, 
 type GoogleLongrunningListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
 // operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// GoogleRpcStatus: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs and RPC
+// APIs. It is used by gRPC (https://github.com/grpc). Each `Status` message
+// contains three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it in the
+// API Design Guide (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "recommendationengine.projects.locations.catalogs.list":
 
 type ProjectsLocationsCatalogsListCall struct {
 	s            *Service
@@ -2667,8 +2165,7 @@ type ProjectsLocationsCatalogsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all the catalog configurations associated with the
-// project.
+// List: Lists all the catalog configurations associated with the project.
 //
 // - parent: The account resource name with an associated location.
 func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocationsCatalogsListCall {
@@ -2677,50 +2174,45 @@ func (r *ProjectsLocationsCatalogsService) List(parent string) *ProjectsLocation
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return. If unspecified, defaults to 50. Max allowed value
-// is 1000.
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return. If unspecified, defaults to 50. Max allowed value is 1000.
 func (c *ProjectsLocationsCatalogsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListCatalogs` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListCatalogs` call. Provide this to retrieve the subsequent
+// page.
 func (c *ProjectsLocationsCatalogsListCall) PageToken(pageToken string) *ProjectsLocationsCatalogsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2729,12 +2221,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2755,15 +2242,11 @@ func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.list" call.
-// Exactly one of
-// *GoogleCloudRecommendationengineV1beta1ListCatalogsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1ListCatalogsResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1ListCatalogsResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1ListCatalogsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2794,43 +2277,6 @@ func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the catalog configurations associated with the project.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Maximum number of results to return. If unspecified, defaults to 50. Max allowed value is 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListCatalogs` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The account resource name with an associated location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/catalogs",
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1ListCatalogsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2838,7 +2284,7 @@ func (c *ProjectsLocationsCatalogsListCall) Do(opts ...googleapi.CallOption) (*G
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommendationengineV1beta1ListCatalogsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2853,8 +2299,6 @@ func (c *ProjectsLocationsCatalogsListCall) Pages(ctx context.Context, f func(*G
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "recommendationengine.projects.locations.catalogs.patch":
 
 type ProjectsLocationsCatalogsPatchCall struct {
 	s                                             *Service
@@ -2875,33 +2319,31 @@ func (r *ProjectsLocationsCatalogsService) Patch(name string, googlecloudrecomme
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Indicates which
-// fields in the provided 'catalog' to update. If not set, will only
-// update the catalog_item_level_config field. Currently only fields
-// that can be updated are catalog_item_level_config.
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided 'catalog' to update. If not set, will only update the
+// catalog_item_level_config field. Currently only fields that can be updated
+// are catalog_item_level_config.
 func (c *ProjectsLocationsCatalogsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsPatchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2910,18 +2352,12 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1catalog)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
@@ -2938,14 +2374,11 @@ func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.patch" call.
-// Exactly one of *GoogleCloudRecommendationengineV1beta1Catalog or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1Catalog.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1Catalog.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1Catalog, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2976,44 +2409,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the catalog configuration.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "recommendationengine.projects.locations.catalogs.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The fully qualified resource name of the catalog.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. Indicates which fields in the provided 'catalog' to update. If not set, will only update the catalog_item_level_config field. Currently only fields that can be updated are catalog_item_level_config.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1Catalog"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1Catalog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.catalogItems.create":
 
 type ProjectsLocationsCatalogsCatalogItemsCreateCall struct {
 	s                                                 *Service
@@ -3036,23 +2432,21 @@ func (r *ProjectsLocationsCatalogsCatalogItemsService) Create(parent string, goo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCatalogItemsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCatalogItemsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3061,18 +2455,12 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1catalogitem)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/catalogItems")
@@ -3089,14 +2477,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) doRequest(alt string) 
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.create" call.
-// Exactly one of *GoogleCloudRecommendationengineV1beta1CatalogItem or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1CatalogItem.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1CatalogItem.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1CatalogItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3127,38 +2512,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsCreateCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a catalog item.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.catalogItems.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent catalog resource name, such as `projects/*/locations/global/catalogs/default_catalog`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/catalogItems",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1CatalogItem"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1CatalogItem"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.catalogItems.delete":
 
 type ProjectsLocationsCatalogsCatalogItemsDeleteCall struct {
 	s          *Service
@@ -3171,8 +2525,8 @@ type ProjectsLocationsCatalogsCatalogItemsDeleteCall struct {
 // Delete: Deletes a catalog item.
 //
 //   - name: Full resource name of catalog item, such as
-//     `projects/*/locations/global/catalogs/default_catalog/catalogItems/s
-//     ome_catalog_item_id`.
+//     `projects/*/locations/global/catalogs/default_catalog/catalogItems/some_cat
+//     alog_item_id`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Delete(name string) *ProjectsLocationsCatalogsCatalogItemsDeleteCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3180,23 +2534,21 @@ func (r *ProjectsLocationsCatalogsCatalogItemsService) Delete(name string) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCatalogItemsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCatalogItemsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3205,12 +2557,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3228,12 +2575,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) doRequest(alt string) 
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3264,35 +2610,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsDeleteCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a catalog item.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems/{catalogItemsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "recommendationengine.projects.locations.catalogs.catalogItems.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Full resource name of catalog item, such as `projects/*/locations/global/catalogs/default_catalog/catalogItems/some_catalog_item_id`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/catalogItems/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.catalogItems.get":
 
 type ProjectsLocationsCatalogsCatalogItemsGetCall struct {
 	s            *Service
@@ -3306,8 +2624,8 @@ type ProjectsLocationsCatalogsCatalogItemsGetCall struct {
 // Get: Gets a specific catalog item.
 //
 //   - name: Full resource name of catalog item, such as
-//     `projects/*/locations/global/catalogs/default_catalog/catalogitems/s
-//     ome_catalog_item_id`.
+//     `projects/*/locations/global/catalogs/default_catalog/catalogitems/some_cat
+//     alog_item_id`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Get(name string) *ProjectsLocationsCatalogsCatalogItemsGetCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3315,33 +2633,29 @@ func (r *ProjectsLocationsCatalogsCatalogItemsService) Get(name string) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCatalogItemsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsCatalogItemsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCatalogItemsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3350,12 +2664,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3376,14 +2685,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) doRequest(alt string) (*h
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.get" call.
-// Exactly one of *GoogleCloudRecommendationengineV1beta1CatalogItem or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1CatalogItem.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1CatalogItem.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1CatalogItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3414,35 +2720,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsGetCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a specific catalog item.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems/{catalogItemsId}",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.catalogItems.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Full resource name of catalog item, such as `projects/*/locations/global/catalogs/default_catalog/catalogitems/some_catalog_item_id`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/catalogItems/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1CatalogItem"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.catalogItems.import":
 
 type ProjectsLocationsCatalogsCatalogItemsImportCall struct {
 	s                                                               *Service
@@ -3453,16 +2731,14 @@ type ProjectsLocationsCatalogsCatalogItemsImportCall struct {
 	header_                                                         http.Header
 }
 
-// Import: Bulk import of multiple catalog items. Request processing may
-// be synchronous. No partial updating supported. Non-existing items
-// will be created. Operation.response is of type ImportResponse. Note
-// that it is possible for a subset of the items to be successfully
-// updated.
+// Import: Bulk import of multiple catalog items. Request processing may be
+// synchronous. No partial updating supported. Non-existing items will be
+// created. Operation.response is of type ImportResponse. Note that it is
+// possible for a subset of the items to be successfully updated.
 //
-//   - parent: `projects/1234/locations/global/catalogs/default_catalog`
-//     If no updateMask is specified, requires catalogItems.create
-//     permission. If updateMask is specified, requires
-//     catalogItems.update permission.
+//   - parent: `projects/1234/locations/global/catalogs/default_catalog` If no
+//     updateMask is specified, requires catalogItems.create permission. If
+//     updateMask is specified, requires catalogItems.update permission.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Import(parent string, googlecloudrecommendationenginev1beta1importcatalogitemsrequest *GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest) *ProjectsLocationsCatalogsCatalogItemsImportCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3471,23 +2747,21 @@ func (r *ProjectsLocationsCatalogsCatalogItemsService) Import(parent string, goo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCatalogItemsImportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCatalogItemsImportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3496,18 +2770,12 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1importcatalogitemsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/catalogItems:import")
@@ -3524,12 +2792,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) doRequest(alt string) 
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.import" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3560,38 +2827,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsImportCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Bulk import of multiple catalog items. Request processing may be synchronous. No partial updating supported. Non-existing items will be created. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully updated.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems:import",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.catalogItems.import",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. `projects/1234/locations/global/catalogs/default_catalog` If no updateMask is specified, requires catalogItems.create permission. If updateMask is specified, requires catalogItems.update permission.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/catalogItems:import",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1ImportCatalogItemsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.catalogItems.list":
 
 type ProjectsLocationsCatalogsCatalogItemsListCall struct {
 	s            *Service
@@ -3619,9 +2855,8 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Filter(filter string) *P
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return per page. If zero, the service will choose a
-// reasonable default.
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return per page. If zero, the service will choose a reasonable default.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsCatalogItemsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3635,33 +2870,29 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) PageToken(pageToken stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCatalogItemsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsCatalogItemsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCatalogItemsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3670,12 +2901,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3696,15 +2922,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) doRequest(alt string) (*
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.list" call.
-// Exactly one of
-// *GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse.Server
-// Response.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3735,48 +2957,6 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a list of catalog items.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.catalogItems.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Use of this field is not supported by version v1beta1.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Maximum number of results to return per page. If zero, the service will choose a reasonable default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The previous ListCatalogItemsResponse.next_page_token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent catalog resource name, such as `projects/*/locations/global/catalogs/default_catalog`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/catalogItems",
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3784,7 +2964,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Do(opts ...googleapi.Cal
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommendationengineV1beta1ListCatalogItemsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3800,8 +2980,6 @@ func (c *ProjectsLocationsCatalogsCatalogItemsListCall) Pages(ctx context.Contex
 	}
 }
 
-// method id "recommendationengine.projects.locations.catalogs.catalogItems.patch":
-
 type ProjectsLocationsCatalogsCatalogItemsPatchCall struct {
 	s                                                 *Service
 	name                                              string
@@ -3811,12 +2989,12 @@ type ProjectsLocationsCatalogsCatalogItemsPatchCall struct {
 	header_                                           http.Header
 }
 
-// Patch: Updates a catalog item. Partial updating is supported.
-// Non-existing items will be created.
+// Patch: Updates a catalog item. Partial updating is supported. Non-existing
+// items will be created.
 //
 //   - name: Full resource name of catalog item, such as
-//     `projects/*/locations/global/catalogs/default_catalog/catalogItems/s
-//     ome_catalog_item_id`.
+//     `projects/*/locations/global/catalogs/default_catalog/catalogItems/some_cat
+//     alog_item_id`.
 func (r *ProjectsLocationsCatalogsCatalogItemsService) Patch(name string, googlecloudrecommendationenginev1beta1catalogitem *GoogleCloudRecommendationengineV1beta1CatalogItem) *ProjectsLocationsCatalogsCatalogItemsPatchCall {
 	c := &ProjectsLocationsCatalogsCatalogItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3824,32 +3002,30 @@ func (r *ProjectsLocationsCatalogsCatalogItemsService) Patch(name string, google
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Indicates which
-// fields in the provided 'item' to update. If not set, will by default
-// update all fields.
+// UpdateMask sets the optional parameter "updateMask": Indicates which fields
+// in the provided 'item' to update. If not set, will by default update all
+// fields.
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCatalogsCatalogItemsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsCatalogItemsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Context(ctx context.Context) *ProjectsLocationsCatalogsCatalogItemsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3858,18 +3034,12 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1catalogitem)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
@@ -3886,14 +3056,11 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) doRequest(alt string) (
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.catalogItems.patch" call.
-// Exactly one of *GoogleCloudRecommendationengineV1beta1CatalogItem or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1CatalogItem.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1CatalogItem.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1CatalogItem, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3924,44 +3091,7 @@ func (c *ProjectsLocationsCatalogsCatalogItemsPatchCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a catalog item. Partial updating is supported. Non-existing items will be created.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/catalogItems/{catalogItemsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "recommendationengine.projects.locations.catalogs.catalogItems.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Full resource name of catalog item, such as `projects/*/locations/global/catalogs/default_catalog/catalogItems/some_catalog_item_id`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/catalogItems/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Optional. Indicates which fields in the provided 'item' to update. If not set, will by default update all fields.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1CatalogItem"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1CatalogItem"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.operations.get":
 
 type ProjectsLocationsCatalogsEventStoresOperationsGetCall struct {
 	s            *Service
@@ -3972,9 +3102,9 @@ type ProjectsLocationsCatalogsEventStoresOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsEventStoresOperationsService) Get(name string) *ProjectsLocationsCatalogsEventStoresOperationsGetCall {
@@ -3984,33 +3114,29 @@ func (r *ProjectsLocationsCatalogsEventStoresOperationsService) Get(name string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsEventStoresOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4019,12 +3145,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Header() http.He
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4045,12 +3166,11 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) doRequest(alt st
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4081,35 +3201,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsGetCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.operations.list":
 
 type ProjectsLocationsCatalogsEventStoresOperationsListCall struct {
 	s            *Service
@@ -4120,9 +3212,8 @@ type ProjectsLocationsCatalogsEventStoresOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsEventStoresOperationsService) List(name string) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
@@ -4131,55 +3222,50 @@ func (r *ProjectsLocationsCatalogsEventStoresOperationsService) List(name string
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Filter(filter string) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4188,12 +3274,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Header() http.H
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4214,13 +3295,11 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) doRequest(alt s
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4251,48 +3330,6 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}/operations",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4300,7 +3337,7 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Do(opts ...goog
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4315,8 +3352,6 @@ func (c *ProjectsLocationsCatalogsEventStoresOperationsListCall) Pages(ctx conte
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.placements.predict":
 
 type ProjectsLocationsCatalogsEventStoresPlacementsPredictCall struct {
 	s                                                    *Service
@@ -4341,23 +3376,21 @@ func (r *ProjectsLocationsCatalogsEventStoresPlacementsService) Predict(name str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4366,18 +3399,12 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Header() htt
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1predictrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:predict")
@@ -4394,14 +3421,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) doRequest(al
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.placements.predict" call.
-// Exactly one of *GoogleCloudRecommendationengineV1beta1PredictResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudRecommendationengineV1beta1PredictResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1PredictResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1PredictResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4432,34 +3456,6 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Do(opts ...g
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Makes a recommendation prediction. If using API Key based authentication, the API Key must be registered using the PredictionApiKeyRegistry service. [Learn more](https://cloud.google.com/recommendations-ai/docs/setting-up#register-key).",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/placements/{placementsId}:predict",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.placements.predict",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+/placements/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:predict",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1PredictRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1PredictResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4467,7 +3463,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Do(opts ...g
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Pages(ctx context.Context, f func(*GoogleCloudRecommendationengineV1beta1PredictResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googlecloudrecommendationenginev1beta1predictrequest.PageToken = pt }(c.googlecloudrecommendationenginev1beta1predictrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googlecloudrecommendationenginev1beta1predictrequest.PageToken = pt }(c.googlecloudrecommendationenginev1beta1predictrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4483,8 +3479,6 @@ func (c *ProjectsLocationsCatalogsEventStoresPlacementsPredictCall) Pages(ctx co
 	}
 }
 
-// method id "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.create":
-
 type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall struct {
 	s                                                                               *Service
 	parent                                                                          string
@@ -4497,8 +3491,8 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall
 // Create: Register an API key for use with predict method.
 //
 //   - parent: The parent resource path.
-//     `projects/*/locations/global/catalogs/default_catalog/eventStores/de
-//     fault_event_store`.
+//     `projects/*/locations/global/catalogs/default_catalog/eventStores/default_e
+//     vent_store`.
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) Create(parent string, googlecloudrecommendationenginev1beta1createpredictionapikeyregistrationrequest *GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4507,23 +3501,21 @@ func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsServic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4532,18 +3524,12 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1createpredictionapikeyregistrationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/predictionApiKeyRegistrations")
@@ -4560,15 +3546,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.create" call.
-// Exactly one of
-// *GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration.Se
-// rverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration.ServerRes
+// ponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4599,38 +3581,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsCreate
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Register an API key for use with predict method.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/predictionApiKeyRegistrations",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource path. `projects/*/locations/global/catalogs/default_catalog/eventStores/default_event_store`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/predictionApiKeyRegistrations",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1CreatePredictionApiKeyRegistrationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1PredictionApiKeyRegistration"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.delete":
 
 type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall struct {
 	s          *Service
@@ -4643,8 +3594,8 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall
 // Delete: Unregister an apiKey from using for predict method.
 //
 //   - name: The API key to unregister including full resource path.
-//     `projects/*/locations/global/catalogs/default_catalog/eventStores/de
-//     fault_event_store/predictionApiKeyRegistrations/`.
+//     `projects/*/locations/global/catalogs/default_catalog/eventStores/default_e
+//     vent_store/predictionApiKeyRegistrations/`.
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) Delete(name string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4652,23 +3603,21 @@ func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsServic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4677,12 +3626,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4700,12 +3644,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4736,35 +3679,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsDelete
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Unregister an apiKey from using for predict method.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/predictionApiKeyRegistrations/{predictionApiKeyRegistrationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The API key to unregister including full resource path. `projects/*/locations/global/catalogs/default_catalog/eventStores/default_event_store/predictionApiKeyRegistrations/`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+/predictionApiKeyRegistrations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.list":
 
 type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall struct {
 	s            *Service
@@ -4778,17 +3693,16 @@ type ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall s
 // List: List the registered apiKeys for use with predict method.
 //
 //   - parent: The parent placement resource name such as
-//     `projects/1234/locations/global/catalogs/default_catalog/eventStores
-//     /default_event_store`.
+//     `projects/1234/locations/global/catalogs/default_catalog/eventStores/defaul
+//     t_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsService) List(parent string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c := &ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return per page. If unset, the service will choose a
-// reasonable default.
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return per page. If unset, the service will choose a reasonable default.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4802,33 +3716,29 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4837,12 +3747,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4863,15 +3768,11 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.list" call.
-// Exactly one of
-// *GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistratio
-// nsResponse or error will be non-nil. Any non-2xx status code is an
-// error. Response headers are in either
-// *GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistratio
-// nsResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsRespo
+// nse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4902,43 +3803,6 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the registered apiKeys for use with predict method.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/predictionApiKeyRegistrations",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Maximum number of results to return per page. If unset, the service will choose a reasonable default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The previous `ListPredictionApiKeyRegistration.nextPageToken`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent placement resource name such as `projects/1234/locations/global/catalogs/default_catalog/eventStores/default_event_store`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/predictionApiKeyRegistrations",
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4946,7 +3810,7 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommendationengineV1beta1ListPredictionApiKeyRegistrationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4962,8 +3826,6 @@ func (c *ProjectsLocationsCatalogsEventStoresPredictionApiKeyRegistrationsListCa
 	}
 }
 
-// method id "recommendationengine.projects.locations.catalogs.eventStores.userEvents.collect":
-
 type ProjectsLocationsCatalogsEventStoresUserEventsCollectCall struct {
 	s            *Service
 	parent       string
@@ -4974,72 +3836,68 @@ type ProjectsLocationsCatalogsEventStoresUserEventsCollectCall struct {
 }
 
 // Collect: Writes a single user event from the browser. This uses a GET
-// request to due to browser restriction of POST-ing to a 3rd party
-// domain. This method is used only by the Recommendations AI JavaScript
-// pixel. Users should not call this method directly.
+// request to due to browser restriction of POST-ing to a 3rd party domain.
+// This method is used only by the Recommendations AI JavaScript pixel. Users
+// should not call this method directly.
 //
 //   - parent: The parent eventStore name, such as
-//     `projects/1234/locations/global/catalogs/default_catalog/eventStores
-//     /default_event_store`.
+//     `projects/1234/locations/global/catalogs/default_catalog/eventStores/defaul
+//     t_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Collect(parent string) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsCollectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Ets sets the optional parameter "ets": The event timestamp in
-// milliseconds. This prevents browser caching of otherwise identical
-// get requests. The name is abbreviated to reduce the payload bytes.
+// Ets sets the optional parameter "ets": The event timestamp in milliseconds.
+// This prevents browser caching of otherwise identical get requests. The name
+// is abbreviated to reduce the payload bytes.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Ets(ets int64) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c.urlParams_.Set("ets", fmt.Sprint(ets))
 	return c
 }
 
-// Uri sets the optional parameter "uri": The url including
-// cgi-parameters but excluding the hash fragment. The URL must be
-// truncated to 1.5K bytes to conservatively be under the 2K bytes. This
-// is often more useful than the referer url, because many browsers only
-// send the domain for 3rd party requests.
+// Uri sets the optional parameter "uri": The url including cgi-parameters but
+// excluding the hash fragment. The URL must be truncated to 1.5K bytes to
+// conservatively be under the 2K bytes. This is often more useful than the
+// referer url, because many browsers only send the domain for 3rd party
+// requests.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Uri(uri string) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c.urlParams_.Set("uri", uri)
 	return c
 }
 
-// UserEvent sets the optional parameter "userEvent": Required. URL
-// encoded UserEvent proto.
+// UserEvent sets the optional parameter "userEvent": Required. URL encoded
+// UserEvent proto.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) UserEvent(userEvent string) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c.urlParams_.Set("userEvent", userEvent)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5048,12 +3906,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Header() htt
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5074,12 +3927,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) doRequest(al
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.collect" call.
-// Exactly one of *GoogleApiHttpBody or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleApiHttpBody.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5110,51 +3962,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsCollectCall) Do(opts ...g
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Writes a single user event from the browser. This uses a GET request to due to browser restriction of POST-ing to a 3rd party domain. This method is used only by the Recommendations AI JavaScript pixel. Users should not call this method directly.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:collect",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.userEvents.collect",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "ets": {
-	//       "description": "Optional. The event timestamp in milliseconds. This prevents browser caching of otherwise identical get requests. The name is abbreviated to reduce the payload bytes.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent eventStore name, such as `projects/1234/locations/global/catalogs/default_catalog/eventStores/default_event_store`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "uri": {
-	//       "description": "Optional. The url including cgi-parameters but excluding the hash fragment. The URL must be truncated to 1.5K bytes to conservatively be under the 2K bytes. This is often more useful than the referer url, because many browsers only send the domain for 3rd party requests.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "userEvent": {
-	//       "description": "Required. URL encoded UserEvent proto.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/userEvents:collect",
-	//   "response": {
-	//     "$ref": "GoogleApiHttpBody"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.userEvents.import":
 
 type ProjectsLocationsCatalogsEventStoresUserEventsImportCall struct {
 	s                                                             *Service
@@ -5165,16 +3973,15 @@ type ProjectsLocationsCatalogsEventStoresUserEventsImportCall struct {
 	header_                                                       http.Header
 }
 
-// Import: Bulk import of User events. Request processing might be
-// synchronous. Events that already exist are skipped. Use this method
-// for backfilling historical user events. Operation.response is of type
-// ImportResponse. Note that it is possible for a subset of the items to
-// be successfully inserted. Operation.metadata is of type
-// ImportMetadata.
+// Import: Bulk import of User events. Request processing might be synchronous.
+// Events that already exist are skipped. Use this method for backfilling
+// historical user events. Operation.response is of type ImportResponse. Note
+// that it is possible for a subset of the items to be successfully inserted.
+// Operation.metadata is of type ImportMetadata.
 //
 //   - parent:
-//     `projects/1234/locations/global/catalogs/default_catalog/eventStores
-//     /default_event_store`.
+//     `projects/1234/locations/global/catalogs/default_catalog/eventStores/defaul
+//     t_event_store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Import(parent string, googlecloudrecommendationenginev1beta1importusereventsrequest *GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsImportCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5183,23 +3990,21 @@ func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Import(parent st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresUserEventsImportCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresUserEventsImportCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5208,18 +4013,12 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Header() http
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1importusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/userEvents:import")
@@ -5236,12 +4035,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) doRequest(alt
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.import" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5272,38 +4070,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsImportCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Bulk import of User events. Request processing might be synchronous. Events that already exist are skipped. Use this method for backfilling historical user events. Operation.response is of type ImportResponse. Note that it is possible for a subset of the items to be successfully inserted. Operation.metadata is of type ImportMetadata.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:import",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.userEvents.import",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. `projects/1234/locations/global/catalogs/default_catalog/eventStores/default_event_store`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/userEvents:import",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1ImportUserEventsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.userEvents.list":
 
 type ProjectsLocationsCatalogsEventStoresUserEventsListCall struct {
 	s            *Service
@@ -5315,52 +4082,50 @@ type ProjectsLocationsCatalogsEventStoresUserEventsListCall struct {
 }
 
 // List: Gets a list of user events within a time range, with potential
-// filtering. The method does not list unjoined user events. Unjoined
-// user event definition: when a user event is ingested from
-// Recommendations AI User Event APIs, the catalog item included in the
-// user event is connected with the current catalog. If a catalog item
-// of the ingested event is not in the current catalog, it could lead to
-// degraded model quality. This is called an unjoined event.
+// filtering. The method does not list unjoined user events. Unjoined user
+// event definition: when a user event is ingested from Recommendations AI User
+// Event APIs, the catalog item included in the user event is connected with
+// the current catalog. If a catalog item of the ingested event is not in the
+// current catalog, it could lead to degraded model quality. This is called an
+// unjoined event.
 //
 //   - parent: The parent eventStore resource name, such as
-//     `projects/*/locations/*/catalogs/default_catalog/eventStores/default
-//     _event_store`.
+//     `projects/*/locations/*/catalogs/default_catalog/eventStores/default_event_
+//     store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) List(parent string) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering expression to
-// specify restrictions over returned events. This is a sequence of
-// terms, where each term applies some kind of a restriction to the
-// returned user events. Use this expression to restrict results to a
-// specific time range, or filter events by eventType. eg: eventTime >
-// "2012-04-23T18:25:43.511Z" eventsMissingCatalogItems
-// eventTime<"2012-04-23T18:25:43.511Z" eventType=search We expect only
-// 3 types of fields: * eventTime: this can be specified a maximum of 2
-// times, once with a less than operator and once with a greater than
-// operator. The eventTime restrict should result in one contiguous
-// valid eventTime range. * eventType: only 1 eventType restriction can
-// be specified. * eventsMissingCatalogItems: specififying this will
-// restrict results to events for which catalog items were not found in
-// the catalog. The default behavior is to return only those events for
-// which catalog items were found. Some examples of valid filters
-// expressions: * Example 1: eventTime > "2012-04-23T18:25:43.511Z"
-// eventTime < "2012-04-23T18:30:43.511Z" * Example 2: eventTime >
+// Filter sets the optional parameter "filter": Filtering expression to specify
+// restrictions over returned events. This is a sequence of terms, where each
+// term applies some kind of a restriction to the returned user events. Use
+// this expression to restrict results to a specific time range, or filter
+// events by eventType. eg: eventTime > "2012-04-23T18:25:43.511Z"
+// eventsMissingCatalogItems eventTime<"2012-04-23T18:25:43.511Z"
+// eventType=search We expect only 3 types of fields: * eventTime: this can be
+// specified a maximum of 2 times, once with a less than operator and once with
+// a greater than operator. The eventTime restrict should result in one
+// contiguous valid eventTime range. * eventType: only 1 eventType restriction
+// can be specified. * eventsMissingCatalogItems: specififying this will
+// restrict results to events for which catalog items were not found in the
+// catalog. The default behavior is to return only those events for which
+// catalog items were found. Some examples of valid filters expressions: *
+// Example 1: eventTime > "2012-04-23T18:25:43.511Z" eventTime <
+// "2012-04-23T18:30:43.511Z" * Example 2: eventTime >
 // "2012-04-23T18:25:43.511Z" eventType = detail-page-view * Example 3:
 // eventsMissingCatalogItems eventType = search eventTime <
 // "2018-04-23T18:30:43.511Z" * Example 4: eventTime >
-// "2012-04-23T18:25:43.511Z" * Example 5: eventType = search * Example
-// 6: eventsMissingCatalogItems
+// "2012-04-23T18:25:43.511Z" * Example 5: eventType = search * Example 6:
+// eventsMissingCatalogItems
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Filter(filter string) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// results to return per page. If zero, the service will choose a
-// reasonable default.
+// PageSize sets the optional parameter "pageSize": Maximum number of results
+// to return per page. If zero, the service will choose a reasonable default.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5374,33 +4139,29 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) PageToken(pageT
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresUserEventsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5409,12 +4170,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Header() http.H
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5435,15 +4191,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) doRequest(alt s
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.list" call.
-// Exactly one of
-// *GoogleCloudRecommendationengineV1beta1ListUserEventsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1ListUserEventsResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1ListUserEventsResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1ListUserEventsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5474,48 +4226,6 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a list of user events within a time range, with potential filtering. The method does not list unjoined user events. Unjoined user event definition: when a user event is ingested from Recommendations AI User Event APIs, the catalog item included in the user event is connected with the current catalog. If a catalog item of the ingested event is not in the current catalog, it could lead to degraded model quality. This is called an unjoined event.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.userEvents.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filtering expression to specify restrictions over returned events. This is a sequence of terms, where each term applies some kind of a restriction to the returned user events. Use this expression to restrict results to a specific time range, or filter events by eventType. eg: eventTime \u003e \"2012-04-23T18:25:43.511Z\" eventsMissingCatalogItems eventTime\u003c\"2012-04-23T18:25:43.511Z\" eventType=search We expect only 3 types of fields: * eventTime: this can be specified a maximum of 2 times, once with a less than operator and once with a greater than operator. The eventTime restrict should result in one contiguous valid eventTime range. * eventType: only 1 eventType restriction can be specified. * eventsMissingCatalogItems: specififying this will restrict results to events for which catalog items were not found in the catalog. The default behavior is to return only those events for which catalog items were found. Some examples of valid filters expressions: * Example 1: eventTime \u003e \"2012-04-23T18:25:43.511Z\" eventTime \u003c \"2012-04-23T18:30:43.511Z\" * Example 2: eventTime \u003e \"2012-04-23T18:25:43.511Z\" eventType = detail-page-view * Example 3: eventsMissingCatalogItems eventType = search eventTime \u003c \"2018-04-23T18:30:43.511Z\" * Example 4: eventTime \u003e \"2012-04-23T18:25:43.511Z\" * Example 5: eventType = search * Example 6: eventsMissingCatalogItems",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Maximum number of results to return per page. If zero, the service will choose a reasonable default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The previous ListUserEventsResponse.next_page_token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent eventStore resource name, such as `projects/*/locations/*/catalogs/default_catalog/eventStores/default_event_store`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/userEvents",
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1ListUserEventsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5523,7 +4233,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Do(opts ...goog
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecommendationengineV1beta1ListUserEventsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5539,8 +4249,6 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsListCall) Pages(ctx conte
 	}
 }
 
-// method id "recommendationengine.projects.locations.catalogs.eventStores.userEvents.purge":
-
 type ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall struct {
 	s                                                            *Service
 	parent                                                       string
@@ -5550,15 +4258,15 @@ type ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall struct {
 	header_                                                      http.Header
 }
 
-// Purge: Deletes permanently all user events specified by the filter
-// provided. Depending on the number of events specified by the filter,
-// this operation could take hours or days to complete. To test a
-// filter, use the list command first.
+// Purge: Deletes permanently all user events specified by the filter provided.
+// Depending on the number of events specified by the filter, this operation
+// could take hours or days to complete. To test a filter, use the list command
+// first.
 //
-//   - parent: The resource name of the event_store under which the events
-//     are created. The format is
-//     `projects/${projectId}/locations/global/catalogs/${catalogId}/eventS
-//     tores/${eventStoreId}`.
+//   - parent: The resource name of the event_store under which the events are
+//     created. The format is
+//     `projects/${projectId}/locations/global/catalogs/${catalogId}/eventStores/$
+//     {eventStoreId}`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Purge(parent string, googlecloudrecommendationenginev1beta1purgeusereventsrequest *GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5567,23 +4275,21 @@ func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Purge(parent str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5592,18 +4298,12 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Header() http.
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1purgeusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/userEvents:purge")
@@ -5620,12 +4320,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) doRequest(alt 
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.purge" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5656,38 +4355,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsPurgeCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes permanently all user events specified by the filter provided. Depending on the number of events specified by the filter, this operation could take hours or days to complete. To test a filter, use the list command first.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:purge",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.userEvents.purge",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the event_store under which the events are created. The format is `projects/${projectId}/locations/global/catalogs/${catalogId}/eventStores/${eventStoreId}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/userEvents:purge",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1PurgeUserEventsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.userEvents.rejoin":
 
 type ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall struct {
 	s                                                             *Service
@@ -5698,18 +4366,17 @@ type ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall struct {
 	header_                                                       http.Header
 }
 
-// Rejoin: Triggers a user event rejoin operation with latest catalog
-// data. Events will not be annotated with detailed catalog information
-// if catalog item is missing at the time the user event is ingested,
-// and these events are stored as unjoined events with a limited usage
-// on training and serving. This API can be used to trigger a 'join'
-// operation on specified events with latest version of catalog items.
-// It can also be used to correct events joined with wrong catalog
-// items.
+// Rejoin: Triggers a user event rejoin operation with latest catalog data.
+// Events will not be annotated with detailed catalog information if catalog
+// item is missing at the time the user event is ingested, and these events are
+// stored as unjoined events with a limited usage on training and serving. This
+// API can be used to trigger a 'join' operation on specified events with
+// latest version of catalog items. It can also be used to correct events
+// joined with wrong catalog items.
 //
 //   - parent: Full resource name of user event, such as
-//     `projects/*/locations/*/catalogs/default_catalog/eventStores/default
-//     _event_store`.
+//     `projects/*/locations/*/catalogs/default_catalog/eventStores/default_event_
+//     store`.
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Rejoin(parent string, googlecloudrecommendationenginev1beta1rejoinusereventsrequest *GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest) *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5718,23 +4385,21 @@ func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Rejoin(parent st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5743,18 +4408,12 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Header() http
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1rejoinusereventsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/userEvents:rejoin")
@@ -5771,12 +4430,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) doRequest(alt
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.rejoin" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5807,38 +4465,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsRejoinCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Triggers a user event rejoin operation with latest catalog data. Events will not be annotated with detailed catalog information if catalog item is missing at the time the user event is ingested, and these events are stored as unjoined events with a limited usage on training and serving. This API can be used to trigger a 'join' operation on specified events with latest version of catalog items. It can also be used to correct events joined with wrong catalog items.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:rejoin",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.userEvents.rejoin",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Full resource name of user event, such as `projects/*/locations/*/catalogs/default_catalog/eventStores/default_event_store`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/userEvents:rejoin",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1RejoinUserEventsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.eventStores.userEvents.write":
 
 type ProjectsLocationsCatalogsEventStoresUserEventsWriteCall struct {
 	s                                               *Service
@@ -5852,8 +4479,8 @@ type ProjectsLocationsCatalogsEventStoresUserEventsWriteCall struct {
 // Write: Writes a single user event.
 //
 //   - parent: The parent eventStore resource name, such as
-//     "projects/1234/locations/global/catalogs/default_catalog/eventStores
-//     /default_event_store".
+//     "projects/1234/locations/global/catalogs/default_catalog/eventStores/defaul
+//     t_event_store".
 func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Write(parent string, googlecloudrecommendationenginev1beta1userevent *GoogleCloudRecommendationengineV1beta1UserEvent) *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall {
 	c := &ProjectsLocationsCatalogsEventStoresUserEventsWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5862,23 +4489,21 @@ func (r *ProjectsLocationsCatalogsEventStoresUserEventsService) Write(parent str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Context(ctx context.Context) *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5887,18 +4512,12 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Header() http.
 }
 
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecommendationenginev1beta1userevent)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/userEvents:write")
@@ -5915,16 +4534,11 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) doRequest(alt 
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.eventStores.userEvents.write" call.
-// Exactly one of *GoogleCloudRecommendationengineV1beta1UserEvent or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudRecommendationengineV1beta1UserEvent.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRecommendationengineV1beta1UserEvent.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecommendationengineV1beta1UserEvent, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5955,38 +4569,7 @@ func (c *ProjectsLocationsCatalogsEventStoresUserEventsWriteCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Writes a single user event.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/eventStores/{eventStoresId}/userEvents:write",
-	//   "httpMethod": "POST",
-	//   "id": "recommendationengine.projects.locations.catalogs.eventStores.userEvents.write",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent eventStore resource name, such as \"projects/1234/locations/global/catalogs/default_catalog/eventStores/default_event_store\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/eventStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/userEvents:write",
-	//   "request": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1UserEvent"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudRecommendationengineV1beta1UserEvent"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.operations.get":
 
 type ProjectsLocationsCatalogsOperationsGetCall struct {
 	s            *Service
@@ -5997,9 +4580,9 @@ type ProjectsLocationsCatalogsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsCatalogsOperationsService) Get(name string) *ProjectsLocationsCatalogsOperationsGetCall {
@@ -6009,33 +4592,29 @@ func (r *ProjectsLocationsCatalogsOperationsService) Get(name string) *ProjectsL
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsCatalogsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6044,12 +4623,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6070,12 +4644,11 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6106,35 +4679,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "recommendationengine.projects.locations.catalogs.operations.list":
 
 type ProjectsLocationsCatalogsOperationsListCall struct {
 	s            *Service
@@ -6145,9 +4690,8 @@ type ProjectsLocationsCatalogsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsCatalogsOperationsService) List(name string) *ProjectsLocationsCatalogsOperationsListCall {
@@ -6156,55 +4700,50 @@ func (r *ProjectsLocationsCatalogsOperationsService) List(name string) *Projects
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsLocationsCatalogsOperationsListCall) Filter(filter string) *ProjectsLocationsCatalogsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsLocationsCatalogsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsCatalogsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsLocationsCatalogsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsCatalogsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsCatalogsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCatalogsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsCatalogsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCatalogsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsCatalogsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsCatalogsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6213,12 +4752,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6239,13 +4773,11 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "recommendationengine.projects.locations.catalogs.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsCatalogsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6276,48 +4808,6 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "recommendationengine.projects.locations.catalogs.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}/operations",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6325,7 +4815,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Do(opts ...googleapi.CallO
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsCatalogsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

@@ -58,6 +58,7 @@ func SetOptions(u URLParams, opts ...googleapi.CallOption) {
 	}
 }
 
+// SetHeaders sets common headers for all requests.
 func SetHeaders(userAgent, contentType string, userHeaders http.Header) http.Header {
 	reqHeaders := make(http.Header)
 	reqHeaders.Set("x-goog-api-client", "gl-go/"+GoVersion()+" gdcl/"+internal.Version)

@@ -101,12 +101,12 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View and write monitoring data for all of your Google and third-party
-	// Cloud and API projects
+	// View and write monitoring data for all of your Google and third-party Cloud
+	// and API projects
 	MonitoringScope = "https://www.googleapis.com/auth/monitoring"
 
 	// Publish metric data to your Google Cloud projects
@@ -190,238 +190,189 @@ type ProjectsProfilesService struct {
 	s *Service
 }
 
-// CreateProfileRequest: CreateProfileRequest describes a profile
-// resource online creation request. The deployment field must be
-// populated. The profile_type specifies the list of profile types
-// supported by the agent. The creation call will hang until a profile
-// of one of these types needs to be collected.
+// CreateProfileRequest: CreateProfileRequest describes a profile resource
+// online creation request. The deployment field must be populated. The
+// profile_type specifies the list of profile types supported by the agent. The
+// creation call will hang until a profile of one of these types needs to be
+// collected.
 type CreateProfileRequest struct {
 	// Deployment: Deployment details.
 	Deployment *Deployment `json:"deployment,omitempty"`
-
 	// ProfileType: One or more profile types that the agent is capable of
 	// providing.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Unspecified profile type.
 	//   "CPU" - Thread CPU time sampling.
-	//   "WALL" - Wallclock time sampling. More expensive as stops all
-	// threads.
-	//   "HEAP" - In-use heap profile. Represents a snapshot of the
-	// allocations that are live at the time of the profiling.
+	//   "WALL" - Wallclock time sampling. More expensive as stops all threads.
+	//   "HEAP" - In-use heap profile. Represents a snapshot of the allocations
+	// that are live at the time of the profiling.
 	//   "THREADS" - Single-shot collection of all thread stacks.
 	//   "CONTENTION" - Synchronization contention profile.
 	//   "PEAK_HEAP" - Peak heap profile.
-	//   "HEAP_ALLOC" - Heap allocation profile. It represents the
-	// aggregation of all allocations made over the duration of the profile.
-	// All allocations are included, including those that might have been
-	// freed by the end of the profiling interval. The profile is in
-	// particular useful for garbage collecting languages to understand
-	// which parts of the code create most of the garbage collection
-	// pressure to see if those can be optimized.
+	//   "HEAP_ALLOC" - Heap allocation profile. It represents the aggregation of
+	// all allocations made over the duration of the profile. All allocations are
+	// included, including those that might have been freed by the end of the
+	// profiling interval. The profile is in particular useful for garbage
+	// collecting languages to understand which parts of the code create most of
+	// the garbage collection pressure to see if those can be optimized.
 	ProfileType []string `json:"profileType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deployment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Deployment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateProfileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateProfileRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Deployment: Deployment contains the deployment identification
-// information.
+// Deployment: Deployment contains the deployment identification information.
 type Deployment struct {
-	// Labels: Labels identify the deployment within the user universe and
-	// same target. Validation regex for label names: `^a-z0-9
-	// ([a-z0-9-]{0,61}[a-z0-9])?$`. Value for an individual label must be
-	// <= 512 bytes, the total size of all label names and values must be <=
-	// 1024 bytes. Label named "language" can be used to record the
-	// programming language of the profiled deployment. The standard choices
-	// for the value include "java", "go", "python", "ruby", "nodejs",
-	// "php", "dotnet". For deployments running on Google Cloud Platform,
-	// "zone" or "region" label should be present describing the deployment
-	// location. An example of a zone is "us-central1-a", an example of a
-	// region is "us-central1" or "us-central".
+	// Labels: Labels identify the deployment within the user universe and same
+	// target. Validation regex for label names: `^a-z0-9
+	// ([a-z0-9-]{0,61}[a-z0-9])?$`. Value for an individual label must be <= 512
+	// bytes, the total size of all label names and values must be <= 1024 bytes.
+	// Label named "language" can be used to record the programming language of the
+	// profiled deployment. The standard choices for the value include "java",
+	// "go", "python", "ruby", "nodejs", "php", "dotnet". For deployments running
+	// on Google Cloud Platform, "zone" or "region" label should be present
+	// describing the deployment location. An example of a zone is "us-central1-a",
+	// an example of a region is "us-central1" or "us-central".
 	Labels map[string]string `json:"labels,omitempty"`
-
 	// ProjectId: Project ID is the ID of a cloud project. Validation regex:
 	// `^a-z{4,61}[a-z0-9]$`.
 	ProjectId string `json:"projectId,omitempty"`
-
-	// Target: Target is the service name used to group related deployments:
-	// * Service name for App Engine Flex / Standard. * Cluster and
-	// container name for GKE. * User-specified string for direct Compute
-	// Engine profiling (e.g. Java). * Job name for Dataflow. Validation
-	// regex: `^a-z0-9 ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
+	// Target: Target is the service name used to group related deployments: *
+	// Service name for App Engine Flex / Standard. * Cluster and container name
+	// for GKE. * User-specified string for direct Compute Engine profiling (e.g.
+	// Java). * Job name for Dataflow. Validation regex: `^a-z0-9
+	// ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
 	Target string `json:"target,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Labels") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Deployment) MarshalJSON() ([]byte, error) {
 	type NoMethod Deployment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListProfilesResponse: ListProfileResponse contains the list of
-// collected profiles for deployments in projects which the user has
-// permissions to view.
+// ListProfilesResponse: ListProfileResponse contains the list of collected
+// profiles for deployments in projects which the user has permissions to view.
 type ListProfilesResponse struct {
-	// NextPageToken: Token to receive the next page of results. This field
-	// maybe empty if there are no more profiles to fetch.
+	// NextPageToken: Token to receive the next page of results. This field maybe
+	// empty if there are no more profiles to fetch.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Profiles: List of profiles fetched.
 	Profiles []*Profile `json:"profiles,omitempty"`
-
-	// SkippedProfiles: Number of profiles that were skipped in the current
-	// page since they were not able to be fetched successfully. This should
-	// typically be zero. A non-zero value may indicate a transient failure,
-	// in which case if the number is too high for your use case, the call
-	// may be retried.
+	// SkippedProfiles: Number of profiles that were skipped in the current page
+	// since they were not able to be fetched successfully. This should typically
+	// be zero. A non-zero value may indicate a transient failure, in which case if
+	// the number is too high for your use case, the call may be retried.
 	SkippedProfiles int64 `json:"skippedProfiles,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProfilesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Profile: Profile resource.
 type Profile struct {
 	// Deployment: Deployment this profile corresponds to.
 	Deployment *Deployment `json:"deployment,omitempty"`
-
-	// Duration: Duration of the profiling session. Input (for the offline
-	// mode) or output (for the online mode). The field represents requested
-	// profiling duration. It may slightly differ from the effective
-	// profiling duration, which is recorded in the profile data, in case
-	// the profiling can't be stopped immediately (e.g. in case stopping the
-	// profiling is handled asynchronously).
+	// Duration: Duration of the profiling session. Input (for the offline mode) or
+	// output (for the online mode). The field represents requested profiling
+	// duration. It may slightly differ from the effective profiling duration,
+	// which is recorded in the profile data, in case the profiling can't be
+	// stopped immediately (e.g. in case stopping the profiling is handled
+	// asynchronously).
 	Duration string `json:"duration,omitempty"`
-
-	// Labels: Input only. Labels associated to this specific profile. These
-	// labels will get merged with the deployment labels for the final data
-	// set. See documentation on deployment labels for validation rules and
-	// limits.
+	// Labels: Input only. Labels associated to this specific profile. These labels
+	// will get merged with the deployment labels for the final data set. See
+	// documentation on deployment labels for validation rules and limits.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: Output only. Opaque, server-assigned, unique ID for this
-	// profile.
+	// Name: Output only. Opaque, server-assigned, unique ID for this profile.
 	Name string `json:"name,omitempty"`
-
-	// ProfileBytes: Input only. Profile bytes, as a gzip compressed
-	// serialized proto, the format is
+	// ProfileBytes: Input only. Profile bytes, as a gzip compressed serialized
+	// proto, the format is
 	// https://github.com/google/pprof/blob/master/proto/profile.proto.
 	ProfileBytes string `json:"profileBytes,omitempty"`
-
-	// ProfileType: Type of profile. For offline mode, this must be
-	// specified when creating the profile. For online mode it is assigned
-	// and returned by the server.
+	// ProfileType: Type of profile. For offline mode, this must be specified when
+	// creating the profile. For online mode it is assigned and returned by the
+	// server.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Unspecified profile type.
 	//   "CPU" - Thread CPU time sampling.
-	//   "WALL" - Wallclock time sampling. More expensive as stops all
-	// threads.
-	//   "HEAP" - In-use heap profile. Represents a snapshot of the
-	// allocations that are live at the time of the profiling.
+	//   "WALL" - Wallclock time sampling. More expensive as stops all threads.
+	//   "HEAP" - In-use heap profile. Represents a snapshot of the allocations
+	// that are live at the time of the profiling.
 	//   "THREADS" - Single-shot collection of all thread stacks.
 	//   "CONTENTION" - Synchronization contention profile.
 	//   "PEAK_HEAP" - Peak heap profile.
-	//   "HEAP_ALLOC" - Heap allocation profile. It represents the
-	// aggregation of all allocations made over the duration of the profile.
-	// All allocations are included, including those that might have been
-	// freed by the end of the profiling interval. The profile is in
-	// particular useful for garbage collecting languages to understand
-	// which parts of the code create most of the garbage collection
-	// pressure to see if those can be optimized.
+	//   "HEAP_ALLOC" - Heap allocation profile. It represents the aggregation of
+	// all allocations made over the duration of the profile. All allocations are
+	// included, including those that might have been freed by the end of the
+	// profiling interval. The profile is in particular useful for garbage
+	// collecting languages to understand which parts of the code create most of
+	// the garbage collection pressure to see if those can be optimized.
 	ProfileType string `json:"profileType,omitempty"`
-
-	// StartTime: Output only. Start time for the profile. This output is
-	// only present in response from the ListProfiles method.
+	// StartTime: Output only. Start time for the profile. This output is only
+	// present in response from the ListProfiles method.
 	StartTime string `json:"startTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deployment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Deployment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Profile) MarshalJSON() ([]byte, error) {
 	type NoMethod Profile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudprofiler.projects.profiles.create":
 
 type ProjectsProfilesCreateCall struct {
 	s                    *Service
@@ -432,20 +383,19 @@ type ProjectsProfilesCreateCall struct {
 	header_              http.Header
 }
 
-// Create: CreateProfile creates a new profile resource in the online
-// mode. _Direct use of this API is discouraged, please use a supported
-// profiler agent
+// Create: CreateProfile creates a new profile resource in the online mode.
+// _Direct use of this API is discouraged, please use a supported profiler
+// agent
 // (https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
-// instead for profile collection._ The server ensures that the new
-// profiles are created at a constant rate per deployment, so the
-// creation request may hang for some time until the next profile
-// session is available. The request may fail with ABORTED error if the
-// creation is not available within ~1m, the response will indicate the
-// duration of the backoff the client should take before attempting
-// creating a profile again. The backoff duration is returned in
-// google.rpc.RetryInfo extension on the response status. To a gRPC
-// client, the extension will be return as a binary-serialized proto in
-// the trailing metadata item named "google.rpc.retryinfo-bin".
+// instead for profile collection._ The server ensures that the new profiles
+// are created at a constant rate per deployment, so the creation request may
+// hang for some time until the next profile session is available. The request
+// may fail with ABORTED error if the creation is not available within ~1m, the
+// response will indicate the duration of the backoff the client should take
+// before attempting creating a profile again. The backoff duration is returned
+// in google.rpc.RetryInfo extension on the response status. To a gRPC client,
+// the extension will be return as a binary-serialized proto in the trailing
+// metadata item named "google.rpc.retryinfo-bin".
 //
 // - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) Create(parent string, createprofilerequest *CreateProfileRequest) *ProjectsProfilesCreateCall {
@@ -456,23 +406,21 @@ func (r *ProjectsProfilesService) Create(parent string, createprofilerequest *Cr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsProfilesCreateCall) Fields(s ...googleapi.Field) *ProjectsProfilesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsProfilesCreateCall) Context(ctx context.Context) *ProjectsProfilesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsProfilesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -481,18 +429,12 @@ func (c *ProjectsProfilesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createprofilerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/profiles")
@@ -509,12 +451,10 @@ func (c *ProjectsProfilesCreateCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "cloudprofiler.projects.profiles.create" call.
-// Exactly one of *Profile or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Profile.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Profile.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsProfilesCreateCall) Do(opts ...googleapi.CallOption) (*Profile, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -545,40 +485,7 @@ func (c *ProjectsProfilesCreateCall) Do(opts ...googleapi.CallOption) (*Profile,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "CreateProfile creates a new profile resource in the online mode. _Direct use of this API is discouraged, please use a [supported profiler agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent) instead for profile collection._ The server ensures that the new profiles are created at a constant rate per deployment, so the creation request may hang for some time until the next profile session is available. The request may fail with ABORTED error if the creation is not available within ~1m, the response will indicate the duration of the backoff the client should take before attempting creating a profile again. The backoff duration is returned in google.rpc.RetryInfo extension on the response status. To a gRPC client, the extension will be return as a binary-serialized proto in the trailing metadata item named \"google.rpc.retryinfo-bin\". ",
-	//   "flatPath": "v2/projects/{projectsId}/profiles",
-	//   "httpMethod": "POST",
-	//   "id": "cloudprofiler.projects.profiles.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Parent project to create the profile in.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/profiles",
-	//   "request": {
-	//     "$ref": "CreateProfileRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Profile"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/monitoring",
-	//     "https://www.googleapis.com/auth/monitoring.write"
-	//   ]
-	// }
-
 }
-
-// method id "cloudprofiler.projects.profiles.createOffline":
 
 type ProjectsProfilesCreateOfflineCall struct {
 	s          *Service
@@ -589,10 +496,10 @@ type ProjectsProfilesCreateOfflineCall struct {
 	header_    http.Header
 }
 
-// CreateOffline: CreateOfflineProfile creates a new profile resource in
-// the offline mode. The client provides the profile to create along
-// with the profile bytes, the server records it. _Direct use of this
-// API is discouraged, please use a supported profiler agent
+// CreateOffline: CreateOfflineProfile creates a new profile resource in the
+// offline mode. The client provides the profile to create along with the
+// profile bytes, the server records it. _Direct use of this API is
+// discouraged, please use a supported profiler agent
 // (https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
 // instead for profile collection._
 //
@@ -605,23 +512,21 @@ func (r *ProjectsProfilesService) CreateOffline(parent string, profile *Profile)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsProfilesCreateOfflineCall) Fields(s ...googleapi.Field) *ProjectsProfilesCreateOfflineCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsProfilesCreateOfflineCall) Context(ctx context.Context) *ProjectsProfilesCreateOfflineCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsProfilesCreateOfflineCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -630,18 +535,12 @@ func (c *ProjectsProfilesCreateOfflineCall) Header() http.Header {
 }
 
 func (c *ProjectsProfilesCreateOfflineCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profile)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/profiles:createOffline")
@@ -658,12 +557,10 @@ func (c *ProjectsProfilesCreateOfflineCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "cloudprofiler.projects.profiles.createOffline" call.
-// Exactly one of *Profile or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Profile.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Profile.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsProfilesCreateOfflineCall) Do(opts ...googleapi.CallOption) (*Profile, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -694,40 +591,7 @@ func (c *ProjectsProfilesCreateOfflineCall) Do(opts ...googleapi.CallOption) (*P
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "CreateOfflineProfile creates a new profile resource in the offline mode. The client provides the profile to create along with the profile bytes, the server records it. _Direct use of this API is discouraged, please use a [supported profiler agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent) instead for profile collection._",
-	//   "flatPath": "v2/projects/{projectsId}/profiles:createOffline",
-	//   "httpMethod": "POST",
-	//   "id": "cloudprofiler.projects.profiles.createOffline",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Parent project to create the profile in.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/profiles:createOffline",
-	//   "request": {
-	//     "$ref": "Profile"
-	//   },
-	//   "response": {
-	//     "$ref": "Profile"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/monitoring",
-	//     "https://www.googleapis.com/auth/monitoring.write"
-	//   ]
-	// }
-
 }
-
-// method id "cloudprofiler.projects.profiles.list":
 
 type ProjectsProfilesListCall struct {
 	s            *Service
@@ -738,8 +602,8 @@ type ProjectsProfilesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists profiles which have been collected so far and for which
-// the caller has permission to view.
+// List: Lists profiles which have been collected so far and for which the
+// caller has permission to view.
 //
 //   - parent: The parent, which owns this collection of profiles. Format:
 //     projects/{user_project_id}.
@@ -749,50 +613,46 @@ func (r *ProjectsProfilesService) List(parent string) *ProjectsProfilesListCall 
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of items to return. Default page_size is 1000. Max limit is 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. Default page_size is 1000. Max limit is 1000.
 func (c *ProjectsProfilesListCall) PageSize(pageSize int64) *ProjectsProfilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token to
-// continue pagination and get profiles from a particular page. When
-// paginating, all other parameters provided to `ListProfiles` must
-// match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": The token to continue
+// pagination and get profiles from a particular page. When paginating, all
+// other parameters provided to `ListProfiles` must match the call that
+// provided the page token.
 func (c *ProjectsProfilesListCall) PageToken(pageToken string) *ProjectsProfilesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsProfilesListCall) Fields(s ...googleapi.Field) *ProjectsProfilesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsProfilesListCall) IfNoneMatch(entityTag string) *ProjectsProfilesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsProfilesListCall) Context(ctx context.Context) *ProjectsProfilesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsProfilesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -801,12 +661,7 @@ func (c *ProjectsProfilesListCall) Header() http.Header {
 }
 
 func (c *ProjectsProfilesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -827,12 +682,11 @@ func (c *ProjectsProfilesListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "cloudprofiler.projects.profiles.list" call.
-// Exactly one of *ListProfilesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListProfilesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListProfilesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsProfilesListCall) Do(opts ...googleapi.CallOption) (*ListProfilesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -863,45 +717,6 @@ func (c *ProjectsProfilesListCall) Do(opts ...googleapi.CallOption) (*ListProfil
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists profiles which have been collected so far and for which the caller has permission to view.",
-	//   "flatPath": "v2/projects/{projectsId}/profiles",
-	//   "httpMethod": "GET",
-	//   "id": "cloudprofiler.projects.profiles.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of items to return. Default page_size is 1000. Max limit is 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The token to continue pagination and get profiles from a particular page. When paginating, all other parameters provided to `ListProfiles` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of profiles. Format: projects/{user_project_id}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/profiles",
-	//   "response": {
-	//     "$ref": "ListProfilesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/monitoring",
-	//     "https://www.googleapis.com/auth/monitoring.write"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -909,7 +724,7 @@ func (c *ProjectsProfilesListCall) Do(opts ...googleapi.CallOption) (*ListProfil
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsProfilesListCall) Pages(ctx context.Context, f func(*ListProfilesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -925,8 +740,6 @@ func (c *ProjectsProfilesListCall) Pages(ctx context.Context, f func(*ListProfil
 	}
 }
 
-// method id "cloudprofiler.projects.profiles.patch":
-
 type ProjectsProfilesPatchCall struct {
 	s          *Service
 	name       string
@@ -936,17 +749,15 @@ type ProjectsProfilesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: UpdateProfile updates the profile bytes and labels on the
-// profile resource created in the online mode. Updating the bytes for
-// profiles created in the offline mode is currently not supported: the
-// profile content must be provided at the time of the profile creation.
-// _Direct use of this API is discouraged, please use a supported
-// profiler agent
+// Patch: UpdateProfile updates the profile bytes and labels on the profile
+// resource created in the online mode. Updating the bytes for profiles created
+// in the offline mode is currently not supported: the profile content must be
+// provided at the time of the profile creation. _Direct use of this API is
+// discouraged, please use a supported profiler agent
 // (https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
 // instead for profile collection._
 //
-//   - name: Output only. Opaque, server-assigned, unique ID for this
-//     profile.
+// - name: Output only. Opaque, server-assigned, unique ID for this profile.
 func (r *ProjectsProfilesService) Patch(name string, profile *Profile) *ProjectsProfilesPatchCall {
 	c := &ProjectsProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -954,34 +765,31 @@ func (r *ProjectsProfilesService) Patch(name string, profile *Profile) *Projects
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask used
-// to specify the fields to be overwritten. Currently only profile_bytes
-// and labels fields are supported by UpdateProfile, so only those
-// fields can be specified in the mask. When no mask is provided, all
-// fields are overwritten.
+// UpdateMask sets the optional parameter "updateMask": Field mask used to
+// specify the fields to be overwritten. Currently only profile_bytes and
+// labels fields are supported by UpdateProfile, so only those fields can be
+// specified in the mask. When no mask is provided, all fields are overwritten.
 func (c *ProjectsProfilesPatchCall) UpdateMask(updateMask string) *ProjectsProfilesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsProfilesPatchCall) Fields(s ...googleapi.Field) *ProjectsProfilesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsProfilesPatchCall) Context(ctx context.Context) *ProjectsProfilesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsProfilesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -990,18 +798,12 @@ func (c *ProjectsProfilesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.profile)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -1018,12 +820,10 @@ func (c *ProjectsProfilesPatchCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudprofiler.projects.profiles.patch" call.
-// Exactly one of *Profile or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Profile.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Profile.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Profile, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1054,41 +854,4 @@ func (c *ProjectsProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Profile, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "UpdateProfile updates the profile bytes and labels on the profile resource created in the online mode. Updating the bytes for profiles created in the offline mode is currently not supported: the profile content must be provided at the time of the profile creation. _Direct use of this API is discouraged, please use a [supported profiler agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent) instead for profile collection._",
-	//   "flatPath": "v2/projects/{projectsId}/profiles/{profilesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudprofiler.projects.profiles.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. Opaque, server-assigned, unique ID for this profile.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/profiles/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Field mask used to specify the fields to be overwritten. Currently only profile_bytes and labels fields are supported by UpdateProfile, so only those fields can be specified in the mask. When no mask is provided, all fields are overwritten.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "Profile"
-	//   },
-	//   "response": {
-	//     "$ref": "Profile"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/monitoring",
-	//     "https://www.googleapis.com/auth/monitoring.write"
-	//   ]
-	// }
-
 }

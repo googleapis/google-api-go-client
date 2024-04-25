@@ -107,8 +107,8 @@ const (
 	// View your Google Cloud Platform billing accounts
 	CloudBillingReadonlyScope = "https://www.googleapis.com/auth/cloud-billing.readonly"
 
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -335,7 +335,6 @@ type CacheFillRegions struct {
 	//   "CACHE_FILL_DESTINATION_REGION_CHINA" - China
 	//   "CACHE_FILL_DESTINATION_REGION_OTHERS" - Others
 	DestinationRegion string `json:"destinationRegion,omitempty"`
-
 	// SourceRegion: The source region for cache fill.
 	//
 	// Possible values:
@@ -346,29 +345,22 @@ type CacheFillRegions struct {
 	//   "CACHE_FILL_SOURCE_REGION_OCEANIA" - Oceania
 	//   "CACHE_FILL_SOURCE_REGION_SOUTH_AMERICA" - South America
 	SourceRegion string `json:"sourceRegion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DestinationRegion")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DestinationRegion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DestinationRegion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DestinationRegion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CacheFillRegions) MarshalJSON() ([]byte, error) {
 	type NoMethod CacheFillRegions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudCdnEgressWorkload: Specifies usage for Cloud CDN Data Transfer.
@@ -381,44 +373,35 @@ type CloudCdnEgressWorkload struct {
 	//   "CACHE_EGRESS_DESTINATION_CHINA" - China.
 	//   "CACHE_EGRESS_DESTINATION_EUROPE" - Europe.
 	//   "CACHE_EGRESS_DESTINATION_NORTH_AMERICA" - North America.
-	//   "CACHE_EGRESS_DESTINATION_OCEANIA" - Oceania including Australia,
-	// New Zealand, and surrounding Pacific Ocean islands such as Papua New
-	// Guinea and Fiji. This region excludes Hawaii.
-	//   "CACHE_EGRESS_DESTINATION_LATIN_AMERICA" - Latin America (Including
-	// the Caribbean, South America and Central America.)
-	//   "CACHE_EGRESS_DESTINATION_OTHER_DESTINATIONS" - All other
-	// destinations (including Africa and Antarctica)
+	//   "CACHE_EGRESS_DESTINATION_OCEANIA" - Oceania including Australia, New
+	// Zealand, and surrounding Pacific Ocean islands such as Papua New Guinea and
+	// Fiji. This region excludes Hawaii.
+	//   "CACHE_EGRESS_DESTINATION_LATIN_AMERICA" - Latin America (Including the
+	// Caribbean, South America and Central America.)
+	//   "CACHE_EGRESS_DESTINATION_OTHER_DESTINATIONS" - All other destinations
+	// (including Africa and Antarctica)
 	CacheEgressDestination string `json:"cacheEgressDestination,omitempty"`
-
 	// CacheEgressRate: Cache data transfer usage. The rate of data cache
-	// transferred to the destination. Use units such as GiBy/s or TiBy/mo,
-	// based on The Unified Code for Units of Measure
-	// (https://ucum.org/ucum.html) standard.
+	// transferred to the destination. Use units such as GiBy/s or TiBy/mo, based
+	// on The Unified Code for Units of Measure (https://ucum.org/ucum.html)
+	// standard.
 	CacheEgressRate *Usage `json:"cacheEgressRate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CacheEgressDestination") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CacheEgressDestination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CacheEgressDestination")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CacheEgressDestination") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudCdnEgressWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudCdnEgressWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudCdnWorkload: Specifies usage for Cloud CDN resources.
@@ -427,65 +410,52 @@ type CloudCdnWorkload struct {
 	//
 	// Possible values:
 	//   "CACHE_FILL_ORIGIN_SERVICE_UNSPECIFIED" - Not specified.
-	//   "CACHE_FILL_ORIGIN_SERVICE_GOOGLE_CLOUD_STORAGE_BUCKET" - Origin
-	// service is Google Cloud Storage.
-	//   "CACHE_FILL_ORIGIN_SERVICE_BACKEND_SERVICE" - Origin service is
-	// backend service, such as Compute VMs, external backend, etc.
+	//   "CACHE_FILL_ORIGIN_SERVICE_GOOGLE_CLOUD_STORAGE_BUCKET" - Origin service
+	// is Google Cloud Storage.
+	//   "CACHE_FILL_ORIGIN_SERVICE_BACKEND_SERVICE" - Origin service is backend
+	// service, such as Compute VMs, external backend, etc.
 	CacheFillOriginService string `json:"cacheFillOriginService,omitempty"`
-
-	// CacheFillRate: Cache fill usage. The rate of data transferred between
-	// cache fill regions. For example: units such as "GiBy/s" or "TBy/mo".
+	// CacheFillRate: Cache fill usage. The rate of data transferred between cache
+	// fill regions. For example: units such as "GiBy/s" or "TBy/mo".
 	CacheFillRate *Usage `json:"cacheFillRate,omitempty"`
-
-	// CacheFillRegions: The regions where data is transferred from Google
-	// data locations into Google global cache servers. The SKU prices for
-	// cache fill across services are the same.
+	// CacheFillRegions: The regions where data is transferred from Google data
+	// locations into Google global cache servers. The SKU prices for cache fill
+	// across services are the same.
 	CacheFillRegions *CacheFillRegions `json:"cacheFillRegions,omitempty"`
-
-	// CacheLookUpRate: Cache look up requests. This is specified to
-	// indicate the number of requests. For example: units such as "1/s".
+	// CacheLookUpRate: Cache look up requests. This is specified to indicate the
+	// number of requests. For example: units such as "1/s".
 	CacheLookUpRate *Usage `json:"cacheLookUpRate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CacheFillOriginService") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CacheFillOriginService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CacheFillOriginService")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CacheFillOriginService") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudCdnWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudCdnWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudInterconnectEgressWorkload: Includes the estimate for
-// Interconnect Data Transfer only. To specify usage for data transfer
-// between VMs and internet end-points, use the Standard Tier Internet
-// Data Transfer interface.
+// CloudInterconnectEgressWorkload: Includes the estimate for Interconnect Data
+// Transfer only. To specify usage for data transfer between VMs and internet
+// end-points, use the Standard Tier Internet Data Transfer interface.
 type CloudInterconnectEgressWorkload struct {
-	// EgressRate: Outbound data transfer usage. This usage applies when you
-	// move or copy data from one Google Cloud service to another service.
-	// The units are GiBy/s, By/s, and so on, based on The Unified Code for
-	// Units of Measure (https://ucum.org/ucum.html) standard.
+	// EgressRate: Outbound data transfer usage. This usage applies when you move
+	// or copy data from one Google Cloud service to another service. The units are
+	// GiBy/s, By/s, and so on, based on The Unified Code for Units of Measure
+	// (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
-
-	// InterconnectConnectionLocation: Locations in the Interconnect
-	// connection location table
-	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing).
-	// These are the Interconnect Data Transfer charges.
+	// InterconnectConnectionLocation: Locations in the Interconnect connection
+	// location table
+	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing). These
+	// are the Interconnect Data Transfer charges.
 	//
 	// Possible values:
 	//   "INTERCONNECT_CONNECTION_LOCATION_UNSPECIFIED" - Unspecified.
@@ -495,36 +465,28 @@ type CloudInterconnectEgressWorkload struct {
 	//   "INTERCONNECT_CONNECTION_LOCATION_SOUTH_AMERICA" - South America.
 	//   "INTERCONNECT_CONNECTION_LOCATION_AUSTRALIA" - Australia.
 	InterconnectConnectionLocation string `json:"interconnectConnectionLocation,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EgressRate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EgressRate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EgressRate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudInterconnectEgressWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudInterconnectEgressWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudInterconnectWorkload: Specifies usage for Cloud Interconnect
-// resources.
+// CloudInterconnectWorkload: Specifies usage for Cloud Interconnect resources.
 type CloudInterconnectWorkload struct {
 	// InterconnectAttachments: VLAN attachment used for interconnect.
 	InterconnectAttachments []*VlanAttachment `json:"interconnectAttachments,omitempty"`
-
 	// InterconnectType: VLAN attachment type
 	//
 	// Possible values:
@@ -532,7 +494,6 @@ type CloudInterconnectWorkload struct {
 	//   "INTERCONNECT_TYPE_DEDICATED" - Type is dedicated
 	//   "INTERCONNECT_TYPE_PARTNER" - Type is partner
 	InterconnectType string `json:"interconnectType,omitempty"`
-
 	// LinkType: Interconnect circuit link type.
 	//
 	// Possible values:
@@ -540,43 +501,32 @@ type CloudInterconnectWorkload struct {
 	//   "LINK_TYPE_ETHERNET_10G_LR" - Link type is 10 Gbps.
 	//   "LINK_TYPE_ETHERNET_100G_LR" - Link type is 100 Gbps.
 	LinkType string `json:"linkType,omitempty"`
-
-	// ProvisionedLinkCount: Interconnect usage. This is specified as a
-	// unitless quantity which indicates the number of circuit provisioned
-	// in interconnect.
+	// ProvisionedLinkCount: Interconnect usage. This is specified as a unitless
+	// quantity which indicates the number of circuit provisioned in interconnect.
 	ProvisionedLinkCount *Usage `json:"provisionedLinkCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "InterconnectAttachments") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "InterconnectAttachments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InterconnectAttachments")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InterconnectAttachments") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudInterconnectWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudInterconnectWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudStorageEgressWorkload: Specification of a network type. Network
-// data transfer within Google Cloud applies when you move or copy data
-// from one Cloud Storage bucket to another or when another Google Cloud
-// service accesses data in your Cloud Storage bucket.This includes the
-// network data transfer within Google Cloud and the general network
-// usage.
+// CloudStorageEgressWorkload: Specification of a network type. Network data
+// transfer within Google Cloud applies when you move or copy data from one
+// Cloud Storage bucket to another or when another Google Cloud service
+// accesses data in your Cloud Storage bucket.This includes the network data
+// transfer within Google Cloud and the general network usage.
 type CloudStorageEgressWorkload struct {
 	// DestinationContinent: Where the data is sent to.
 	//
@@ -588,15 +538,12 @@ type CloudStorageEgressWorkload struct {
 	//   "DESTINATION_CONTINENT_NORTH_AMERICA" - North America.
 	//   "DESTINATION_CONTINENT_SOUTH_AMERICA" - South America
 	DestinationContinent string `json:"destinationContinent,omitempty"`
-
-	// EgressRate: Data transfer usage rate. This usage applies when you
-	// move or copy data from one Cloud Storage bucket to another or when
-	// another Google Cloud service accesses data in your Cloud Storage
-	// bucket. The expected units are GiBy/s, By/s, and so on, based on The
-	// Unified Code for Units of Measure (https://ucum.org/ucum.html)
-	// standard.
+	// EgressRate: Data transfer usage rate. This usage applies when you move or
+	// copy data from one Cloud Storage bucket to another or when another Google
+	// Cloud service accesses data in your Cloud Storage bucket. The expected units
+	// are GiBy/s, By/s, and so on, based on The Unified Code for Units of Measure
+	// (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
-
 	// SourceContinent: Where the data comes from.
 	//
 	// Possible values:
@@ -607,415 +554,315 @@ type CloudStorageEgressWorkload struct {
 	//   "SOURCE_CONTINENT_NORTH_AMERICA" - North America.
 	//   "SOURCE_CONTINENT_SOUTH_AMERICA" - South America.
 	SourceContinent string `json:"sourceContinent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DestinationContinent") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DestinationContinent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DestinationContinent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DestinationContinent") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudStorageEgressWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudStorageEgressWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudStorageWorkload: Specifies usage of Cloud Storage resources.
 type CloudStorageWorkload struct {
-	// DataRetrieval: Data retrieval usage. A retrieval cost applies when
-	// data or metadata is read, copied, or rewritten . For example: units
-	// such as "GiB/s" or "B/s".
+	// DataRetrieval: Data retrieval usage. A retrieval cost applies when data or
+	// metadata is read, copied, or rewritten . For example: units such as "GiB/s"
+	// or "B/s".
 	DataRetrieval *Usage `json:"dataRetrieval,omitempty"`
-
-	// DataStored: Data storage usage. The amount of data stored in buckets.
-	// For example: units such as GiBy/s or TiBy/mo, based on The Unified
-	// Code for Units of Measure (https://ucum.org/ucum.html) standard.
+	// DataStored: Data storage usage. The amount of data stored in buckets. For
+	// example: units such as GiBy/s or TiBy/mo, based on The Unified Code for
+	// Units of Measure (https://ucum.org/ucum.html) standard.
 	DataStored *Usage `json:"dataStored,omitempty"`
-
 	// DualRegion: Specify dual regions.
 	DualRegion *DualRegional `json:"dualRegion,omitempty"`
-
 	// MultiRegion: Specify multi regions.
 	MultiRegion *MultiRegional `json:"multiRegion,omitempty"`
-
-	// OperationA: Class A operation usage in Cloud Storage, such as listing
-	// the objects in buckets. See the operations pricing
-	// (https://cloud.google.com/storage/pricing#operations-pricing) tables
-	// for a list of which operations fall into each class. For example:
-	// units such as "1/s".
+	// OperationA: Class A operation usage in Cloud Storage, such as listing the
+	// objects in buckets. See the operations pricing
+	// (https://cloud.google.com/storage/pricing#operations-pricing) tables for a
+	// list of which operations fall into each class. For example: units such as
+	// "1/s".
 	OperationA *Usage `json:"operationA,omitempty"`
-
 	// OperationB: Class B operation usage in Cloud Storage, such as
 	// `getIamPolicy`. See the operations pricing
-	// (https://cloud.google.com/storage/pricing#operations-pricing) tables
-	// for a list of which operations fall into each class. For example:
-	// units such as "1/s".
+	// (https://cloud.google.com/storage/pricing#operations-pricing) tables for a
+	// list of which operations fall into each class. For example: units such as
+	// "1/s".
 	OperationB *Usage `json:"operationB,omitempty"`
-
 	// Region: Specify a single region.
 	Region *Regional `json:"region,omitempty"`
-
 	// StorageClass: The storage class
-	// (https://cloud.google.com/storage/docs/storage-classes#classes) of
-	// the data and operation. For example: "standard" and "nearline".
+	// (https://cloud.google.com/storage/docs/storage-classes#classes) of the data
+	// and operation. For example: "standard" and "nearline".
 	StorageClass string `json:"storageClass,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataRetrieval") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataRetrieval") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataRetrieval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudStorageWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudStorageWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Commitment: Commitments give you the ability to pay a recurring fee
-// in exchange for a benefit, such as a discount for your use. For
-// example, this object might contain details of a spend-based committed
-// use discount (CUD)
-// (https://cloud.google.com/docs/cuds#spend_based_commitments). Within
-// a CostScenario, adding a commitment includes the cost of the
-// commitment and any discounts.
+// Commitment: Commitments give you the ability to pay a recurring fee in
+// exchange for a benefit, such as a discount for your use. For example, this
+// object might contain details of a spend-based committed use discount (CUD)
+// (https://cloud.google.com/docs/cuds#spend_based_commitments). Within a
+// CostScenario, adding a commitment includes the cost of the commitment and
+// any discounts.
 type Commitment struct {
 	// Name: Required. A name for this commitment. All commitments in a
-	// CostScenario must have unique names. Each name may be at most 128
-	// characters long.
+	// CostScenario must have unique names. Each name may be at most 128 characters
+	// long.
 	Name string `json:"name,omitempty"`
-
 	// VmResourceBasedCud: A resource-based committed use discount (CUD).
 	VmResourceBasedCud *VmResourceBasedCud `json:"vmResourceBasedCud,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Commitment) MarshalJSON() ([]byte, error) {
 	type NoMethod Commitment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CommitmentCostEstimate: Estimated cost for a commitment.
 type CommitmentCostEstimate struct {
-	// CommitmentTotalCostEstimate: Total estimated costs for the
-	// commitment.
+	// CommitmentTotalCostEstimate: Total estimated costs for the commitment.
 	CommitmentTotalCostEstimate *CostEstimate `json:"commitmentTotalCostEstimate,omitempty"`
-
 	// Name: The name of the commitment, as specified in the `CostScenario`.
 	Name string `json:"name,omitempty"`
-
 	// SkuCostEstimates: Estimated costs for each SKU in the commitment.
 	SkuCostEstimates []*SkuCostEstimate `json:"skuCostEstimates,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "CommitmentTotalCostEstimate") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "CommitmentTotalCostEstimate") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "CommitmentTotalCostEstimate") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CommitmentTotalCostEstimate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommitmentCostEstimate) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitmentCostEstimate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ComputeVmWorkload: Specificies usage of a set of identical compute VM
 // instances.
 type ComputeVmWorkload struct {
-	// EnableConfidentialCompute: Defines whether each instance has
-	// confidential compute enabled.
+	// EnableConfidentialCompute: Defines whether each instance has confidential
+	// compute enabled.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
-
 	// GuestAccelerator: Guest accelerators attached to each machine.
 	GuestAccelerator *GuestAccelerator `json:"guestAccelerator,omitempty"`
-
-	// InstancesRunning: VM usage. This is specified as a unitless quantity
-	// which indicates the number of instances running.
+	// InstancesRunning: VM usage. This is specified as a unitless quantity which
+	// indicates the number of instances running.
 	InstancesRunning *Usage `json:"instancesRunning,omitempty"`
-
 	// Licenses: Premium image licenses used by each instance.
 	Licenses []string `json:"licenses,omitempty"`
-
 	// MachineType: The machine type.
 	MachineType *MachineType `json:"machineType,omitempty"`
-
-	// PersistentDisks: Persistent disks attached to each instance. Must
-	// include a boot disk.
+	// PersistentDisks: Persistent disks attached to each instance. Must include a
+	// boot disk.
 	PersistentDisks []*PersistentDisk `json:"persistentDisks,omitempty"`
-
 	// Preemptible: Defines whether each instance is preemptible.
 	Preemptible bool `json:"preemptible,omitempty"`
-
-	// Region: The region
-	// (https://cloud.google.com/compute/docs/regions-zones) where the VMs
-	// run. For example: "us-central1".
+	// Region: The region (https://cloud.google.com/compute/docs/regions-zones)
+	// where the VMs run. For example: "us-central1".
 	Region string `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableConfidentialCompute") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EnableConfidentialCompute")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EnableConfidentialCompute") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnableConfidentialCompute") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ComputeVmWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeVmWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CostEstimate: An estimated cost.
 type CostEstimate struct {
 	// CreditEstimates: The estimated credits applied.
 	CreditEstimates []*CreditEstimate `json:"creditEstimates,omitempty"`
-
 	// NetCostEstimate: The estimated net cost after applying credits.
 	NetCostEstimate *Money `json:"netCostEstimate,omitempty"`
-
 	// PreCreditCostEstimate: The estimated cost prior to applying credits.
 	PreCreditCostEstimate *Money `json:"preCreditCostEstimate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreditEstimates") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreditEstimates") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CreditEstimates") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CostEstimate) MarshalJSON() ([]byte, error) {
 	type NoMethod CostEstimate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CostEstimationResult: The result of a estimating the costs of a
 // `CostScenario`.
 type CostEstimationResult struct {
-	// CurrencyCode: Required. The ISO 4217 currency code for the cost
-	// estimate.
+	// CurrencyCode: Required. The ISO 4217 currency code for the cost estimate.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// SegmentCostEstimates: Required. Estimated costs for each idealized
-	// month of a `CostScenario`.
+	// SegmentCostEstimates: Required. Estimated costs for each idealized month of
+	// a `CostScenario`.
 	SegmentCostEstimates []*SegmentCostEstimate `json:"segmentCostEstimates,omitempty"`
-
 	// Skus: Required. Information about SKUs used in the estimate.
 	Skus []*Sku `json:"skus,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CostEstimationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod CostEstimationResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CostScenario: Encapsulates all the information needed to perform a
-// cost estimate. It includes a specification of the Google Cloud usage
-// whose costs are estimated, and configuration options.
+// CostScenario: Encapsulates all the information needed to perform a cost
+// estimate. It includes a specification of the Google Cloud usage whose costs
+// are estimated, and configuration options.
 type CostScenario struct {
-	// Commitments: New commitments to estimate the costs for. The cost of
-	// the commitments will be included in the estimate result and discounts
-	// the commitment entitles will be included in the workload cost
-	// estimates. A maximum of 100 workloads can be provided.
+	// Commitments: New commitments to estimate the costs for. The cost of the
+	// commitments will be included in the estimate result and discounts the
+	// commitment entitles will be included in the workload cost estimates. A
+	// maximum of 100 workloads can be provided.
 	Commitments []*Commitment `json:"commitments,omitempty"`
-
 	// ScenarioConfig: Configuration for the scenario.
 	ScenarioConfig *ScenarioConfig `json:"scenarioConfig,omitempty"`
-
-	// Workloads: The Google Cloud usage whose costs are estimated. A
-	// maximum of 100 workloads can be provided.
+	// Workloads: The Google Cloud usage whose costs are estimated. A maximum of
+	// 100 workloads can be provided.
 	Workloads []*Workload `json:"workloads,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Commitments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Commitments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Commitments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CostScenario) MarshalJSON() ([]byte, error) {
 	type NoMethod CostScenario
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreditEstimate: An estimated credit applied to the costs on a SKU.
 type CreditEstimate struct {
 	// CreditAmount: The estimated credit amount.
 	CreditAmount *Money `json:"creditAmount,omitempty"`
-
 	// CreditDescription: The credit description.
 	CreditDescription string `json:"creditDescription,omitempty"`
-
 	// CreditType: The credit type.
 	CreditType string `json:"creditType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreditAmount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreditAmount") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreditAmount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreditEstimate) MarshalJSON() ([]byte, error) {
 	type NoMethod CreditEstimate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CustomMachineType: Specification of a custom machine type.
 type CustomMachineType struct {
-	// MachineSeries: Required. The machine series. Only certain machine
-	// series
+	// MachineSeries: Required. The machine series. Only certain machine series
 	// (https://cloud.google.com/compute/docs/general-purpose-machines#custom_machine_types)
 	// support custom configurations. For example: "n1".
 	MachineSeries string `json:"machineSeries,omitempty"`
-
-	// MemorySizeGb: Required. Memory size of the VM in GB (2^30 bytes).
-	// Must be an increment of 0.25 (256 MB). Each machine series
+	// MemorySizeGb: Required. Memory size of the VM in GB (2^30 bytes). Must be an
+	// increment of 0.25 (256 MB). Each machine series
 	// (https://cloud.google.com/compute/docs/machine-types#machine_type_comparison)
-	// has limitations on allowed values for the ratio of memory-to-vCPU
-	// count.
+	// has limitations on allowed values for the ratio of memory-to-vCPU count.
 	MemorySizeGb float64 `json:"memorySizeGb,omitempty"`
-
-	// VirtualCpuCount: Required. The number of vCPUs. The allowed values
-	// depend on the machine series
+	// VirtualCpuCount: Required. The number of vCPUs. The allowed values depend on
+	// the machine series
 	// (https://cloud.google.com/compute/docs/machine-types#machine_type_comparison).
 	VirtualCpuCount int64 `json:"virtualCpuCount,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "MachineSeries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MachineSeries") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MachineSeries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CustomMachineType) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomMachineType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *CustomMachineType) UnmarshalJSON(data []byte) error {
@@ -1032,105 +879,89 @@ func (s *CustomMachineType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Decimal: A representation of a decimal value, such as 2.5. Clients
-// may convert values into language-native decimal formats, such as
-// Java's BigDecimal or Python's decimal.Decimal. [BigDecimal]:
+// Decimal: A representation of a decimal value, such as 2.5. Clients may
+// convert values into language-native decimal formats, such as Java's
+// BigDecimal or Python's decimal.Decimal. [BigDecimal]:
 // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html
 // [decimal.Decimal]: https://docs.python.org/3/library/decimal.html
 type Decimal struct {
-	// Value: The decimal value, as a string. The string representation
-	// consists of an optional sign, `+` (`U+002B`) or `-` (`U+002D`),
-	// followed by a sequence of zero or more decimal digits ("the
-	// integer"), optionally followed by a fraction, optionally followed by
-	// an exponent. An empty string **should** be interpreted as `0`. The
-	// fraction consists of a decimal point followed by zero or more decimal
-	// digits. The string must contain at least one digit in either the
-	// integer or the fraction. The number formed by the sign, the integer
-	// and the fraction is referred to as the significand. The exponent
-	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed
-	// by one or more decimal digits. Services **should** normalize decimal
-	// values before storing them by: - Removing an explicitly-provided `+`
-	// sign (`+2.5` -> `2.5`). - Replacing a zero-length integer value with
-	// `0` (`.5` -> `0.5`). - Coercing the exponent character to upper-case,
-	// with explicit sign (`2.5e8` -> `2.5E+8`). - Removing an
-	// explicitly-provided zero exponent (`2.5E0` -> `2.5`). Services
-	// **may** perform additional normalization based on its own needs and
-	// the internal decimal implementation selected, such as shifting the
-	// decimal point and exponent value together (example: `2.5E-1` <->
-	// `0.25`). Additionally, services **may** preserve trailing zeroes in
-	// the fraction to indicate increased precision, but are not required to
-	// do so. Note that only the `.` character is supported to divide the
-	// integer and the fraction; `,` **should not** be supported regardless
-	// of locale. Additionally, thousand separators **should not** be
-	// supported. If a service does support them, values **must** be
-	// normalized. The ENBF grammar is: DecimalString = '' | [Sign]
-	// Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
-	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = {
-	// '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services
-	// **should** clearly document the range of supported values, the
-	// maximum supported precision (total number of digits), and, if
-	// applicable, the scale (number of digits after the decimal point), as
-	// well as how it behaves when receiving out-of-bounds values. Services
-	// **may** choose to accept values passed as input even when the value
-	// has a higher precision or scale than the service supports, and
-	// **should** round the value to fit the supported scale. Alternatively,
-	// the service **may** error with `400 Bad Request` (`INVALID_ARGUMENT`
-	// in gRPC) if precision would be lost. Services **should** error with
-	// `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// Value: The decimal value, as a string. The string representation consists of
+	// an optional sign, `+` (`U+002B`) or `-` (`U+002D`), followed by a sequence
+	// of zero or more decimal digits ("the integer"), optionally followed by a
+	// fraction, optionally followed by an exponent. An empty string **should** be
+	// interpreted as `0`. The fraction consists of a decimal point followed by
+	// zero or more decimal digits. The string must contain at least one digit in
+	// either the integer or the fraction. The number formed by the sign, the
+	// integer and the fraction is referred to as the significand. The exponent
+	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed by one
+	// or more decimal digits. Services **should** normalize decimal values before
+	// storing them by: - Removing an explicitly-provided `+` sign (`+2.5` ->
+	// `2.5`). - Replacing a zero-length integer value with `0` (`.5` -> `0.5`). -
+	// Coercing the exponent character to upper-case, with explicit sign (`2.5e8`
+	// -> `2.5E+8`). - Removing an explicitly-provided zero exponent (`2.5E0` ->
+	// `2.5`). Services **may** perform additional normalization based on its own
+	// needs and the internal decimal implementation selected, such as shifting the
+	// decimal point and exponent value together (example: `2.5E-1` <-> `0.25`).
+	// Additionally, services **may** preserve trailing zeroes in the fraction to
+	// indicate increased precision, but are not required to do so. Note that only
+	// the `.` character is supported to divide the integer and the fraction; `,`
+	// **should not** be supported regardless of locale. Additionally, thousand
+	// separators **should not** be supported. If a service does support them,
+	// values **must** be normalized. The ENBF grammar is: DecimalString = '' |
+	// [Sign] Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = { '0' |
+	// '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services **should**
+	// clearly document the range of supported values, the maximum supported
+	// precision (total number of digits), and, if applicable, the scale (number of
+	// digits after the decimal point), as well as how it behaves when receiving
+	// out-of-bounds values. Services **may** choose to accept values passed as
+	// input even when the value has a higher precision or scale than the service
+	// supports, and **should** round the value to fit the supported scale.
+	// Alternatively, the service **may** error with `400 Bad Request`
+	// (`INVALID_ARGUMENT` in gRPC) if precision would be lost. Services **should**
+	// error with `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
 	// receives a value outside of the supported range.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Decimal) MarshalJSON() ([]byte, error) {
 	type NoMethod Decimal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DualRegional: Area contains dual locations.
 type DualRegional struct {
 	// Name: The location name
-	// (https://cloud.google.com/storage/docs/locations#available-locations)
-	// where the data is stored. For example: "asia1" for dual region.
+	// (https://cloud.google.com/storage/docs/locations#available-locations) where
+	// the data is stored. For example: "asia1" for dual region.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DualRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod DualRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EstimateCostScenarioForBillingAccountRequest: Request for
@@ -1138,28 +969,22 @@ func (s *DualRegional) MarshalJSON() ([]byte, error) {
 type EstimateCostScenarioForBillingAccountRequest struct {
 	// CostScenario: The scenario to estimate costs for.
 	CostScenario *CostScenario `json:"costScenario,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CostScenario") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CostScenario") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CostScenario") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EstimateCostScenarioForBillingAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EstimateCostScenarioForBillingAccountRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EstimateCostScenarioForBillingAccountResponse: Response for
@@ -1168,33 +993,24 @@ type EstimateCostScenarioForBillingAccountResponse struct {
 	// CostEstimationResult: The result of the cost estimation.
 	CostEstimationResult *CostEstimationResult `json:"costEstimationResult,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CostEstimationResult") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CostEstimationResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CostEstimationResult") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CostEstimationResult") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EstimateCostScenarioForBillingAccountResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EstimateCostScenarioForBillingAccountResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EstimateCostScenarioWithListPriceRequest: Request for
@@ -1202,28 +1018,22 @@ func (s *EstimateCostScenarioForBillingAccountResponse) MarshalJSON() ([]byte, e
 type EstimateCostScenarioWithListPriceRequest struct {
 	// CostScenario: The scenario to estimate costs for.
 	CostScenario *CostScenario `json:"costScenario,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CostScenario") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CostScenario") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CostScenario") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EstimateCostScenarioWithListPriceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod EstimateCostScenarioWithListPriceRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EstimateCostScenarioWithListPriceResponse: Response for
@@ -1232,111 +1042,86 @@ type EstimateCostScenarioWithListPriceResponse struct {
 	// CostEstimationResult: The result of the cost estimation.
 	CostEstimationResult *CostEstimationResult `json:"costEstimationResult,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CostEstimationResult") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CostEstimationResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CostEstimationResult") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CostEstimationResult") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EstimateCostScenarioWithListPriceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod EstimateCostScenarioWithListPriceResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EstimationTimePoint: Represents a point in time.
 type EstimationTimePoint struct {
-	// EstimationTimeFrameOffset: The point in time, relative to the start
-	// of the time frame covered by the cost estimate.
+	// EstimationTimeFrameOffset: The point in time, relative to the start of the
+	// time frame covered by the cost estimate.
 	EstimationTimeFrameOffset string `json:"estimationTimeFrameOffset,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EstimationTimeFrameOffset") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EstimationTimeFrameOffset")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "EstimationTimeFrameOffset") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EstimationTimeFrameOffset") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EstimationTimePoint) MarshalJSON() ([]byte, error) {
 	type NoMethod EstimationTimePoint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo:
-// Encapsulates the aggregation information such as aggregation level
-// and interval for a billing account price.
+// GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo: Encapsulates
+// the aggregation information such as aggregation level and interval for a
+// billing account price.
 type GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo struct {
-	// Interval: Interval at which usage is aggregated to compute cost.
-	// Example: "MONTHLY" interval indicates that usage is aggregated every
-	// month.
+	// Interval: Interval at which usage is aggregated to compute cost. Example:
+	// "MONTHLY" interval indicates that usage is aggregated every month.
 	//
 	// Possible values:
 	//   "INTERVAL_UNSPECIFIED" - Default unspecified value.
 	//   "INTERVAL_MONTHLY" - Usage is aggregated every month.
 	//   "INTERVAL_DAILY" - Usage is aggregated every day.
 	Interval string `json:"interval,omitempty"`
-
 	// Level: Level at which usage is aggregated to compute cost. Example:
-	// "ACCOUNT" level indicates that usage is aggregated across all
-	// projects in a single account.
+	// "ACCOUNT" level indicates that usage is aggregated across all projects in a
+	// single account.
 	//
 	// Possible values:
 	//   "LEVEL_UNSPECIFIED" - Default unspecified value.
 	//   "LEVEL_ACCOUNT" - Usage is aggregated at an account level.
 	//   "LEVEL_PROJECT" - Usage is aggregated at a project level.
 	Level string `json:"level,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Interval") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Interval") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice:
@@ -1344,689 +1129,531 @@ func (s *GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo) MarshalJSO
 type GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice struct {
 	// CurrencyCode: ISO-4217 currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// Name: Resource name for the latest billing account price.
 	Name string `json:"name,omitempty"`
-
 	// PriceReason: Background information on the origin of the price.
 	PriceReason *GoogleCloudBillingBillingaccountpricesV1betaPriceReason `json:"priceReason,omitempty"`
-
 	// Rate: Rate price metadata. Billing account SKUs with `Rate` price are
-	// offered by pricing tiers. The price can have 1 or more rate pricing
-	// tiers.
+	// offered by pricing tiers. The price can have 1 or more rate pricing tiers.
 	Rate *GoogleCloudBillingBillingaccountpricesV1betaRate `json:"rate,omitempty"`
-
-	// ValueType: Type of the price. The possible values are:
-	// ["unspecified", "rate"].
+	// ValueType: Type of the price. The possible values are: ["unspecified",
+	// "rate"].
 	ValueType string `json:"valueType,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaDefaultPrice:
-// Encapsulates a default price which is the current list price.
+// GoogleCloudBillingBillingaccountpricesV1betaDefaultPrice: Encapsulates a
+// default price which is the current list price.
 type GoogleCloudBillingBillingaccountpricesV1betaDefaultPrice struct {
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount:
-// Encapsulates a discount off the list price, anchored to the list
-// price as of a fixed time.
+// GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount: Encapsulates a
+// discount off the list price, anchored to the list price as of a fixed time.
 type GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount struct {
 	// DiscountPercent: Percentage of the fixed discount.
 	DiscountPercent *Decimal `json:"discountPercent,omitempty"`
-
-	// DiscountScopeType: Type of the fixed discount scope which indicates
-	// the source of the discount. It can have values such as 'unspecified'
-	// and 'sku-group'.
+	// DiscountScopeType: Type of the fixed discount scope which indicates the
+	// source of the discount. It can have values such as 'unspecified' and
+	// 'sku-group'.
 	DiscountScopeType string `json:"discountScopeType,omitempty"`
-
 	// FixTime: Time that the fixed discount is anchored to.
 	FixTime string `json:"fixTime,omitempty"`
-
 	// SkuGroup: SKU group where the fixed discount comes from.
 	SkuGroup string `json:"skuGroup,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DiscountPercent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiscountPercent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DiscountPercent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaFixedPrice: Encapsulates
-// a set fixed price applicable during the terms of a contract
-// agreement.
+// GoogleCloudBillingBillingaccountpricesV1betaFixedPrice: Encapsulates a set
+// fixed price applicable during the terms of a contract agreement.
 type GoogleCloudBillingBillingaccountpricesV1betaFixedPrice struct {
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount:
-// Encapsulates a discount off the current list price, not anchored to
-// any list price as of a fixed time.
+// GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount: Encapsulates a
+// discount off the current list price, not anchored to any list price as of a
+// fixed time.
 type GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount struct {
 	// DiscountPercent: Percentage of the floating discount.
 	DiscountPercent *Decimal `json:"discountPercent,omitempty"`
-
-	// DiscountScopeType: Type of the floating discount scope which
-	// indicates the source of the discount. It can have values such as
-	// 'unspecified' and 'sku-group'.
+	// DiscountScopeType: Type of the floating discount scope which indicates the
+	// source of the discount. It can have values such as 'unspecified' and
+	// 'sku-group'.
 	DiscountScopeType string `json:"discountScopeType,omitempty"`
-
 	// SkuGroup: SKU group where the floating discount comes from.
 	SkuGroup string `json:"skuGroup,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DiscountPercent") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiscountPercent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DiscountPercent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesRe
-// sponse: Response message for ListBillingAccountPrices.
+// GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse:
+//
+//	Response message for ListBillingAccountPrices.
 type GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse struct {
 	// BillingAccountPrices: The returned billing account prices.
 	BillingAccountPrices []*GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice `json:"billingAccountPrices,omitempty"`
-
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountPrices") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountPrices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccountPrices") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccountPrices") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaListPriceAsCeiling:
-// Encapsulates a contract feature that the list price (DefaultPrice)
-// will be used for the price if the current list price drops lower than
-// the custom fixed price. Available to new contracts after March 21,
-// 2022. Applies to all fixed price SKUs in the contract, including
-// FixedPrice, FixedDiscount, MigratedPrice, and MergedPrice.
+// GoogleCloudBillingBillingaccountpricesV1betaListPriceAsCeiling: Encapsulates
+// a contract feature that the list price (DefaultPrice) will be used for the
+// price if the current list price drops lower than the custom fixed price.
+// Available to new contracts after March 21, 2022. Applies to all fixed price
+// SKUs in the contract, including FixedPrice, FixedDiscount, MigratedPrice,
+// and MergedPrice.
 type GoogleCloudBillingBillingaccountpricesV1betaListPriceAsCeiling struct {
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaMergedPrice: Encapsulates
-// a price after merging from multiple sources. With merged tiers, each
-// individual tier can be from a different source with different
-// discount types.
+// GoogleCloudBillingBillingaccountpricesV1betaMergedPrice: Encapsulates a
+// price after merging from multiple sources. With merged tiers, each
+// individual tier can be from a different source with different discount
+// types.
 type GoogleCloudBillingBillingaccountpricesV1betaMergedPrice struct {
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice:
-// Encapsulates a price migrated from other SKUs.
+// GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice: Encapsulates a
+// price migrated from other SKUs.
 type GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice struct {
 	// SourceSku: Source SKU where the discount is migrated from. Format:
 	// billingAccounts/{billing_account}/skus/{sku}
 	SourceSku string `json:"sourceSku,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SourceSku") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SourceSku") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SourceSku") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaPriceReason: Encapsulates
-// a price reason which contains background information about the origin
-// of the price.
+// GoogleCloudBillingBillingaccountpricesV1betaPriceReason: Encapsulates a
+// price reason which contains background information about the origin of the
+// price.
 type GoogleCloudBillingBillingaccountpricesV1betaPriceReason struct {
 	// DefaultPrice: Default price which is the current list price.
 	DefaultPrice *GoogleCloudBillingBillingaccountpricesV1betaDefaultPrice `json:"defaultPrice,omitempty"`
-
-	// FixedDiscount: Discount off the list price, anchored to the list
-	// price as of a fixed time.
+	// FixedDiscount: Discount off the list price, anchored to the list price as of
+	// a fixed time.
 	FixedDiscount *GoogleCloudBillingBillingaccountpricesV1betaFixedDiscount `json:"fixedDiscount,omitempty"`
-
-	// FixedPrice: Fixed price applicable during the terms of a contract
-	// agreement.
+	// FixedPrice: Fixed price applicable during the terms of a contract agreement.
 	FixedPrice *GoogleCloudBillingBillingaccountpricesV1betaFixedPrice `json:"fixedPrice,omitempty"`
-
-	// FloatingDiscount: Discount off the current list price, not anchored
-	// to any list price as of a fixed time.
+	// FloatingDiscount: Discount off the current list price, not anchored to any
+	// list price as of a fixed time.
 	FloatingDiscount *GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount `json:"floatingDiscount,omitempty"`
-
-	// ListPriceAsCeiling: Contract feature that the list price
-	// (DefaultPrice) will be used for the price if the current list price
-	// drops lower than the custom fixed price. Available to new contracts
-	// after March 21, 2022. Applies to all fixed price SKUs in the
-	// contract, including FixedPrice, FixedDiscount, MigratedPrice, and
-	// MergedPrice.
+	// ListPriceAsCeiling: Contract feature that the list price (DefaultPrice) will
+	// be used for the price if the current list price drops lower than the custom
+	// fixed price. Available to new contracts after March 21, 2022. Applies to all
+	// fixed price SKUs in the contract, including FixedPrice, FixedDiscount,
+	// MigratedPrice, and MergedPrice.
 	ListPriceAsCeiling *GoogleCloudBillingBillingaccountpricesV1betaListPriceAsCeiling `json:"listPriceAsCeiling,omitempty"`
-
 	// MergedPrice: Price after merging from multiple sources.
 	MergedPrice *GoogleCloudBillingBillingaccountpricesV1betaMergedPrice `json:"mergedPrice,omitempty"`
-
 	// MigratedPrice: Price migrated from other SKUs.
 	MigratedPrice *GoogleCloudBillingBillingaccountpricesV1betaMigratedPrice `json:"migratedPrice,omitempty"`
-
-	// Type: Type of the price reason. It can have values such as
-	// 'unspecified', 'default-price', 'fixed-price', 'fixed-discount',
-	// 'floating-discount', 'migrated-price', 'merged-price',
-	// 'list-price-as-ceiling'.
+	// Type: Type of the price reason. It can have values such as 'unspecified',
+	// 'default-price', 'fixed-price', 'fixed-discount', 'floating-discount',
+	// 'migrated-price', 'merged-price', 'list-price-as-ceiling'.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultPrice") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultPrice") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaPriceReason) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaPriceReason
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaRate: Encapsulates a
-// `Rate` price. Billing account SKUs with `Rate` price are offered by
-// pricing tiers. The price have 1 or more rate pricing tiers.
+// GoogleCloudBillingBillingaccountpricesV1betaRate: Encapsulates a `Rate`
+// price. Billing account SKUs with `Rate` price are offered by pricing tiers.
+// The price have 1 or more rate pricing tiers.
 type GoogleCloudBillingBillingaccountpricesV1betaRate struct {
-	// AggregationInfo: Aggregation info for tiers such as aggregation level
-	// and interval.
+	// AggregationInfo: Aggregation info for tiers such as aggregation level and
+	// interval.
 	AggregationInfo *GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo `json:"aggregationInfo,omitempty"`
-
 	// Tiers: All tiers associated with the `Rate` price.
 	Tiers []*GoogleCloudBillingBillingaccountpricesV1betaRateTier `json:"tiers,omitempty"`
-
 	// UnitInfo: Unit info such as name and quantity.
 	UnitInfo *GoogleCloudBillingBillingaccountpricesV1betaUnitInfo `json:"unitInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AggregationInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaRate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaRate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaRateTier: Encapsulates a
-// rate price tier.
+// GoogleCloudBillingBillingaccountpricesV1betaRateTier: Encapsulates a rate
+// price tier.
 type GoogleCloudBillingBillingaccountpricesV1betaRateTier struct {
-	// ContractPrice: Negotiated contract price specific for a billing
-	// account.
+	// ContractPrice: Negotiated contract price specific for a billing account.
 	ContractPrice *Money `json:"contractPrice,omitempty"`
-
-	// EffectiveDiscountPercent: Percentage of effective discount calculated
-	// using the current list price per pricing tier. Formula used:
-	// effective_discount_percent = (list_price - contract_price) /
-	// list_price × 100 If list_price and contract_price are zero, this
-	// field is the same as `discount_percent` of FixedDiscount and
-	// FloatingDiscount. If your contract does NOT have the feature
-	// LIST_PRICE_AS_CEILING enabled, the effective_discount_percent can be
-	// negative if the SKU has a FixedDiscount and the current list price is
-	// lower than the list price on the date of the contract agreement. See
-	// the `FixedDiscount.fix_time` on when the discount was set. If you
-	// have questions regarding pricing per SKU, contact your Account team
-	// for more details.
+	// EffectiveDiscountPercent: Percentage of effective discount calculated using
+	// the current list price per pricing tier. Formula used:
+	// effective_discount_percent = (list_price - contract_price) / list_price ×
+	// 100 If list_price and contract_price are zero, this field is the same as
+	// `discount_percent` of FixedDiscount and FloatingDiscount. If your contract
+	// does NOT have the feature LIST_PRICE_AS_CEILING enabled, the
+	// effective_discount_percent can be negative if the SKU has a FixedDiscount
+	// and the current list price is lower than the list price on the date of the
+	// contract agreement. See the `FixedDiscount.fix_time` on when the discount
+	// was set. If you have questions regarding pricing per SKU, contact your
+	// Account team for more details.
 	EffectiveDiscountPercent *Decimal `json:"effectiveDiscountPercent,omitempty"`
-
 	// ListPrice: List price of one tier.
 	ListPrice *Money `json:"listPrice,omitempty"`
-
-	// StartAmount: Lower bound amount for a tier. Tiers 0-100, 100-200 will
-	// be represented with two tiers with `start_amount` 0 and 100.
+	// StartAmount: Lower bound amount for a tier. Tiers 0-100, 100-200 will be
+	// represented with two tiers with `start_amount` 0 and 100.
 	StartAmount *Decimal `json:"startAmount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContractPrice") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContractPrice") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContractPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaRateTier) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaRateTier
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountpricesV1betaUnitInfo: Encapsulates
-// the unit information for a Rate
+// GoogleCloudBillingBillingaccountpricesV1betaUnitInfo: Encapsulates the unit
+// information for a Rate
 type GoogleCloudBillingBillingaccountpricesV1betaUnitInfo struct {
 	// Unit: Shorthand for the unit. Example: GiBy.mo.
 	Unit string `json:"unit,omitempty"`
-
-	// UnitDescription: Human-readable description of the unit. Example:
-	// gibibyte month.
+	// UnitDescription: Human-readable description of the unit. Example: gibibyte
+	// month.
 	UnitDescription string `json:"unitDescription,omitempty"`
-
-	// UnitQuantity: Unit quantity for the tier. Example: if the RateTier
-	// price is $1 per 1000000 Bytes, then `unit_quantity` is set to
-	// 1000000.
+	// UnitQuantity: Unit quantity for the tier. Example: if the RateTier price is
+	// $1 per 1000000 Bytes, then `unit_quantity` is set to 1000000.
 	UnitQuantity *Decimal `json:"unitQuantity,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Unit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Unit") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaUnitInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaUnitInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService:
 // Encapsulates a Google Cloud service visible to a billing account.
 type GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService struct {
-	// DisplayName: Description of the BillingAccountService. Example:
-	// "BigQuery", "Compute Engine".
+	// DisplayName: Description of the BillingAccountService. Example: "BigQuery",
+	// "Compute Engine".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name for the BillingAccountService. Example:
 	// "billingAccounts/012345-567890-ABCDEF/services/DA34-426B-A397".
 	Name string `json:"name,omitempty"`
-
-	// ServiceId: Identifier for the service. It is the string after the
-	// collection identifier "services/". Example: "DA34-426B-A397".
+	// ServiceId: Identifier for the service. It is the string after the collection
+	// identifier "services/". Example: "DA34-426B-A397".
 	ServiceId string `json:"serviceId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServic
-// esResponse: Response message for ListBillingAccountServices.
+// GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesRespo
+// nse: Response message for ListBillingAccountServices.
 type GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResponse struct {
 	// BillingAccountServices: The returned billing account services.
 	BillingAccountServices []*GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService `json:"billingAccountServices,omitempty"`
-
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountServices") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountServices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccountServices")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccountServices") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup:
-//
-//	Encapsulates a stock keeping (SKU) group visible to a billing
-//
-// account. A SKU group represents a collection of SKUs that are related
-// to each other. For example, the `AI Platform APIs` SKU group includes
-// SKUs from the Cloud Dialogflow API, the Cloud Text-to-Speech API, and
-// additional related APIs.
+// Encapsulates a stock keeping (SKU) group visible to a billing account. A SKU
+// group represents a collection of SKUs that are related to each other. For
+// example, the `AI Platform APIs` SKU group includes SKUs from the Cloud
+// Dialogflow API, the Cloud Text-to-Speech API, and additional related APIs.
 type GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup struct {
-	// DisplayName: Description of the BillingAccountSkuGroup. Example: "A2
-	// VMs (1 Year CUD)".
+	// DisplayName: Description of the BillingAccountSkuGroup. Example: "A2 VMs (1
+	// Year CUD)".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name for the BillingAccountSkuGroup. Example:
-	// "billingAccounts/012345-567890-ABCDEF/skuGroups/0e6403d1-4694-44d2-a69
-	// 6-7a78b1a69301".
+	// "billingAccounts/012345-567890-ABCDEF/skuGroups/0e6403d1-4694-44d2-a696-7a78b
+	// 1a69301".
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGr
-// oupsResponse: Response message for ListBillingAccountSkuGroups.
+// GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsRes
+// ponse: Response message for ListBillingAccountSkuGroups.
 type GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsResponse struct {
-	// BillingAccountSkuGroups: The returned publicly listed billing account
-	// SKU groups.
+	// BillingAccountSkuGroups: The returned publicly listed billing account SKU
+	// groups.
 	BillingAccountSkuGroups []*GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup `json:"billingAccountSkuGroups,omitempty"`
-
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountSkuGroups") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountSkuGroups") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccountSkuGroups")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccountSkuGroups") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGro
-// upSku: Encapsulates a SKU that is part of a billing account SKU
-// group.
+// GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku:
+// Encapsulates a SKU that is part of a billing account SKU group.
 type GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku struct {
 	// BillingAccountService: BillingAccountService that the
 	// BillingAccountSkuGroupSku belongs to.
 	BillingAccountService string `json:"billingAccountService,omitempty"`
-
-	// DisplayName: Description of the BillingAccountSkuGroupSku. Example:
-	// "A2 Instance Core running in Hong Kong".
+	// DisplayName: Description of the BillingAccountSkuGroupSku. Example: "A2
+	// Instance Core running in Hong Kong".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// GeoTaxonomy: Geographic metadata that applies to the
 	// BillingAccountSkuGroupSku.
 	GeoTaxonomy *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy `json:"geoTaxonomy,omitempty"`
-
 	// Name: Resource name for the BillingAccountSkuGroupSku. Example:
-	// "billingAccounts/012345-567890-ABCDEF/skuGroups/0e6403d1-4694-44d2-a69
-	// 6-7a78b1a69301/skus/AA95-CD31-42FE".
+	// "billingAccounts/012345-567890-ABCDEF/skuGroups/0e6403d1-4694-44d2-a696-7a78b
+	// 1a69301/skus/AA95-CD31-42FE".
 	Name string `json:"name,omitempty"`
-
 	// ProductTaxonomy: List of product categories that apply to the
 	// BillingAccountSkuGroupSku.
 	ProductTaxonomy *GoogleCloudBillingBillingaccountskugroupskusV1betaProductTaxonomy `json:"productTaxonomy,omitempty"`
-
-	// SkuId: Unique identifier for the SKU. It is the string after the
-	// collection identifier "skus/" Example: "AA95-CD31-42FE".
+	// SkuId: Unique identifier for the SKU. It is the string after the collection
+	// identifier "skus/" Example: "AA95-CD31-42FE".
 	SkuId string `json:"skuId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountService") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "BillingAccountService") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy:
-// Encapsulates geographic metadata, such as regions and multi-regions
-// like `us-east4` or `European Union`.
+// GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy: Encapsulates
+// geographic metadata, such as regions and multi-regions like `us-east4` or
+// `European Union`.
 type GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy struct {
 	// GlobalMetadata: Global geographic metadata with no regions.
 	GlobalMetadata *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyGlobal `json:"globalMetadata,omitempty"`
-
-	// MultiRegionalMetadata: Multi-regional geographic metadata with 2 or
-	// more regions.
+	// MultiRegionalMetadata: Multi-regional geographic metadata with 2 or more
+	// regions.
 	MultiRegionalMetadata *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegional `json:"multiRegionalMetadata,omitempty"`
-
 	// RegionalMetadata: Regional geographic metadata with 1 region.
 	RegionalMetadata *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegional `json:"regionalMetadata,omitempty"`
-
-	// Type: Type of geographic taxonomy associated with the billing account
-	// SKU group SKU.
+	// Type: Type of geographic taxonomy associated with the billing account SKU
+	// group SKU.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Unspecified type.
 	//   "TYPE_GLOBAL" - Global geographic taxonomy with no regions.
 	//   "TYPE_REGIONAL" - Regional geographic taxonomy with 1 region.
-	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2
-	// or more regions.
+	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2 or more
+	// regions.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GlobalMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GlobalMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlobalMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyGlobal:
@@ -2034,34 +1661,28 @@ func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomy) MarshalJ
 type GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyGlobal struct {
 }
 
-// GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegi
-// onal: Encapsulates a multi-regional geographic taxonomy.
+// GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegional:
+// Encapsulates a multi-regional geographic taxonomy.
 type GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegional struct {
-	// Regions: Google Cloud regions associated with the multi-regional
-	// geographic taxonomy.
+	// Regions: Google Cloud regions associated with the multi-regional geographic
+	// taxonomy.
 	Regions []*GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegion `json:"regions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Regions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Regions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegion:
@@ -2069,133 +1690,101 @@ func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyMultiRegio
 type GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegion struct {
 	// Region: Description of a Google Cloud region. Example: "us-west2".
 	Region string `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegional:
-//
-//	Encapsulates a regional geographic taxonomy.
+// Encapsulates a regional geographic taxonomy.
 type GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegional struct {
 	// Region: Google Cloud region associated with the regional geographic
 	// taxonomy.
 	Region *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegion `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaGeoTaxonomyRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSk
-// uGroupSkusResponse: Response message for
-// ListBillingAccountSkuGroupSkus.
+// GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupS
+// kusResponse: Response message for ListBillingAccountSkuGroupSkus.
 type GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupSkusResponse struct {
-	// BillingAccountSkuGroupSkus: The returned billing account SKU group
-	// SKUs.
+	// BillingAccountSkuGroupSkus: The returned billing account SKU group SKUs.
 	BillingAccountSkuGroupSkus []*GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku `json:"billingAccountSkuGroupSkus,omitempty"`
-
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountSkuGroupSkus") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountSkuGroupSkus")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "BillingAccountSkuGroupSkus") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillingAccountSkuGroupSkus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskugroupskusV1betaProductTaxonomy:
 // Encapsulates product categories, such as `Serverless`, `Cloud Run`,
 // `TaskQueue`, and others.
 type GoogleCloudBillingBillingaccountskugroupskusV1betaProductTaxonomy struct {
-	// TaxonomyCategories: All product categories that the billing account
-	// SKU group SKU belong to.
+	// TaxonomyCategories: All product categories that the billing account SKU
+	// group SKU belong to.
 	TaxonomyCategories []*GoogleCloudBillingBillingaccountskugroupskusV1betaTaxonomyCategory `json:"taxonomyCategories,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TaxonomyCategories")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "TaxonomyCategories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TaxonomyCategories") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "TaxonomyCategories") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaProductTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaProductTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskugroupskusV1betaTaxonomyCategory:
@@ -2203,978 +1792,763 @@ func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaProductTaxonomy) Mars
 type GoogleCloudBillingBillingaccountskugroupskusV1betaTaxonomyCategory struct {
 	// Category: Name of the product category.
 	Category string `json:"category,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Category") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaTaxonomyCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskugroupskusV1betaTaxonomyCategory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku:
-// Encapsulates a stock keeping unit (SKU) visible to a billing account.
-// A SKU distinctly identifies a resource that you can purchase. For a
-// list of available SKUs, see SKUs (https://cloud.google.com/skus).
+// GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku: Encapsulates a
+// stock keeping unit (SKU) visible to a billing account. A SKU distinctly
+// identifies a resource that you can purchase. For a list of available SKUs,
+// see SKUs (https://cloud.google.com/skus).
 type GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku struct {
-	// BillingAccountService: BillingAccountService that the
-	// BillingAccountSku belongs to.
+	// BillingAccountService: BillingAccountService that the BillingAccountSku
+	// belongs to.
 	BillingAccountService string `json:"billingAccountService,omitempty"`
-
-	// DisplayName: Description of the BillingAccountSku. Example: "A2
-	// Instance Core running in Hong Kong".
+	// DisplayName: Description of the BillingAccountSku. Example: "A2 Instance
+	// Core running in Hong Kong".
 	DisplayName string `json:"displayName,omitempty"`
-
-	// GeoTaxonomy: Geographic metadata that applies to the
-	// BillingAccountSku.
+	// GeoTaxonomy: Geographic metadata that applies to the BillingAccountSku.
 	GeoTaxonomy *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomy `json:"geoTaxonomy,omitempty"`
-
 	// Name: Resource name for the BillingAccountSku. Example:
 	// "billingAccounts/012345-567890-ABCDEF/skus/AA95-CD31-42FE".
 	Name string `json:"name,omitempty"`
-
 	// ProductTaxonomy: List of product categories that apply to the
 	// BillingAccountSku.
 	ProductTaxonomy *GoogleCloudBillingBillingaccountskusV1betaProductTaxonomy `json:"productTaxonomy,omitempty"`
-
-	// SkuId: Unique identifier for the SKU. It is the string after the
-	// collection identifier "skus/" Example: "AA95-CD31-42FE".
+	// SkuId: Unique identifier for the SKU. It is the string after the collection
+	// identifier "skus/" Example: "AA95-CD31-42FE".
 	SkuId string `json:"skuId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingAccountService") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "BillingAccountService") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomy: Encapsulates
-// geographic metadata, such as regions and multi-regions like
-// `us-east4` or `European Union`.
+// geographic metadata, such as regions and multi-regions like `us-east4` or
+// `European Union`.
 type GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomy struct {
 	// GlobalMetadata: Global geographic metadata with no regions.
 	GlobalMetadata *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyGlobal `json:"globalMetadata,omitempty"`
-
-	// MultiRegionalMetadata: Multi-regional geographic metadata with 2 or
-	// more regions.
+	// MultiRegionalMetadata: Multi-regional geographic metadata with 2 or more
+	// regions.
 	MultiRegionalMetadata *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyMultiRegional `json:"multiRegionalMetadata,omitempty"`
-
 	// RegionalMetadata: Regional geographic metadata with 1 region.
 	RegionalMetadata *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegional `json:"regionalMetadata,omitempty"`
-
-	// Type: Type of geographic taxonomy associated with the billing account
-	// SKU.
+	// Type: Type of geographic taxonomy associated with the billing account SKU.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Unspecified type.
 	//   "TYPE_GLOBAL" - Global geographic taxonomy with no regions.
 	//   "TYPE_REGIONAL" - Regional geographic taxonomy with 1 region.
-	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2
-	// or more regions.
+	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2 or more
+	// regions.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GlobalMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GlobalMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlobalMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyGlobal:
-// Encapsulates a global geographic taxonomy.
+// GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyGlobal: Encapsulates a
+// global geographic taxonomy.
 type GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyGlobal struct {
 }
 
 // GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyMultiRegional:
 // Encapsulates a multi-regional geographic taxonomy.
 type GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyMultiRegional struct {
-	// Regions: Google Cloud regions associated with the multi-regional
-	// geographic taxonomy.
+	// Regions: Google Cloud regions associated with the multi-regional geographic
+	// taxonomy.
 	Regions []*GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion `json:"regions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Regions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Regions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyMultiRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyMultiRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion:
-// Encapsulates a Google Cloud region.
+// GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion: Encapsulates a
+// Google Cloud region.
 type GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion struct {
 	// Region: Description of a Google Cloud region. Example: "us-west2".
 	Region string `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegional:
-// Encapsulates a regional geographic taxonomy.
+// GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegional: Encapsulates
+// a regional geographic taxonomy.
 type GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegional struct {
 	// Region: Google Cloud region associated with the regional geographic
 	// taxonomy.
 	Region *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegion `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaGeoTaxonomyRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusRespon
-// se: Response message for ListBillingAccountSkus.
+// GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse:
+// Response message for ListBillingAccountSkus.
 type GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse struct {
 	// BillingAccountSkus: The returned billing account SKUs.
 	BillingAccountSkus []*GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku `json:"billingAccountSkus,omitempty"`
-
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BillingAccountSkus")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountSkus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccountSkus") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccountSkus") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaProductTaxonomy:
-// Encapsulates product categories, such as `Serverless`, `Cloud Run`,
-// `TaskQueue`, and others.
+// GoogleCloudBillingBillingaccountskusV1betaProductTaxonomy: Encapsulates
+// product categories, such as `Serverless`, `Cloud Run`, `TaskQueue`, and
+// others.
 type GoogleCloudBillingBillingaccountskusV1betaProductTaxonomy struct {
-	// TaxonomyCategories: All product categories that the billing account
-	// SKU belong to.
+	// TaxonomyCategories: All product categories that the billing account SKU
+	// belong to.
 	TaxonomyCategories []*GoogleCloudBillingBillingaccountskusV1betaTaxonomyCategory `json:"taxonomyCategories,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TaxonomyCategories")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "TaxonomyCategories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TaxonomyCategories") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "TaxonomyCategories") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaProductTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaProductTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingBillingaccountskusV1betaTaxonomyCategory:
-// Encapsulates a product category.
+// GoogleCloudBillingBillingaccountskusV1betaTaxonomyCategory: Encapsulates a
+// product category.
 type GoogleCloudBillingBillingaccountskusV1betaTaxonomyCategory struct {
 	// Category: Name of the product category.
 	Category string `json:"category,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Category") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingBillingaccountskusV1betaTaxonomyCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountskusV1betaTaxonomyCategory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingPricesV1betaAggregationInfo: Encapsulates the
-// aggregation information such as aggregation level and interval for a
-// price.
+// GoogleCloudBillingPricesV1betaAggregationInfo: Encapsulates the aggregation
+// information such as aggregation level and interval for a price.
 type GoogleCloudBillingPricesV1betaAggregationInfo struct {
-	// Interval: Interval at which usage is aggregated to compute cost.
-	// Example: "MONTHLY" interval indicates that usage is aggregated every
-	// month.
+	// Interval: Interval at which usage is aggregated to compute cost. Example:
+	// "MONTHLY" interval indicates that usage is aggregated every month.
 	//
 	// Possible values:
 	//   "INTERVAL_UNSPECIFIED" - Default unspecified value.
 	//   "INTERVAL_MONTHLY" - Usage is aggregated every month.
 	//   "INTERVAL_DAILY" - Usage is aggregated every day.
 	Interval string `json:"interval,omitempty"`
-
 	// Level: Level at which usage is aggregated to compute cost. Example:
-	// "ACCOUNT" level indicates that usage is aggregated across all
-	// projects in a single account.
+	// "ACCOUNT" level indicates that usage is aggregated across all projects in a
+	// single account.
 	//
 	// Possible values:
 	//   "LEVEL_UNSPECIFIED" - Default unspecified value.
 	//   "LEVEL_ACCOUNT" - Usage is aggregated at an account level.
 	//   "LEVEL_PROJECT" - Usage is aggregated at a project level.
 	Level string `json:"level,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Interval") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Interval") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingPricesV1betaAggregationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingPricesV1betaAggregationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingPricesV1betaListPricesResponse: Response message
-// for ListPrices.
+// GoogleCloudBillingPricesV1betaListPricesResponse: Response message for
+// ListPrices.
 type GoogleCloudBillingPricesV1betaListPricesResponse struct {
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Prices: The returned publicly listed prices.
 	Prices []*GoogleCloudBillingPricesV1betaPrice `json:"prices,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingPricesV1betaListPricesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingPricesV1betaListPricesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingPricesV1betaPrice: Encapsulates the latest price
-// for a SKU.
+// GoogleCloudBillingPricesV1betaPrice: Encapsulates the latest price for a
+// SKU.
 type GoogleCloudBillingPricesV1betaPrice struct {
 	// CurrencyCode: ISO-4217 currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// Name: Resource name for the latest price.
 	Name string `json:"name,omitempty"`
-
-	// Rate: Rate price metadata. SKUs with `Rate` price are offered by
-	// pricing tiers. The price can have 1 or more rate pricing tiers.
+	// Rate: Rate price metadata. SKUs with `Rate` price are offered by pricing
+	// tiers. The price can have 1 or more rate pricing tiers.
 	Rate *GoogleCloudBillingPricesV1betaRate `json:"rate,omitempty"`
-
-	// ValueType: Type of the price. It can have values: ["unspecified",
-	// "rate"].
+	// ValueType: Type of the price. It can have values: ["unspecified", "rate"].
 	ValueType string `json:"valueType,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingPricesV1betaPrice) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingPricesV1betaPrice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingPricesV1betaRate: Encapsulates a `Rate` price. SKUs
-// with `Rate` price are offered by pricing tiers. The price have 1 or
-// more rate pricing tiers.
+// GoogleCloudBillingPricesV1betaRate: Encapsulates a `Rate` price. SKUs with
+// `Rate` price are offered by pricing tiers. The price have 1 or more rate
+// pricing tiers.
 type GoogleCloudBillingPricesV1betaRate struct {
-	// AggregationInfo: Aggregation info for tiers such as aggregation level
-	// and interval.
+	// AggregationInfo: Aggregation info for tiers such as aggregation level and
+	// interval.
 	AggregationInfo *GoogleCloudBillingPricesV1betaAggregationInfo `json:"aggregationInfo,omitempty"`
-
 	// Tiers: All tiers associated with the `Rate` price.
 	Tiers []*GoogleCloudBillingPricesV1betaRateTier `json:"tiers,omitempty"`
-
 	// UnitInfo: Unit info such as name and quantity.
 	UnitInfo *GoogleCloudBillingPricesV1betaUnitInfo `json:"unitInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AggregationInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingPricesV1betaRate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingPricesV1betaRate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingPricesV1betaRateTier: Encapsulates a rate price
-// tier.
+// GoogleCloudBillingPricesV1betaRateTier: Encapsulates a rate price tier.
 type GoogleCloudBillingPricesV1betaRateTier struct {
 	// ListPrice: List price of one tier.
 	ListPrice *Money `json:"listPrice,omitempty"`
-
-	// StartAmount: Lower bound amount for a tier. Tiers 0-100, 100-200 will
-	// be represented with two tiers with `start_amount` 0 and 100.
+	// StartAmount: Lower bound amount for a tier. Tiers 0-100, 100-200 will be
+	// represented with two tiers with `start_amount` 0 and 100.
 	StartAmount *Decimal `json:"startAmount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ListPrice") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ListPrice") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ListPrice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingPricesV1betaRateTier) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingPricesV1betaRateTier
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingPricesV1betaUnitInfo: Encapsulates the unit
-// information for a Rate
+// GoogleCloudBillingPricesV1betaUnitInfo: Encapsulates the unit information
+// for a Rate
 type GoogleCloudBillingPricesV1betaUnitInfo struct {
 	// Unit: Shorthand for the unit. Example: GiBy.mo.
 	Unit string `json:"unit,omitempty"`
-
-	// UnitDescription: Human-readable description of the unit. Example:
-	// gibibyte month.
+	// UnitDescription: Human-readable description of the unit. Example: gibibyte
+	// month.
 	UnitDescription string `json:"unitDescription,omitempty"`
-
-	// UnitQuantity: Unit quantity for the tier. Example: if the RateTier
-	// price is $1 per 1000000 Bytes, then `unit_quantity` is set to
-	// 1000000.
+	// UnitQuantity: Unit quantity for the tier. Example: if the RateTier price is
+	// $1 per 1000000 Bytes, then `unit_quantity` is set to 1000000.
 	UnitQuantity *Decimal `json:"unitQuantity,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Unit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Unit") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingPricesV1betaUnitInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingPricesV1betaUnitInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse: Response
-// message for ListSkuGroups.
+// GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse: Response message for
+// ListSkuGroups.
 type GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse struct {
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// SkuGroups: The returned publicly listed SKU groups.
 	SkuGroups []*GoogleCloudBillingSkugroupsV1betaSkuGroup `json:"skuGroups,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupsV1betaSkuGroup: Encapsulates a publicly
-// listed stock keeping unit (SKU) group. A SKU group represents a
-// collection of SKUs that are related to each other. For example, the
-// `AI Platform APIs` SKU group includes SKUs from the Cloud Dialogflow
-// API, the Cloud Text-to-Speech API, and additional related APIs.
+// GoogleCloudBillingSkugroupsV1betaSkuGroup: Encapsulates a publicly listed
+// stock keeping unit (SKU) group. A SKU group represents a collection of SKUs
+// that are related to each other. For example, the `AI Platform APIs` SKU
+// group includes SKUs from the Cloud Dialogflow API, the Cloud Text-to-Speech
+// API, and additional related APIs.
 type GoogleCloudBillingSkugroupsV1betaSkuGroup struct {
-	// DisplayName: Description of the SKU group. Example: "A2 VMs (1 Year
-	// CUD)".
+	// DisplayName: Description of the SKU group. Example: "A2 VMs (1 Year CUD)".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name for the SKU group. Example:
 	// "skuGroups/0e6403d1-4694-44d2-a696-7a78b1a69301".
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupsV1betaSkuGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupsV1betaSkuGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy: Encapsulates
-// geographic metadata, such as regions and multi-regions like
-// `us-east4` or `European Union`.
+// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy: Encapsulates geographic
+// metadata, such as regions and multi-regions like `us-east4` or `European
+// Union`.
 type GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy struct {
 	// GlobalMetadata: Global geographic metadata with no regions.
 	GlobalMetadata *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyGlobal `json:"globalMetadata,omitempty"`
-
-	// MultiRegionalMetadata: Multi-regional geographic metadata with 2 or
-	// more regions.
+	// MultiRegionalMetadata: Multi-regional geographic metadata with 2 or more
+	// regions.
 	MultiRegionalMetadata *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyMultiRegional `json:"multiRegionalMetadata,omitempty"`
-
 	// RegionalMetadata: Regional geographic metadata with 1 region.
 	RegionalMetadata *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegional `json:"regionalMetadata,omitempty"`
-
 	// Type: Type of geographic taxonomy associated with the SKU group SKU.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value. Unspecified type.
 	//   "TYPE_GLOBAL" - Global geographic taxonomy with no regions.
 	//   "TYPE_REGIONAL" - Regional geographic taxonomy with 1 region.
-	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2
-	// or more regions.
+	//   "TYPE_MULTI_REGIONAL" - Multi-regional geographic taxonomy with 2 or more
+	// regions.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GlobalMetadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GlobalMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlobalMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyGlobal: Encapsulates a
-// global geographic taxonomy.
+// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyGlobal: Encapsulates a global
+// geographic taxonomy.
 type GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyGlobal struct {
 }
 
-// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyMultiRegional:
-// Encapsulates a multi-regional geographic taxonomy.
+// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyMultiRegional: Encapsulates a
+// multi-regional geographic taxonomy.
 type GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyMultiRegional struct {
-	// Regions: Google Cloud regions associated with the multi-regional
-	// geographic taxonomy.
+	// Regions: Google Cloud regions associated with the multi-regional geographic
+	// taxonomy.
 	Regions []*GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion `json:"regions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Regions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Regions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyMultiRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyMultiRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion: Encapsulates a
-// Google Cloud region.
+// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion: Encapsulates a Google
+// Cloud region.
 type GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion struct {
 	// Region: Description of a Google Cloud region. Example: "us-west2".
 	Region string `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegional: Encapsulates
-// a regional geographic taxonomy.
+// GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegional: Encapsulates a
+// regional geographic taxonomy.
 type GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegional struct {
 	// Region: Google Cloud region associated with the regional geographic
 	// taxonomy.
 	Region *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegion `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Region") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Region") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Region") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaGeoTaxonomyRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse:
-// Response message for ListSkuGroupSkus.
+// GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse: Response
+// message for ListSkuGroupSkus.
 type GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse struct {
-	// NextPageToken: Token that can be sent as `page_token` in the
-	// subsequent request to retrieve the next page. If this field is empty,
-	// there are no subsequent pages.
+	// NextPageToken: Token that can be sent as `page_token` in the subsequent
+	// request to retrieve the next page. If this field is empty, there are no
+	// subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// SkuGroupSkus: The returned SKU group SKUs.
 	SkuGroupSkus []*GoogleCloudBillingSkugroupskusV1betaSkuGroupSku `json:"skuGroupSkus,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaProductTaxonomy: Encapsulates
-// product categories, such as `Serverless`, `Cloud Run`, `TaskQueue`,
-// and others.
+// GoogleCloudBillingSkugroupskusV1betaProductTaxonomy: Encapsulates product
+// categories, such as `Serverless`, `Cloud Run`, `TaskQueue`, and others.
 type GoogleCloudBillingSkugroupskusV1betaProductTaxonomy struct {
-	// TaxonomyCategories: All product categories that the SKU group SKU
-	// belongs to.
+	// TaxonomyCategories: All product categories that the SKU group SKU belongs
+	// to.
 	TaxonomyCategories []*GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory `json:"taxonomyCategories,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TaxonomyCategories")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "TaxonomyCategories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TaxonomyCategories") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "TaxonomyCategories") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaProductTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaProductTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaSkuGroupSku: Encapsulates a
-// publicly listed stock keeping unit (SKU) that is part of a publicly
-// listed SKU group. A SKU group represents a collection of SKUs that
-// are related to each other. For example, the `AI Platform APIs` SKU
-// group includes SKUs from the Cloud Dialogflow API, the Cloud
-// Text-to-Speech API, and additional related APIs.
+// GoogleCloudBillingSkugroupskusV1betaSkuGroupSku: Encapsulates a publicly
+// listed stock keeping unit (SKU) that is part of a publicly listed SKU group.
+// A SKU group represents a collection of SKUs that are related to each other.
+// For example, the `AI Platform APIs` SKU group includes SKUs from the Cloud
+// Dialogflow API, the Cloud Text-to-Speech API, and additional related APIs.
 type GoogleCloudBillingSkugroupskusV1betaSkuGroupSku struct {
-	// DisplayName: Description of the SkuGroupSku. Example: "A2 Instance
-	// Core running in Hong Kong".
+	// DisplayName: Description of the SkuGroupSku. Example: "A2 Instance Core
+	// running in Hong Kong".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// GeoTaxonomy: Geographic metadata that applies to the SkuGroupSku.
 	GeoTaxonomy *GoogleCloudBillingSkugroupskusV1betaGeoTaxonomy `json:"geoTaxonomy,omitempty"`
-
 	// Name: Resource name for the SkuGroupSku. Example:
 	// "skuGroups/0e6403d1-4694-44d2-a696-7a78b1a69301/skus/AA95-CD31-42FE".
 	Name string `json:"name,omitempty"`
-
-	// ProductTaxonomy: List of product categories that apply to the
-	// SkuGroupSku.
+	// ProductTaxonomy: List of product categories that apply to the SkuGroupSku.
 	ProductTaxonomy *GoogleCloudBillingSkugroupskusV1betaProductTaxonomy `json:"productTaxonomy,omitempty"`
-
 	// Service: Service that the SkuGroupSku belongs to.
 	Service string `json:"service,omitempty"`
-
-	// SkuId: Unique identifier for the SKU. It is the string after the
-	// collection identifier "skus/" Example: "AA95-CD31-42FE".
+	// SkuId: Unique identifier for the SKU. It is the string after the collection
+	// identifier "skus/" Example: "AA95-CD31-42FE".
 	SkuId string `json:"skuId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaSkuGroupSku) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaSkuGroupSku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory: Encapsulates a
-// product category.
+// GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory: Encapsulates a product
+// category.
 type GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory struct {
 	// Category: Name of the product category.
 	Category string `json:"category,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Category") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingSkugroupskusV1betaTaxonomyCategory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GuestAccelerator: Specification of a set of guest accelerators
-// attached to a machine.
+// GuestAccelerator: Specification of a set of guest accelerators attached to a
+// machine.
 type GuestAccelerator struct {
-	// AcceleratorCount: The number of the guest accelerator cards exposed
-	// to each instance.
+	// AcceleratorCount: The number of the guest accelerator cards exposed to each
+	// instance.
 	AcceleratorCount int64 `json:"acceleratorCount,omitempty,string"`
-
-	// AcceleratorType: The type of the guest accelerator cards. For
-	// example: "nvidia-tesla-t4".
+	// AcceleratorType: The type of the guest accelerator cards. For example:
+	// "nvidia-tesla-t4".
 	AcceleratorType string `json:"acceleratorType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AcceleratorCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AcceleratorCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AcceleratorCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GuestAccelerator) MarshalJSON() ([]byte, error) {
 	type NoMethod GuestAccelerator
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InterRegionEgress: Data transfer between two regions.
@@ -3183,219 +2557,170 @@ type InterRegionEgress struct {
 	// (https://cloud.google.com/compute/docs/regions-zones) the data is
 	// transferred to.
 	DestinationRegion string `json:"destinationRegion,omitempty"`
-
 	// EgressRate: VM to VM data transfer usage. The expected units such are
 	// GiBy/s, By/s, and so on.
 	EgressRate *Usage `json:"egressRate,omitempty"`
-
 	// SourceRegion: Which region
 	// (https://cloud.google.com/compute/docs/regions-zones) the data is
 	// transferred from.
 	SourceRegion string `json:"sourceRegion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DestinationRegion")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DestinationRegion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DestinationRegion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DestinationRegion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InterRegionEgress) MarshalJSON() ([]byte, error) {
 	type NoMethod InterRegionEgress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// IntraRegionEgress: Data transfer within the same region. When the
-// source region and destination region are in the same zone, using
-// internal IP addresses, there isn't any charge for data transfer.
+// IntraRegionEgress: Data transfer within the same region. When the source
+// region and destination region are in the same zone, using internal IP
+// addresses, there isn't any charge for data transfer.
 type IntraRegionEgress struct {
-	// EgressRate: VM to VM data transfer usage. The expected are GiBy/s,
-	// By/s, and so on.
+	// EgressRate: VM to VM data transfer usage. The expected are GiBy/s, By/s, and
+	// so on.
 	EgressRate *Usage `json:"egressRate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EgressRate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EgressRate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EgressRate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IntraRegionEgress) MarshalJSON() ([]byte, error) {
 	type NoMethod IntraRegionEgress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MachineType: Specification of machine series, memory, and number of
-// vCPUs.
+// MachineType: Specification of machine series, memory, and number of vCPUs.
 type MachineType struct {
-	CustomMachineType *CustomMachineType `json:"customMachineType,omitempty"`
-
+	CustomMachineType     *CustomMachineType     `json:"customMachineType,omitempty"`
 	PredefinedMachineType *PredefinedMachineType `json:"predefinedMachineType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomMachineType")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomMachineType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomMachineType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomMachineType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MachineType) MarshalJSON() ([]byte, error) {
 	type NoMethod MachineType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Nanos: Number of nano (10^-9) units of the amount. The value must be
-	// between -999,999,999 and +999,999,999 inclusive. If `units` is
-	// positive, `nanos` must be positive or zero. If `units` is zero,
-	// `nanos` can be positive, zero, or negative. If `units` is negative,
-	// `nanos` must be negative or zero. For example $-1.75 is represented
-	// as `units`=-1 and `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be between
+	// -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos`
+	// must be positive or zero. If `units` is zero, `nanos` can be positive, zero,
+	// or negative. If `units` is negative, `nanos` must be negative or zero. For
+	// example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
-
-	// Units: The whole units of the amount. For example if `currencyCode`
-	// is "USD", then 1 unit is one US dollar.
+	// Units: The whole units of the amount. For example if `currencyCode` is
+	// "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MultiRegional: Area contains multiple locations.
 type MultiRegional struct {
 	// Name: The location name
-	// (https://cloud.google.com/storage/docs/locations#available-locations)
-	// where the data is stored. For example: "us" for multi-region.
+	// (https://cloud.google.com/storage/docs/locations#available-locations) where
+	// the data is stored. For example: "us" for multi-region.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MultiRegional) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiRegional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PersistentDisk: Specification of a persistent disk attached to a VM.
 type PersistentDisk struct {
 	// DiskSize: Specifies the size of disk. Must be at least 10 GB.
 	DiskSize *Usage `json:"diskSize,omitempty"`
-
 	// DiskType: The disk type
-	// (https://cloud.google.com/compute/docs/disks#disk-types). For
-	// example: "pd-standard".
+	// (https://cloud.google.com/compute/docs/disks#disk-types). For example:
+	// "pd-standard".
 	DiskType string `json:"diskType,omitempty"`
-
-	// ProvisionedIops: Indicates how many IOPS to provision for the disk
-	// for extreme persistent disks. This sets the number of I/O operations
-	// per second that the disk can handle. Values must be between 10,000
-	// and 120,000.
+	// ProvisionedIops: Indicates how many IOPS to provision for the disk for
+	// extreme persistent disks. This sets the number of I/O operations per second
+	// that the disk can handle. Values must be between 10,000 and 120,000.
 	ProvisionedIops *Usage `json:"provisionedIops,omitempty"`
-
-	// Scope: The geographic scope of the disk. Defaults to `SCOPE_ZONAL` if
-	// not specified.
+	// Scope: The geographic scope of the disk. Defaults to `SCOPE_ZONAL` if not
+	// specified.
 	//
 	// Possible values:
 	//   "SCOPE_UNSPECIFIED" - Unspecified.
 	//   "SCOPE_ZONAL" - The disk exists in a single zone.
-	//   "SCOPE_REGIONAL" - The disk is replicated in a secondary zone
-	// within the same region.
+	//   "SCOPE_REGIONAL" - The disk is replicated in a secondary zone within the
+	// same region.
 	Scope string `json:"scope,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DiskSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiskSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DiskSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PersistentDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod PersistentDisk
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PredefinedMachineType: Specification of a predefined machine type.
@@ -3404,32 +2729,26 @@ type PredefinedMachineType struct {
 	// (https://cloud.google.com/compute/docs/machine-types). For example:
 	// "n1-standard1".
 	MachineType string `json:"machineType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MachineType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MachineType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PredefinedMachineType) MarshalJSON() ([]byte, error) {
 	type NoMethod PredefinedMachineType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PremiumTierEgressWorkload: Specify a Premium Tier Internet Data
-// Transfer networking workload.
+// PremiumTierEgressWorkload: Specify a Premium Tier Internet Data Transfer
+// networking workload.
 type PremiumTierEgressWorkload struct {
 	// DestinationContinent: Where the data is sent to.
 	//
@@ -3443,119 +2762,91 @@ type PremiumTierEgressWorkload struct {
 	//   "DESTINATION_CONTINENT_CHINA" - China.
 	//   "DESTINATION_CONTINENT_EASTERN_EUROPE" - Eastern Europe.
 	//   "DESTINATION_CONTINENT_WESTERN_EUROPE" - Western Europe.
-	//   "DESTINATION_CONTINENT_EMEA" - Other regions in Europe, Middle East
-	// and Africa.
+	//   "DESTINATION_CONTINENT_EMEA" - Other regions in Europe, Middle East and
+	// Africa.
 	//   "DESTINATION_CONTINENT_INDIA" - India
 	//   "DESTINATION_CONTINENT_MIDDLE_EAST" - Middle East.
 	//   "DESTINATION_CONTINENT_SOUTH_AMERICA" - South America.
 	DestinationContinent string `json:"destinationContinent,omitempty"`
-
-	// EgressRate: Premium Tier Data Transfer usage. The expected units are
-	// GiBy/s, By/s, and so on, based on The Unified Code for Units of
-	// Measure (https://ucum.org/ucum.html) standard.
+	// EgressRate: Premium Tier Data Transfer usage. The expected units are GiBy/s,
+	// By/s, and so on, based on The Unified Code for Units of Measure
+	// (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
-
 	// SourceRegion: Which region
-	// (https://cloud.google.com/compute/docs/regions-zones) the data comes
-	// from.
+	// (https://cloud.google.com/compute/docs/regions-zones) the data comes from.
 	SourceRegion string `json:"sourceRegion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DestinationContinent") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DestinationContinent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DestinationContinent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DestinationContinent") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PremiumTierEgressWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod PremiumTierEgressWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Price: The price of a SKU at a point int time.
 type Price struct {
-	// EffectiveTime: The timestamp within the estimation time frame when
-	// the price was set.
+	// EffectiveTime: The timestamp within the estimation time frame when the price
+	// was set.
 	EffectiveTime *EstimationTimePoint `json:"effectiveTime,omitempty"`
-
 	// PriceType: The type of price. Possible values: "RATE"
 	PriceType string `json:"priceType,omitempty"`
-
 	// Rate: A set of tiered rates.
 	Rate *Rate `json:"rate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EffectiveTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EffectiveTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EffectiveTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Price) MarshalJSON() ([]byte, error) {
 	type NoMethod Price
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Rate: A SKU price consisting of tiered rates.
 type Rate struct {
 	// Tiers: The service tiers.
 	Tiers []*RateTier `json:"tiers,omitempty"`
-
-	// Unit: The SKU's pricing unit. For example, if the tier price is $1
-	// per 1000000 Bytes, then this field will show 'By'. The `start_amount`
-	// field in each tier will be in this unit.
+	// Unit: The SKU's pricing unit. For example, if the tier price is $1 per
+	// 1000000 Bytes, then this field will show 'By'. The `start_amount` field in
+	// each tier will be in this unit.
 	Unit string `json:"unit,omitempty"`
-
-	// UnitCount: The SKU's count for the pricing unit. For example, if the
-	// tier price is $1 per 1000000 Bytes, then this column will show
-	// 1000000.
+	// UnitCount: The SKU's count for the pricing unit. For example, if the tier
+	// price is $1 per 1000000 Bytes, then this column will show 1000000.
 	UnitCount float64 `json:"unitCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Tiers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Tiers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Tiers") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Rate) MarshalJSON() ([]byte, error) {
 	type NoMethod Rate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Rate) UnmarshalJSON(data []byte) error {
@@ -3576,33 +2867,26 @@ func (s *Rate) UnmarshalJSON(data []byte) error {
 type RateTier struct {
 	// Price: The price for this tier.
 	Price *Money `json:"price,omitempty"`
-
-	// StartAmount: The magnitude of usage in which the tier interval
-	// begins. Example: "From 100 GiBi the price is $1 per byte" implies
-	// `start_amount` = 100
+	// StartAmount: The magnitude of usage in which the tier interval begins.
+	// Example: "From 100 GiBi the price is $1 per byte" implies `start_amount` =
+	// 100
 	StartAmount float64 `json:"startAmount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Price") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Price") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Price") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RateTier) MarshalJSON() ([]byte, error) {
 	type NoMethod RateTier
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RateTier) UnmarshalJSON(data []byte) error {
@@ -3622,186 +2906,142 @@ func (s *RateTier) UnmarshalJSON(data []byte) error {
 // Regional: Area contains only one location.
 type Regional struct {
 	// Name: The location name
-	// (https://cloud.google.com/storage/docs/locations#available-locations).
-	// For example: "us-central1" for region.
+	// (https://cloud.google.com/storage/docs/locations#available-locations). For
+	// example: "us-central1" for region.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Regional) MarshalJSON() ([]byte, error) {
 	type NoMethod Regional
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScenarioConfig: Configuration for a CostScenario. Specifies how costs
-// are calculated.
+// ScenarioConfig: Configuration for a CostScenario. Specifies how costs are
+// calculated.
 type ScenarioConfig struct {
-	// EstimateDuration: Time frame for the estimate. Workloads must specify
-	// usage for this duration. Duration must be at least 1 hour (3,600
-	// seconds) and at most 10 years (315,360,000 seconds). The calculations
-	// for years and months are based on a 730-hour (2,628,000-second)
-	// month. For durations longer than one month (2,628,000 seconds), the
-	// duration is rounded up to the next month, so the estimate shows you
-	// the costs for full months. For example, a duration of 3,232,800
-	// seconds (roughly 5 weeks) is rounded up to 2 months.
+	// EstimateDuration: Time frame for the estimate. Workloads must specify usage
+	// for this duration. Duration must be at least 1 hour (3,600 seconds) and at
+	// most 10 years (315,360,000 seconds). The calculations for years and months
+	// are based on a 730-hour (2,628,000-second) month. For durations longer than
+	// one month (2,628,000 seconds), the duration is rounded up to the next month,
+	// so the estimate shows you the costs for full months. For example, a duration
+	// of 3,232,800 seconds (roughly 5 weeks) is rounded up to 2 months.
 	EstimateDuration string `json:"estimateDuration,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EstimateDuration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EstimateDuration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EstimateDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScenarioConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ScenarioConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SegmentCostEstimate: Workload cost estimates for a single time
-// segment.
+// SegmentCostEstimate: Workload cost estimates for a single time segment.
 type SegmentCostEstimate struct {
 	// CommitmentCostEstimates: Estimated costs for each commitment.
 	CommitmentCostEstimates []*CommitmentCostEstimate `json:"commitmentCostEstimates,omitempty"`
-
 	// SegmentStartTime: Timestamp for the start of the segment.
 	SegmentStartTime *EstimationTimePoint `json:"segmentStartTime,omitempty"`
-
 	// SegmentTotalCostEstimate: Total estimated costs for the time segment.
 	SegmentTotalCostEstimate *CostEstimate `json:"segmentTotalCostEstimate,omitempty"`
-
 	// WorkloadCostEstimates: Estimated costs for each workload.
 	WorkloadCostEstimates []*WorkloadCostEstimate `json:"workloadCostEstimates,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CommitmentCostEstimates") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CommitmentCostEstimates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CommitmentCostEstimates")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CommitmentCostEstimates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SegmentCostEstimate) MarshalJSON() ([]byte, error) {
 	type NoMethod SegmentCostEstimate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Sku: Information about SKUs appearing in the cost estimate.
 type Sku struct {
-	// DisplayName: The display name for the SKU. Example: A2 Instance Core
-	// running in Americas
+	// DisplayName: The display name for the SKU. Example: A2 Instance Core running
+	// in Americas
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Prices: A timeline of prices for a SKU in chronological order. Note:
-	// The API currently only supports using a constant price for the entire
-	// estimation time frame so this list will contain a single value.
+	// Prices: A timeline of prices for a SKU in chronological order. Note: The API
+	// currently only supports using a constant price for the entire estimation
+	// time frame so this list will contain a single value.
 	Prices []*Price `json:"prices,omitempty"`
-
 	// Sku: The resource name for the SKU. Example:
 	// "services/DA34-426B-A397/skus/AA95-CD31-42FE"
 	Sku string `json:"sku,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod Sku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SkuCostEstimate: Estimated cost for usage on a SKU.
 type SkuCostEstimate struct {
 	// CostEstimate: The estimated cost for the usage on this SKU.
 	CostEstimate *CostEstimate `json:"costEstimate,omitempty"`
-
 	// Sku: The resource name for the SKU. Example:
-	// "services/DA34-426B-A397/skus/AA95-CD31-42FE" More information about
-	// the SKU can be found in the `skus` field of the
-	// `CostEstimationResult`.
+	// "services/DA34-426B-A397/skus/AA95-CD31-42FE" More information about the SKU
+	// can be found in the `skus` field of the `CostEstimationResult`.
 	Sku string `json:"sku,omitempty"`
-
 	// UsageAmount: The amount of usage on this SKU.
 	UsageAmount float64 `json:"usageAmount,omitempty"`
-
 	// UsageUnit: The unit for the usage on this SKU.
 	UsageUnit string `json:"usageUnit,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CostEstimate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CostEstimate") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CostEstimate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SkuCostEstimate) MarshalJSON() ([]byte, error) {
 	type NoMethod SkuCostEstimate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *SkuCostEstimate) UnmarshalJSON(data []byte) error {
@@ -3818,170 +3058,135 @@ func (s *SkuCostEstimate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// StandardTierEgressWorkload: Specify Standard Tier Internet Data
-// Transfer.
+// StandardTierEgressWorkload: Specify Standard Tier Internet Data Transfer.
 type StandardTierEgressWorkload struct {
 	// EgressRate: Standard Tier Data Transfer usage. The expected units are
-	// GiBy/s, By/s, and so on, based on the The Unified Code for Units of
-	// Measure (https://ucum.org/ucum.html) standard.
+	// GiBy/s, By/s, and so on, based on the The Unified Code for Units of Measure
+	// (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
-
 	// SourceRegion: Which region
 	// (https://cloud.google.com/compute/docs/regions-zones) the data is
 	// transferred from.
 	SourceRegion string `json:"sourceRegion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EgressRate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EgressRate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EgressRate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StandardTierEgressWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardTierEgressWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Usage: An amount of usage over a time frame.
 type Usage struct {
-	// UsageRateTimeline: A timeline of usage rates over the estimate
-	// interval.
+	// UsageRateTimeline: A timeline of usage rates over the estimate interval.
 	UsageRateTimeline *UsageRateTimeline `json:"usageRateTimeline,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "UsageRateTimeline")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "UsageRateTimeline") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UsageRateTimeline") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "UsageRateTimeline") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Usage) MarshalJSON() ([]byte, error) {
 	type NoMethod Usage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageRateTimeline: A timeline of usage rates. Consists of a series of
-// entries, each of which specifies a constant rate of usage during a
-// time interval. Each entry contains an effective time. The usage rate
-// is in effect from that time until the effective time of the
-// subsequent entry, or, for the last entry, for the remaining portion
-// of estimation time frame. Effective times are specified as an offset
-// into the estimation time frame. Usage is considered to be zero until
-// the `effective_time` of the first entry. All subsequent entries must
-// have an effective time greater than the previous entry and less than
-// the estimate time frame. The effective time on all entries must be an
-// integer number of hours.
+// entries, each of which specifies a constant rate of usage during a time
+// interval. Each entry contains an effective time. The usage rate is in effect
+// from that time until the effective time of the subsequent entry, or, for the
+// last entry, for the remaining portion of estimation time frame. Effective
+// times are specified as an offset into the estimation time frame. Usage is
+// considered to be zero until the `effective_time` of the first entry. All
+// subsequent entries must have an effective time greater than the previous
+// entry and less than the estimate time frame. The effective time on all
+// entries must be an integer number of hours.
 type UsageRateTimeline struct {
-	// Unit: The unit for the usage rate in each timeline entry. If you
-	// provide an incorrect unit for an instance, the correct unit is
-	// provided in the error message. The supported units are a subset of
-	// The Unified Code for Units of Measure (https://ucum.org/ucum.html)
-	// standard: * **Time units (TIME-UNIT)** * `s` second * `min` minute *
-	// `h` hour * `d` day * `wk` week * `mo` month * `yr` year * `ms`
-	// millisecond * `us` microsecond * `ns` nanosecond * **Basic storage
-	// units (BASIC-STORAGE-UNIT)** * `bit` bit * `By` byte * **Count units
-	// (COUNT-UNIT)** * `count` count * **Prefixes (PREFIX)** * `k` kilo
-	// (10^3) * `M` mega (10^6) * `G` giga (10^9) * `T` tera (10^12) * `P`
-	// peta (10^15) * `Ki` kibi (2^10) * `Mi` mebi (2^20) * `Gi` gibi (2^30)
-	// * `Ti` tebi (2^40) * `Pi` pebi (2^50) **Grammar** The grammar also
-	// includes these connectors: * `/` division or ratio (as an infix
-	// operator). For example: `kBy/{email}` or `MiBy/10ms`. * `.`
-	// multiplication or composition (as an infix operator). For example:
-	// `GBy.d` or `k{watt}.h`. The grammar for a unit is as follows: ```
-	// Expression = Component { "." Component } { "/" Component } ;
-	// Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ] | Annotation |
-	// "1" ; UNIT = TIME-UNIT | STORAGE-UNIT | DATA-UNIT | COUNT-UNIT
-	// Annotation = "{" NAME "}" ; ``` Examples: * Request per second: `1/s`
-	// or `{requests}/s` * GibiBytes: `GiBy` * GibiBytes * seconds: `GiBy.s`
+	// Unit: The unit for the usage rate in each timeline entry. If you provide an
+	// incorrect unit for an instance, the correct unit is provided in the error
+	// message. The supported units are a subset of The Unified Code for Units of
+	// Measure (https://ucum.org/ucum.html) standard: * **Time units (TIME-UNIT)**
+	// * `s` second * `min` minute * `h` hour * `d` day * `wk` week * `mo` month *
+	// `yr` year * `ms` millisecond * `us` microsecond * `ns` nanosecond * **Basic
+	// storage units (BASIC-STORAGE-UNIT)** * `bit` bit * `By` byte * **Count units
+	// (COUNT-UNIT)** * `count` count * **Prefixes (PREFIX)** * `k` kilo (10^3) *
+	// `M` mega (10^6) * `G` giga (10^9) * `T` tera (10^12) * `P` peta (10^15) *
+	// `Ki` kibi (2^10) * `Mi` mebi (2^20) * `Gi` gibi (2^30) * `Ti` tebi (2^40) *
+	// `Pi` pebi (2^50) **Grammar** The grammar also includes these connectors: *
+	// `/` division or ratio (as an infix operator). For example: `kBy/{email}` or
+	// `MiBy/10ms`. * `.` multiplication or composition (as an infix operator). For
+	// example: `GBy.d` or `k{watt}.h`. The grammar for a unit is as follows: ```
+	// Expression = Component { "." Component } { "/" Component } ; Component = ( [
+	// PREFIX ] UNIT | "%" ) [ Annotation ] | Annotation | "1" ; UNIT = TIME-UNIT |
+	// STORAGE-UNIT | DATA-UNIT | COUNT-UNIT Annotation = "{" NAME "}" ; ```
+	// Examples: * Request per second: `1/s` or `{requests}/s` * GibiBytes: `GiBy`
+	// * GibiBytes * seconds: `GiBy.s`
 	Unit string `json:"unit,omitempty"`
-
-	// UsageRateTimelineEntries: The timeline entries. Each entry has a
-	// start time and usage rate. The start time specifies the effective
-	// time of the usage rate. The entries must be sorted by start time in
-	// an increasing order.
+	// UsageRateTimelineEntries: The timeline entries. Each entry has a start time
+	// and usage rate. The start time specifies the effective time of the usage
+	// rate. The entries must be sorted by start time in an increasing order.
 	UsageRateTimelineEntries []*UsageRateTimelineEntry `json:"usageRateTimelineEntries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Unit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Unit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Unit") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Unit") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageRateTimeline) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageRateTimeline
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UsageRateTimelineEntry: A usage rate timeline entry. Each entry
-// specifies a constant usage rate during a time interval.
+// UsageRateTimelineEntry: A usage rate timeline entry. Each entry specifies a
+// constant usage rate during a time interval.
 type UsageRateTimelineEntry struct {
-	// EffectiveTime: The effective time for this entry. The usage rate is
-	// in effect starting at this time until the effective time of the
-	// subsequent entry in the timeline. The last entry defines the usage
-	// rate until the end of the `Usage` time frame. Must correspond to an
-	// integer number of hours.
+	// EffectiveTime: The effective time for this entry. The usage rate is in
+	// effect starting at this time until the effective time of the subsequent
+	// entry in the timeline. The last entry defines the usage rate until the end
+	// of the `Usage` time frame. Must correspond to an integer number of hours.
 	EffectiveTime *EstimationTimePoint `json:"effectiveTime,omitempty"`
-
 	// UsageRate: The usage rate.
 	UsageRate float64 `json:"usageRate,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EffectiveTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EffectiveTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EffectiveTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageRateTimelineEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageRateTimelineEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *UsageRateTimelineEntry) UnmarshalJSON(data []byte) error {
@@ -4001,9 +3206,8 @@ func (s *UsageRateTimelineEntry) UnmarshalJSON(data []byte) error {
 // VlanAttachment: VLAN attachment for Cloud Interconnect.
 type VlanAttachment struct {
 	// Bandwidth: Capacities in the pricing table
-	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing)
-	// Examples of capacity are: 50/100/200/300/400/500-Mbps,
-	// 1/2/5/10/20/50-Gbps.
+	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing) Examples
+	// of capacity are: 50/100/200/300/400/500-Mbps, 1/2/5/10/20/50-Gbps.
 	//
 	// Possible values:
 	//   "BANDWIDTH_UNSPECIFIED" - Unspecified
@@ -4020,53 +3224,42 @@ type VlanAttachment struct {
 	//   "BANDWIDTH_BPS_20G" - 20 Gbit/s
 	//   "BANDWIDTH_BPS_50G" - 50 Gbit/s
 	Bandwidth string `json:"bandwidth,omitempty"`
-
 	// VlanCount: VLAN usage. This is specified as a unitless quantity which
 	// indicates the number of VLAN attachment used in interconnect.
 	VlanCount *Usage `json:"vlanCount,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Bandwidth") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bandwidth") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bandwidth") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VlanAttachment) MarshalJSON() ([]byte, error) {
 	type NoMethod VlanAttachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VmResourceBasedCud: Specifies a resource-based committed use discount
-// (CUD).
+// VmResourceBasedCud: Specifies a resource-based committed use discount (CUD).
 type VmResourceBasedCud struct {
 	// GuestAccelerator: Guest accelerator, known as GPU.
 	GuestAccelerator *GuestAccelerator `json:"guestAccelerator,omitempty"`
-
-	// MachineSeries: The machine series for CUD. For example: "n1" for
-	// general purpose N1 machine type commitments. "n2" for general purpose
-	// N2 machine type commitments. "e2" for general purpose E2 machine type
-	// commitments. "n2d" for general purpose N2D machine type commitments.
-	// "t2d" for general purpose T2D machine type commitments. "c2"/"c2d"
-	// for compute-optimized commitments. "m1"/"m2" for the memory-optimized
-	// commitments. "a2' for the accelerator-optimized commitments.
+	// MachineSeries: The machine series for CUD. For example: "n1" for general
+	// purpose N1 machine type commitments. "n2" for general purpose N2 machine
+	// type commitments. "e2" for general purpose E2 machine type commitments.
+	// "n2d" for general purpose N2D machine type commitments. "t2d" for general
+	// purpose T2D machine type commitments. "c2"/"c2d" for compute-optimized
+	// commitments. "m1"/"m2" for the memory-optimized commitments. "a2' for the
+	// accelerator-optimized commitments.
 	MachineSeries string `json:"machineSeries,omitempty"`
-
-	// MemorySizeGb: Memory size of the VM in GB (2^30 bytes). Must be an
-	// increment of 0.25 (256 MB).
+	// MemorySizeGb: Memory size of the VM in GB (2^30 bytes). Must be an increment
+	// of 0.25 (256 MB).
 	MemorySizeGb float64 `json:"memorySizeGb,omitempty"`
-
 	// Plan: Commitment usage plan.
 	//
 	// Possible values:
@@ -4074,36 +3267,27 @@ type VmResourceBasedCud struct {
 	//   "TWELVE_MONTH" - 1 year commitment.
 	//   "THIRTY_SIX_MONTH" - 3 years commitment.
 	Plan string `json:"plan,omitempty"`
-
 	// Region: The region where the VM runs. For example: "us-central1"
 	Region string `json:"region,omitempty"`
-
-	// VirtualCpuCount: The number of vCPUs. The number of vCPUs must be an
-	// integer of 0 or more and can be even or odd.
+	// VirtualCpuCount: The number of vCPUs. The number of vCPUs must be an integer
+	// of 0 or more and can be even or odd.
 	VirtualCpuCount int64 `json:"virtualCpuCount,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "GuestAccelerator") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GuestAccelerator") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GuestAccelerator") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VmResourceBasedCud) MarshalJSON() ([]byte, error) {
 	type NoMethod VmResourceBasedCud
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *VmResourceBasedCud) UnmarshalJSON(data []byte) error {
@@ -4123,136 +3307,97 @@ func (s *VmResourceBasedCud) UnmarshalJSON(data []byte) error {
 // VmToVmEgressWorkload: Specify VM to VM data transfer.
 type VmToVmEgressWorkload struct {
 	InterRegionEgress *InterRegionEgress `json:"interRegionEgress,omitempty"`
-
 	IntraRegionEgress *IntraRegionEgress `json:"intraRegionEgress,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "InterRegionEgress")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "InterRegionEgress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InterRegionEgress") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InterRegionEgress") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VmToVmEgressWorkload) MarshalJSON() ([]byte, error) {
 	type NoMethod VmToVmEgressWorkload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Workload: Specifies usage on a single Google Cloud product over a
-// time frame. Each Google Cloud product has its own message, containing
-// specific product configuration parameters of the product usage
-// amounts along each dimension in which the product is billed.
+// Workload: Specifies usage on a single Google Cloud product over a time
+// frame. Each Google Cloud product has its own message, containing specific
+// product configuration parameters of the product usage amounts along each
+// dimension in which the product is billed.
 type Workload struct {
 	// CloudCdnEgressWorkload: Usage on Google Cloud CDN Data Transfer.
 	CloudCdnEgressWorkload *CloudCdnEgressWorkload `json:"cloudCdnEgressWorkload,omitempty"`
-
 	// CloudCdnWorkload: Usage on Google Cloud CDN.
 	CloudCdnWorkload *CloudCdnWorkload `json:"cloudCdnWorkload,omitempty"`
-
-	// CloudInterconnectEgressWorkload: Usage on Google Cloud Interconnect
-	// Data Transfer.
+	// CloudInterconnectEgressWorkload: Usage on Google Cloud Interconnect Data
+	// Transfer.
 	CloudInterconnectEgressWorkload *CloudInterconnectEgressWorkload `json:"cloudInterconnectEgressWorkload,omitempty"`
-
 	// CloudInterconnectWorkload: Usage on Google Cloud Interconnect.
 	CloudInterconnectWorkload *CloudInterconnectWorkload `json:"cloudInterconnectWorkload,omitempty"`
-
 	// CloudStorageEgressWorkload: Usage on Cloud Storage Data Transfer.
 	CloudStorageEgressWorkload *CloudStorageEgressWorkload `json:"cloudStorageEgressWorkload,omitempty"`
-
 	// CloudStorageWorkload: Usage on Google Cloud Storage.
 	CloudStorageWorkload *CloudStorageWorkload `json:"cloudStorageWorkload,omitempty"`
-
 	// ComputeVmWorkload: Usage of a Google Compute Engine Virtual Machine.
 	ComputeVmWorkload *ComputeVmWorkload `json:"computeVmWorkload,omitempty"`
-
-	// Name: Required. A name for this workload. All workloads in a
-	// `CostScenario` must have a unique `name`. Each `name` may be at most
-	// 128 characters long.
+	// Name: Required. A name for this workload. All workloads in a `CostScenario`
+	// must have a unique `name`. Each `name` may be at most 128 characters long.
 	Name string `json:"name,omitempty"`
-
-	// PremiumTierEgressWorkload: Usage on Premium Tier Internet Data
-	// Transfer.
+	// PremiumTierEgressWorkload: Usage on Premium Tier Internet Data Transfer.
 	PremiumTierEgressWorkload *PremiumTierEgressWorkload `json:"premiumTierEgressWorkload,omitempty"`
-
-	// StandardTierEgressWorkload: Usage on Standard Tier Internet Data
-	// Transfer.
+	// StandardTierEgressWorkload: Usage on Standard Tier Internet Data Transfer.
 	StandardTierEgressWorkload *StandardTierEgressWorkload `json:"standardTierEgressWorkload,omitempty"`
-
 	// VmToVmEgressWorkload: Usage on VM to VM Data Transfer.
 	VmToVmEgressWorkload *VmToVmEgressWorkload `json:"vmToVmEgressWorkload,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CloudCdnEgressWorkload") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudCdnEgressWorkload") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CloudCdnEgressWorkload")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CloudCdnEgressWorkload") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Workload) MarshalJSON() ([]byte, error) {
 	type NoMethod Workload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // WorkloadCostEstimate: Estimated cost for a workload.
 type WorkloadCostEstimate struct {
 	// Name: The name of the workload, as specified in the `CostScenario`.
 	Name string `json:"name,omitempty"`
-
 	// SkuCostEstimates: Estimated costs for each SKU in the workload.
 	SkuCostEstimates []*SkuCostEstimate `json:"skuCostEstimates,omitempty"`
-
 	// WorkloadTotalCostEstimate: Total estimated costs for the workload.
 	WorkloadTotalCostEstimate *CostEstimate `json:"workloadTotalCostEstimate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *WorkloadCostEstimate) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadCostEstimate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudbilling.billingAccounts.estimateCostScenario":
 
 type BillingAccountsEstimateCostScenarioCall struct {
 	s                                            *Service
@@ -4269,8 +3414,8 @@ type BillingAccountsEstimateCostScenarioCall struct {
 //   - billingAccount: Resource name of the billing account for the cost
 //     estimate. The resource name has the form
 //     `billingAccounts/{billing_account_id}`. For example,
-//     `billingAccounts/012345-567890-ABCDEF` is the resource name for
-//     billing account `012345-567890-ABCDEF`. Must be specified.
+//     `billingAccounts/012345-567890-ABCDEF` is the resource name for billing
+//     account `012345-567890-ABCDEF`. Must be specified.
 func (r *BillingAccountsService) EstimateCostScenario(billingAccount string, estimatecostscenarioforbillingaccountrequest *EstimateCostScenarioForBillingAccountRequest) *BillingAccountsEstimateCostScenarioCall {
 	c := &BillingAccountsEstimateCostScenarioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.billingAccount = billingAccount
@@ -4279,23 +3424,21 @@ func (r *BillingAccountsService) EstimateCostScenario(billingAccount string, est
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsEstimateCostScenarioCall) Fields(s ...googleapi.Field) *BillingAccountsEstimateCostScenarioCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsEstimateCostScenarioCall) Context(ctx context.Context) *BillingAccountsEstimateCostScenarioCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsEstimateCostScenarioCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4304,18 +3447,12 @@ func (c *BillingAccountsEstimateCostScenarioCall) Header() http.Header {
 }
 
 func (c *BillingAccountsEstimateCostScenarioCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.estimatecostscenarioforbillingaccountrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+billingAccount}:estimateCostScenario")
@@ -4332,14 +3469,11 @@ func (c *BillingAccountsEstimateCostScenarioCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "cloudbilling.billingAccounts.estimateCostScenario" call.
-// Exactly one of *EstimateCostScenarioForBillingAccountResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *EstimateCostScenarioForBillingAccountResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *EstimateCostScenarioForBillingAccountResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *BillingAccountsEstimateCostScenarioCall) Do(opts ...googleapi.CallOption) (*EstimateCostScenarioForBillingAccountResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4370,40 +3504,7 @@ func (c *BillingAccountsEstimateCostScenarioCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Use custom pricing in the estimate, using a `CostScenario` with a defined `billingAccount`.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}:estimateCostScenario",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.billingAccounts.estimateCostScenario",
-	//   "parameterOrder": [
-	//     "billingAccount"
-	//   ],
-	//   "parameters": {
-	//     "billingAccount": {
-	//       "description": "Resource name of the billing account for the cost estimate. The resource name has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF` is the resource name for billing account `012345-567890-ABCDEF`. Must be specified.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+billingAccount}:estimateCostScenario",
-	//   "request": {
-	//     "$ref": "EstimateCostScenarioForBillingAccountRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "EstimateCostScenarioForBillingAccountResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.services.get":
 
 type BillingAccountsServicesGetCall struct {
 	s            *Service
@@ -4425,33 +3526,29 @@ func (r *BillingAccountsServicesService) Get(name string) *BillingAccountsServic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsServicesGetCall) Fields(s ...googleapi.Field) *BillingAccountsServicesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsServicesGetCall) IfNoneMatch(entityTag string) *BillingAccountsServicesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsServicesGetCall) Context(ctx context.Context) *BillingAccountsServicesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsServicesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4460,12 +3557,7 @@ func (c *BillingAccountsServicesGetCall) Header() http.Header {
 }
 
 func (c *BillingAccountsServicesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4486,15 +3578,11 @@ func (c *BillingAccountsServicesGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "cloudbilling.billingAccounts.services.get" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService.S
-// erverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService.ServerRe
+// sponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4525,37 +3613,7 @@ func (c *BillingAccountsServicesGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a Google Cloud service visible to a billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/services/{servicesId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.services.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the billing account service to retrieve. Format: billingAccounts/{billing_account}/services/{service}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountservicesV1betaBillingAccountService"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.services.list":
 
 type BillingAccountsServicesListCall struct {
 	s            *Service
@@ -4568,59 +3626,54 @@ type BillingAccountsServicesListCall struct {
 
 // List: Lists services visible to a billing account.
 //
-//   - parent: The billing account to list billing account service from.
-//     Format: billingAccounts/{billing_account}.
+//   - parent: The billing account to list billing account service from. Format:
+//     billingAccounts/{billing_account}.
 func (r *BillingAccountsServicesService) List(parent string) *BillingAccountsServicesListCall {
 	c := &BillingAccountsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// billing account service to return. Results may return fewer than this
-// value. Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of billing
+// account service to return. Results may return fewer than this value. Default
+// value is 50 and maximum value is 5000.
 func (c *BillingAccountsServicesListCall) PageSize(pageSize int64) *BillingAccountsServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListBillingAccountServices call to retrieve
-// the next page of results. If this field is empty, the first page is
-// returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListBillingAccountServices call to retrieve the next page of
+// results. If this field is empty, the first page is returned.
 func (c *BillingAccountsServicesListCall) PageToken(pageToken string) *BillingAccountsServicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsServicesListCall) Fields(s ...googleapi.Field) *BillingAccountsServicesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsServicesListCall) IfNoneMatch(entityTag string) *BillingAccountsServicesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsServicesListCall) Context(ctx context.Context) *BillingAccountsServicesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsServicesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4629,12 +3682,7 @@ func (c *BillingAccountsServicesListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsServicesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4655,15 +3703,11 @@ func (c *BillingAccountsServicesListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudbilling.billingAccounts.services.list" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServi
-// cesResponse or error will be non-nil. Any non-2xx status code is an
-// error. Response headers are in either
-// *GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServi
-// cesResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResp
+// onse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsServicesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4694,45 +3738,6 @@ func (c *BillingAccountsServicesListCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists services visible to a billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/services",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.services.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of billing account service to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token received from a previous ListBillingAccountServices call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The billing account to list billing account service from. Format: billingAccounts/{billing_account}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/services",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4740,7 +3745,7 @@ func (c *BillingAccountsServicesListCall) Do(opts ...googleapi.CallOption) (*Goo
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsServicesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingBillingaccountservicesV1betaListBillingAccountServicesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4755,8 +3760,6 @@ func (c *BillingAccountsServicesListCall) Pages(ctx context.Context, f func(*Goo
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "cloudbilling.billingAccounts.skuGroups.get":
 
 type BillingAccountsSkuGroupsGetCall struct {
 	s            *Service
@@ -4778,33 +3781,29 @@ func (r *BillingAccountsSkuGroupsService) Get(name string) *BillingAccountsSkuGr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkuGroupsGetCall) Fields(s ...googleapi.Field) *BillingAccountsSkuGroupsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkuGroupsGetCall) IfNoneMatch(entityTag string) *BillingAccountsSkuGroupsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkuGroupsGetCall) Context(ctx context.Context) *BillingAccountsSkuGroupsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkuGroupsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4813,12 +3812,7 @@ func (c *BillingAccountsSkuGroupsGetCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkuGroupsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4839,17 +3833,11 @@ func (c *BillingAccountsSkuGroupsGetCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudbilling.billingAccounts.skuGroups.get" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup
-//
-//	or error will be non-nil. Any non-2xx status code is an error.
-//
-// Response headers are in either
-// *GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup
-// .ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup.Server
+// Response.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkuGroupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4880,37 +3868,7 @@ func (c *BillingAccountsSkuGroupsGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a SKU group visible to a billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skuGroups/{skuGroupsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skuGroups.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the BillingAccountSkuGroup to retrieve. Format: billingAccounts/{billing_account}/skuGroups/{sku_group}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/skuGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountskugroupsV1betaBillingAccountSkuGroup"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.skuGroups.list":
 
 type BillingAccountsSkuGroupsListCall struct {
 	s            *Service
@@ -4923,59 +3881,54 @@ type BillingAccountsSkuGroupsListCall struct {
 
 // List: Lists SKU groups visible to a billing account.
 //
-//   - parent: The billing account to list billing account SKU groups
-//     from. Format: billingAccounts/{billing_account}.
+//   - parent: The billing account to list billing account SKU groups from.
+//     Format: billingAccounts/{billing_account}.
 func (r *BillingAccountsSkuGroupsService) List(parent string) *BillingAccountsSkuGroupsListCall {
 	c := &BillingAccountsSkuGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// billing account SKU groups to return. Results may return fewer than
-// this value. Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of billing
+// account SKU groups to return. Results may return fewer than this value.
+// Default value is 50 and maximum value is 5000.
 func (c *BillingAccountsSkuGroupsListCall) PageSize(pageSize int64) *BillingAccountsSkuGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListBillingAccountSkuGroups call to retrieve
-// the next page of results. If this field is empty, the first page is
-// returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListBillingAccountSkuGroups call to retrieve the next page of
+// results. If this field is empty, the first page is returned.
 func (c *BillingAccountsSkuGroupsListCall) PageToken(pageToken string) *BillingAccountsSkuGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkuGroupsListCall) Fields(s ...googleapi.Field) *BillingAccountsSkuGroupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkuGroupsListCall) IfNoneMatch(entityTag string) *BillingAccountsSkuGroupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkuGroupsListCall) Context(ctx context.Context) *BillingAccountsSkuGroupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkuGroupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4984,12 +3937,7 @@ func (c *BillingAccountsSkuGroupsListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkuGroupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5010,15 +3958,11 @@ func (c *BillingAccountsSkuGroupsListCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudbilling.billingAccounts.skuGroups.list" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuG
-// roupsResponse or error will be non-nil. Any non-2xx status code is an
-// error. Response headers are in either
-// *GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuG
-// roupsResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsRe
+// sponse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5049,45 +3993,6 @@ func (c *BillingAccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists SKU groups visible to a billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skuGroups",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skuGroups.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of billing account SKU groups to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token received from a previous ListBillingAccountSkuGroups call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The billing account to list billing account SKU groups from. Format: billingAccounts/{billing_account}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/skuGroups",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5095,7 +4000,7 @@ func (c *BillingAccountsSkuGroupsListCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsSkuGroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingBillingaccountskugroupsV1betaListBillingAccountSkuGroupsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5111,8 +4016,6 @@ func (c *BillingAccountsSkuGroupsListCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
-// method id "cloudbilling.billingAccounts.skuGroups.skus.get":
-
 type BillingAccountsSkuGroupsSkusGetCall struct {
 	s            *Service
 	name         string
@@ -5124,8 +4027,7 @@ type BillingAccountsSkuGroupsSkusGetCall struct {
 
 // Get: Gets a SKU that is part of a billing account SKU group.
 //
-//   - name: The name of the billing account SKU group SKU to retrieve.
-//     Format:
+//   - name: The name of the billing account SKU group SKU to retrieve. Format:
 //     billingAccounts/{billing_account}/skuGroups/{sku_group}/skus/{sku}.
 func (r *BillingAccountsSkuGroupsSkusService) Get(name string) *BillingAccountsSkuGroupsSkusGetCall {
 	c := &BillingAccountsSkuGroupsSkusGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5134,33 +4036,29 @@ func (r *BillingAccountsSkuGroupsSkusService) Get(name string) *BillingAccountsS
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkuGroupsSkusGetCall) Fields(s ...googleapi.Field) *BillingAccountsSkuGroupsSkusGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkuGroupsSkusGetCall) IfNoneMatch(entityTag string) *BillingAccountsSkuGroupsSkusGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkuGroupsSkusGetCall) Context(ctx context.Context) *BillingAccountsSkuGroupsSkusGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkuGroupsSkusGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5169,12 +4067,7 @@ func (c *BillingAccountsSkuGroupsSkusGetCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkuGroupsSkusGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5195,15 +4088,11 @@ func (c *BillingAccountsSkuGroupsSkusGetCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "cloudbilling.billingAccounts.skuGroups.skus.get" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGr
-// oupSku or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGr
-// oupSku.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku.
+// ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkuGroupsSkusGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5234,37 +4123,7 @@ func (c *BillingAccountsSkuGroupsSkusGetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a SKU that is part of a billing account SKU group.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skuGroups/{skuGroupsId}/skus/{skusId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skuGroups.skus.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the billing account SKU group SKU to retrieve. Format: billingAccounts/{billing_account}/skuGroups/{sku_group}/skus/{sku}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/skuGroups/[^/]+/skus/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountskugroupskusV1betaBillingAccountSkuGroupSku"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.skuGroups.skus.list":
 
 type BillingAccountsSkuGroupsSkusListCall struct {
 	s            *Service
@@ -5277,60 +4136,54 @@ type BillingAccountsSkuGroupsSkusListCall struct {
 
 // List: Lists SKUs that is part of billing account SKU groups.
 //
-//   - parent: The billing account SKU group to list billing account SKU
-//     group SKUs from. Format:
-//     billingAccounts/{billing_account}/skuGroups/{sku_group}.
+//   - parent: The billing account SKU group to list billing account SKU group
+//     SKUs from. Format: billingAccounts/{billing_account}/skuGroups/{sku_group}.
 func (r *BillingAccountsSkuGroupsSkusService) List(parent string) *BillingAccountsSkuGroupsSkusListCall {
 	c := &BillingAccountsSkuGroupsSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// billing account SKU group SKUs to return. Results may return fewer
-// than this value. Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of billing
+// account SKU group SKUs to return. Results may return fewer than this value.
+// Default value is 50 and maximum value is 5000.
 func (c *BillingAccountsSkuGroupsSkusListCall) PageSize(pageSize int64) *BillingAccountsSkuGroupsSkusListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListBillingAccountSkuGroupSkus call to
-// retrieve the next page of results. If this field is empty, the first
-// page is returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListBillingAccountSkuGroupSkus call to retrieve the next page of
+// results. If this field is empty, the first page is returned.
 func (c *BillingAccountsSkuGroupsSkusListCall) PageToken(pageToken string) *BillingAccountsSkuGroupsSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkuGroupsSkusListCall) Fields(s ...googleapi.Field) *BillingAccountsSkuGroupsSkusListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkuGroupsSkusListCall) IfNoneMatch(entityTag string) *BillingAccountsSkuGroupsSkusListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkuGroupsSkusListCall) Context(ctx context.Context) *BillingAccountsSkuGroupsSkusListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkuGroupsSkusListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5339,12 +4192,7 @@ func (c *BillingAccountsSkuGroupsSkusListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkuGroupsSkusListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5365,15 +4213,11 @@ func (c *BillingAccountsSkuGroupsSkusListCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudbilling.billingAccounts.skuGroups.skus.list" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountS
-// kuGroupSkusResponse or error will be non-nil. Any non-2xx status code
-// is an error. Response headers are in either
-// *GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountS
-// kuGroupSkusResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroup
+// SkusResponse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkuGroupsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5404,45 +4248,6 @@ func (c *BillingAccountsSkuGroupsSkusListCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists SKUs that is part of billing account SKU groups.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skuGroups/{skuGroupsId}/skus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skuGroups.skus.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of billing account SKU group SKUs to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token received from a previous ListBillingAccountSkuGroupSkus call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The billing account SKU group to list billing account SKU group SKUs from. Format: billingAccounts/{billing_account}/skuGroups/{sku_group}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/skuGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/skus",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5450,7 +4255,7 @@ func (c *BillingAccountsSkuGroupsSkusListCall) Do(opts ...googleapi.CallOption) 
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsSkuGroupsSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingBillingaccountskugroupskusV1betaListBillingAccountSkuGroupSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5465,8 +4270,6 @@ func (c *BillingAccountsSkuGroupsSkusListCall) Pages(ctx context.Context, f func
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "cloudbilling.billingAccounts.skus.get":
 
 type BillingAccountsSkusGetCall struct {
 	s            *Service
@@ -5488,33 +4291,29 @@ func (r *BillingAccountsSkusService) Get(name string) *BillingAccountsSkusGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkusGetCall) Fields(s ...googleapi.Field) *BillingAccountsSkusGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkusGetCall) IfNoneMatch(entityTag string) *BillingAccountsSkusGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkusGetCall) Context(ctx context.Context) *BillingAccountsSkusGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkusGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5523,12 +4322,7 @@ func (c *BillingAccountsSkusGetCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkusGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5549,15 +4343,11 @@ func (c *BillingAccountsSkusGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "cloudbilling.billingAccounts.skus.get" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkusGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5588,37 +4378,7 @@ func (c *BillingAccountsSkusGetCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a SKU visible to a billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus/{skusId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skus.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the billing account SKU to retrieve. Format: billingAccounts/{billing_account}/skus/{sku}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/skus/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.skus.list":
 
 type BillingAccountsSkusListCall struct {
 	s            *Service
@@ -5631,69 +4391,64 @@ type BillingAccountsSkusListCall struct {
 
 // List: Lists SKUs visible to a billing account.
 //
-//   - parent: The billing account to list billing account SKU from.
-//     Format: billingAccounts/{billing_account}.
+//   - parent: The billing account to list billing account SKU from. Format:
+//     billingAccounts/{billing_account}.
 func (r *BillingAccountsSkusService) List(parent string) *BillingAccountsSkusListCall {
 	c := &BillingAccountsSkusListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Options for how to
-// filter the billing account SKUs. Currently, only filter on
-// `billing_account_service` is supported. Only !=, = operators are
-// supported. Examples: - billing_account_service =
+// Filter sets the optional parameter "filter": Options for how to filter the
+// billing account SKUs. Currently, only filter on `billing_account_service` is
+// supported. Only !=, = operators are supported. Examples: -
+// billing_account_service =
 // "billingAccounts/012345-567890-ABCDEF/services/DA34-426B-A397"
 func (c *BillingAccountsSkusListCall) Filter(filter string) *BillingAccountsSkusListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// billing account SKUs to return. Results may return fewer than this
-// value. Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of billing
+// account SKUs to return. Results may return fewer than this value. Default
+// value is 50 and maximum value is 5000.
 func (c *BillingAccountsSkusListCall) PageSize(pageSize int64) *BillingAccountsSkusListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListBillingAccountSkus call to retrieve the
-// next page of results. If this field is empty, the first page is
-// returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListBillingAccountSkus call to retrieve the next page of results.
+// If this field is empty, the first page is returned.
 func (c *BillingAccountsSkusListCall) PageToken(pageToken string) *BillingAccountsSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkusListCall) Fields(s ...googleapi.Field) *BillingAccountsSkusListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkusListCall) IfNoneMatch(entityTag string) *BillingAccountsSkusListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkusListCall) Context(ctx context.Context) *BillingAccountsSkusListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkusListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5702,12 +4457,7 @@ func (c *BillingAccountsSkusListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkusListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5728,15 +4478,11 @@ func (c *BillingAccountsSkusListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudbilling.billingAccounts.skus.list" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusRespo
-// nse or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusRespo
-// nse.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse.Ser
+// verResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5767,50 +4513,6 @@ func (c *BillingAccountsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists SKUs visible to a billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skus.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Options for how to filter the billing account SKUs. Currently, only filter on `billing_account_service` is supported. Only !=, = operators are supported. Examples: - billing_account_service = \"billingAccounts/012345-567890-ABCDEF/services/DA34-426B-A397\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum number of billing account SKUs to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token received from a previous ListBillingAccountSkus call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The billing account to list billing account SKU from. Format: billingAccounts/{billing_account}",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/skus",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5818,7 +4520,7 @@ func (c *BillingAccountsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingBillingaccountskusV1betaListBillingAccountSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5834,8 +4536,6 @@ func (c *BillingAccountsSkusListCall) Pages(ctx context.Context, f func(*GoogleC
 	}
 }
 
-// method id "cloudbilling.billingAccounts.skus.price.get":
-
 type BillingAccountsSkusPriceGetCall struct {
 	s            *Service
 	name         string
@@ -5845,8 +4545,7 @@ type BillingAccountsSkusPriceGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest price for SKUs available to your Cloud Billing
-// account.
+// Get: Gets the latest price for SKUs available to your Cloud Billing account.
 //
 //   - name: Name of the billing account price to retrieve. Format:
 //     billingAccounts/{billing_account}/skus/{sku}/price.
@@ -5856,42 +4555,38 @@ func (r *BillingAccountsSkusPriceService) Get(name string) *BillingAccountsSkusP
 	return c
 }
 
-// CurrencyCode sets the optional parameter "currencyCode": ISO-4217
-// currency code for the price. If not specified, the currency of the
-// billing account is used.
+// CurrencyCode sets the optional parameter "currencyCode": ISO-4217 currency
+// code for the price. If not specified, the currency of the billing account is
+// used.
 func (c *BillingAccountsSkusPriceGetCall) CurrencyCode(currencyCode string) *BillingAccountsSkusPriceGetCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkusPriceGetCall) Fields(s ...googleapi.Field) *BillingAccountsSkusPriceGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkusPriceGetCall) IfNoneMatch(entityTag string) *BillingAccountsSkusPriceGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkusPriceGetCall) Context(ctx context.Context) *BillingAccountsSkusPriceGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkusPriceGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5900,12 +4595,7 @@ func (c *BillingAccountsSkusPriceGetCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkusPriceGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5926,15 +4616,11 @@ func (c *BillingAccountsSkusPriceGetCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudbilling.billingAccounts.skus.price.get" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5965,42 +4651,7 @@ func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest price for SKUs available to your Cloud Billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus/{skusId}/price",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skus.price.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "currencyCode": {
-	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, the currency of the billing account is used.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Name of the billing account price to retrieve. Format: billingAccounts/{billing_account}/skus/{sku}/price",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/skus/[^/]+/price$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.skus.prices.list":
 
 type BillingAccountsSkusPricesListCall struct {
 	s            *Service
@@ -6011,72 +4662,66 @@ type BillingAccountsSkusPricesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the latest prices for SKUs available to your Cloud
-// Billing account.
+// List: Lists the latest prices for SKUs available to your Cloud Billing
+// account.
 //
-//   - parent: To list all Billing Account SKUs, use `-` as the SKU ID.
-//     Format: `billingAccounts/{billing_account}/skus/-` Note: Specifying
-//     an actual SKU resource id will return a collection of one Billing
-//     Account Price.
+//   - parent: To list all Billing Account SKUs, use `-` as the SKU ID. Format:
+//     `billingAccounts/{billing_account}/skus/-` Note: Specifying an actual SKU
+//     resource id will return a collection of one Billing Account Price.
 func (r *BillingAccountsSkusPricesService) List(parent string) *BillingAccountsSkusPricesListCall {
 	c := &BillingAccountsSkusPricesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// CurrencyCode sets the optional parameter "currencyCode": ISO-4217
-// currency code for the price. If not specified, currency of billing
-// account will be used.
+// CurrencyCode sets the optional parameter "currencyCode": ISO-4217 currency
+// code for the price. If not specified, currency of billing account will be
+// used.
 func (c *BillingAccountsSkusPricesListCall) CurrencyCode(currencyCode string) *BillingAccountsSkusPricesListCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// billing account price to return. Results may return fewer than this
-// value. Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of billing
+// account price to return. Results may return fewer than this value. Default
+// value is 50 and maximum value is 5000.
 func (c *BillingAccountsSkusPricesListCall) PageSize(pageSize int64) *BillingAccountsSkusPricesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListBillingAccountPrices call to retrieve
-// the next page of results. If this field is empty, the first page is
-// returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListBillingAccountPrices call to retrieve the next page of
+// results. If this field is empty, the first page is returned.
 func (c *BillingAccountsSkusPricesListCall) PageToken(pageToken string) *BillingAccountsSkusPricesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSkusPricesListCall) Fields(s ...googleapi.Field) *BillingAccountsSkusPricesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSkusPricesListCall) IfNoneMatch(entityTag string) *BillingAccountsSkusPricesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSkusPricesListCall) Context(ctx context.Context) *BillingAccountsSkusPricesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSkusPricesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6085,12 +4730,7 @@ func (c *BillingAccountsSkusPricesListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSkusPricesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6111,15 +4751,11 @@ func (c *BillingAccountsSkusPricesListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "cloudbilling.billingAccounts.skus.prices.list" call.
-// Exactly one of
-// *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesR
-// esponse or error will be non-nil. Any non-2xx status code is an
-// error. Response headers are in either
-// *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesR
-// esponse.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse
+// .ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSkusPricesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6150,50 +4786,6 @@ func (c *BillingAccountsSkusPricesListCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the latest prices for SKUs available to your Cloud Billing account.",
-	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus/{skusId}/prices",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.skus.prices.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "currencyCode": {
-	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, currency of billing account will be used.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Maximum number of billing account price to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. Page token received from a previous ListBillingAccountPrices call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. To list all Billing Account SKUs, use `-` as the SKU ID. Format: `billingAccounts/{billing_account}/skus/-` Note: Specifying an actual SKU resource id will return a collection of one Billing Account Price.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+/skus/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/prices",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6201,7 +4793,7 @@ func (c *BillingAccountsSkusPricesListCall) Do(opts ...googleapi.CallOption) (*G
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsSkusPricesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6217,8 +4809,6 @@ func (c *BillingAccountsSkusPricesListCall) Pages(ctx context.Context, f func(*G
 	}
 }
 
-// method id "cloudbilling.skuGroups.get":
-
 type SkuGroupsGetCall struct {
 	s            *Service
 	name         string
@@ -6230,8 +4820,7 @@ type SkuGroupsGetCall struct {
 
 // Get: Gets a publicly listed SKU group.
 //
-//   - name: The name of the SKU group to retrieve. Format:
-//     skuGroups/{sku_group}.
+// - name: The name of the SKU group to retrieve. Format: skuGroups/{sku_group}.
 func (r *SkuGroupsService) Get(name string) *SkuGroupsGetCall {
 	c := &SkuGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6239,33 +4828,29 @@ func (r *SkuGroupsService) Get(name string) *SkuGroupsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SkuGroupsGetCall) Fields(s ...googleapi.Field) *SkuGroupsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SkuGroupsGetCall) IfNoneMatch(entityTag string) *SkuGroupsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SkuGroupsGetCall) Context(ctx context.Context) *SkuGroupsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SkuGroupsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6274,12 +4859,7 @@ func (c *SkuGroupsGetCall) Header() http.Header {
 }
 
 func (c *SkuGroupsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6300,14 +4880,11 @@ func (c *SkuGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.skuGroups.get" call.
-// Exactly one of *GoogleCloudBillingSkugroupsV1betaSkuGroup or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudBillingSkugroupsV1betaSkuGroup.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingSkugroupsV1betaSkuGroup.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SkuGroupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingSkugroupsV1betaSkuGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6338,37 +4915,7 @@ func (c *SkuGroupsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBilling
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a publicly listed SKU group.",
-	//   "flatPath": "v1beta/skuGroups/{skuGroupsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.skuGroups.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the SKU group to retrieve. Format: skuGroups/{sku_group}",
-	//       "location": "path",
-	//       "pattern": "^skuGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingSkugroupsV1betaSkuGroup"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.skuGroups.list":
 
 type SkuGroupsListCall struct {
 	s            *Service
@@ -6384,50 +4931,46 @@ func (r *SkuGroupsService) List() *SkuGroupsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// SKU groups to return. Results may return fewer than this value.
-// Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of SKU
+// groups to return. Results may return fewer than this value. Default value is
+// 50 and maximum value is 5000.
 func (c *SkuGroupsListCall) PageSize(pageSize int64) *SkuGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListSkuGroups call to retrieve the next page
-// of results. If this field is empty, the first page is returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListSkuGroups call to retrieve the next page of results. If this
+// field is empty, the first page is returned.
 func (c *SkuGroupsListCall) PageToken(pageToken string) *SkuGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SkuGroupsListCall) Fields(s ...googleapi.Field) *SkuGroupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SkuGroupsListCall) IfNoneMatch(entityTag string) *SkuGroupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SkuGroupsListCall) Context(ctx context.Context) *SkuGroupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SkuGroupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6436,12 +4979,7 @@ func (c *SkuGroupsListCall) Header() http.Header {
 }
 
 func (c *SkuGroupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6459,15 +4997,13 @@ func (c *SkuGroupsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.skuGroups.list" call.
-// Exactly one of
-// *GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6498,36 +5034,6 @@ func (c *SkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillin
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all publicly listed SKU groups.",
-	//   "flatPath": "v1beta/skuGroups",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.skuGroups.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of SKU groups to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token received from a previous ListSkuGroups call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/skuGroups",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6535,7 +5041,7 @@ func (c *SkuGroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillin
 // The provided context supersedes any context provided to the Context method.
 func (c *SkuGroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingSkugroupsV1betaListSkuGroupsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6551,8 +5057,6 @@ func (c *SkuGroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudBillin
 	}
 }
 
-// method id "cloudbilling.skuGroups.skus.get":
-
 type SkuGroupsSkusGetCall struct {
 	s            *Service
 	name         string
@@ -6562,8 +5066,7 @@ type SkuGroupsSkusGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a publicly listed SKU that is part of a publicly listed SKU
-// group.
+// Get: Gets a publicly listed SKU that is part of a publicly listed SKU group.
 //
 //   - name: The name of the SKU group SKU to retrieve. Format:
 //     skuGroups/{sku_group}/skus/{sku}.
@@ -6574,33 +5077,29 @@ func (r *SkuGroupsSkusService) Get(name string) *SkuGroupsSkusGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SkuGroupsSkusGetCall) Fields(s ...googleapi.Field) *SkuGroupsSkusGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SkuGroupsSkusGetCall) IfNoneMatch(entityTag string) *SkuGroupsSkusGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SkuGroupsSkusGetCall) Context(ctx context.Context) *SkuGroupsSkusGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SkuGroupsSkusGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6609,12 +5108,7 @@ func (c *SkuGroupsSkusGetCall) Header() http.Header {
 }
 
 func (c *SkuGroupsSkusGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6635,16 +5129,11 @@ func (c *SkuGroupsSkusGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.skuGroups.skus.get" call.
-// Exactly one of *GoogleCloudBillingSkugroupskusV1betaSkuGroupSku or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudBillingSkugroupskusV1betaSkuGroupSku.ServerResponse.Header
-//
-//	or (if a response was returned at all) in
-//
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingSkugroupskusV1betaSkuGroupSku.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SkuGroupsSkusGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingSkugroupskusV1betaSkuGroupSku, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6675,37 +5164,7 @@ func (c *SkuGroupsSkusGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBil
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a publicly listed SKU that is part of a publicly listed SKU group.",
-	//   "flatPath": "v1beta/skuGroups/{skuGroupsId}/skus/{skusId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.skuGroups.skus.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the SKU group SKU to retrieve. Format: skuGroups/{sku_group}/skus/{sku}",
-	//       "location": "path",
-	//       "pattern": "^skuGroups/[^/]+/skus/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingSkugroupskusV1betaSkuGroupSku"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.skuGroups.skus.list":
 
 type SkuGroupsSkusListCall struct {
 	s            *Service
@@ -6716,8 +5175,8 @@ type SkuGroupsSkusListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all publicly listed SKUs contained by a publicly listed
-// SKU group.
+// List: Lists all publicly listed SKUs contained by a publicly listed SKU
+// group.
 //
 //   - parent: The SkuGroup to list SkuGroupSku from. Format:
 //     skuGroups/{sku_group}.
@@ -6727,50 +5186,46 @@ func (r *SkuGroupsSkusService) List(parent string) *SkuGroupsSkusListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// SKU group SKUs to return. Results may return fewer than this value.
-// Default value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of SKU group
+// SKUs to return. Results may return fewer than this value. Default value is
+// 50 and maximum value is 5000.
 func (c *SkuGroupsSkusListCall) PageSize(pageSize int64) *SkuGroupsSkusListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListSkuGroupSkus call to retrieve the next
-// page of results. If this field is empty, the first page is returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListSkuGroupSkus call to retrieve the next page of results. If
+// this field is empty, the first page is returned.
 func (c *SkuGroupsSkusListCall) PageToken(pageToken string) *SkuGroupsSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SkuGroupsSkusListCall) Fields(s ...googleapi.Field) *SkuGroupsSkusListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SkuGroupsSkusListCall) IfNoneMatch(entityTag string) *SkuGroupsSkusListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SkuGroupsSkusListCall) Context(ctx context.Context) *SkuGroupsSkusListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SkuGroupsSkusListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6779,12 +5234,7 @@ func (c *SkuGroupsSkusListCall) Header() http.Header {
 }
 
 func (c *SkuGroupsSkusListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6805,15 +5255,11 @@ func (c *SkuGroupsSkusListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.skuGroups.skus.list" call.
-// Exactly one of
-// *GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SkuGroupsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6844,45 +5290,6 @@ func (c *SkuGroupsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all publicly listed SKUs contained by a publicly listed SKU group.",
-	//   "flatPath": "v1beta/skuGroups/{skuGroupsId}/skus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.skuGroups.skus.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of SKU group SKUs to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token received from a previous ListSkuGroupSkus call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The SkuGroup to list SkuGroupSku from. Format: skuGroups/{sku_group}",
-	//       "location": "path",
-	//       "pattern": "^skuGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/skus",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6890,7 +5297,7 @@ func (c *SkuGroupsSkusListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBi
 // The provided context supersedes any context provided to the Context method.
 func (c *SkuGroupsSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingSkugroupskusV1betaListSkuGroupSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6906,8 +5313,6 @@ func (c *SkuGroupsSkusListCall) Pages(ctx context.Context, f func(*GoogleCloudBi
 	}
 }
 
-// method id "cloudbilling.skus.price.get":
-
 type SkusPriceGetCall struct {
 	s            *Service
 	name         string
@@ -6919,49 +5324,44 @@ type SkusPriceGetCall struct {
 
 // Get: Gets the latest price for the given SKU.
 //
-//   - name: Name of the latest price to retrieve. Format:
-//     skus/{sku}/price.
+// - name: Name of the latest price to retrieve. Format: skus/{sku}/price.
 func (r *SkusPriceService) Get(name string) *SkusPriceGetCall {
 	c := &SkusPriceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// CurrencyCode sets the optional parameter "currencyCode": ISO-4217
-// currency code for the price. If not specified, USD will be used.
+// CurrencyCode sets the optional parameter "currencyCode": ISO-4217 currency
+// code for the price. If not specified, USD will be used.
 func (c *SkusPriceGetCall) CurrencyCode(currencyCode string) *SkusPriceGetCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SkusPriceGetCall) Fields(s ...googleapi.Field) *SkusPriceGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SkusPriceGetCall) IfNoneMatch(entityTag string) *SkusPriceGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SkusPriceGetCall) Context(ctx context.Context) *SkusPriceGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SkusPriceGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6970,12 +5370,7 @@ func (c *SkusPriceGetCall) Header() http.Header {
 }
 
 func (c *SkusPriceGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6996,13 +5391,11 @@ func (c *SkusPriceGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.skus.price.get" call.
-// Exactly one of *GoogleCloudBillingPricesV1betaPrice or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudBillingPricesV1betaPrice.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingPricesV1betaPrice.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SkusPriceGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingPricesV1betaPrice, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7033,42 +5426,7 @@ func (c *SkusPriceGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBilling
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest price for the given SKU.",
-	//   "flatPath": "v1beta/skus/{skusId}/price",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.skus.price.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "currencyCode": {
-	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, USD will be used.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Name of the latest price to retrieve. Format: skus/{sku}/price",
-	//       "location": "path",
-	//       "pattern": "^skus/[^/]+/price$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingPricesV1betaPrice"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.skus.prices.list":
 
 type SkusPricesListCall struct {
 	s            *Service
@@ -7081,66 +5439,62 @@ type SkusPricesListCall struct {
 
 // List: Lists the latest prices for all SKUs.
 //
-//   - parent: To list the prices for all SKUs, use `-` as the SKU ID.
-//     Format: `skus/-` Specifying a specific SKU ID returns a collection
-//     with one Price object for the SKU.
+//   - parent: To list the prices for all SKUs, use `-` as the SKU ID. Format:
+//     `skus/-` Specifying a specific SKU ID returns a collection with one Price
+//     object for the SKU.
 func (r *SkusPricesService) List(parent string) *SkusPricesListCall {
 	c := &SkusPricesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// CurrencyCode sets the optional parameter "currencyCode": ISO-4217
-// currency code for the price. If not specified, USD will be used.
+// CurrencyCode sets the optional parameter "currencyCode": ISO-4217 currency
+// code for the price. If not specified, USD will be used.
 func (c *SkusPricesListCall) CurrencyCode(currencyCode string) *SkusPricesListCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// prices to return. Results may return fewer than this value. Default
-// value is 50 and maximum value is 5000.
+// PageSize sets the optional parameter "pageSize": Maximum number of prices to
+// return. Results may return fewer than this value. Default value is 50 and
+// maximum value is 5000.
 func (c *SkusPricesListCall) PageSize(pageSize int64) *SkusPricesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token
-// received from a previous ListPrices call to retrieve the next page of
-// results. If this field is empty, the first page is returned.
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous ListPrices call to retrieve the next page of results. If this
+// field is empty, the first page is returned.
 func (c *SkusPricesListCall) PageToken(pageToken string) *SkusPricesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SkusPricesListCall) Fields(s ...googleapi.Field) *SkusPricesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SkusPricesListCall) IfNoneMatch(entityTag string) *SkusPricesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SkusPricesListCall) Context(ctx context.Context) *SkusPricesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SkusPricesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7149,12 +5503,7 @@ func (c *SkusPricesListCall) Header() http.Header {
 }
 
 func (c *SkusPricesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7175,14 +5524,11 @@ func (c *SkusPricesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.skus.prices.list" call.
-// Exactly one of *GoogleCloudBillingPricesV1betaListPricesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudBillingPricesV1betaListPricesResponse.ServerResponse.Heade
-// r or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudBillingPricesV1betaListPricesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *SkusPricesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingPricesV1betaListPricesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7213,50 +5559,6 @@ func (c *SkusPricesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBilli
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the latest prices for all SKUs.",
-	//   "flatPath": "v1beta/skus/{skusId}/prices",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.skus.prices.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "currencyCode": {
-	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, USD will be used.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Maximum number of prices to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. Page token received from a previous ListPrices call to retrieve the next page of results. If this field is empty, the first page is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. To list the prices for all SKUs, use `-` as the SKU ID. Format: `skus/-` Specifying a specific SKU ID returns a collection with one Price object for the SKU.",
-	//       "location": "path",
-	//       "pattern": "^skus/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/prices",
-	//   "response": {
-	//     "$ref": "GoogleCloudBillingPricesV1betaListPricesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7264,7 +5566,7 @@ func (c *SkusPricesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBilli
 // The provided context supersedes any context provided to the Context method.
 func (c *SkusPricesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingPricesV1betaListPricesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7280,8 +5582,6 @@ func (c *SkusPricesListCall) Pages(ctx context.Context, f func(*GoogleCloudBilli
 	}
 }
 
-// method id "cloudbilling.estimateCostScenario":
-
 type V1betaEstimateCostScenarioCall struct {
 	s                                        *Service
 	estimatecostscenariowithlistpricerequest *EstimateCostScenarioWithListPriceRequest
@@ -7290,8 +5590,8 @@ type V1betaEstimateCostScenarioCall struct {
 	header_                                  http.Header
 }
 
-// EstimateCostScenario: Estimate list prices using a `CostScenario`
-// without a defined `billingAccount`.
+// EstimateCostScenario: Estimate list prices using a `CostScenario` without a
+// defined `billingAccount`.
 func (r *V1betaService) EstimateCostScenario(estimatecostscenariowithlistpricerequest *EstimateCostScenarioWithListPriceRequest) *V1betaEstimateCostScenarioCall {
 	c := &V1betaEstimateCostScenarioCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.estimatecostscenariowithlistpricerequest = estimatecostscenariowithlistpricerequest
@@ -7299,23 +5599,21 @@ func (r *V1betaService) EstimateCostScenario(estimatecostscenariowithlistpricere
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *V1betaEstimateCostScenarioCall) Fields(s ...googleapi.Field) *V1betaEstimateCostScenarioCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *V1betaEstimateCostScenarioCall) Context(ctx context.Context) *V1betaEstimateCostScenarioCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *V1betaEstimateCostScenarioCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7324,18 +5622,12 @@ func (c *V1betaEstimateCostScenarioCall) Header() http.Header {
 }
 
 func (c *V1betaEstimateCostScenarioCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.estimatecostscenariowithlistpricerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta:estimateCostScenario")
@@ -7349,14 +5641,11 @@ func (c *V1betaEstimateCostScenarioCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "cloudbilling.estimateCostScenario" call.
-// Exactly one of *EstimateCostScenarioWithListPriceResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *EstimateCostScenarioWithListPriceResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *EstimateCostScenarioWithListPriceResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *V1betaEstimateCostScenarioCall) Do(opts ...googleapi.CallOption) (*EstimateCostScenarioWithListPriceResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7387,25 +5676,4 @@ func (c *V1betaEstimateCostScenarioCall) Do(opts ...googleapi.CallOption) (*Esti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Estimate list prices using a `CostScenario` without a defined `billingAccount`.",
-	//   "flatPath": "v1beta:estimateCostScenario",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.estimateCostScenario",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1beta:estimateCostScenario",
-	//   "request": {
-	//     "$ref": "EstimateCostScenarioWithListPriceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "EstimateCostScenarioWithListPriceResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

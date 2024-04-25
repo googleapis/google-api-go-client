@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -200,578 +200,479 @@ type SystempolicyService struct {
 	s *Service
 }
 
-// AdmissionRule: An admission rule specifies either that all container
-// images used in a pod creation request must be attested to by one or
-// more attestors, that all pod creations will be allowed, or that all
-// pod creations will be denied. Images matching an admission allowlist
-// pattern are exempted from admission rules and will never block a pod
-// creation.
+// AdmissionRule: An admission rule specifies either that all container images
+// used in a pod creation request must be attested to by one or more attestors,
+// that all pod creations will be allowed, or that all pod creations will be
+// denied. Images matching an admission allowlist pattern are exempted from
+// admission rules and will never block a pod creation.
 type AdmissionRule struct {
-	// EnforcementMode: Required. The action when a pod creation is denied
-	// by the admission rule.
+	// EnforcementMode: Required. The action when a pod creation is denied by the
+	// admission rule.
 	//
 	// Possible values:
 	//   "ENFORCEMENT_MODE_UNSPECIFIED" - Do not use.
-	//   "ENFORCED_BLOCK_AND_AUDIT_LOG" - Enforce the admission rule by
-	// blocking the pod creation.
-	//   "DRYRUN_AUDIT_LOG_ONLY" - Dryrun mode: Audit logging only. This
-	// will allow the pod creation as if the admission request had specified
-	// break-glass.
+	//   "ENFORCED_BLOCK_AND_AUDIT_LOG" - Enforce the admission rule by blocking
+	// the pod creation.
+	//   "DRYRUN_AUDIT_LOG_ONLY" - Dryrun mode: Audit logging only. This will allow
+	// the pod creation as if the admission request had specified break-glass.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
-
 	// EvaluationMode: Required. How this admission rule will be evaluated.
 	//
 	// Possible values:
 	//   "EVALUATION_MODE_UNSPECIFIED" - Do not use.
 	//   "ALWAYS_ALLOW" - This rule allows all all pod creations.
 	//   "REQUIRE_ATTESTATION" - This rule allows a pod creation if all the
-	// attestors listed in `require_attestations_by` have valid attestations
-	// for all of the images in the pod spec.
+	// attestors listed in `require_attestations_by` have valid attestations for
+	// all of the images in the pod spec.
 	//   "ALWAYS_DENY" - This rule denies all pod creations.
 	EvaluationMode string `json:"evaluationMode,omitempty"`
-
-	// RequireAttestationsBy: Optional. The resource names of the attestors
-	// that must attest to a container image, in the format
-	// `projects/*/attestors/*`. Each attestor must exist before a policy
-	// can reference it. To add an attestor to a policy the principal
-	// issuing the policy change request must be able to read the attestor
-	// resource. Note: this field must be non-empty when the evaluation_mode
-	// field specifies REQUIRE_ATTESTATION, otherwise it must be empty.
+	// RequireAttestationsBy: Optional. The resource names of the attestors that
+	// must attest to a container image, in the format `projects/*/attestors/*`.
+	// Each attestor must exist before a policy can reference it. To add an
+	// attestor to a policy the principal issuing the policy change request must be
+	// able to read the attestor resource. Note: this field must be non-empty when
+	// the evaluation_mode field specifies REQUIRE_ATTESTATION, otherwise it must
+	// be empty.
 	RequireAttestationsBy []string `json:"requireAttestationsBy,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EnforcementMode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EnforcementMode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EnforcementMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdmissionRule) MarshalJSON() ([]byte, error) {
 	type NoMethod AdmissionRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AdmissionWhitelistPattern: An admission allowlist pattern exempts
-// images from checks by admission rules.
+// AdmissionWhitelistPattern: An admission allowlist pattern exempts images
+// from checks by admission rules.
 type AdmissionWhitelistPattern struct {
 	// NamePattern: An image name pattern to allowlist, in the form
-	// `registry/path/to/image`. This supports a trailing `*` as a wildcard,
-	// but this is allowed only in text after the `registry/` part. `*`
-	// wildcard does not match `/`, i.e., `gcr.io/nginx*` matches
-	// `gcr.io/nginx@latest`, but it does not match `gcr.io/nginx/image`.
-	// This also supports a trailing `**` wildcard which matches
-	// subdirectories, i.e., `gcr.io/nginx**` matches `gcr.io/nginx/image`.
+	// `registry/path/to/image`. This supports a trailing `*` as a wildcard, but
+	// this is allowed only in text after the `registry/` part. `*` wildcard does
+	// not match `/`, i.e., `gcr.io/nginx*` matches `gcr.io/nginx@latest`, but it
+	// does not match `gcr.io/nginx/image`. This also supports a trailing `**`
+	// wildcard which matches subdirectories, i.e., `gcr.io/nginx**` matches
+	// `gcr.io/nginx/image`.
 	NamePattern string `json:"namePattern,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "NamePattern") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NamePattern") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NamePattern") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
 	type NoMethod AdmissionWhitelistPattern
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AttestationOccurrence: Occurrence that represents a single
-// "attestation". The authenticity of an attestation can be verified
-// using the attached signature. If the verifier trusts the public key
-// of the signer, then verifying the signature is sufficient to
-// establish trust. In this circumstance, the authority to which this
-// attestation is attached is primarily useful for lookup (how to find
-// this attestation if you already know the authority and artifact to be
-// verified) and intent (for which authority this attestation was
-// intended to sign.
+// AttestationOccurrence: Occurrence that represents a single "attestation".
+// The authenticity of an attestation can be verified using the attached
+// signature. If the verifier trusts the public key of the signer, then
+// verifying the signature is sufficient to establish trust. In this
+// circumstance, the authority to which this attestation is attached is
+// primarily useful for lookup (how to find this attestation if you already
+// know the authority and artifact to be verified) and intent (for which
+// authority this attestation was intended to sign.
 type AttestationOccurrence struct {
-	// Jwts: One or more JWTs encoding a self-contained attestation. Each
-	// JWT encodes the payload that it verifies within the JWT itself.
-	// Verifier implementation SHOULD ignore the `serialized_payload` field
-	// when verifying these JWTs. If only JWTs are present on this
-	// AttestationOccurrence, then the `serialized_payload` SHOULD be left
-	// empty. Each JWT SHOULD encode a claim specific to the `resource_uri`
-	// of this Occurrence, but this is not validated by Grafeas metadata API
-	// implementations. The JWT itself is opaque to Grafeas.
+	// Jwts: One or more JWTs encoding a self-contained attestation. Each JWT
+	// encodes the payload that it verifies within the JWT itself. Verifier
+	// implementation SHOULD ignore the `serialized_payload` field when verifying
+	// these JWTs. If only JWTs are present on this AttestationOccurrence, then the
+	// `serialized_payload` SHOULD be left empty. Each JWT SHOULD encode a claim
+	// specific to the `resource_uri` of this Occurrence, but this is not validated
+	// by Grafeas metadata API implementations. The JWT itself is opaque to
+	// Grafeas.
 	Jwts []*Jwt `json:"jwts,omitempty"`
-
-	// SerializedPayload: Required. The serialized payload that is verified
-	// by one or more `signatures`.
+	// SerializedPayload: Required. The serialized payload that is verified by one
+	// or more `signatures`.
 	SerializedPayload string `json:"serializedPayload,omitempty"`
-
-	// Signatures: One or more signatures over `serialized_payload`.
-	// Verifier implementations should consider this attestation message
-	// verified if at least one `signature` verifies `serialized_payload`.
-	// See `Signature` in common.proto for more details on signature
-	// structure and verification.
+	// Signatures: One or more signatures over `serialized_payload`. Verifier
+	// implementations should consider this attestation message verified if at
+	// least one `signature` verifies `serialized_payload`. See `Signature` in
+	// common.proto for more details on signature structure and verification.
 	Signatures []*Signature `json:"signatures,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Jwts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Jwts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Jwts") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Jwts") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestationOccurrence
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Attestor: An attestor that attests to container image artifacts. An
-// existing attestor cannot be modified except where indicated.
+// Attestor: An attestor that attests to container image artifacts. An existing
+// attestor cannot be modified except where indicated.
 type Attestor struct {
-	// Description: Optional. A descriptive comment. This field may be
-	// updated. The field may be displayed in chooser dialogs.
+	// Description: Optional. A descriptive comment. This field may be updated. The
+	// field may be displayed in chooser dialogs.
 	Description string `json:"description,omitempty"`
-
-	// Etag: Optional. A checksum, returned by the server, that can be sent
-	// on update requests to ensure the attestor has an up-to-date value
-	// before attempting to update it. See https://google.aip.dev/154.
+	// Etag: Optional. A checksum, returned by the server, that can be sent on
+	// update requests to ensure the attestor has an up-to-date value before
+	// attempting to update it. See https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
-
-	// Name: Required. The resource name, in the format:
-	// `projects/*/attestors/*`. This field may not be updated.
+	// Name: Required. The resource name, in the format: `projects/*/attestors/*`.
+	// This field may not be updated.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. Time when the attestor was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// UserOwnedDrydockNote: A Drydock ATTESTATION_AUTHORITY Note, created
-	// by the user.
+	// UserOwnedDrydockNote: A Drydock ATTESTATION_AUTHORITY Note, created by the
+	// user.
 	UserOwnedDrydockNote *UserOwnedDrydockNote `json:"userOwnedDrydockNote,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Attestor) MarshalJSON() ([]byte, error) {
 	type NoMethod Attestor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AttestorPublicKey: An attestor public key that will be used to verify
 // attestations signed by this attestor.
 type AttestorPublicKey struct {
-	// AsciiArmoredPgpPublicKey: ASCII-armored representation of a PGP
-	// public key, as the entire output by the command `gpg --export --armor
-	// foo@example.com` (either LF or CRLF line endings). When using this
-	// field, `id` should be left blank. The BinAuthz API handlers will
-	// calculate the ID and fill it in automatically. BinAuthz computes this
-	// ID as the OpenPGP RFC4880 V4 fingerprint, represented as upper-case
-	// hex. If `id` is provided by the caller, it will be overwritten by the
-	// API-calculated ID.
+	// AsciiArmoredPgpPublicKey: ASCII-armored representation of a PGP public key,
+	// as the entire output by the command `gpg --export --armor foo@example.com`
+	// (either LF or CRLF line endings). When using this field, `id` should be left
+	// blank. The BinAuthz API handlers will calculate the ID and fill it in
+	// automatically. BinAuthz computes this ID as the OpenPGP RFC4880 V4
+	// fingerprint, represented as upper-case hex. If `id` is provided by the
+	// caller, it will be overwritten by the API-calculated ID.
 	AsciiArmoredPgpPublicKey string `json:"asciiArmoredPgpPublicKey,omitempty"`
-
 	// Comment: Optional. A descriptive comment. This field may be updated.
 	Comment string `json:"comment,omitempty"`
-
-	// Id: The ID of this public key. Signatures verified by BinAuthz must
-	// include the ID of the public key that can be used to verify them, and
-	// that ID must match the contents of this field exactly. Additional
-	// restrictions on this field can be imposed based on which public key
-	// type is encapsulated. See the documentation on `public_key` cases
-	// below for details.
+	// Id: The ID of this public key. Signatures verified by BinAuthz must include
+	// the ID of the public key that can be used to verify them, and that ID must
+	// match the contents of this field exactly. Additional restrictions on this
+	// field can be imposed based on which public key type is encapsulated. See the
+	// documentation on `public_key` cases below for details.
 	Id string `json:"id,omitempty"`
-
-	// PkixPublicKey: A raw PKIX SubjectPublicKeyInfo format public key.
-	// NOTE: `id` may be explicitly provided by the caller when using this
-	// type of public key, but it MUST be a valid RFC3986 URI. If `id` is
-	// left blank, a default one will be computed based on the digest of the
-	// DER encoding of the public key.
+	// PkixPublicKey: A raw PKIX SubjectPublicKeyInfo format public key. NOTE: `id`
+	// may be explicitly provided by the caller when using this type of public key,
+	// but it MUST be a valid RFC3986 URI. If `id` is left blank, a default one
+	// will be computed based on the digest of the DER encoding of the public key.
 	PkixPublicKey *PkixPublicKey `json:"pkixPublicKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AsciiArmoredPgpPublicKey") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AsciiArmoredPgpPublicKey")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AsciiArmoredPgpPublicKey")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AsciiArmoredPgpPublicKey") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AttestorPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod AttestorPublicKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
-	// condition evaluates to `true`, then this binding applies to the
-	// current request. If the condition evaluates to `false`, then this
-	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the
-	// principals in this binding. To learn which resources support
-	// conditions in their IAM policies, see the IAM documentation
+	// condition evaluates to `true`, then this binding applies to the current
+	// request. If the condition evaluates to `false`, then this binding does not
+	// apply to the current request. However, a different role binding might grant
+	// the same role to one or more of the principals in this binding. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
-
-	// Members: Specifies the principals requesting access for a Google
-	// Cloud resource. `members` can have the following values: *
-	// `allUsers`: A special identifier that represents anyone who is on the
-	// internet; with or without a Google account. *
-	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. Does
-	// not include identities that come from external identity providers
-	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// Members: Specifies the principals requesting access for a Google Cloud
+	// resource. `members` can have the following values: * `allUsers`: A special
+	// identifier that represents anyone who is on the internet; with or without a
+	// Google account. * `allAuthenticatedUsers`: A special identifier that
+	// represents anyone who is authenticated with a Google account or a service
+	// account. Does not include identities that come from external identity
+	// providers (IdPs) through identity federation. * `user:{emailid}`: An email
 	// address that represents a specific Google account. For example,
-	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
-	// that represents a Google service account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address that
+	// represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
-	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
-	//  An identifier for a Kubernetes service account
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An
+	// identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
-	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
-	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
-	// domain (primary) that represents all the users of that domain. For
-	// example, `google.com` or `example.com`. *
-	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
-	// id}/subject/{subject_attribute_value}`: A single identity in a
-	// workforce identity pool. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/group/{group_id}`: All workforce identities in a group. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
-	// identities with a specific attribute value. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/*`: All identities in a workforce identity pool. *
-	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
-	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
-	// `: A single identity in a workload identity pool. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
-	// identity pool group. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
-	// tribute_value}`: All identities in a workload identity pool with a
-	// certain attribute. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
-	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
-	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus unique identifier) representing a service account that has been
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. *
+	// `group:{emailid}`: An email address that represents a Google group. For
+	// example, `admins@example.com`. * `domain:{domain}`: The G Suite domain
+	// (primary) that represents all the users of that domain. For example,
+	// `google.com` or `example.com`. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/sub
+	// ject/{subject_attribute_value}`: A single identity in a workforce identity
+	// pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// attribute.{attribute_name}/{attribute_value}`: All workforce identities with
+	// a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// *`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/global/wo
+	// rkloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single
+	// identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool
+	// group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}
+	// `: All identities in a workload identity pool with a certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/*`: All identities in a workload identity
+	// pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently deleted. For
+	// example, `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered user
+	// retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a service account that has been recently
+	// deleted. For example,
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the
+	// service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains the
+	// role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email
+	// address (plus unique identifier) representing a Google group that has been
 	// recently deleted. For example,
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	// If the service account is undeleted, this value reverts to
-	// `serviceAccount:{emailid}` and the undeleted service account retains
-	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
-	// An email address (plus unique identifier) representing a Google group
-	// that has been recently deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If the group is
-	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. *
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
-	// identity in a workforce identity pool. For example,
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/my-pool-id/subject/my-subject-attribute-value`.
+	// `admins@example.com?uid=123456789012345678901`. If the group is recovered,
+	// this value reverts to `group:{emailid}` and the recovered group retains the
+	// role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool
+	// _id}/subject/{subject_attribute_value}`: Deleted single identity in a
+	// workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-po
+	// ol-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
-
-	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
-	// overview of the IAM roles and permissions, see the IAM documentation
+	// Role: Role that is assigned to the list of `members`, or principals. For
+	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
+	// of the IAM roles and permissions, see the IAM documentation
 	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
 	// available pre-defined roles, see here
 	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Expr: Represents a textual expression in the Common Expression
-// Language (CEL) syntax. CEL is a C-like expression language. The
-// syntax and semantics of CEL are documented at
-// https://github.com/google/cel-spec. Example (Comparison): title:
-// "Summary size limit" description: "Determines if a summary is less
-// than 100 chars" expression: "document.summary.size() < 100" Example
-// (Equality): title: "Requestor is owner" description: "Determines if
+// Expr: Represents a textual expression in the Common Expression Language
+// (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL are documented at https://github.com/google/cel-spec. Example
+// (Comparison): title: "Summary size limit" description: "Determines if a
+// summary is less than 100 chars" expression: "document.summary.size() < 100"
+// Example (Equality): title: "Requestor is owner" description: "Determines if
 // requestor is the document owner" expression: "document.owner ==
 // request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly
-// visible" expression: "document.type != 'private' && document.type !=
-// 'internal'" Example (Data Manipulation): title: "Notification string"
-// description: "Create a notification string with a timestamp."
-// expression: "'New message received at ' +
-// string(document.create_time)" The exact variables and functions that
-// may be referenced within an expression are determined by the service
-// that evaluates it. See the service documentation for additional
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
 // information.
 type Expr struct {
-	// Description: Optional. Description of the expression. This is a
-	// longer text which describes the expression, e.g. when hovered over it
-	// in a UI.
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
-	// Expression: Textual representation of an expression in Common
-	// Expression Language syntax.
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: Optional. String indicating the location of the expression
-	// for error reporting, e.g. a file name and a position in the file.
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
-	// Title: Optional. Title for the expression, i.e. a short string
-	// describing its purpose. This can be used e.g. in UIs which allow to
-	// enter the expression.
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// IamPolicy: An Identity and Access Management (IAM) policy, which
-// specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members`, or
-// principals, to a single `role`. Principals can be user accounts,
-// service accounts, Google groups, and domains (such as G Suite). A
-// `role` is a named list of permissions; each `role` can be an IAM
-// predefined role or a user-created custom role. For some types of
-// Google Cloud resources, a `binding` can also specify a `condition`,
-// which is a logical expression that allows access to a resource only
-// if the expression evaluates to `true`. A condition can add
-// constraints based on attributes of the request, the resource, or
-// both. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** ``` { "bindings": [ { "role":
+// IamPolicy: An Identity and Access Management (IAM) policy, which specifies
+// access controls for Google Cloud resources. A `Policy` is a collection of
+// `bindings`. A `binding` binds one or more `members`, or principals, to a
+// single `role`. Principals can be user accounts, service accounts, Google
+// groups, and domains (such as G Suite). A `role` is a named list of
+// permissions; each `role` can be an IAM predefined role or a user-created
+// custom role. For some types of Google Cloud resources, a `binding` can also
+// specify a `condition`, which is a logical expression that allows access to a
+// resource only if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or both. To
+// learn which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies). **JSON
+// example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
-// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+// "roles/resourcemanager.organizationViewer", "members": [
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
-// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
-// bindings: - members: - user:mike@example.com -
-// group:admins@example.com - domain:google.com -
-// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
-// roles/resourcemanager.organizationAdmin - members: -
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ], "etag":
+// "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ``` bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+// role: roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
-// condition: title: expirable access description: Does not grant access
-// after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// ``` For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// condition: title: expirable access description: Does not grant access after
+// Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+// etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features,
+// see the IAM documentation (https://cloud.google.com/iam/docs/).
 type IamPolicy struct {
-	// Bindings: Associates a list of `members`, or principals, with a
-	// `role`. Optionally, may specify a `condition` that determines how and
-	// when the `bindings` are applied. Each of the `bindings` must contain
-	// at least one principal. The `bindings` in a `Policy` can refer to up
-	// to 1,500 principals; up to 250 of these principals can be Google
-	// groups. Each occurrence of a principal counts towards these limits.
-	// For example, if the `bindings` grant 50 different roles to
-	// `user:alice@example.com`, and not to any other principal, then you
-	// can add another 1,450 principals to the `bindings` in the `Policy`.
+	// Bindings: Associates a list of `members`, or principals, with a `role`.
+	// Optionally, may specify a `condition` that determines how and when the
+	// `bindings` are applied. Each of the `bindings` must contain at least one
+	// principal. The `bindings` in a `Policy` can refer to up to 1,500 principals;
+	// up to 250 of these principals can be Google groups. Each occurrence of a
+	// principal counts towards these limits. For example, if the `bindings` grant
+	// 50 different roles to `user:alice@example.com`, and not to any other
+	// principal, then you can add another 1,450 principals to the `bindings` in
+	// the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
-
-	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help prevent simultaneous updates of a policy from overwriting each
-	// other. It is strongly suggested that systems make use of the `etag`
-	// in the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions: An `etag` is returned in the response to
-	// `getIamPolicy`, and systems are expected to put that etag in the
-	// request to `setIamPolicy` to ensure that their change will be applied
-	// to the same version of the policy. **Important:** If you use IAM
-	// Conditions, you must include the `etag` field whenever you call
-	// `setIamPolicy`. If you omit this field, then IAM allows you to
-	// overwrite a version `3` policy with a version `1` policy, and all of
+	// Etag: `etag` is used for optimistic concurrency control as a way to help
+	// prevent simultaneous updates of a policy from overwriting each other. It is
+	// strongly suggested that systems make use of the `etag` in the
+	// read-modify-write cycle to perform policy updates in order to avoid race
+	// conditions: An `etag` is returned in the response to `getIamPolicy`, and
+	// systems are expected to put that etag in the request to `setIamPolicy` to
+	// ensure that their change will be applied to the same version of the policy.
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
-
-	// Version: Specifies the format of the policy. Valid values are `0`,
-	// `1`, and `3`. Requests that specify an invalid value are rejected.
-	// Any operation that affects conditional role bindings must specify
-	// version `3`. This requirement applies to the following operations: *
-	// Getting a policy that includes a conditional role binding * Adding a
-	// conditional role binding to a policy * Changing a conditional role
-	// binding in a policy * Removing any role binding, with or without a
-	// condition, from a policy that includes conditions **Important:** If
-	// you use IAM Conditions, you must include the `etag` field whenever
-	// you call `setIamPolicy`. If you omit this field, then IAM allows you
-	// to overwrite a version `3` policy with a version `1` policy, and all
-	// of the conditions in the version `3` policy are lost. If a policy
-	// does not include any conditions, operations on that policy may
-	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the IAM
-	// documentation
+	// Version: Specifies the format of the policy. Valid values are `0`, `1`, and
+	// `3`. Requests that specify an invalid value are rejected. Any operation that
+	// affects conditional role bindings must specify version `3`. This requirement
+	// applies to the following operations: * Getting a policy that includes a
+	// conditional role binding * Adding a conditional role binding to a policy *
+	// Changing a conditional role binding in a policy * Removing any role binding,
+	// with or without a condition, from a policy that includes conditions
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
+	// the conditions in the version `3` policy are lost. If a policy does not
+	// include any conditions, operations on that policy may specify any valid
+	// version or leave the field unset. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bindings") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bindings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IamPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IamPolicy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Jwt struct {
-	// CompactJwt: The compact encoding of a JWS, which is always three
-	// base64 encoded strings joined by periods. For details, see:
+	// CompactJwt: The compact encoding of a JWS, which is always three base64
+	// encoded strings joined by periods. For details, see:
 	// https://tools.ietf.org/html/rfc7515.html#section-3.1
 	CompactJwt string `json:"compactJwt,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CompactJwt") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompactJwt") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompactJwt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Jwt) MarshalJSON() ([]byte, error) {
 	type NoMethod Jwt
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAttestorsResponse: Response message for
@@ -779,469 +680,368 @@ func (s *Jwt) MarshalJSON() ([]byte, error) {
 type ListAttestorsResponse struct {
 	// Attestors: The list of attestors.
 	Attestors []*Attestor `json:"attestors,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. Pass
-	// this value in the ListAttestorsRequest.page_token field in the
-	// subsequent call to the `ListAttestors` method to retrieve the next
-	// page of results.
+	// NextPageToken: A token to retrieve the next page of results. Pass this value
+	// in the ListAttestorsRequest.page_token field in the subsequent call to the
+	// `ListAttestors` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Attestors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attestors") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attestors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAttestorsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAttestorsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PkixPublicKey: A public key in the PkixPublicKey format (see
-// https://tools.ietf.org/html/rfc5280#section-4.1.2.7 for details).
-// Public keys of this type are typically textually encoded using the
-// PEM format.
+// https://tools.ietf.org/html/rfc5280#section-4.1.2.7 for details). Public
+// keys of this type are typically textually encoded using the PEM format.
 type PkixPublicKey struct {
 	// PublicKeyPem: A PEM-encoded public key, as described in
 	// https://tools.ietf.org/html/rfc7468#section-13
 	PublicKeyPem string `json:"publicKeyPem,omitempty"`
-
-	// SignatureAlgorithm: The signature algorithm used to verify a message
-	// against a signature using this key. These signature algorithm must
-	// match the structure and any object identifiers encoded in
-	// `public_key_pem` (i.e. this algorithm must match that of the public
-	// key).
+	// SignatureAlgorithm: The signature algorithm used to verify a message against
+	// a signature using this key. These signature algorithm must match the
+	// structure and any object identifiers encoded in `public_key_pem` (i.e. this
+	// algorithm must match that of the public key).
 	//
 	// Possible values:
 	//   "SIGNATURE_ALGORITHM_UNSPECIFIED" - Not specified.
-	//   "RSA_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
-	// digest.
-	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
-	// digest.
-	//   "RSA_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
-	// digest.
-	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
-	// digest.
-	//   "RSA_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
-	// digest.
-	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
-	// digest.
-	//   "RSA_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
-	// digest.
-	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
-	// digest.
-	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
-	// key and a SHA256 digest.
-	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
-	// key and a SHA256 digest.
-	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
-	// key and a SHA256 digest.
-	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit
-	// key and a SHA512 digest.
-	//   "ECDSA_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
-	// digest.
+	//   "RSA_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256 digest.
+	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256 digest.
+	//   "RSA_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256 digest.
+	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256 digest.
+	//   "RSA_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256 digest.
+	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256 digest.
+	//   "RSA_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512 digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512 digest.
+	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit key and a
+	// SHA256 digest.
+	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit key and a
+	// SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit key and a
+	// SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit key and a
+	// SHA512 digest.
+	//   "ECDSA_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256 digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
 	// digest.
-	//   "ECDSA_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
-	// digest.
+	//   "ECDSA_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384 digest.
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
 	// digest.
-	//   "ECDSA_P521_SHA512" - ECDSA on the NIST P-521 curve with a SHA512
-	// digest.
+	//   "ECDSA_P521_SHA512" - ECDSA on the NIST P-521 curve with a SHA512 digest.
 	//   "EC_SIGN_P521_SHA512" - ECDSA on the NIST P-521 curve with a SHA512
 	// digest.
 	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PublicKeyPem") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PublicKeyPem") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PkixPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod PkixPublicKey
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Policy: A policy for Binary Authorization.
 type Policy struct {
-	// AdmissionWhitelistPatterns: Optional. Admission policy allowlisting.
-	// A matching admission request will always be permitted. This feature
-	// is typically used to exclude Google or third-party infrastructure
-	// images from Binary Authorization policies.
+	// AdmissionWhitelistPatterns: Optional. Admission policy allowlisting. A
+	// matching admission request will always be permitted. This feature is
+	// typically used to exclude Google or third-party infrastructure images from
+	// Binary Authorization policies.
 	AdmissionWhitelistPatterns []*AdmissionWhitelistPattern `json:"admissionWhitelistPatterns,omitempty"`
-
-	// ClusterAdmissionRules: Optional. Per-cluster admission rules. Cluster
-	// spec format: `location.clusterId`. There can be at most one admission
-	// rule per cluster spec. A `location` is either a compute zone (e.g.
-	// us-central1-a) or a region (e.g. us-central1). For `clusterId` syntax
-	// restrictions see
+	// ClusterAdmissionRules: Optional. Per-cluster admission rules. Cluster spec
+	// format: `location.clusterId`. There can be at most one admission rule per
+	// cluster spec. A `location` is either a compute zone (e.g. us-central1-a) or
+	// a region (e.g. us-central1). For `clusterId` syntax restrictions see
 	// https://cloud.google.com/container-engine/reference/rest/v1/projects.zones.clusters.
 	ClusterAdmissionRules map[string]AdmissionRule `json:"clusterAdmissionRules,omitempty"`
-
-	// DefaultAdmissionRule: Required. Default admission rule for a cluster
-	// without a per-cluster, per- kubernetes-service-account, or
+	// DefaultAdmissionRule: Required. Default admission rule for a cluster without
+	// a per-cluster, per- kubernetes-service-account, or
 	// per-istio-service-identity admission rule.
 	DefaultAdmissionRule *AdmissionRule `json:"defaultAdmissionRule,omitempty"`
-
 	// Description: Optional. A descriptive comment.
 	Description string `json:"description,omitempty"`
-
-	// Etag: Optional. A checksum, returned by the server, that can be sent
-	// on update requests to ensure the policy has an up-to-date value
-	// before attempting to update it. See https://google.aip.dev/154.
+	// Etag: Optional. A checksum, returned by the server, that can be sent on
+	// update requests to ensure the policy has an up-to-date value before
+	// attempting to update it. See https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
-
 	// GlobalPolicyEvaluationMode: Optional. Controls the evaluation of a
-	// Google-maintained global admission policy for common system-level
-	// images. Images not covered by the global policy will be subject to
-	// the project admission policy. This setting has no effect when
-	// specified inside a global admission policy.
+	// Google-maintained global admission policy for common system-level images.
+	// Images not covered by the global policy will be subject to the project
+	// admission policy. This setting has no effect when specified inside a global
+	// admission policy.
 	//
 	// Possible values:
-	//   "GLOBAL_POLICY_EVALUATION_MODE_UNSPECIFIED" - Not specified:
-	// DISABLE is assumed.
+	//   "GLOBAL_POLICY_EVALUATION_MODE_UNSPECIFIED" - Not specified: DISABLE is
+	// assumed.
 	//   "ENABLE" - Enables system policy evaluation.
 	//   "DISABLE" - Disables system policy evaluation.
 	GlobalPolicyEvaluationMode string `json:"globalPolicyEvaluationMode,omitempty"`
-
-	// IstioServiceIdentityAdmissionRules: Optional.
-	// Per-istio-service-identity admission rules. Istio service identity
-	// spec format: `spiffe:///ns//sa/` or `/ns//sa/` e.g.
-	// `spiffe://example.com/ns/test-ns/sa/default`
+	// IstioServiceIdentityAdmissionRules: Optional. Per-istio-service-identity
+	// admission rules. Istio service identity spec format: `spiffe:///ns//sa/` or
+	// `/ns//sa/` e.g. `spiffe://example.com/ns/test-ns/sa/default`
 	IstioServiceIdentityAdmissionRules map[string]AdmissionRule `json:"istioServiceIdentityAdmissionRules,omitempty"`
-
 	// KubernetesNamespaceAdmissionRules: Optional. Per-kubernetes-namespace
 	// admission rules. K8s namespace spec format: `[a-z.-]+`, e.g.
 	// `some-namespace`
 	KubernetesNamespaceAdmissionRules map[string]AdmissionRule `json:"kubernetesNamespaceAdmissionRules,omitempty"`
-
 	// KubernetesServiceAccountAdmissionRules: Optional.
-	// Per-kubernetes-service-account admission rules. Service account spec
-	// format: `namespace:serviceaccount`. e.g. `test-ns:default`
+	// Per-kubernetes-service-account admission rules. Service account spec format:
+	// `namespace:serviceaccount`. e.g. `test-ns:default`
 	KubernetesServiceAccountAdmissionRules map[string]AdmissionRule `json:"kubernetesServiceAccountAdmissionRules,omitempty"`
-
-	// Name: Output only. The resource name, in the format
-	// `projects/*/policy`. There is at most one policy per project.
+	// Name: Output only. The resource name, in the format `projects/*/policy`.
+	// There is at most one policy per project.
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. Time when the policy was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdmissionWhitelistPatterns") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdmissionWhitelistPatterns")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "AdmissionWhitelistPatterns") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdmissionWhitelistPatterns") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Google Cloud services
-	// (such as Projects) might reject them.
+	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
+	// size of the policy is limited to a few 10s of KB. An empty policy is a valid
+	// policy but certain Google Cloud services (such as Projects) might reject
+	// them.
 	Policy *IamPolicy `json:"policy,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Signature: Verifiers (e.g. Kritis implementations) MUST verify
-// signatures with respect to the trust anchors defined in policy (e.g.
-// a Kritis policy). Typically this means that the verifier has been
-// configured with a map from `public_key_id` to public key material
-// (and any required parameters, e.g. signing algorithm). In particular,
-// verification implementations MUST NOT treat the signature
-// `public_key_id` as anything more than a key lookup hint. The
-// `public_key_id` DOES NOT validate or authenticate a public key; it
-// only provides a mechanism for quickly selecting a public key ALREADY
-// CONFIGURED on the verifier through a trusted channel. Verification
-// implementations MUST reject signatures in any of the following
-// circumstances: * The `public_key_id` is not recognized by the
-// verifier. * The public key that `public_key_id` refers to does not
-// verify the signature with respect to the payload. The `signature`
-// contents SHOULD NOT be "attached" (where the payload is included with
-// the serialized `signature` bytes). Verifiers MUST ignore any
-// "attached" payload and only verify signatures with respect to
-// explicitly provided payload (e.g. a `payload` field on the proto
-// message that holds this Signature, or the canonical serialization of
-// the proto message that holds this signature).
+// Signature: Verifiers (e.g. Kritis implementations) MUST verify signatures
+// with respect to the trust anchors defined in policy (e.g. a Kritis policy).
+// Typically this means that the verifier has been configured with a map from
+// `public_key_id` to public key material (and any required parameters, e.g.
+// signing algorithm). In particular, verification implementations MUST NOT
+// treat the signature `public_key_id` as anything more than a key lookup hint.
+// The `public_key_id` DOES NOT validate or authenticate a public key; it only
+// provides a mechanism for quickly selecting a public key ALREADY CONFIGURED
+// on the verifier through a trusted channel. Verification implementations MUST
+// reject signatures in any of the following circumstances: * The
+// `public_key_id` is not recognized by the verifier. * The public key that
+// `public_key_id` refers to does not verify the signature with respect to the
+// payload. The `signature` contents SHOULD NOT be "attached" (where the
+// payload is included with the serialized `signature` bytes). Verifiers MUST
+// ignore any "attached" payload and only verify signatures with respect to
+// explicitly provided payload (e.g. a `payload` field on the proto message
+// that holds this Signature, or the canonical serialization of the proto
+// message that holds this signature).
 type Signature struct {
-	// PublicKeyId: The identifier for the public key that verifies this
-	// signature. * The `public_key_id` is required. * The `public_key_id`
-	// SHOULD be an RFC3986 conformant URI. * When possible, the
-	// `public_key_id` SHOULD be an immutable reference, such as a
-	// cryptographic digest. Examples of valid `public_key_id`s: OpenPGP V4
-	// public key fingerprint: *
+	// PublicKeyId: The identifier for the public key that verifies this signature.
+	// * The `public_key_id` is required. * The `public_key_id` SHOULD be an
+	// RFC3986 conformant URI. * When possible, the `public_key_id` SHOULD be an
+	// immutable reference, such as a cryptographic digest. Examples of valid
+	// `public_key_id`s: OpenPGP V4 public key fingerprint: *
 	// "openpgp4fpr:74FAF3B861BDA0870C7B6DEF607E48D2A663AEEA" See
-	// https://www.iana.org/assignments/uri-schemes/prov/openpgp4fpr for
-	// more details on this scheme. RFC6920 digest-named
-	// SubjectPublicKeyInfo (digest of the DER serialization): *
+	// https://www.iana.org/assignments/uri-schemes/prov/openpgp4fpr for more
+	// details on this scheme. RFC6920 digest-named SubjectPublicKeyInfo (digest of
+	// the DER serialization): *
 	// "ni:///sha-256;cD9o9Cq6LG3jD0iKXqEi_vdjJGecm_iXkbqVoScViaU" *
-	// "nih:///sha-256;703f68f42aba2c6de30f488a5ea122fef76324679c9bf89791ba95
-	// a1271589a5"
+	// "nih:///sha-256;703f68f42aba2c6de30f488a5ea122fef76324679c9bf89791ba95a127158
+	// 9a5"
 	PublicKeyId string `json:"publicKeyId,omitempty"`
-
-	// Signature: The content of the signature, an opaque bytestring. The
-	// payload that this signature verifies MUST be unambiguously provided
-	// with the Signature during verification. A wrapper message might
-	// provide the payload explicitly. Alternatively, a message might have a
-	// canonical serialization that can always be unambiguously computed to
-	// derive the payload.
+	// Signature: The content of the signature, an opaque bytestring. The payload
+	// that this signature verifies MUST be unambiguously provided with the
+	// Signature during verification. A wrapper message might provide the payload
+	// explicitly. Alternatively, a message might have a canonical serialization
+	// that can always be unambiguously computed to derive the payload.
 	Signature string `json:"signature,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PublicKeyId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PublicKeyId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PublicKeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Signature) MarshalJSON() ([]byte, error) {
 	type NoMethod Signature
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsRequest: Request message for `TestIamPermissions`
-// method.
+// TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as `*` or `storage.*`) are not
-	// allowed. For more information see IAM Overview
+	// Permissions: The set of permissions to check for the `resource`. Permissions
+	// with wildcards (such as `*` or `storage.*`) are not allowed. For more
+	// information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
 // method.
 type TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is allowed.
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that the
+	// caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UserOwnedDrydockNote: An user owned drydock note references a Drydock
 // ATTESTATION_AUTHORITY Note created by the user.
 type UserOwnedDrydockNote struct {
-	// DelegationServiceAccountEmail: Output only. This field will contain
-	// the service account email address that this Attestor will use as the
-	// principal when querying Container Analysis. Attestor administrators
-	// must grant this service account the IAM role needed to read
-	// attestations from the note_reference in Container Analysis
-	// (`containeranalysis.notes.occurrences.viewer`). This email address is
-	// fixed for the lifetime of the Attestor, but callers should not make
-	// any other assumptions about the service account email; future
-	// versions may use an email based on a different naming pattern.
+	// DelegationServiceAccountEmail: Output only. This field will contain the
+	// service account email address that this Attestor will use as the principal
+	// when querying Container Analysis. Attestor administrators must grant this
+	// service account the IAM role needed to read attestations from the
+	// note_reference in Container Analysis
+	// (`containeranalysis.notes.occurrences.viewer`). This email address is fixed
+	// for the lifetime of the Attestor, but callers should not make any other
+	// assumptions about the service account email; future versions may use an
+	// email based on a different naming pattern.
 	DelegationServiceAccountEmail string `json:"delegationServiceAccountEmail,omitempty"`
-
 	// NoteReference: Required. The Drydock resource name of a
 	// ATTESTATION_AUTHORITY Note, created by the user, in the format:
-	// `projects/*/notes/*` (or the legacy `providers/*/notes/*`). This
-	// field may not be updated. An attestation by this attestor is stored
-	// as a Drydock ATTESTATION_AUTHORITY Occurrence that names a container
-	// image and that links to this Note. Drydock is an external dependency.
+	// `projects/*/notes/*` (or the legacy `providers/*/notes/*`). This field may
+	// not be updated. An attestation by this attestor is stored as a Drydock
+	// ATTESTATION_AUTHORITY Occurrence that names a container image and that links
+	// to this Note. Drydock is an external dependency.
 	NoteReference string `json:"noteReference,omitempty"`
-
-	// PublicKeys: Optional. Public keys that verify attestations signed by
-	// this attestor. This field may be updated. If this field is non-empty,
-	// one of the specified public keys must verify that an attestation was
-	// signed by this attestor for the image specified in the admission
-	// request. If this field is empty, this attestor always returns that no
-	// valid attestations exist.
+	// PublicKeys: Optional. Public keys that verify attestations signed by this
+	// attestor. This field may be updated. If this field is non-empty, one of the
+	// specified public keys must verify that an attestation was signed by this
+	// attestor for the image specified in the admission request. If this field is
+	// empty, this attestor always returns that no valid attestations exist.
 	PublicKeys []*AttestorPublicKey `json:"publicKeys,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "DelegationServiceAccountEmail") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "DelegationServiceAccountEmail") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "DelegationServiceAccountEmail") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DelegationServiceAccountEmail")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserOwnedDrydockNote) MarshalJSON() ([]byte, error) {
 	type NoMethod UserOwnedDrydockNote
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateAttestationOccurrenceRequest: Request message for
 // ValidationHelperV1.ValidateAttestationOccurrence.
 type ValidateAttestationOccurrenceRequest struct {
-	// Attestation: Required. An AttestationOccurrence to be checked that it
-	// can be verified by the `Attestor`. It does not have to be an existing
-	// entity in Container Analysis. It must otherwise be a valid
-	// `AttestationOccurrence`.
+	// Attestation: Required. An AttestationOccurrence to be checked that it can be
+	// verified by the `Attestor`. It does not have to be an existing entity in
+	// Container Analysis. It must otherwise be a valid `AttestationOccurrence`.
 	Attestation *AttestationOccurrence `json:"attestation,omitempty"`
-
 	// OccurrenceNote: Required. The resource name of the Note to which the
 	// containing Occurrence is associated.
 	OccurrenceNote string `json:"occurrenceNote,omitempty"`
-
-	// OccurrenceResourceUri: Required. The URI of the artifact (e.g.
-	// container image) that is the subject of the containing Occurrence.
+	// OccurrenceResourceUri: Required. The URI of the artifact (e.g. container
+	// image) that is the subject of the containing Occurrence.
 	OccurrenceResourceUri string `json:"occurrenceResourceUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attestation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attestation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attestation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ValidateAttestationOccurrenceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateAttestationOccurrenceRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ValidateAttestationOccurrenceResponse: Response message for
@@ -1250,44 +1050,34 @@ type ValidateAttestationOccurrenceResponse struct {
 	// DenialReason: The reason for denial if the Attestation couldn't be
 	// validated.
 	DenialReason string `json:"denialReason,omitempty"`
-
 	// Result: The result of the Attestation validation.
 	//
 	// Possible values:
 	//   "RESULT_UNSPECIFIED" - Unspecified.
 	//   "VERIFIED" - The Attestation was able to verified by the Attestor.
-	//   "ATTESTATION_NOT_VERIFIABLE" - The Attestation was not able to
-	// verified by the Attestor.
+	//   "ATTESTATION_NOT_VERIFIABLE" - The Attestation was not able to verified by
+	// the Attestor.
 	Result string `json:"result,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DenialReason") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DenialReason") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DenialReason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ValidateAttestationOccurrenceResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidateAttestationOccurrenceResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "binaryauthorization.projects.getPolicy":
 
 type ProjectsGetPolicyCall struct {
 	s            *Service
@@ -1298,11 +1088,11 @@ type ProjectsGetPolicyCall struct {
 	header_      http.Header
 }
 
-// GetPolicy: A policy specifies the attestors that must attest to a
-// container image, before the project is allowed to deploy that image.
-// There is at most one policy per project. All image admission requests
-// are permitted if a project has no policy. Gets the policy for this
-// project. Returns a default policy if the project does not have one.
+// GetPolicy: A policy specifies the attestors that must attest to a container
+// image, before the project is allowed to deploy that image. There is at most
+// one policy per project. All image admission requests are permitted if a
+// project has no policy. Gets the policy for this project. Returns a default
+// policy if the project does not have one.
 //
 //   - name: The resource name of the policy to retrieve, in the format
 //     `projects/*/policy`.
@@ -1313,33 +1103,29 @@ func (r *ProjectsService) GetPolicy(name string) *ProjectsGetPolicyCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsGetPolicyCall) Fields(s ...googleapi.Field) *ProjectsGetPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsGetPolicyCall) IfNoneMatch(entityTag string) *ProjectsGetPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsGetPolicyCall) Context(ctx context.Context) *ProjectsGetPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsGetPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1348,12 +1134,7 @@ func (c *ProjectsGetPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1374,12 +1155,10 @@ func (c *ProjectsGetPolicyCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "binaryauthorization.projects.getPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsGetPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1410,35 +1189,7 @@ func (c *ProjectsGetPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "A policy specifies the attestors that must attest to a container image, before the project is allowed to deploy that image. There is at most one policy per project. All image admission requests are permitted if a project has no policy. Gets the policy for this project. Returns a default policy if the project does not have one.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/policy",
-	//   "httpMethod": "GET",
-	//   "id": "binaryauthorization.projects.getPolicy",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the policy to retrieve, in the format `projects/*/policy`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policy$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.updatePolicy":
 
 type ProjectsUpdatePolicyCall struct {
 	s          *Service
@@ -1449,14 +1200,14 @@ type ProjectsUpdatePolicyCall struct {
 	header_    http.Header
 }
 
-// UpdatePolicy: Creates or updates a project's policy, and returns a
-// copy of the new policy. A policy is always updated as a whole, to
-// avoid race conditions with concurrent policy enforcement (or
-// management!) requests. Returns NOT_FOUND if the project does not
-// exist, INVALID_ARGUMENT if the request is malformed.
+// UpdatePolicy: Creates or updates a project's policy, and returns a copy of
+// the new policy. A policy is always updated as a whole, to avoid race
+// conditions with concurrent policy enforcement (or management!) requests.
+// Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the
+// request is malformed.
 //
-//   - name: Output only. The resource name, in the format
-//     `projects/*/policy`. There is at most one policy per project.
+//   - name: Output only. The resource name, in the format `projects/*/policy`.
+//     There is at most one policy per project.
 func (r *ProjectsService) UpdatePolicy(name string, policy *Policy) *ProjectsUpdatePolicyCall {
 	c := &ProjectsUpdatePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1465,23 +1216,21 @@ func (r *ProjectsService) UpdatePolicy(name string, policy *Policy) *ProjectsUpd
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsUpdatePolicyCall) Fields(s ...googleapi.Field) *ProjectsUpdatePolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsUpdatePolicyCall) Context(ctx context.Context) *ProjectsUpdatePolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1490,18 +1239,12 @@ func (c *ProjectsUpdatePolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
@@ -1518,12 +1261,10 @@ func (c *ProjectsUpdatePolicyCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "binaryauthorization.projects.updatePolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsUpdatePolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1554,38 +1295,7 @@ func (c *ProjectsUpdatePolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates or updates a project's policy, and returns a copy of the new policy. A policy is always updated as a whole, to avoid race conditions with concurrent policy enforcement (or management!) requests. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request is malformed.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/policy",
-	//   "httpMethod": "PUT",
-	//   "id": "binaryauthorization.projects.updatePolicy",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The resource name, in the format `projects/*/policy`. There is at most one policy per project.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policy$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "request": {
-	//     "$ref": "Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.create":
 
 type ProjectsAttestorsCreateCall struct {
 	s          *Service
@@ -1596,10 +1306,9 @@ type ProjectsAttestorsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an attestor, and returns a copy of the new attestor.
-// Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if
-// the request is malformed, ALREADY_EXISTS if the attestor already
-// exists.
+// Create: Creates an attestor, and returns a copy of the new attestor. Returns
+// NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request is
+// malformed, ALREADY_EXISTS if the attestor already exists.
 //
 // - parent: The parent of this attestor.
 func (r *ProjectsAttestorsService) Create(parent string, attestor *Attestor) *ProjectsAttestorsCreateCall {
@@ -1609,31 +1318,29 @@ func (r *ProjectsAttestorsService) Create(parent string, attestor *Attestor) *Pr
 	return c
 }
 
-// AttestorId sets the optional parameter "attestorId": Required. The
-// attestors ID.
+// AttestorId sets the optional parameter "attestorId": Required. The attestors
+// ID.
 func (c *ProjectsAttestorsCreateCall) AttestorId(attestorId string) *ProjectsAttestorsCreateCall {
 	c.urlParams_.Set("attestorId", attestorId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsCreateCall) Fields(s ...googleapi.Field) *ProjectsAttestorsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsCreateCall) Context(ctx context.Context) *ProjectsAttestorsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1642,18 +1349,12 @@ func (c *ProjectsAttestorsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attestor)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/attestors")
@@ -1670,12 +1371,10 @@ func (c *ProjectsAttestorsCreateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "binaryauthorization.projects.attestors.create" call.
-// Exactly one of *Attestor or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Attestor.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attestor.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAttestorsCreateCall) Do(opts ...googleapi.CallOption) (*Attestor, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1706,43 +1405,7 @@ func (c *ProjectsAttestorsCreateCall) Do(opts ...googleapi.CallOption) (*Attesto
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an attestor, and returns a copy of the new attestor. Returns NOT_FOUND if the project does not exist, INVALID_ARGUMENT if the request is malformed, ALREADY_EXISTS if the attestor already exists.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors",
-	//   "httpMethod": "POST",
-	//   "id": "binaryauthorization.projects.attestors.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "attestorId": {
-	//       "description": "Required. The attestors ID.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent of this attestor.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/attestors",
-	//   "request": {
-	//     "$ref": "Attestor"
-	//   },
-	//   "response": {
-	//     "$ref": "Attestor"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.delete":
 
 type ProjectsAttestorsDeleteCall struct {
 	s          *Service
@@ -1752,8 +1415,8 @@ type ProjectsAttestorsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an attestor. Returns NOT_FOUND if the attestor does
-// not exist.
+// Delete: Deletes an attestor. Returns NOT_FOUND if the attestor does not
+// exist.
 //
 //   - name: The name of the attestors to delete, in the format
 //     `projects/*/attestors/*`.
@@ -1764,23 +1427,21 @@ func (r *ProjectsAttestorsService) Delete(name string) *ProjectsAttestorsDeleteC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsAttestorsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsDeleteCall) Context(ctx context.Context) *ProjectsAttestorsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1789,12 +1450,7 @@ func (c *ProjectsAttestorsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1812,12 +1468,10 @@ func (c *ProjectsAttestorsDeleteCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "binaryauthorization.projects.attestors.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAttestorsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1848,35 +1502,7 @@ func (c *ProjectsAttestorsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an attestor. Returns NOT_FOUND if the attestor does not exist.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "binaryauthorization.projects.attestors.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the attestors to delete, in the format `projects/*/attestors/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.get":
 
 type ProjectsAttestorsGetCall struct {
 	s            *Service
@@ -1887,8 +1513,7 @@ type ProjectsAttestorsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an attestor. Returns NOT_FOUND if the attestor does not
-// exist.
+// Get: Gets an attestor. Returns NOT_FOUND if the attestor does not exist.
 //
 //   - name: The name of the attestor to retrieve, in the format
 //     `projects/*/attestors/*`.
@@ -1899,33 +1524,29 @@ func (r *ProjectsAttestorsService) Get(name string) *ProjectsAttestorsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsGetCall) Fields(s ...googleapi.Field) *ProjectsAttestorsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAttestorsGetCall) IfNoneMatch(entityTag string) *ProjectsAttestorsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsGetCall) Context(ctx context.Context) *ProjectsAttestorsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1934,12 +1555,7 @@ func (c *ProjectsAttestorsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1960,12 +1576,10 @@ func (c *ProjectsAttestorsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "binaryauthorization.projects.attestors.get" call.
-// Exactly one of *Attestor or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Attestor.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attestor.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAttestorsGetCall) Do(opts ...googleapi.CallOption) (*Attestor, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1996,35 +1610,7 @@ func (c *ProjectsAttestorsGetCall) Do(opts ...googleapi.CallOption) (*Attestor, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets an attestor. Returns NOT_FOUND if the attestor does not exist.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}",
-	//   "httpMethod": "GET",
-	//   "id": "binaryauthorization.projects.attestors.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the attestor to retrieve, in the format `projects/*/attestors/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "Attestor"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.getIamPolicy":
 
 type ProjectsAttestorsGetIamPolicyCall struct {
 	s            *Service
@@ -2035,14 +1621,12 @@ type ProjectsAttestorsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsAttestorsService) GetIamPolicy(resource string) *ProjectsAttestorsGetIamPolicyCall {
 	c := &ProjectsAttestorsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2050,17 +1634,16 @@ func (r *ProjectsAttestorsService) GetIamPolicy(resource string) *ProjectsAttest
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy. Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected. Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset. The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1. To learn
-// which resources support conditions in their IAM policies, see the IAM
-// documentation
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsAttestorsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsAttestorsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -2068,33 +1651,29 @@ func (c *ProjectsAttestorsGetIamPolicyCall) OptionsRequestedPolicyVersion(option
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsAttestorsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAttestorsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsAttestorsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsGetIamPolicyCall) Context(ctx context.Context) *ProjectsAttestorsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2103,12 +1682,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2129,12 +1703,10 @@ func (c *ProjectsAttestorsGetIamPolicyCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "binaryauthorization.projects.attestors.getIamPolicy" call.
-// Exactly one of *IamPolicy or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *IamPolicy.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *IamPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAttestorsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamPolicy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2165,41 +1737,7 @@ func (c *ProjectsAttestorsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*I
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "binaryauthorization.projects.attestors.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "IamPolicy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.list":
 
 type ProjectsAttestorsListCall struct {
 	s            *Service
@@ -2210,62 +1748,58 @@ type ProjectsAttestorsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists attestors. Returns INVALID_ARGUMENT if the project does
-// not exist.
+// List: Lists attestors. Returns INVALID_ARGUMENT if the project does not
+// exist.
 //
-//   - parent: The resource name of the project associated with the
-//     attestors, in the format `projects/*`.
+//   - parent: The resource name of the project associated with the attestors, in
+//     the format `projects/*`.
 func (r *ProjectsAttestorsService) List(parent string) *ProjectsAttestorsListCall {
 	c := &ProjectsAttestorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested. If unspecified,
-// the server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server may return fewer results than requested. If unspecified, the server
+// will pick an appropriate default.
 func (c *ProjectsAttestorsListCall) PageSize(pageSize int64) *ProjectsAttestorsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of ListAttestorsResponse.next_page_token returned
-// from the previous call to the `ListAttestors` method.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// ListAttestorsResponse.next_page_token returned from the previous call to the
+// `ListAttestors` method.
 func (c *ProjectsAttestorsListCall) PageToken(pageToken string) *ProjectsAttestorsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsListCall) Fields(s ...googleapi.Field) *ProjectsAttestorsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsAttestorsListCall) IfNoneMatch(entityTag string) *ProjectsAttestorsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsListCall) Context(ctx context.Context) *ProjectsAttestorsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2274,12 +1808,7 @@ func (c *ProjectsAttestorsListCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2300,12 +1829,11 @@ func (c *ProjectsAttestorsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "binaryauthorization.projects.attestors.list" call.
-// Exactly one of *ListAttestorsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAttestorsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAttestorsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsAttestorsListCall) Do(opts ...googleapi.CallOption) (*ListAttestorsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2336,43 +1864,6 @@ func (c *ProjectsAttestorsListCall) Do(opts ...googleapi.CallOption) (*ListAttes
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists attestors. Returns INVALID_ARGUMENT if the project does not exist.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors",
-	//   "httpMethod": "GET",
-	//   "id": "binaryauthorization.projects.attestors.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListAttestorsResponse.next_page_token returned from the previous call to the `ListAttestors` method.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the project associated with the attestors, in the format `projects/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/attestors",
-	//   "response": {
-	//     "$ref": "ListAttestorsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2380,7 +1871,7 @@ func (c *ProjectsAttestorsListCall) Do(opts ...googleapi.CallOption) (*ListAttes
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsAttestorsListCall) Pages(ctx context.Context, f func(*ListAttestorsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2396,8 +1887,6 @@ func (c *ProjectsAttestorsListCall) Pages(ctx context.Context, f func(*ListAttes
 	}
 }
 
-// method id "binaryauthorization.projects.attestors.setIamPolicy":
-
 type ProjectsAttestorsSetIamPolicyCall struct {
 	s                   *Service
 	resource            string
@@ -2407,14 +1896,13 @@ type ProjectsAttestorsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy. Can return `NOT_FOUND`,
-// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsAttestorsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsAttestorsSetIamPolicyCall {
 	c := &ProjectsAttestorsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2423,23 +1911,21 @@ func (r *ProjectsAttestorsService) SetIamPolicy(resource string, setiampolicyreq
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsAttestorsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsSetIamPolicyCall) Context(ctx context.Context) *ProjectsAttestorsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2448,18 +1934,12 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
@@ -2476,12 +1956,10 @@ func (c *ProjectsAttestorsSetIamPolicyCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "binaryauthorization.projects.attestors.setIamPolicy" call.
-// Exactly one of *IamPolicy or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *IamPolicy.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *IamPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAttestorsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamPolicy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2512,38 +1990,7 @@ func (c *ProjectsAttestorsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*I
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "binaryauthorization.projects.attestors.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "IamPolicy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.testIamPermissions":
 
 type ProjectsAttestorsTestIamPermissionsCall struct {
 	s                         *Service
@@ -2554,17 +2001,16 @@ type ProjectsAttestorsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a `NOT_FOUND` error. Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsAttestorsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsAttestorsTestIamPermissionsCall {
 	c := &ProjectsAttestorsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2573,23 +2019,21 @@ func (r *ProjectsAttestorsService) TestIamPermissions(resource string, testiampe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsAttestorsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsAttestorsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2598,18 +2042,12 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
@@ -2626,12 +2064,11 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "binaryauthorization.projects.attestors.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAttestorsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2662,38 +2099,7 @@ func (c *ProjectsAttestorsTestIamPermissionsCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "binaryauthorization.projects.attestors.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.update":
 
 type ProjectsAttestorsUpdateCall struct {
 	s          *Service
@@ -2704,11 +2110,11 @@ type ProjectsAttestorsUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates an attestor. Returns NOT_FOUND if the attestor does
-// not exist.
+// Update: Updates an attestor. Returns NOT_FOUND if the attestor does not
+// exist.
 //
-//   - name: The resource name, in the format: `projects/*/attestors/*`.
-//     This field may not be updated.
+//   - name: The resource name, in the format: `projects/*/attestors/*`. This
+//     field may not be updated.
 func (r *ProjectsAttestorsService) Update(name string, attestor *Attestor) *ProjectsAttestorsUpdateCall {
 	c := &ProjectsAttestorsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2717,23 +2123,21 @@ func (r *ProjectsAttestorsService) Update(name string, attestor *Attestor) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsUpdateCall) Fields(s ...googleapi.Field) *ProjectsAttestorsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsUpdateCall) Context(ctx context.Context) *ProjectsAttestorsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2742,18 +2146,12 @@ func (c *ProjectsAttestorsUpdateCall) Header() http.Header {
 }
 
 func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attestor)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
@@ -2770,12 +2168,10 @@ func (c *ProjectsAttestorsUpdateCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "binaryauthorization.projects.attestors.update" call.
-// Exactly one of *Attestor or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Attestor.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Attestor.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsAttestorsUpdateCall) Do(opts ...googleapi.CallOption) (*Attestor, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2806,38 +2202,7 @@ func (c *ProjectsAttestorsUpdateCall) Do(opts ...googleapi.CallOption) (*Attesto
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates an attestor. Returns NOT_FOUND if the attestor does not exist.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}",
-	//   "httpMethod": "PUT",
-	//   "id": "binaryauthorization.projects.attestors.update",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name, in the format: `projects/*/attestors/*`. This field may not be updated.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "request": {
-	//     "$ref": "Attestor"
-	//   },
-	//   "response": {
-	//     "$ref": "Attestor"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.attestors.validateAttestationOccurrence":
 
 type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
 	s                                    *Service
@@ -2848,12 +2213,11 @@ type ProjectsAttestorsValidateAttestationOccurrenceCall struct {
 	header_                              http.Header
 }
 
-// ValidateAttestationOccurrence: Returns whether the given
-// `Attestation` for the given image URI was signed by the given
-// `Attestor`
+// ValidateAttestationOccurrence: Returns whether the given `Attestation` for
+// the given image URI was signed by the given `Attestor`
 //
-//   - attestor: The resource name of the Attestor of the occurrence, in
-//     the format `projects/*/attestors/*`.
+//   - attestor: The resource name of the Attestor of the occurrence, in the
+//     format `projects/*/attestors/*`.
 func (r *ProjectsAttestorsService) ValidateAttestationOccurrence(attestor string, validateattestationoccurrencerequest *ValidateAttestationOccurrenceRequest) *ProjectsAttestorsValidateAttestationOccurrenceCall {
 	c := &ProjectsAttestorsValidateAttestationOccurrenceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.attestor = attestor
@@ -2862,23 +2226,21 @@ func (r *ProjectsAttestorsService) ValidateAttestationOccurrence(attestor string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Fields(s ...googleapi.Field) *ProjectsAttestorsValidateAttestationOccurrenceCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Context(ctx context.Context) *ProjectsAttestorsValidateAttestationOccurrenceCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2887,18 +2249,12 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Header() http.Heade
 }
 
 func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.validateattestationoccurrencerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+attestor}:validateAttestationOccurrence")
@@ -2915,13 +2271,11 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) doRequest(alt strin
 }
 
 // Do executes the "binaryauthorization.projects.attestors.validateAttestationOccurrence" call.
-// Exactly one of *ValidateAttestationOccurrenceResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ValidateAttestationOccurrenceResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleapi.CallOption) (*ValidateAttestationOccurrenceResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2952,38 +2306,7 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns whether the given `Attestation` for the given image URI was signed by the given `Attestor`",
-	//   "flatPath": "v1beta1/projects/{projectsId}/attestors/{attestorsId}:validateAttestationOccurrence",
-	//   "httpMethod": "POST",
-	//   "id": "binaryauthorization.projects.attestors.validateAttestationOccurrence",
-	//   "parameterOrder": [
-	//     "attestor"
-	//   ],
-	//   "parameters": {
-	//     "attestor": {
-	//       "description": "Required. The resource name of the Attestor of the occurrence, in the format `projects/*/attestors/*`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/attestors/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+attestor}:validateAttestationOccurrence",
-	//   "request": {
-	//     "$ref": "ValidateAttestationOccurrenceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ValidateAttestationOccurrenceResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.policy.getIamPolicy":
 
 type ProjectsPolicyGetIamPolicyCall struct {
 	s            *Service
@@ -2994,14 +2317,12 @@ type ProjectsPolicyGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsPolicyService) GetIamPolicy(resource string) *ProjectsPolicyGetIamPolicyCall {
 	c := &ProjectsPolicyGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3009,17 +2330,16 @@ func (r *ProjectsPolicyService) GetIamPolicy(resource string) *ProjectsPolicyGet
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy. Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected. Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset. The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1. To learn
-// which resources support conditions in their IAM policies, see the IAM
-// documentation
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsPolicyGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsPolicyGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -3027,33 +2347,29 @@ func (c *ProjectsPolicyGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPolicyGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsPolicyGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsPolicyGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsPolicyGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPolicyGetIamPolicyCall) Context(ctx context.Context) *ProjectsPolicyGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3062,12 +2378,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3088,12 +2399,10 @@ func (c *ProjectsPolicyGetIamPolicyCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "binaryauthorization.projects.policy.getIamPolicy" call.
-// Exactly one of *IamPolicy or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *IamPolicy.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *IamPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsPolicyGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamPolicy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3124,41 +2433,7 @@ func (c *ProjectsPolicyGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamP
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/policy:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "binaryauthorization.projects.policy.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policy$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "IamPolicy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.policy.setIamPolicy":
 
 type ProjectsPolicySetIamPolicyCall struct {
 	s                   *Service
@@ -3169,14 +2444,13 @@ type ProjectsPolicySetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy. Can return `NOT_FOUND`,
-// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsPolicyService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsPolicySetIamPolicyCall {
 	c := &ProjectsPolicySetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3185,23 +2459,21 @@ func (r *ProjectsPolicyService) SetIamPolicy(resource string, setiampolicyreques
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPolicySetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsPolicySetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPolicySetIamPolicyCall) Context(ctx context.Context) *ProjectsPolicySetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3210,18 +2482,12 @@ func (c *ProjectsPolicySetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:setIamPolicy")
@@ -3238,12 +2504,10 @@ func (c *ProjectsPolicySetIamPolicyCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "binaryauthorization.projects.policy.setIamPolicy" call.
-// Exactly one of *IamPolicy or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *IamPolicy.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *IamPolicy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsPolicySetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamPolicy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3274,38 +2538,7 @@ func (c *ProjectsPolicySetIamPolicyCall) Do(opts ...googleapi.CallOption) (*IamP
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/policy:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "binaryauthorization.projects.policy.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policy$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "IamPolicy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.projects.policy.testIamPermissions":
 
 type ProjectsPolicyTestIamPermissionsCall struct {
 	s                         *Service
@@ -3316,17 +2549,16 @@ type ProjectsPolicyTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a `NOT_FOUND` error. Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsPolicyService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsPolicyTestIamPermissionsCall {
 	c := &ProjectsPolicyTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3335,23 +2567,21 @@ func (r *ProjectsPolicyService) TestIamPermissions(resource string, testiampermi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPolicyTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsPolicyTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPolicyTestIamPermissionsCall) Context(ctx context.Context) *ProjectsPolicyTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3360,18 +2590,12 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+resource}:testIamPermissions")
@@ -3388,12 +2612,11 @@ func (c *ProjectsPolicyTestIamPermissionsCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "binaryauthorization.projects.policy.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsPolicyTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3424,38 +2647,7 @@ func (c *ProjectsPolicyTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/policy:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "binaryauthorization.projects.policy.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policy$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "binaryauthorization.systempolicy.getPolicy":
 
 type SystempolicyGetPolicyCall struct {
 	s            *Service
@@ -3468,8 +2660,8 @@ type SystempolicyGetPolicyCall struct {
 
 // GetPolicy: Gets the current system policy in the specified location.
 //
-//   - name: The resource name, in the format `locations/*/policy`. Note
-//     that the system policy is not associated with a project.
+//   - name: The resource name, in the format `locations/*/policy`. Note that the
+//     system policy is not associated with a project.
 func (r *SystempolicyService) GetPolicy(name string) *SystempolicyGetPolicyCall {
 	c := &SystempolicyGetPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3477,33 +2669,29 @@ func (r *SystempolicyService) GetPolicy(name string) *SystempolicyGetPolicyCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SystempolicyGetPolicyCall) Fields(s ...googleapi.Field) *SystempolicyGetPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SystempolicyGetPolicyCall) IfNoneMatch(entityTag string) *SystempolicyGetPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SystempolicyGetPolicyCall) Context(ctx context.Context) *SystempolicyGetPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SystempolicyGetPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3512,12 +2700,7 @@ func (c *SystempolicyGetPolicyCall) Header() http.Header {
 }
 
 func (c *SystempolicyGetPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3538,12 +2721,10 @@ func (c *SystempolicyGetPolicyCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "binaryauthorization.systempolicy.getPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SystempolicyGetPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3574,30 +2755,4 @@ func (c *SystempolicyGetPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the current system policy in the specified location.",
-	//   "flatPath": "v1beta1/locations/{locationsId}/policy",
-	//   "httpMethod": "GET",
-	//   "id": "binaryauthorization.systempolicy.getPolicy",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name, in the format `locations/*/policy`. Note that the system policy is not associated with a project.",
-	//       "location": "path",
-	//       "pattern": "^locations/[^/]+/policy$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

@@ -103,8 +103,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Translate text from one language to another using Google Translate
@@ -311,513 +311,401 @@ type ProjectsLocationsOperationsService struct {
 type AdaptiveMtDataset struct {
 	// CreateTime: Output only. Timestamp when this dataset was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: The name of the dataset to show in the interface. The
-	// name can be up to 32 characters long and can consist only of ASCII
-	// Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+	// DisplayName: The name of the dataset to show in the interface. The name can
+	// be up to 32 characters long and can consist only of ASCII Latin letters A-Z
+	// and a-z, underscores (_), and ASCII digits 0-9.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ExampleCount: The number of examples in the dataset.
 	ExampleCount int64 `json:"exampleCount,omitempty"`
-
 	// Name: Required. The resource name of the dataset, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
-	// asets/{dataset_id}`
+	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{
+	// dataset_id}`
 	Name string `json:"name,omitempty"`
-
 	// SourceLanguageCode: The BCP-47 language code of the source language.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// TargetLanguageCode: The BCP-47 language code of the target language.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
-
-	// UpdateTime: Output only. Timestamp when this dataset was last
-	// updated.
+	// UpdateTime: Output only. Timestamp when this dataset was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdaptiveMtDataset) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtDataset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtFile: An AdaptiveMtFile.
 type AdaptiveMtFile struct {
 	// CreateTime: Output only. Timestamp when this file was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// DisplayName: The file's display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// EntryCount: The number of entries that the file contains.
 	EntryCount int64 `json:"entryCount,omitempty"`
-
 	// Name: Required. The resource name of the file, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
-	// asets/{dataset}/adaptiveMtFiles/{file}`
+	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{
+	// dataset}/adaptiveMtFiles/{file}`
 	Name string `json:"name,omitempty"`
-
 	// UpdateTime: Output only. Timestamp when this file was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdaptiveMtFile) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtFile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtSentence: An AdaptiveMt sentence entry.
 type AdaptiveMtSentence struct {
 	// CreateTime: Output only. Timestamp when this sentence was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Name: Required. The resource name of the file, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDat
-	// asets/{dataset}/adaptiveMtFiles/{file}/adaptiveMtSentences/{sentence}`
+	// `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{
+	// dataset}/adaptiveMtFiles/{file}/adaptiveMtSentences/{sentence}`
 	Name string `json:"name,omitempty"`
-
 	// SourceSentence: Required. The source sentence.
 	SourceSentence string `json:"sourceSentence,omitempty"`
-
 	// TargetSentence: Required. The target sentence.
 	TargetSentence string `json:"targetSentence,omitempty"`
-
-	// UpdateTime: Output only. Timestamp when this sentence was last
-	// updated.
+	// UpdateTime: Output only. Timestamp when this sentence was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdaptiveMtSentence) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtSentence
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtTranslateRequest: The request for sending an AdaptiveMt
 // translation query.
 type AdaptiveMtTranslateRequest struct {
-	// Content: Required. The content of the input in string format. For now
-	// only one sentence per request is supported.
+	// Content: Required. The content of the input in string format. For now only
+	// one sentence per request is supported.
 	Content []string `json:"content,omitempty"`
-
-	// Dataset: Required. The resource name for the dataset to use for
-	// adaptive MT.
-	// `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{datase
-	// t}`
+	// Dataset: Required. The resource name for the dataset to use for adaptive MT.
+	// `projects/{project}/locations/{location-id}/adaptiveMtDatasets/{dataset}`
 	Dataset string `json:"dataset,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdaptiveMtTranslateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtTranslateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtTranslateResponse: An AdaptiveMtTranslate response.
 type AdaptiveMtTranslateResponse struct {
 	// LanguageCode: Output only. The translation's language code.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Translations: Output only. The translation.
 	Translations []*AdaptiveMtTranslation `json:"translations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdaptiveMtTranslateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtTranslateResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdaptiveMtTranslation: An AdaptiveMt translation.
 type AdaptiveMtTranslation struct {
 	// TranslatedText: Output only. The translated text.
 	TranslatedText string `json:"translatedText,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "TranslatedText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TranslatedText") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "TranslatedText") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdaptiveMtTranslation) MarshalJSON() ([]byte, error) {
 	type NoMethod AdaptiveMtTranslation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchDocumentInputConfig: Input configuration for
-// BatchTranslateDocument request.
+// BatchDocumentInputConfig: Input configuration for BatchTranslateDocument
+// request.
 type BatchDocumentInputConfig struct {
-	// GcsSource: Google Cloud Storage location for the source input. This
-	// can be a single file (for example,
-	// `gs://translation-test/input.docx`) or a wildcard (for example,
-	// `gs://translation-test/*`). File mime type is determined based on
-	// extension. Supported mime type includes: - `pdf`, application/pdf -
+	// GcsSource: Google Cloud Storage location for the source input. This can be a
+	// single file (for example, `gs://translation-test/input.docx`) or a wildcard
+	// (for example, `gs://translation-test/*`). File mime type is determined based
+	// on extension. Supported mime type includes: - `pdf`, application/pdf -
 	// `docx`,
-	// application/vnd.openxmlformats-officedocument.wordprocessingml.documen
-	// t - `pptx`,
-	// application/vnd.openxmlformats-officedocument.presentationml.presentat
-	// ion - `xlsx`,
-	// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet The
-	// max file size to support for `.docx`, `.pptx` and `.xlsx` is 100MB.
-	// The max file size to support for `.pdf` is 1GB and the max page limit
-	// is 1000 pages. The max file size to support for all input documents
-	// is 1GB.
+	// application/vnd.openxmlformats-officedocument.wordprocessingml.document -
+	// `pptx`,
+	// application/vnd.openxmlformats-officedocument.presentationml.presentation -
+	// `xlsx`, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+	// The max file size to support for `.docx`, `.pptx` and `.xlsx` is 100MB. The
+	// max file size to support for `.pdf` is 1GB and the max page limit is 1000
+	// pages. The max file size to support for all input documents is 1GB.
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchDocumentInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDocumentInputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchDocumentOutputConfig: Output configuration for
-// BatchTranslateDocument request.
+// BatchDocumentOutputConfig: Output configuration for BatchTranslateDocument
+// request.
 type BatchDocumentOutputConfig struct {
-	// GcsDestination: Google Cloud Storage destination for output content.
-	// For every single input document (for example,
-	// gs://a/b/c.[extension]), we generate at most 2 * n output files. (n
-	// is the # of target_language_codes in the
-	// BatchTranslateDocumentRequest). While the input documents are being
+	// GcsDestination: Google Cloud Storage destination for output content. For
+	// every single input document (for example, gs://a/b/c.[extension]), we
+	// generate at most 2 * n output files. (n is the # of target_language_codes in
+	// the BatchTranslateDocumentRequest). While the input documents are being
 	// processed, we write/update an index file `index.csv` under
 	// `gcs_destination.output_uri_prefix` (for example,
-	// gs://translation_output/index.csv) The index file is
-	// generated/updated as new files are being translated. The format is:
+	// gs://translation_output/index.csv) The index file is generated/updated as
+	// new files are being translated. The format is:
 	// input_document,target_language_code,translation_output,error_output,
-	// glossary_translation_output,glossary_error_output `input_document` is
-	// one file we matched using gcs_source.input_uri.
-	// `target_language_code` is provided in the request.
-	// `translation_output` contains the translations. (details provided
-	// below) `error_output` contains the error message during processing of
-	// the file. Both translations_file and errors_file could be empty
-	// strings if we have no content to output.
-	// `glossary_translation_output` and `glossary_error_output` are the
-	// translated output/error when we apply glossaries. They could also be
-	// empty if we have no content to output. Once a row is present in
-	// index.csv, the input/output matching never changes. Callers should
-	// also expect all the content in input_file are processed and ready to
-	// be consumed (that is, no partial output file is written). Since
-	// index.csv will be keeping updated during the process, please make
-	// sure there is no custom retention policy applied on the output bucket
-	// that may avoid file updating.
-	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
-	// The naming format of translation output files follows (for target
-	// language code [trg]): `translation_output`:
+	// glossary_translation_output,glossary_error_output `input_document` is one
+	// file we matched using gcs_source.input_uri. `target_language_code` is
+	// provided in the request. `translation_output` contains the translations.
+	// (details provided below) `error_output` contains the error message during
+	// processing of the file. Both translations_file and errors_file could be
+	// empty strings if we have no content to output. `glossary_translation_output`
+	// and `glossary_error_output` are the translated output/error when we apply
+	// glossaries. They could also be empty if we have no content to output. Once a
+	// row is present in index.csv, the input/output matching never changes.
+	// Callers should also expect all the content in input_file are processed and
+	// ready to be consumed (that is, no partial output file is written). Since
+	// index.csv will be keeping updated during the process, please make sure there
+	// is no custom retention policy applied on the output bucket that may avoid
+	// file updating.
+	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy) The
+	// naming format of translation output files follows (for target language code
+	// [trg]): `translation_output`:
 	// `gs://translation_output/a_b_c_[trg]_translation.[extension]`
 	// `glossary_translation_output`:
-	// `gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]`.
-	// The output document will maintain the same file format as the input
-	// document. The naming format of error output files follows (for target
-	// language code [trg]): `error_output`:
-	// `gs://translation_test/a_b_c_[trg]_errors.txt`
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]`. The
+	// output document will maintain the same file format as the input document.
+	// The naming format of error output files follows (for target language code
+	// [trg]): `error_output`: `gs://translation_test/a_b_c_[trg]_errors.txt`
 	// `glossary_error_output`:
-	// `gs://translation_test/a_b_c_[trg]_glossary_translation.txt`. The
-	// error output is a txt file containing error details.
+	// `gs://translation_test/a_b_c_[trg]_glossary_translation.txt`. The error
+	// output is a txt file containing error details.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDocumentOutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchTranslateDocumentRequest: The BatchTranslateDocument request.
 type BatchTranslateDocumentRequest struct {
-	// CustomizedAttribution: Optional. This flag is to support user
-	// customized attribution. If not provided, the default is `Machine
-	// Translated by Google`. Customized attribution should follow rules in
+	// CustomizedAttribution: Optional. This flag is to support user customized
+	// attribution. If not provided, the default is `Machine Translated by Google`.
+	// Customized attribution should follow rules in
 	// https://cloud.google.com/translate/attribution#attribution_and_logos
 	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
-
-	// EnableRotationCorrection: Optional. If true, enable auto rotation
-	// correction in DVS.
+	// EnableRotationCorrection: Optional. If true, enable auto rotation correction
+	// in DVS.
 	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
-
-	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
-	// server to remove the shadow text on background image for native pdf
-	// translation. Shadow removal feature can only be enabled when
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal server
+	// to remove the shadow text on background image for native pdf translation.
+	// Shadow removal feature can only be enabled when
 	// is_translate_native_pdf_only: false && pdf_native_only: false
 	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
-
-	// FormatConversions: Optional. The file format conversion map that is
-	// applied to all input files. The map key is the original mime_type.
-	// The map value is the target mime_type of translated documents.
-	// Supported file format conversion includes: - `application/pdf` to
-	// `application/vnd.openxmlformats-officedocument.wordprocessingml.docume
-	// nt` If nothing specified, output files will be in the same format as
-	// the original file.
+	// FormatConversions: Optional. The file format conversion map that is applied
+	// to all input files. The map key is the original mime_type. The map value is
+	// the target mime_type of translated documents. Supported file format
+	// conversion includes: - `application/pdf` to
+	// `application/vnd.openxmlformats-officedocument.wordprocessingml.document` If
+	// nothing specified, output files will be in the same format as the original
+	// file.
 	FormatConversions map[string]string `json:"formatConversions,omitempty"`
-
 	// Glossaries: Optional. Glossaries to be applied. It's keyed by target
 	// language code.
 	Glossaries map[string]TranslateTextGlossaryConfig `json:"glossaries,omitempty"`
-
-	// InputConfigs: Required. Input configurations. The total number of
-	// files matched should be <= 100. The total content size to translate
-	// should be <= 100M Unicode codepoints. The files must use UTF-8
-	// encoding.
+	// InputConfigs: Required. Input configurations. The total number of files
+	// matched should be <= 100. The total content size to translate should be <=
+	// 100M Unicode codepoints. The files must use UTF-8 encoding.
 	InputConfigs []*BatchDocumentInputConfig `json:"inputConfigs,omitempty"`
-
-	// Models: Optional. The models to use for translation. Map's key is
-	// target language code. Map's value is the model name. Value can be a
-	// built-in general model, or an AutoML Translation model. The value
-	// format depends on model type: - AutoML Translation models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-	// -id}` - General (built-in) models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`, If the map is empty or a specific model is not requested for
-	// a language pair, then default google model (nmt) is used.
+	// Models: Optional. The models to use for translation. Map's key is target
+	// language code. Map's value is the model name. Value can be a built-in
+	// general model, or an AutoML Translation model. The value format depends on
+	// model type: - AutoML Translation models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+	// - General (built-in) models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+	//  If the map is empty or a specific model is not requested for a language
+	// pair, then default google model (nmt) is used.
 	Models map[string]string `json:"models,omitempty"`
-
-	// OutputConfig: Required. Output configuration. If 2 input configs
-	// match to the same file (that is, same input path), we don't generate
-	// output for duplicate inputs.
+	// OutputConfig: Required. Output configuration. If 2 input configs match to
+	// the same file (that is, same input path), we don't generate output for
+	// duplicate inputs.
 	OutputConfig *BatchDocumentOutputConfig `json:"outputConfig,omitempty"`
-
 	// SourceLanguageCode: Required. The ISO-639 language code of the input
-	// document if known, for example, "en-US" or "sr-Latn". Supported
-	// language codes are listed in Language Support
+	// document if known, for example, "en-US" or "sr-Latn". Supported language
+	// codes are listed in Language Support
 	// (https://cloud.google.com/translate/docs/languages).
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// TargetLanguageCodes: Required. The ISO-639 language code to use for
-	// translation of the input document. Specify up to 10 language codes
-	// here.
+	// translation of the input document. Specify up to 10 language codes here.
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CustomizedAttribution") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomizedAttribution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CustomizedAttribution") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchTranslateDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchTranslateDocumentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchTranslateTextRequest: The batch translation request.
 type BatchTranslateTextRequest struct {
-	// Glossaries: Optional. Glossaries to be applied for translation. It's
-	// keyed by target language code.
+	// Glossaries: Optional. Glossaries to be applied for translation. It's keyed
+	// by target language code.
 	Glossaries map[string]TranslateTextGlossaryConfig `json:"glossaries,omitempty"`
-
-	// InputConfigs: Required. Input configurations. The total number of
-	// files matched should be <= 100. The total content size should be <=
-	// 100M Unicode codepoints. The files must use UTF-8 encoding.
+	// InputConfigs: Required. Input configurations. The total number of files
+	// matched should be <= 100. The total content size should be <= 100M Unicode
+	// codepoints. The files must use UTF-8 encoding.
 	InputConfigs []*InputConfig `json:"inputConfigs,omitempty"`
-
-	// Labels: Optional. The labels with user-defined metadata for the
-	// request. Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. Label values are optional. Label keys must start with a
-	// letter. See https://cloud.google.com/translate/docs/advanced/labels
-	// for more information.
+	// Labels: Optional. The labels with user-defined metadata for the request.
+	// Label keys and values can be no longer than 63 characters (Unicode
+	// codepoints), can only contain lowercase letters, numeric characters,
+	// underscores and dashes. International characters are allowed. Label values
+	// are optional. Label keys must start with a letter. See
+	// https://cloud.google.com/translate/docs/advanced/labels for more
+	// information.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Models: Optional. The models to use for translation. Map's key is
-	// target language code. Map's value is model name. Value can be a
-	// built-in general model, or an AutoML Translation model. The value
-	// format depends on model type: - AutoML Translation models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-	// -id}` - General (built-in) models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`, If the map is empty or a specific model is not requested for
-	// a language pair, then default google model (nmt) is used.
+	// Models: Optional. The models to use for translation. Map's key is target
+	// language code. Map's value is model name. Value can be a built-in general
+	// model, or an AutoML Translation model. The value format depends on model
+	// type: - AutoML Translation models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+	// - General (built-in) models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+	//  If the map is empty or a specific model is not requested for a language
+	// pair, then default google model (nmt) is used.
 	Models map[string]string `json:"models,omitempty"`
-
-	// OutputConfig: Required. Output configuration. If 2 input configs
-	// match to the same file (that is, same input path), we don't generate
-	// output for duplicate inputs.
+	// OutputConfig: Required. Output configuration. If 2 input configs match to
+	// the same file (that is, same input path), we don't generate output for
+	// duplicate inputs.
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
-
 	// SourceLanguageCode: Required. Source language code.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// TargetLanguageCodes: Required. Specify up to 10 language codes here.
 	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Glossaries") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Glossaries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchTranslateTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchTranslateTextRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CancelOperationRequest: The request message for
-// Operations.CancelOperation.
+// CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
 
@@ -826,67 +714,49 @@ type CancelOperationRequest struct {
 type Dataset struct {
 	// CreateTime: Output only. Timestamp when this dataset was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: The name of the dataset to show in the interface. The
-	// name can be up to 32 characters long and can consist only of ASCII
-	// Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+	// DisplayName: The name of the dataset to show in the interface. The name can
+	// be up to 32 characters long and can consist only of ASCII Latin letters A-Z
+	// and a-z, underscores (_), and ASCII digits 0-9.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ExampleCount: Output only. The number of examples in the dataset.
 	ExampleCount int64 `json:"exampleCount,omitempty"`
-
 	// Name: The resource name of the dataset, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dat
-	// aset_id}`
+	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id
+	// }`
 	Name string `json:"name,omitempty"`
-
 	// SourceLanguageCode: The BCP-47 language code of the source language.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// TargetLanguageCode: The BCP-47 language code of the target language.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
-
-	// TestExampleCount: Output only. Number of test examples (sentence
-	// pairs).
+	// TestExampleCount: Output only. Number of test examples (sentence pairs).
 	TestExampleCount int64 `json:"testExampleCount,omitempty"`
-
 	// TrainExampleCount: Output only. Number of training examples (sentence
 	// pairs).
 	TrainExampleCount int64 `json:"trainExampleCount,omitempty"`
-
-	// UpdateTime: Output only. Timestamp when this dataset was last
-	// updated.
+	// UpdateTime: Output only. Timestamp when this dataset was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ValidateExampleCount: Output only. Number of validation examples
-	// (sentence pairs).
+	// ValidateExampleCount: Output only. Number of validation examples (sentence
+	// pairs).
 	ValidateExampleCount int64 `json:"validateExampleCount,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod Dataset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetInputConfig: Input configuration for datasets.
@@ -894,173 +764,134 @@ type DatasetInputConfig struct {
 	// InputFiles: Files containing the sentence pairs to be imported to the
 	// dataset.
 	InputFiles []*InputFile `json:"inputFiles,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputFiles") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputFiles") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputFiles") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DatasetInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetInputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DatasetOutputConfig: Output configuration for datasets.
 type DatasetOutputConfig struct {
 	// GcsDestination: Google Cloud Storage destination to write the output.
 	GcsDestination *GcsOutputDestination `json:"gcsDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DatasetOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DatasetOutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectLanguageRequest: The request message for language detection.
 type DetectLanguageRequest struct {
 	// Content: The content of the input stored as a string.
 	Content string `json:"content,omitempty"`
-
-	// Labels: Optional. The labels with user-defined metadata for the
-	// request. Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. Label values are optional. Label keys must start with a
-	// letter. See https://cloud.google.com/translate/docs/advanced/labels
-	// for more information.
+	// Labels: Optional. The labels with user-defined metadata for the request.
+	// Label keys and values can be no longer than 63 characters (Unicode
+	// codepoints), can only contain lowercase letters, numeric characters,
+	// underscores and dashes. International characters are allowed. Label values
+	// are optional. Label keys must start with a letter. See
+	// https://cloud.google.com/translate/docs/advanced/labels for more
+	// information.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// MimeType: Optional. The format of the source text, for example,
-	// "text/html", "text/plain". If left blank, the MIME type defaults to
-	// "text/html".
+	// MimeType: Optional. The format of the source text, for example, "text/html",
+	// "text/plain". If left blank, the MIME type defaults to "text/html".
 	MimeType string `json:"mimeType,omitempty"`
-
 	// Model: Optional. The language detection model to be used. Format:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/langua
-	// ge-detection/{model-id}` Only one language detection model is
-	// currently supported:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/langua
-	// ge-detection/default`. If not specified, the default model is used.
+	// `projects/{project-number-or-id}/locations/{location-id}/models/language-dete
+	// ction/{model-id}` Only one language detection model is currently supported:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/language-dete
+	// ction/default`. If not specified, the default model is used.
 	Model string `json:"model,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DetectLanguageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectLanguageRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectLanguageResponse: The response message for language detection.
 type DetectLanguageResponse struct {
-	// Languages: The most probable language detected by the Translation
-	// API. For each request, the Translation API will always return only
-	// one result.
+	// Languages: The most probable language detected by the Translation API. For
+	// each request, the Translation API will always return only one result.
 	Languages []*DetectedLanguage `json:"languages,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Languages") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Languages") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Languages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DetectLanguageResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectLanguageResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DetectedLanguage: The response message for language detection.
 type DetectedLanguage struct {
 	// Confidence: The confidence of the detection result for this language.
 	Confidence float64 `json:"confidence,omitempty"`
-
 	// LanguageCode: The ISO-639 language code of the source content in the
 	// request, detected automatically.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Confidence") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Confidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DetectedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod DetectedLanguage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DetectedLanguage) UnmarshalJSON(data []byte) error {
@@ -1081,364 +912,284 @@ func (s *DetectedLanguage) UnmarshalJSON(data []byte) error {
 type DocumentInputConfig struct {
 	// Content: Document's content represented as a stream of bytes.
 	Content string `json:"content,omitempty"`
-
-	// GcsSource: Google Cloud Storage location. This must be a single file.
-	// For example: gs://example_bucket/example_file.pdf
+	// GcsSource: Google Cloud Storage location. This must be a single file. For
+	// example: gs://example_bucket/example_file.pdf
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
-
-	// MimeType: Specifies the input document's mime_type. If not specified
-	// it will be determined using the file extension for gcs_source
-	// provided files. For a file provided through bytes content the
-	// mime_type must be provided. Currently supported mime types are: -
-	// application/pdf -
-	// application/vnd.openxmlformats-officedocument.wordprocessingml.documen
-	// t -
-	// application/vnd.openxmlformats-officedocument.presentationml.presentat
-	// ion -
+	// MimeType: Specifies the input document's mime_type. If not specified it will
+	// be determined using the file extension for gcs_source provided files. For a
+	// file provided through bytes content the mime_type must be provided.
+	// Currently supported mime types are: - application/pdf -
+	// application/vnd.openxmlformats-officedocument.wordprocessingml.document -
+	// application/vnd.openxmlformats-officedocument.presentationml.presentation -
 	// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 	MimeType string `json:"mimeType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DocumentInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentInputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentOutputConfig: A document translation request output config.
 type DocumentOutputConfig struct {
 	// GcsDestination: Optional. Google Cloud Storage destination for the
-	// translation output, e.g., `gs://my_bucket/my_directory/`. The
-	// destination directory provided does not have to be empty, but the
-	// bucket must exist. If a file with the same name as the output file
-	// already exists in the destination an error will be returned. For a
-	// DocumentInputConfig.contents provided document, the output file will
-	// have the name "output_[trg]_translations.[ext]", where - [trg]
-	// corresponds to the translated file's language code, - [ext]
-	// corresponds to the translated file's extension according to its mime
-	// type. For a DocumentInputConfig.gcs_uri provided document, the output
-	// file will have a name according to its URI. For example: an input
-	// file with URI: `gs://a/b/c.[extension]` stored in a gcs_destination
-	// bucket with name "my_bucket" will have an output URI:
-	// `gs://my_bucket/a_b_c_[trg]_translations.[ext]`, where - [trg]
-	// corresponds to the translated file's language code, - [ext]
-	// corresponds to the translated file's extension according to its mime
-	// type. If the document was directly provided through the request, then
-	// the output document will have the format:
-	// `gs://my_bucket/translated_document_[trg]_translations.[ext]`, where
-	// - [trg] corresponds to the translated file's language code, - [ext]
-	// corresponds to the translated file's extension according to its mime
-	// type. If a glossary was provided, then the output URI for the
-	// glossary translation will be equal to the default output URI but have
-	// `glossary_translations` instead of `translations`. For the previous
-	// example, its glossary URI would be:
-	// `gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]`. Thus the
-	// max number of output files will be 2 (Translated document, Glossary
-	// translated document). Callers should expect no partial outputs. If
-	// there is any error during document translation, no output will be
-	// stored in the Cloud Storage bucket.
+	// translation output, e.g., `gs://my_bucket/my_directory/`. The destination
+	// directory provided does not have to be empty, but the bucket must exist. If
+	// a file with the same name as the output file already exists in the
+	// destination an error will be returned. For a DocumentInputConfig.contents
+	// provided document, the output file will have the name
+	// "output_[trg]_translations.[ext]", where - [trg] corresponds to the
+	// translated file's language code, - [ext] corresponds to the translated
+	// file's extension according to its mime type. For a
+	// DocumentInputConfig.gcs_uri provided document, the output file will have a
+	// name according to its URI. For example: an input file with URI:
+	// `gs://a/b/c.[extension]` stored in a gcs_destination bucket with name
+	// "my_bucket" will have an output URI:
+	// `gs://my_bucket/a_b_c_[trg]_translations.[ext]`, where - [trg] corresponds
+	// to the translated file's language code, - [ext] corresponds to the
+	// translated file's extension according to its mime type. If the document was
+	// directly provided through the request, then the output document will have
+	// the format: `gs://my_bucket/translated_document_[trg]_translations.[ext]`,
+	// where - [trg] corresponds to the translated file's language code, - [ext]
+	// corresponds to the translated file's extension according to its mime type.
+	// If a glossary was provided, then the output URI for the glossary translation
+	// will be equal to the default output URI but have `glossary_translations`
+	// instead of `translations`. For the previous example, its glossary URI would
+	// be: `gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]`. Thus the max
+	// number of output files will be 2 (Translated document, Glossary translated
+	// document). Callers should expect no partial outputs. If there is any error
+	// during document translation, no output will be stored in the Cloud Storage
+	// bucket.
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
-
-	// MimeType: Optional. Specifies the translated document's mime_type. If
-	// not specified, the translated file's mime type will be the same as
-	// the input file's mime type. Currently only support the output mime
-	// type to be the same as input mime type. - application/pdf -
-	// application/vnd.openxmlformats-officedocument.wordprocessingml.documen
-	// t -
-	// application/vnd.openxmlformats-officedocument.presentationml.presentat
-	// ion -
+	// MimeType: Optional. Specifies the translated document's mime_type. If not
+	// specified, the translated file's mime type will be the same as the input
+	// file's mime type. Currently only support the output mime type to be the same
+	// as input mime type. - application/pdf -
+	// application/vnd.openxmlformats-officedocument.wordprocessingml.document -
+	// application/vnd.openxmlformats-officedocument.presentationml.presentation -
 	// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 	MimeType string `json:"mimeType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DocumentOutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentOutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DocumentTranslation: A translated document message.
 type DocumentTranslation struct {
-	// ByteStreamOutputs: The array of translated documents. It is expected
-	// to be size 1 for now. We may produce multiple translated documents in
-	// the future for other type of file formats.
+	// ByteStreamOutputs: The array of translated documents. It is expected to be
+	// size 1 for now. We may produce multiple translated documents in the future
+	// for other type of file formats.
 	ByteStreamOutputs []string `json:"byteStreamOutputs,omitempty"`
-
-	// DetectedLanguageCode: The detected language for the input document.
-	// If the user did not provide the source language for the input
-	// document, this field will have the language code automatically
-	// detected. If the source language was passed, auto-detection of the
-	// language does not occur and this field is empty.
+	// DetectedLanguageCode: The detected language for the input document. If the
+	// user did not provide the source language for the input document, this field
+	// will have the language code automatically detected. If the source language
+	// was passed, auto-detection of the language does not occur and this field is
+	// empty.
 	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
-
 	// MimeType: The translated document's mime type.
 	MimeType string `json:"mimeType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ByteStreamOutputs")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ByteStreamOutputs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ByteStreamOutputs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ByteStreamOutputs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DocumentTranslation) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentTranslation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // Example: A sentence pair.
 type Example struct {
 	// Name: Output only. The resource name of the example, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dat
-	// aset_id}/examples/{example_id}'
+	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id
+	// }/examples/{example_id}'
 	Name string `json:"name,omitempty"`
-
 	// SourceText: Sentence in source language.
 	SourceText string `json:"sourceText,omitempty"`
-
 	// TargetText: Sentence in target language.
 	TargetText string `json:"targetText,omitempty"`
-
 	// Usage: Output only. Usage of the sentence pair. Options are
 	// TRAIN|VALIDATION|TEST.
 	Usage string `json:"usage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Example) MarshalJSON() ([]byte, error) {
 	type NoMethod Example
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ExportDataRequest: Request message for ExportData.
 type ExportDataRequest struct {
 	// OutputConfig: Required. The config for the output content.
 	OutputConfig *DatasetOutputConfig `json:"outputConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "OutputConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ExportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportDataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FileInputSource: An inlined file.
 type FileInputSource struct {
 	// Content: Required. The file's byte contents.
 	Content string `json:"content,omitempty"`
-
 	// DisplayName: Required. The file's display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// MimeType: Required. The file's mime type.
 	MimeType string `json:"mimeType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FileInputSource) MarshalJSON() ([]byte, error) {
 	type NoMethod FileInputSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GcsDestination: The Google Cloud Storage location for the output
-// content.
+// GcsDestination: The Google Cloud Storage location for the output content.
 type GcsDestination struct {
-	// OutputUriPrefix: Required. The bucket used in 'output_uri_prefix'
-	// must exist and there must be no files under 'output_uri_prefix'.
-	// 'output_uri_prefix' must end with "/" and start with "gs://". One
-	// 'output_uri_prefix' can only be used by one batch translation job at
-	// a time. Otherwise an INVALID_ARGUMENT (400) error is returned.
+	// OutputUriPrefix: Required. The bucket used in 'output_uri_prefix' must exist
+	// and there must be no files under 'output_uri_prefix'. 'output_uri_prefix'
+	// must end with "/" and start with "gs://". One 'output_uri_prefix' can only
+	// be used by one batch translation job at a time. Otherwise an
+	// INVALID_ARGUMENT (400) error is returned.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GcsDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GcsInputSource: The Google Cloud Storage location for the input
-// content.
+// GcsInputSource: The Google Cloud Storage location for the input content.
 type GcsInputSource struct {
 	// InputUri: Required. Source data URI. For example,
 	// `gs://my_bucket/my_object`.
 	InputUri string `json:"inputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GcsInputSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsInputSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GcsOutputDestination: The Google Cloud Storage location for the
-// output content.
+// GcsOutputDestination: The Google Cloud Storage location for the output
+// content.
 type GcsOutputDestination struct {
-	// OutputUriPrefix: Required. Google Cloud Storage URI to output
-	// directory. For example, `gs://bucket/directory`. The requesting user
-	// must have write permission to the bucket. The directory will be
-	// created if it doesn't exist.
+	// OutputUriPrefix: Required. Google Cloud Storage URI to output directory. For
+	// example, `gs://bucket/directory`. The requesting user must have write
+	// permission to the bucket. The directory will be created if it doesn't exist.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GcsOutputDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsOutputDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GcsSource: The Google Cloud Storage location for the input content.
@@ -1446,1723 +1197,1330 @@ type GcsSource struct {
 	// InputUri: Required. Source data URI. For example,
 	// `gs://my_bucket/my_object`.
 	InputUri string `json:"inputUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GcsSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GcsSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Glossary: Represents a glossary built from user-provided data.
 type Glossary struct {
 	// DisplayName: Optional. The display name of the glossary.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// EndTime: Output only. When the glossary creation was finished.
 	EndTime string `json:"endTime,omitempty"`
-
-	// EntryCount: Output only. The number of entries defined in the
-	// glossary.
+	// EntryCount: Output only. The number of entries defined in the glossary.
 	EntryCount int64 `json:"entryCount,omitempty"`
-
-	// InputConfig: Required. Provides examples to build the glossary from.
-	// Total glossary must not exceed 10M Unicode codepoints.
+	// InputConfig: Required. Provides examples to build the glossary from. Total
+	// glossary must not exceed 10M Unicode codepoints.
 	InputConfig *GlossaryInputConfig `json:"inputConfig,omitempty"`
-
 	// LanguageCodesSet: Used with equivalent term set glossaries.
 	LanguageCodesSet *LanguageCodesSet `json:"languageCodesSet,omitempty"`
-
 	// LanguagePair: Used with unidirectional glossaries.
 	LanguagePair *LanguageCodePair `json:"languagePair,omitempty"`
-
-	// Name: Required. The resource name of the glossary. Glossary names
-	// have the form
-	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{g
-	// lossary-id}`.
+	// Name: Required. The resource name of the glossary. Glossary names have the
+	// form
+	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary
+	// -id}`.
 	Name string `json:"name,omitempty"`
-
 	// SubmitTime: Output only. When CreateGlossary was called.
 	SubmitTime string `json:"submitTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Glossary) MarshalJSON() ([]byte, error) {
 	type NoMethod Glossary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryEntry: Represents a single entry in a glossary.
 type GlossaryEntry struct {
 	// Description: Describes the glossary entry.
 	Description string `json:"description,omitempty"`
-
 	// Name: Required. The resource name of the entry. Format:
 	// "projects/*/locations/*/glossaries/*/glossaryEntries/*"
 	Name string `json:"name,omitempty"`
-
 	// TermsPair: Used for an unidirectional glossary.
 	TermsPair *GlossaryTermsPair `json:"termsPair,omitempty"`
-
 	// TermsSet: Used for an equivalent term sets glossary.
 	TermsSet *GlossaryTermsSet `json:"termsSet,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GlossaryEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryInputConfig: Input configuration for glossaries.
 type GlossaryInputConfig struct {
-	// GcsSource: Required. Google Cloud Storage location of glossary data.
-	// File format is determined based on the filename extension. API
-	// returns [google.rpc.Code.INVALID_ARGUMENT] for unsupported URI-s and
-	// file formats. Wildcards are not allowed. This must be a single file
-	// in one of the following formats: For unidirectional glossaries: -
-	// TSV/CSV (`.tsv`/`.csv`): Two column file, tab- or comma-separated.
-	// The first column is source text. The second column is target text. No
-	// headers in this file. The first row contains data and not column
-	// names. - TMX (`.tmx`): TMX file with parallel data defining
-	// source/target term pairs. For equivalent term sets glossaries: - CSV
-	// (`.csv`): Multi-column CSV file defining equivalent glossary terms in
-	// multiple languages. See documentation for more information -
-	// glossaries
+	// GcsSource: Required. Google Cloud Storage location of glossary data. File
+	// format is determined based on the filename extension. API returns
+	// [google.rpc.Code.INVALID_ARGUMENT] for unsupported URI-s and file formats.
+	// Wildcards are not allowed. This must be a single file in one of the
+	// following formats: For unidirectional glossaries: - TSV/CSV (`.tsv`/`.csv`):
+	// Two column file, tab- or comma-separated. The first column is source text.
+	// The second column is target text. No headers in this file. The first row
+	// contains data and not column names. - TMX (`.tmx`): TMX file with parallel
+	// data defining source/target term pairs. For equivalent term sets glossaries:
+	// - CSV (`.csv`): Multi-column CSV file defining equivalent glossary terms in
+	// multiple languages. See documentation for more information - glossaries
 	// (https://cloud.google.com/translate/docs/advanced/glossary).
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GlossaryInputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryInputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GlossaryTerm: Represents a single glossary term
 type GlossaryTerm struct {
 	// LanguageCode: The language for this glossary term.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Text: The text for the glossary term.
 	Text string `json:"text,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GlossaryTerm) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryTerm
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GlossaryTermsPair: Represents a single entry for an unidirectional
-// glossary.
+// GlossaryTermsPair: Represents a single entry for an unidirectional glossary.
 type GlossaryTermsPair struct {
-	// SourceTerm: The source term is the term that will get match in the
-	// text,
+	// SourceTerm: The source term is the term that will get match in the text,
 	SourceTerm *GlossaryTerm `json:"sourceTerm,omitempty"`
-
 	// TargetTerm: The term that will replace the match source term.
 	TargetTerm *GlossaryTerm `json:"targetTerm,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SourceTerm") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SourceTerm") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SourceTerm") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GlossaryTermsPair) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryTermsPair
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GlossaryTermsSet: Represents a single entry for an equivalent term
-// set glossary. This is used for equivalent term sets where each term
-// can be replaced by the other terms in the set.
+// GlossaryTermsSet: Represents a single entry for an equivalent term set
+// glossary. This is used for equivalent term sets where each term can be
+// replaced by the other terms in the set.
 type GlossaryTermsSet struct {
-	// Terms: Each term in the set represents a term that can be replaced by
-	// the other terms.
+	// Terms: Each term in the set represents a term that can be replaced by the
+	// other terms.
 	Terms []*GlossaryTerm `json:"terms,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Terms") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Terms") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Terms") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GlossaryTermsSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GlossaryTermsSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ImportAdaptiveMtFileRequest: The request for importing an AdaptiveMt
-// file along with its sentences.
+// ImportAdaptiveMtFileRequest: The request for importing an AdaptiveMt file
+// along with its sentences.
 type ImportAdaptiveMtFileRequest struct {
 	// FileInputSource: Inline file source.
 	FileInputSource *FileInputSource `json:"fileInputSource,omitempty"`
-
 	// GcsInputSource: Google Cloud Storage file source.
 	GcsInputSource *GcsInputSource `json:"gcsInputSource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FileInputSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FileInputSource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FileInputSource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ImportAdaptiveMtFileRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdaptiveMtFileRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ImportAdaptiveMtFileResponse: The response for importing an
-// AdaptiveMtFile
+// ImportAdaptiveMtFileResponse: The response for importing an AdaptiveMtFile
 type ImportAdaptiveMtFileResponse struct {
 	// AdaptiveMtFile: Output only. The Adaptive MT file that was imported.
 	AdaptiveMtFile *AdaptiveMtFile `json:"adaptiveMtFile,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AdaptiveMtFile") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdaptiveMtFile") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdaptiveMtFile") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ImportAdaptiveMtFileResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportAdaptiveMtFileResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ImportDataRequest: Request message for ImportData.
 type ImportDataRequest struct {
 	// InputConfig: Required. The config for the input content.
 	InputConfig *DatasetInputConfig `json:"inputConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InputConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InputConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ImportDataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportDataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InputConfig: Input configuration for BatchTranslateText request.
 type InputConfig struct {
-	// GcsSource: Required. Google Cloud Storage location for the source
-	// input. This can be a single file (for example,
-	// `gs://translation-test/input.tsv`) or a wildcard (for example,
-	// `gs://translation-test/*`). If a file extension is `.tsv`, it can
-	// contain either one or two columns. The first column (optional) is the
-	// id of the text request. If the first column is missing, we use the
-	// row number (0-based) from the input file as the ID in the output
-	// file. The second column is the actual text to be translated. We
-	// recommend each row be <= 10K Unicode codepoints, otherwise an error
-	// might be returned. Note that the input tsv must be RFC 4180
-	// compliant. You could use https://github.com/Clever/csvlint to check
-	// potential formatting errors in your tsv file. csvlint
-	// --delimiter='\t' your_input_file.tsv The other supported file
-	// extensions are `.txt` or `.html`, which is treated as a single large
-	// chunk of text.
+	// GcsSource: Required. Google Cloud Storage location for the source input.
+	// This can be a single file (for example, `gs://translation-test/input.tsv`)
+	// or a wildcard (for example, `gs://translation-test/*`). If a file extension
+	// is `.tsv`, it can contain either one or two columns. The first column
+	// (optional) is the id of the text request. If the first column is missing, we
+	// use the row number (0-based) from the input file as the ID in the output
+	// file. The second column is the actual text to be translated. We recommend
+	// each row be <= 10K Unicode codepoints, otherwise an error might be returned.
+	// Note that the input tsv must be RFC 4180 compliant. You could use
+	// https://github.com/Clever/csvlint to check potential formatting errors in
+	// your tsv file. csvlint --delimiter='\t' your_input_file.tsv The other
+	// supported file extensions are `.txt` or `.html`, which is treated as a
+	// single large chunk of text.
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
-
 	// MimeType: Optional. Can be "text/plain" or "text/html". For `.tsv`,
-	// "text/html" is used if mime_type is missing. For `.html`, this field
-	// must be "text/html" or empty. For `.txt`, this field must be
-	// "text/plain" or empty.
+	// "text/html" is used if mime_type is missing. For `.html`, this field must be
+	// "text/html" or empty. For `.txt`, this field must be "text/plain" or empty.
 	MimeType string `json:"mimeType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // InputFile: An input file.
 type InputFile struct {
 	// GcsSource: Google Cloud Storage file source.
 	GcsSource *GcsInputSource `json:"gcsSource,omitempty"`
-
 	// Usage: Optional. Usage of the file contents. Options are
 	// TRAIN|VALIDATION|TEST, or UNASSIGNED (by default) for auto split.
 	Usage string `json:"usage,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsSource") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "GcsSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *InputFile) MarshalJSON() ([]byte, error) {
 	type NoMethod InputFile
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageCodePair: Used with unidirectional glossaries.
 type LanguageCodePair struct {
-	// SourceLanguageCode: Required. The ISO-639 language code of the input
-	// text, for example, "en-US". Expected to be an exact match for
+	// SourceLanguageCode: Required. The ISO-639 language code of the input text,
+	// for example, "en-US". Expected to be an exact match for
 	// GlossaryTerm.language_code.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
-	// TargetLanguageCode: Required. The ISO-639 language code for
-	// translation output, for example, "zh-CN". Expected to be an exact
-	// match for GlossaryTerm.language_code.
+	// TargetLanguageCode: Required. The ISO-639 language code for translation
+	// output, for example, "zh-CN". Expected to be an exact match for
+	// GlossaryTerm.language_code.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SourceLanguageCode")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "SourceLanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SourceLanguageCode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SourceLanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *LanguageCodePair) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageCodePair
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // LanguageCodesSet: Used with equivalent term set glossaries.
 type LanguageCodesSet struct {
 	// LanguageCodes: The ISO-639 language code(s) for terms defined in the
-	// glossary. All entries are unique. The list contains at least two
-	// entries. Expected to be an exact match for
-	// GlossaryTerm.language_code.
+	// glossary. All entries are unique. The list contains at least two entries.
+	// Expected to be an exact match for GlossaryTerm.language_code.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCodes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCodes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *LanguageCodesSet) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageCodesSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdaptiveMtDatasetsResponse: A list of AdaptiveMtDatasets.
 type ListAdaptiveMtDatasetsResponse struct {
 	// AdaptiveMtDatasets: Output only. A list of Adaptive MT datasets.
 	AdaptiveMtDatasets []*AdaptiveMtDataset `json:"adaptiveMtDatasets,omitempty"`
-
-	// NextPageToken: Optional. A token to retrieve a page of results. Pass
-	// this value in the [ListAdaptiveMtDatasetsRequest.page_token] field in
-	// the subsequent call to `ListAdaptiveMtDatasets` method to retrieve
-	// the next page of results.
+	// NextPageToken: Optional. A token to retrieve a page of results. Pass this
+	// value in the [ListAdaptiveMtDatasetsRequest.page_token] field in the
+	// subsequent call to `ListAdaptiveMtDatasets` method to retrieve the next page
+	// of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AdaptiveMtDatasets")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdaptiveMtDatasets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdaptiveMtDatasets") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdaptiveMtDatasets") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdaptiveMtDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptiveMtDatasetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAdaptiveMtFilesResponse: The response for listing all AdaptiveMt
-// files under a given dataset.
+// ListAdaptiveMtFilesResponse: The response for listing all AdaptiveMt files
+// under a given dataset.
 type ListAdaptiveMtFilesResponse struct {
 	// AdaptiveMtFiles: Output only. The Adaptive MT files.
 	AdaptiveMtFiles []*AdaptiveMtFile `json:"adaptiveMtFiles,omitempty"`
-
-	// NextPageToken: Optional. A token to retrieve a page of results. Pass
-	// this value in the ListAdaptiveMtFilesRequest.page_token field in the
-	// subsequent call to `ListAdaptiveMtFiles` method to retrieve the next
-	// page of results.
+	// NextPageToken: Optional. A token to retrieve a page of results. Pass this
+	// value in the ListAdaptiveMtFilesRequest.page_token field in the subsequent
+	// call to `ListAdaptiveMtFiles` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AdaptiveMtFiles") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdaptiveMtFiles") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdaptiveMtFiles") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdaptiveMtFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptiveMtFilesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdaptiveMtSentencesResponse: List AdaptiveMt sentences response.
 type ListAdaptiveMtSentencesResponse struct {
 	// AdaptiveMtSentences: Output only. The list of AdaptiveMtSentences.
 	AdaptiveMtSentences []*AdaptiveMtSentence `json:"adaptiveMtSentences,omitempty"`
-
 	// NextPageToken: Optional.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AdaptiveMtSentences")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdaptiveMtSentences") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdaptiveMtSentences") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdaptiveMtSentences") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdaptiveMtSentencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptiveMtSentencesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDatasetsResponse: Response message for ListDatasets.
 type ListDatasetsResponse struct {
 	// Datasets: The datasets read.
 	Datasets []*Dataset `json:"datasets,omitempty"`
-
-	// NextPageToken: A token to retrieve next page of results. Pass this
-	// token to the page_token field in the ListDatasetsRequest to obtain
-	// the corresponding page.
+	// NextPageToken: A token to retrieve next page of results. Pass this token to
+	// the page_token field in the ListDatasetsRequest to obtain the corresponding
+	// page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Datasets") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Datasets") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Datasets") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDatasetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDatasetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListExamplesResponse: Response message for ListExamples.
 type ListExamplesResponse struct {
 	// Examples: The sentence pairs.
 	Examples []*Example `json:"examples,omitempty"`
-
-	// NextPageToken: A token to retrieve next page of results. Pass this
-	// token to the page_token field in the ListExamplesRequest to obtain
-	// the corresponding page.
+	// NextPageToken: A token to retrieve next page of results. Pass this token to
+	// the page_token field in the ListExamplesRequest to obtain the corresponding
+	// page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Examples") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Examples") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Examples") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListExamplesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListExamplesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGlossariesResponse: Response message for ListGlossaries.
 type ListGlossariesResponse struct {
 	// Glossaries: The list of glossaries for a project.
 	Glossaries []*Glossary `json:"glossaries,omitempty"`
-
-	// NextPageToken: A token to retrieve a page of results. Pass this value
-	// in the [ListGlossariesRequest.page_token] field in the subsequent
-	// call to `ListGlossaries` method to retrieve the next page of results.
+	// NextPageToken: A token to retrieve a page of results. Pass this value in the
+	// [ListGlossariesRequest.page_token] field in the subsequent call to
+	// `ListGlossaries` method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Glossaries") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Glossaries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListGlossariesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGlossariesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListGlossaryEntriesResponse: Response message for ListGlossaryEntries
 type ListGlossaryEntriesResponse struct {
 	// GlossaryEntries: Optional. The Glossary Entries
 	GlossaryEntries []*GlossaryEntry `json:"glossaryEntries,omitempty"`
-
-	// NextPageToken: Optional. A token to retrieve a page of results. Pass
-	// this value in the [ListGLossaryEntriesRequest.page_token] field in
-	// the subsequent calls.
+	// NextPageToken: Optional. A token to retrieve a page of results. Pass this
+	// value in the [ListGLossaryEntriesRequest.page_token] field in the subsequent
+	// calls.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "GlossaryEntries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GlossaryEntries") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlossaryEntries") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListGlossaryEntriesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGlossaryEntriesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListLocationsResponse: The response message for
-// Locations.ListLocations.
+// ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
-	// Locations: A list of locations that matches the specified filter in
-	// the request.
+	// Locations: A list of locations that matches the specified filter in the
+	// request.
 	Locations []*Location `json:"locations,omitempty"`
-
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListModelsResponse: Response message for ListModels.
 type ListModelsResponse struct {
 	// Models: The models read.
 	Models []*Model `json:"models,omitempty"`
-
-	// NextPageToken: A token to retrieve next page of results. Pass this
-	// token to the page_token field in the ListModelsRequest to obtain the
-	// corresponding page.
+	// NextPageToken: A token to retrieve next page of results. Pass this token to
+	// the page_token field in the ListModelsRequest to obtain the corresponding
+	// page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Models") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Models") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Models") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListModelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListModelsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListOperationsResponse: The response message for
-// Operations.ListOperations.
+// ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*Operation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
-	// DisplayName: The friendly name for this location, typically a nearby
-	// city name. For example, "Tokyo".
+	// DisplayName: The friendly name for this location, typically a nearby city
+	// name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Labels: Cross-service attributes for the location. For example
 	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// LocationId: The canonical id for this location. For example:
-	// "us-east1".
+	// LocationId: The canonical id for this location. For example: "us-east1".
 	LocationId string `json:"locationId,omitempty"`
-
-	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given location.
+	// Metadata: Service-specific metadata. For example the available capacity at
+	// the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: Resource name for the location, which may vary between
 	// implementations. For example:
 	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Model: A trained translation model.
 type Model struct {
-	// CreateTime: Output only. Timestamp when the model resource was
-	// created, which is also when the training started.
+	// CreateTime: Output only. Timestamp when the model resource was created,
+	// which is also when the training started.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Dataset: The dataset from which the model is trained, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dat
-	// aset_id}`
+	// `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id
+	// }`
 	Dataset string `json:"dataset,omitempty"`
-
-	// DisplayName: The name of the model to show in the interface. The name
-	// can be up to 32 characters long and can consist only of ASCII Latin
-	// letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+	// DisplayName: The name of the model to show in the interface. The name can be
+	// up to 32 characters long and can consist only of ASCII Latin letters A-Z and
+	// a-z, underscores (_), and ASCII digits 0-9.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: The resource name of the model, in form of
-	// `projects/{project-number-or-id}/locations/{location_id}/models/{model
-	// _id}`
+	// `projects/{project-number-or-id}/locations/{location_id}/models/{model_id}`
 	Name string `json:"name,omitempty"`
-
-	// SourceLanguageCode: Output only. The BCP-47 language code of the
-	// source language.
+	// SourceLanguageCode: Output only. The BCP-47 language code of the source
+	// language.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
-	// TargetLanguageCode: Output only. The BCP-47 language code of the
-	// target language.
+	// TargetLanguageCode: Output only. The BCP-47 language code of the target
+	// language.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
-
-	// TestExampleCount: Output only. Number of examples (sentence pairs)
-	// used to test the model.
+	// TestExampleCount: Output only. Number of examples (sentence pairs) used to
+	// test the model.
 	TestExampleCount int64 `json:"testExampleCount,omitempty"`
-
-	// TrainExampleCount: Output only. Number of examples (sentence pairs)
-	// used to train the model.
+	// TrainExampleCount: Output only. Number of examples (sentence pairs) used to
+	// train the model.
 	TrainExampleCount int64 `json:"trainExampleCount,omitempty"`
-
 	// UpdateTime: Output only. Timestamp when this model was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ValidateExampleCount: Output only. Number of examples (sentence
-	// pairs) used to validate the model.
+	// ValidateExampleCount: Output only. Number of examples (sentence pairs) used
+	// to validate the model.
 	ValidateExampleCount int64 `json:"validateExampleCount,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Model) MarshalJSON() ([]byte, error) {
 	type NoMethod Model
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Operation: This resource represents a long-running operation that is
-// the result of a network API call.
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
 type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // OutputConfig: Output configuration for BatchTranslateText request.
 type OutputConfig struct {
-	// GcsDestination: Google Cloud Storage destination for output content.
-	// For every single input file (for example, gs://a/b/c.[extension]), we
-	// generate at most 2 * n output files. (n is the # of
-	// target_language_codes in the BatchTranslateTextRequest). Output files
-	// (tsv) generated are compliant with RFC 4180 except that record
-	// delimiters are '\n' instead of '\r\n'. We don't provide any way to
-	// change record delimiters. While the input files are being processed,
-	// we write/update an index file 'index.csv' under 'output_uri_prefix'
-	// (for example, gs://translation-test/index.csv) The index file is
-	// generated/updated as new files are being translated. The format is:
+	// GcsDestination: Google Cloud Storage destination for output content. For
+	// every single input file (for example, gs://a/b/c.[extension]), we generate
+	// at most 2 * n output files. (n is the # of target_language_codes in the
+	// BatchTranslateTextRequest). Output files (tsv) generated are compliant with
+	// RFC 4180 except that record delimiters are '\n' instead of '\r\n'. We don't
+	// provide any way to change record delimiters. While the input files are being
+	// processed, we write/update an index file 'index.csv' under
+	// 'output_uri_prefix' (for example, gs://translation-test/index.csv) The index
+	// file is generated/updated as new files are being translated. The format is:
 	// input_file,target_language_code,translations_file,errors_file,
-	// glossary_translations_file,glossary_errors_file input_file is one
-	// file we matched using gcs_source.input_uri. target_language_code is
-	// provided in the request. translations_file contains the translations.
-	// (details provided below) errors_file contains the errors during
-	// processing of the file. (details below). Both translations_file and
-	// errors_file could be empty strings if we have no content to output.
-	// glossary_translations_file and glossary_errors_file are always empty
-	// strings if the input_file is tsv. They could also be empty if we have
-	// no content to output. Once a row is present in index.csv, the
-	// input/output matching never changes. Callers should also expect all
-	// the content in input_file are processed and ready to be consumed
+	// glossary_translations_file,glossary_errors_file input_file is one file we
+	// matched using gcs_source.input_uri. target_language_code is provided in the
+	// request. translations_file contains the translations. (details provided
+	// below) errors_file contains the errors during processing of the file.
+	// (details below). Both translations_file and errors_file could be empty
+	// strings if we have no content to output. glossary_translations_file and
+	// glossary_errors_file are always empty strings if the input_file is tsv. They
+	// could also be empty if we have no content to output. Once a row is present
+	// in index.csv, the input/output matching never changes. Callers should also
+	// expect all the content in input_file are processed and ready to be consumed
 	// (that is, no partial output file is written). Since index.csv will be
-	// keeping updated during the process, please make sure there is no
-	// custom retention policy applied on the output bucket that may avoid
-	// file updating.
-	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy)
-	// The format of translations_file (for target language code 'trg') is:
-	// `gs://translation_test/a_b_c_'trg'_translations.[extension]` If the
-	// input file extension is tsv, the output has the following columns:
-	// Column 1: ID of the request provided in the input, if it's not
-	// provided in the input, then the input row number is used (0-based).
-	// Column 2: source sentence. Column 3: translation without applying a
-	// glossary. Empty string if there is an error. Column 4 (only present
-	// if a glossary is provided in the request): translation after applying
-	// the glossary. Empty string if there is an error applying the
-	// glossary. Could be same string as column 3 if there is no glossary
-	// applied. If input file extension is a txt or html, the translation is
-	// directly written to the output file. If glossary is requested, a
-	// separate glossary_translations_file has format of
-	// `gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]`
-	// The format of errors file (for target language code 'trg') is:
-	// `gs://translation_test/a_b_c_'trg'_errors.[extension]` If the input
-	// file extension is tsv, errors_file contains the following: Column 1:
-	// ID of the request provided in the input, if it's not provided in the
-	// input, then the input row number is used (0-based). Column 2: source
-	// sentence. Column 3: Error detail for the translation. Could be empty.
+	// keeping updated during the process, please make sure there is no custom
+	// retention policy applied on the output bucket that may avoid file updating.
+	// (https://cloud.google.com/storage/docs/bucket-lock#retention-policy) The
+	// format of translations_file (for target language code 'trg') is:
+	// `gs://translation_test/a_b_c_'trg'_translations.[extension]` If the input
+	// file extension is tsv, the output has the following columns: Column 1: ID of
+	// the request provided in the input, if it's not provided in the input, then
+	// the input row number is used (0-based). Column 2: source sentence. Column 3:
+	// translation without applying a glossary. Empty string if there is an error.
 	// Column 4 (only present if a glossary is provided in the request):
-	// Error when applying the glossary. If the input file extension is txt
-	// or html, glossary_error_file will be generated that contains error
-	// details. glossary_error_file has format of
+	// translation after applying the glossary. Empty string if there is an error
+	// applying the glossary. Could be same string as column 3 if there is no
+	// glossary applied. If input file extension is a txt or html, the translation
+	// is directly written to the output file. If glossary is requested, a separate
+	// glossary_translations_file has format of
+	// `gs://translation_test/a_b_c_'trg'_glossary_translations.[extension]` The
+	// format of errors file (for target language code 'trg') is:
+	// `gs://translation_test/a_b_c_'trg'_errors.[extension]` If the input file
+	// extension is tsv, errors_file contains the following: Column 1: ID of the
+	// request provided in the input, if it's not provided in the input, then the
+	// input row number is used (0-based). Column 2: source sentence. Column 3:
+	// Error detail for the translation. Could be empty. Column 4 (only present if
+	// a glossary is provided in the request): Error when applying the glossary. If
+	// the input file extension is txt or html, glossary_error_file will be
+	// generated that contains error details. glossary_error_file has format of
 	// `gs://translation_test/a_b_c_'trg'_glossary_errors.[extension]`
 	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GcsDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GcsDestination") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Romanization: A single romanization response.
 type Romanization struct {
 	// DetectedLanguageCode: The ISO-639 language code of source text in the
-	// initial request, detected automatically, if no source language was
-	// passed within the initial request. If the source language was passed,
-	// auto-detection of the language does not occur and this field is
-	// empty.
+	// initial request, detected automatically, if no source language was passed
+	// within the initial request. If the source language was passed,
+	// auto-detection of the language does not occur and this field is empty.
 	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
-
-	// RomanizedText: Romanized text. If an error occurs during
-	// romanization, this field might be excluded from the response.
+	// RomanizedText: Romanized text. If an error occurs during romanization, this
+	// field might be excluded from the response.
 	RomanizedText string `json:"romanizedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DetectedLanguageCode") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DetectedLanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DetectedLanguageCode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DetectedLanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Romanization) MarshalJSON() ([]byte, error) {
 	type NoMethod Romanization
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RomanizeTextRequest: The request message for synchronous
-// romanization.
+// RomanizeTextRequest: The request message for synchronous romanization.
 type RomanizeTextRequest struct {
 	// Contents: Required. The content of the input in string format.
 	Contents []string `json:"contents,omitempty"`
-
-	// SourceLanguageCode: Optional. The ISO-639 language code of the input
-	// text if known, for example, "hi" or "zh". If the source language
-	// isn't specified, the API attempts to identify the source language
-	// automatically and returns the source language for each content in the
-	// response.
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input text if
+	// known, for example, "hi" or "zh". If the source language isn't specified,
+	// the API attempts to identify the source language automatically and returns
+	// the source language for each content in the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Contents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Contents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RomanizeTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RomanizeTextRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RomanizeTextResponse: The response message for synchronous
-// romanization.
+// RomanizeTextResponse: The response message for synchronous romanization.
 type RomanizeTextResponse struct {
-	// Romanizations: Text romanization responses. This field has the same
-	// length as `contents`.
+	// Romanizations: Text romanization responses. This field has the same length
+	// as `contents`.
 	Romanizations []*Romanization `json:"romanizations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Romanizations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Romanizations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Romanizations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RomanizeTextResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RomanizeTextResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SupportedLanguage: A single supported language response corresponds
-// to information related to one supported language.
+// SupportedLanguage: A single supported language response corresponds to
+// information related to one supported language.
 type SupportedLanguage struct {
-	// DisplayName: Human-readable name of the language localized in the
-	// display language specified in the request.
+	// DisplayName: Human-readable name of the language localized in the display
+	// language specified in the request.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// LanguageCode: Supported language code, generally consisting of its
-	// ISO 639-1 identifier, for example, 'en', 'ja'. In certain cases,
-	// ISO-639 codes including language and region identifiers are returned
-	// (for example, 'zh-TW' and 'zh-CN').
+	// LanguageCode: Supported language code, generally consisting of its ISO 639-1
+	// identifier, for example, 'en', 'ja'. In certain cases, ISO-639 codes
+	// including language and region identifiers are returned (for example, 'zh-TW'
+	// and 'zh-CN').
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// SupportSource: Can be used as a source language.
 	SupportSource bool `json:"supportSource,omitempty"`
-
 	// SupportTarget: Can be used as a target language.
 	SupportTarget bool `json:"supportTarget,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SupportedLanguage) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedLanguage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SupportedLanguages: The response message for discovering supported
 // languages.
 type SupportedLanguages struct {
-	// Languages: A list of supported language responses. This list contains
-	// an entry for each language the Translation API supports.
+	// Languages: A list of supported language responses. This list contains an
+	// entry for each language the Translation API supports.
 	Languages []*SupportedLanguage `json:"languages,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Languages") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Languages") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Languages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SupportedLanguages) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedLanguages
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateDocumentRequest: A document translation request.
 type TranslateDocumentRequest struct {
-	// CustomizedAttribution: Optional. This flag is to support user
-	// customized attribution. If not provided, the default is `Machine
-	// Translated by Google`. Customized attribution should follow rules in
+	// CustomizedAttribution: Optional. This flag is to support user customized
+	// attribution. If not provided, the default is `Machine Translated by Google`.
+	// Customized attribution should follow rules in
 	// https://cloud.google.com/translate/attribution#attribution_and_logos
 	CustomizedAttribution string `json:"customizedAttribution,omitempty"`
-
 	// DocumentInputConfig: Required. Input configurations.
 	DocumentInputConfig *DocumentInputConfig `json:"documentInputConfig,omitempty"`
-
-	// DocumentOutputConfig: Optional. Output configurations. Defines if the
-	// output file should be stored within Cloud Storage as well as the
-	// desired output format. If not provided the translated file will only
-	// be returned through a byte-stream and its output mime type will be
-	// the same as the input file's mime type.
+	// DocumentOutputConfig: Optional. Output configurations. Defines if the output
+	// file should be stored within Cloud Storage as well as the desired output
+	// format. If not provided the translated file will only be returned through a
+	// byte-stream and its output mime type will be the same as the input file's
+	// mime type.
 	DocumentOutputConfig *DocumentOutputConfig `json:"documentOutputConfig,omitempty"`
-
-	// EnableRotationCorrection: Optional. If true, enable auto rotation
-	// correction in DVS.
+	// EnableRotationCorrection: Optional. If true, enable auto rotation correction
+	// in DVS.
 	EnableRotationCorrection bool `json:"enableRotationCorrection,omitempty"`
-
-	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal
-	// server to remove the shadow text on background image for native pdf
-	// translation. Shadow removal feature can only be enabled when
+	// EnableShadowRemovalNativePdf: Optional. If true, use the text removal server
+	// to remove the shadow text on background image for native pdf translation.
+	// Shadow removal feature can only be enabled when
 	// is_translate_native_pdf_only: false && pdf_native_only: false
 	EnableShadowRemovalNativePdf bool `json:"enableShadowRemovalNativePdf,omitempty"`
-
-	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
-	// be within the same region (have the same location-id) as the model,
-	// otherwise an INVALID_ARGUMENT (400) error is returned.
+	// GlossaryConfig: Optional. Glossary to be applied. The glossary must be
+	// within the same region (have the same location-id) as the model, otherwise
+	// an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
-
-	// IsTranslateNativePdfOnly: Optional. is_translate_native_pdf_only
-	// field for external customers. If true, the page limit of online
-	// native pdf translation is 300 and only native pdf pages will be
-	// translated.
+	// IsTranslateNativePdfOnly: Optional. is_translate_native_pdf_only field for
+	// external customers. If true, the page limit of online native pdf translation
+	// is 300 and only native pdf pages will be translated.
 	IsTranslateNativePdfOnly bool `json:"isTranslateNativePdfOnly,omitempty"`
-
-	// Labels: Optional. The labels with user-defined metadata for the
-	// request. Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. Label values are optional. Label keys must start with a
-	// letter. See https://cloud.google.com/translate/docs/advanced/labels
-	// for more information.
+	// Labels: Optional. The labels with user-defined metadata for the request.
+	// Label keys and values can be no longer than 63 characters (Unicode
+	// codepoints), can only contain lowercase letters, numeric characters,
+	// underscores and dashes. International characters are allowed. Label values
+	// are optional. Label keys must start with a letter. See
+	// https://cloud.google.com/translate/docs/advanced/labels for more
+	// information.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Model: Optional. The `model` type requested for this translation. The
-	// format depends on model type: - AutoML Translation models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-	// -id}` - General (built-in) models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`, If not provided, the default Google model (NMT) will be used
-	// for translation.
+	// Model: Optional. The `model` type requested for this translation. The format
+	// depends on model type: - AutoML Translation models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+	// - General (built-in) models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+	//  If not provided, the default Google model (NMT) will be used for
+	// translation.
 	Model string `json:"model,omitempty"`
-
 	// SourceLanguageCode: Optional. The ISO-639 language code of the input
-	// document if known, for example, "en-US" or "sr-Latn". Supported
-	// language codes are listed in Language Support. If the source language
-	// isn't specified, the API attempts to identify the source language
-	// automatically and returns the source language within the response.
-	// Source language must be specified if the request contains a glossary
-	// or a custom model.
+	// document if known, for example, "en-US" or "sr-Latn". Supported language
+	// codes are listed in Language Support. If the source language isn't
+	// specified, the API attempts to identify the source language automatically
+	// and returns the source language within the response. Source language must be
+	// specified if the request contains a glossary or a custom model.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// TargetLanguageCode: Required. The ISO-639 language code to use for
-	// translation of the input document, set to one of the language codes
-	// listed in Language Support.
+	// translation of the input document, set to one of the language codes listed
+	// in Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CustomizedAttribution") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomizedAttribution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "CustomizedAttribution") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TranslateDocumentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateDocumentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateDocumentResponse: A translated document response message.
 type TranslateDocumentResponse struct {
 	// DocumentTranslation: Translated document.
 	DocumentTranslation *DocumentTranslation `json:"documentTranslation,omitempty"`
-
 	// GlossaryConfig: The `glossary_config` used for this translation.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
-
-	// GlossaryDocumentTranslation: The document's translation output if a
-	// glossary is provided in the request. This can be the same as
-	// [TranslateDocumentResponse.document_translation] if no glossary terms
-	// apply.
+	// GlossaryDocumentTranslation: The document's translation output if a glossary
+	// is provided in the request. This can be the same as
+	// [TranslateDocumentResponse.document_translation] if no glossary terms apply.
 	GlossaryDocumentTranslation *DocumentTranslation `json:"glossaryDocumentTranslation,omitempty"`
-
-	// Model: Only present when 'model' is present in the request. 'model'
-	// is normalized to have a project number. For example: If the 'model'
-	// field in TranslateDocumentRequest is:
-	// `projects/{project-id}/locations/{location-id}/models/general/nmt`
-	// then `model` here would be normalized to
-	// `projects/{project-number}/locations/{location-id}/models/general/nmt`
-	// .
+	// Model: Only present when 'model' is present in the request. 'model' is
+	// normalized to have a project number. For example: If the 'model' field in
+	// TranslateDocumentRequest is:
+	// `projects/{project-id}/locations/{location-id}/models/general/nmt` then
+	// `model` here would be normalized to
+	// `projects/{project-number}/locations/{location-id}/models/general/nmt`.
 	Model string `json:"model,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "DocumentTranslation")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DocumentTranslation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DocumentTranslation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DocumentTranslation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TranslateDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateDocumentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TranslateTextGlossaryConfig: Configures which glossary is used for a
-// specific target language and defines options for applying that
-// glossary.
+// specific target language and defines options for applying that glossary.
 type TranslateTextGlossaryConfig struct {
-	// Glossary: Required. The `glossary` to be applied for this
-	// translation. The format depends on the glossary: - User-provided
-	// custom glossary:
-	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{g
-	// lossary-id}`
+	// Glossary: Required. The `glossary` to be applied for this translation. The
+	// format depends on the glossary: - User-provided custom glossary:
+	// `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary
+	// -id}`
 	Glossary string `json:"glossary,omitempty"`
-
-	// IgnoreCase: Optional. Indicates match is case insensitive. The
-	// default value is `false` if missing.
+	// IgnoreCase: Optional. Indicates match is case insensitive. The default value
+	// is `false` if missing.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Glossary") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Glossary") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Glossary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TranslateTextGlossaryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextGlossaryConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TranslateTextRequest: The request message for synchronous
-// translation.
+// TranslateTextRequest: The request message for synchronous translation.
 type TranslateTextRequest struct {
-	// Contents: Required. The content of the input in string format. We
-	// recommend the total content be less than 30,000 codepoints. The max
-	// length of this field is 1024. Use BatchTranslateText for larger text.
+	// Contents: Required. The content of the input in string format. We recommend
+	// the total content be less than 30,000 codepoints. The max length of this
+	// field is 1024. Use BatchTranslateText for larger text.
 	Contents []string `json:"contents,omitempty"`
-
-	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
-	// be within the same region (have the same location-id) as the model,
-	// otherwise an INVALID_ARGUMENT (400) error is returned.
+	// GlossaryConfig: Optional. Glossary to be applied. The glossary must be
+	// within the same region (have the same location-id) as the model, otherwise
+	// an INVALID_ARGUMENT (400) error is returned.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
-
-	// Labels: Optional. The labels with user-defined metadata for the
-	// request. Label keys and values can be no longer than 63 characters
-	// (Unicode codepoints), can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. Label values are optional. Label keys must start with a
-	// letter. See https://cloud.google.com/translate/docs/advanced/labels
-	// for more information.
+	// Labels: Optional. The labels with user-defined metadata for the request.
+	// Label keys and values can be no longer than 63 characters (Unicode
+	// codepoints), can only contain lowercase letters, numeric characters,
+	// underscores and dashes. International characters are allowed. Label values
+	// are optional. Label keys must start with a letter. See
+	// https://cloud.google.com/translate/docs/advanced/labels for more
+	// information.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// MimeType: Optional. The format of the source text, for example,
-	// "text/html", "text/plain". If left blank, the MIME type defaults to
-	// "text/html".
+	// MimeType: Optional. The format of the source text, for example, "text/html",
+	// "text/plain". If left blank, the MIME type defaults to "text/html".
 	MimeType string `json:"mimeType,omitempty"`
-
-	// Model: Optional. The `model` type requested for this translation. The
-	// format depends on model type: - AutoML Translation models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-	// -id}` - General (built-in) models:
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`, For global (non-regionalized) requests, use `location-id`
-	// `global`. For example,
-	// `projects/{project-number-or-id}/locations/global/models/general/nmt`.
-	//  If not provided, the default Google model (NMT) will be used
+	// Model: Optional. The `model` type requested for this translation. The format
+	// depends on model type: - AutoML Translation models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+	// - General (built-in) models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+	//  For global (non-regionalized) requests, use `location-id` `global`. For
+	// example,
+	// `projects/{project-number-or-id}/locations/global/models/general/nmt`. If
+	// not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
-
-	// SourceLanguageCode: Optional. The ISO-639 language code of the input
-	// text if known, for example, "en-US" or "sr-Latn". Supported language
-	// codes are listed in Language Support. If the source language isn't
-	// specified, the API attempts to identify the source language
-	// automatically and returns the source language within the response.
+	// SourceLanguageCode: Optional. The ISO-639 language code of the input text if
+	// known, for example, "en-US" or "sr-Latn". Supported language codes are
+	// listed in Language Support. If the source language isn't specified, the API
+	// attempts to identify the source language automatically and returns the
+	// source language within the response.
 	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
-
 	// TargetLanguageCode: Required. The ISO-639 language code to use for
-	// translation of the input text, set to one of the language codes
-	// listed in Language Support.
+	// translation of the input text, set to one of the language codes listed in
+	// Language Support.
 	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
-
 	// TransliterationConfig: Optional. Transliteration to be applied.
 	TransliterationConfig *TransliterationConfig `json:"transliterationConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Contents") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Contents") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TranslateTextRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type TranslateTextResponse struct {
-	// GlossaryTranslations: Text translation responses if a glossary is
-	// provided in the request. This can be the same as `translations` if no
-	// terms apply. This field has the same length as `contents`.
-	GlossaryTranslations []*Translation `json:"glossaryTranslations,omitempty"`
-
-	// Translations: Text translation responses with no glossary applied.
+	// GlossaryTranslations: Text translation responses if a glossary is provided
+	// in the request. This can be the same as `translations` if no terms apply.
 	// This field has the same length as `contents`.
+	GlossaryTranslations []*Translation `json:"glossaryTranslations,omitempty"`
+	// Translations: Text translation responses with no glossary applied. This
+	// field has the same length as `contents`.
 	Translations []*Translation `json:"translations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "GlossaryTranslations") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "GlossaryTranslations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GlossaryTranslations") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GlossaryTranslations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TranslateTextResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TranslateTextResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Translation: A single translation response.
 type Translation struct {
 	// DetectedLanguageCode: The ISO-639 language code of source text in the
-	// initial request, detected automatically, if no source language was
-	// passed within the initial request. If the source language was passed,
-	// auto-detection of the language does not occur and this field is
-	// empty.
+	// initial request, detected automatically, if no source language was passed
+	// within the initial request. If the source language was passed,
+	// auto-detection of the language does not occur and this field is empty.
 	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
-
 	// GlossaryConfig: The `glossary_config` used for this translation.
 	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
-
-	// Model: Only present when `model` is present in the request. `model`
-	// here is normalized to have project number. For example: If the
-	// `model` requested in TranslationTextRequest is
-	// `projects/{project-id}/locations/{location-id}/models/general/nmt`
-	// then `model` here would be normalized to
-	// `projects/{project-number}/locations/{location-id}/models/general/nmt`
-	// .
+	// Model: Only present when `model` is present in the request. `model` here is
+	// normalized to have project number. For example: If the `model` requested in
+	// TranslationTextRequest is
+	// `projects/{project-id}/locations/{location-id}/models/general/nmt` then
+	// `model` here would be normalized to
+	// `projects/{project-number}/locations/{location-id}/models/general/nmt`.
 	Model string `json:"model,omitempty"`
-
-	// TranslatedText: Text translated into the target language. If an error
-	// occurs during translation, this field might be excluded from the
-	// response.
+	// TranslatedText: Text translated into the target language. If an error occurs
+	// during translation, this field might be excluded from the response.
 	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "DetectedLanguageCode") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DetectedLanguageCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DetectedLanguageCode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DetectedLanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Translation) MarshalJSON() ([]byte, error) {
 	type NoMethod Translation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TransliterationConfig: Configures transliteration feature on top of
@@ -3171,65 +2529,47 @@ type TransliterationConfig struct {
 	// EnableTransliteration: If true, source text in romanized form can be
 	// translated to the target language.
 	EnableTransliteration bool `json:"enableTransliteration,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableTransliteration") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EnableTransliteration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "EnableTransliteration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TransliterationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TransliterationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// WaitOperationRequest: The request message for
-// Operations.WaitOperation.
+// WaitOperationRequest: The request message for Operations.WaitOperation.
 type WaitOperationRequest struct {
-	// Timeout: The maximum duration to wait before timing out. If left
-	// blank, the wait will be at most the time permitted by the underlying
-	// HTTP/RPC protocol. If RPC context deadline is also specified, the
-	// shorter one will be used.
+	// Timeout: The maximum duration to wait before timing out. If left blank, the
+	// wait will be at most the time permitted by the underlying HTTP/RPC protocol.
+	// If RPC context deadline is also specified, the shorter one will be used.
 	Timeout string `json:"timeout,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Timeout") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Timeout") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Timeout") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Timeout") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *WaitOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod WaitOperationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "translate.projects.detectLanguage":
 
 type ProjectsDetectLanguageCall struct {
 	s                     *Service
@@ -3242,14 +2582,13 @@ type ProjectsDetectLanguageCall struct {
 
 // DetectLanguage: Detects the language of text within a request.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format:
-//     `projects/{project-number-or-id}/locations/{location-id}` or
-//     `projects/{project-number-or-id}`. For global calls, use
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}/locations/{location-id}`
+//     or `projects/{project-number-or-id}`. For global calls, use
 //     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Only models within the same
-//     region (has same location-id) can be used. Otherwise an
-//     INVALID_ARGUMENT (400) error is returned.
+//     `projects/{project-number-or-id}`. Only models within the same region (has
+//     same location-id) can be used. Otherwise an INVALID_ARGUMENT (400) error
+//     is returned.
 func (r *ProjectsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsDetectLanguageCall {
 	c := &ProjectsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3258,23 +2597,21 @@ func (r *ProjectsService) DetectLanguage(parent string, detectlanguagerequest *D
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDetectLanguageCall) Fields(s ...googleapi.Field) *ProjectsDetectLanguageCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDetectLanguageCall) Context(ctx context.Context) *ProjectsDetectLanguageCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDetectLanguageCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3283,18 +2620,12 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 }
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.detectlanguagerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:detectLanguage")
@@ -3311,12 +2642,11 @@ func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "translate.projects.detectLanguage" call.
-// Exactly one of *DetectLanguageResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DetectLanguageResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DetectLanguageResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLanguageResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3347,39 +2677,7 @@ func (c *ProjectsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLa
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Detects the language of text within a request.",
-	//   "flatPath": "v3/projects/{projectsId}:detectLanguage",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.detectLanguage",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Only models within the same region (has same location-id) can be used. Otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:detectLanguage",
-	//   "request": {
-	//     "$ref": "DetectLanguageRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DetectLanguageResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.getSupportedLanguages":
 
 type ProjectsGetSupportedLanguagesCall struct {
 	s            *Service
@@ -3393,71 +2691,65 @@ type ProjectsGetSupportedLanguagesCall struct {
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format: `projects/{project-number-or-id}` or
-//     `projects/{project-number-or-id}/locations/{location-id}`. For
-//     global calls, use
-//     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Non-global location is required
-//     for AutoML models. Only models within the same region (have same
-//     location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
-//     is returned.
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For global
+//     calls, use `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required for
+//     AutoML models. Only models within the same region (have same location-id)
+//     can be used, otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) GetSupportedLanguages(parent string) *ProjectsGetSupportedLanguagesCall {
 	c := &ProjectsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// DisplayLanguageCode sets the optional parameter
-// "displayLanguageCode": The language to use to return localized, human
-// readable names of supported languages. If missing, then display names
-// are not returned in a response.
+// DisplayLanguageCode sets the optional parameter "displayLanguageCode": The
+// language to use to return localized, human readable names of supported
+// languages. If missing, then display names are not returned in a response.
 func (c *ProjectsGetSupportedLanguagesCall) DisplayLanguageCode(displayLanguageCode string) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("displayLanguageCode", displayLanguageCode)
 	return c
 }
 
-// Model sets the optional parameter "model": Get supported languages of
-// this model. The format depends on model type: - AutoML Translation
-// models:
-// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-// -id}` - General (built-in) models:
-// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/nmt`, Returns languages supported by the specified model. If
-// missing, we get supported languages of Google general NMT model.
+// Model sets the optional parameter "model": Get supported languages of this
+// model. The format depends on model type: - AutoML Translation models:
+// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+// - General (built-in) models:
+// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+//
+//	Returns languages supported by the specified model. If missing, we get
+//
+// supported languages of Google general NMT model.
 func (c *ProjectsGetSupportedLanguagesCall) Model(model string) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsGetSupportedLanguagesCall) Fields(s ...googleapi.Field) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsGetSupportedLanguagesCall) IfNoneMatch(entityTag string) *ProjectsGetSupportedLanguagesCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsGetSupportedLanguagesCall) Context(ctx context.Context) *ProjectsGetSupportedLanguagesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3466,12 +2758,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 }
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3492,12 +2779,11 @@ func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "translate.projects.getSupportedLanguages" call.
-// Exactly one of *SupportedLanguages or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SupportedLanguages.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SupportedLanguages.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*SupportedLanguages, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3528,46 +2814,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of supported languages for translation.",
-	//   "flatPath": "v3/projects/{projectsId}/supportedLanguages",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.getSupportedLanguages",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "displayLanguageCode": {
-	//       "description": "Optional. The language to use to return localized, human readable names of supported languages. If missing, then display names are not returned in a response.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "model": {
-	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, Returns languages supported by the specified model. If missing, we get supported languages of Google general NMT model.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for AutoML models. Only models within the same region (have same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/supportedLanguages",
-	//   "response": {
-	//     "$ref": "SupportedLanguages"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.romanizeText":
 
 type ProjectsRomanizeTextCall struct {
 	s                   *Service
@@ -3578,13 +2825,12 @@ type ProjectsRomanizeTextCall struct {
 	header_             http.Header
 }
 
-// RomanizeText: Romanize input text written in non-Latin scripts to
-// Latin text.
+// RomanizeText: Romanize input text written in non-Latin scripts to Latin
+// text.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format:
-//     `projects/{project-number-or-id}/locations/{location-id}` or
-//     `projects/{project-number-or-id}`. For global calls, use
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}/locations/{location-id}`
+//     or `projects/{project-number-or-id}`. For global calls, use
 //     `projects/{project-number-or-id}/locations/global` or
 //     `projects/{project-number-or-id}`.
 func (r *ProjectsService) RomanizeText(parent string, romanizetextrequest *RomanizeTextRequest) *ProjectsRomanizeTextCall {
@@ -3595,23 +2841,21 @@ func (r *ProjectsService) RomanizeText(parent string, romanizetextrequest *Roman
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsRomanizeTextCall) Fields(s ...googleapi.Field) *ProjectsRomanizeTextCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsRomanizeTextCall) Context(ctx context.Context) *ProjectsRomanizeTextCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsRomanizeTextCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3620,18 +2864,12 @@ func (c *ProjectsRomanizeTextCall) Header() http.Header {
 }
 
 func (c *ProjectsRomanizeTextCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.romanizetextrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:romanizeText")
@@ -3648,12 +2886,11 @@ func (c *ProjectsRomanizeTextCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "translate.projects.romanizeText" call.
-// Exactly one of *RomanizeTextResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *RomanizeTextResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RomanizeTextResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTextResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3684,39 +2921,7 @@ func (c *ProjectsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Romanize input text written in non-Latin scripts to Latin text.",
-	//   "flatPath": "v3/projects/{projectsId}:romanizeText",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.romanizeText",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:romanizeText",
-	//   "request": {
-	//     "$ref": "RomanizeTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RomanizeTextResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.translateText":
 
 type ProjectsTranslateTextCall struct {
 	s                    *Service
@@ -3729,15 +2934,14 @@ type ProjectsTranslateTextCall struct {
 
 // TranslateText: Translates input text and returns translated text.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format: `projects/{project-number-or-id}` or
-//     `projects/{project-number-or-id}/locations/{location-id}`. For
-//     global calls, use
-//     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Non-global location is required
-//     for requests using AutoML models or custom glossaries. Models and
-//     glossaries must be within the same region (have same location-id),
-//     otherwise an INVALID_ARGUMENT (400) error is returned.
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For global
+//     calls, use `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required for
+//     requests using AutoML models or custom glossaries. Models and glossaries
+//     must be within the same region (have same location-id), otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsTranslateTextCall {
 	c := &ProjectsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3746,23 +2950,21 @@ func (r *ProjectsService) TranslateText(parent string, translatetextrequest *Tra
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTranslateTextCall) Fields(s ...googleapi.Field) *ProjectsTranslateTextCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTranslateTextCall) Context(ctx context.Context) *ProjectsTranslateTextCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTranslateTextCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3771,18 +2973,12 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 }
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.translatetextrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:translateText")
@@ -3799,12 +2995,11 @@ func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "translate.projects.translateText" call.
-// Exactly one of *TranslateTextResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *TranslateTextResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TranslateTextResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*TranslateTextResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3835,39 +3030,7 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Translates input text and returns translated text.",
-	//   "flatPath": "v3/projects/{projectsId}:translateText",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.translateText",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for requests using AutoML models or custom glossaries. Models and glossaries must be within the same region (have same location-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:translateText",
-	//   "request": {
-	//     "$ref": "TranslateTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TranslateTextResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtTranslate":
 
 type ProjectsLocationsAdaptiveMtTranslateCall struct {
 	s                          *Service
@@ -3890,23 +3053,21 @@ func (r *ProjectsLocationsService) AdaptiveMtTranslate(parent string, adaptivemt
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtTranslateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtTranslateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtTranslateCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtTranslateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtTranslateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3915,18 +3076,12 @@ func (c *ProjectsLocationsAdaptiveMtTranslateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsAdaptiveMtTranslateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adaptivemttranslaterequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:adaptiveMtTranslate")
@@ -3943,12 +3098,11 @@ func (c *ProjectsLocationsAdaptiveMtTranslateCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtTranslate" call.
-// Exactly one of *AdaptiveMtTranslateResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *AdaptiveMtTranslateResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *AdaptiveMtTranslateResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtTranslateCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtTranslateResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3979,39 +3133,7 @@ func (c *ProjectsLocationsAdaptiveMtTranslateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Translate text using Adaptive MT.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:adaptiveMtTranslate",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.adaptiveMtTranslate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Location to make a regional call. Format: `projects/{project-number-or-id}/locations/{location-id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:adaptiveMtTranslate",
-	//   "request": {
-	//     "$ref": "AdaptiveMtTranslateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "AdaptiveMtTranslateResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.batchTranslateDocument":
 
 type ProjectsLocationsBatchTranslateDocumentCall struct {
 	s                             *Service
@@ -4023,19 +3145,17 @@ type ProjectsLocationsBatchTranslateDocumentCall struct {
 }
 
 // BatchTranslateDocument: Translates a large volume of document in
-// asynchronous batch mode. This function provides real-time output as
-// the inputs are being processed. If caller cancels a request, the
-// partial results (for an input file, it's all or nothing) may still be
-// available on the specified output location. This call returns
-// immediately and you can use google.longrunning.Operation.name to poll
-// the status of the call.
+// asynchronous batch mode. This function provides real-time output as the
+// inputs are being processed. If caller cancels a request, the partial results
+// (for an input file, it's all or nothing) may still be available on the
+// specified output location. This call returns immediately and you can use
+// google.longrunning.Operation.name to poll the status of the call.
 //
 //   - parent: Location to make a regional call. Format:
-//     `projects/{project-number-or-id}/locations/{location-id}`. The
-//     `global` location is not supported for batch translation. Only
-//     AutoML Translation models or glossaries within the same region
-//     (have the same location-id) can be used, otherwise an
-//     INVALID_ARGUMENT (400) error is returned.
+//     `projects/{project-number-or-id}/locations/{location-id}`. The `global`
+//     location is not supported for batch translation. Only AutoML Translation
+//     models or glossaries within the same region (have the same location-id)
+//     can be used, otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateDocument(parent string, batchtranslatedocumentrequest *BatchTranslateDocumentRequest) *ProjectsLocationsBatchTranslateDocumentCall {
 	c := &ProjectsLocationsBatchTranslateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4044,23 +3164,21 @@ func (r *ProjectsLocationsService) BatchTranslateDocument(parent string, batchtr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsBatchTranslateDocumentCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchTranslateDocumentCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsBatchTranslateDocumentCall) Context(ctx context.Context) *ProjectsLocationsBatchTranslateDocumentCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsBatchTranslateDocumentCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4069,18 +3187,12 @@ func (c *ProjectsLocationsBatchTranslateDocumentCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsBatchTranslateDocumentCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchtranslatedocumentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:batchTranslateDocument")
@@ -4097,12 +3209,10 @@ func (c *ProjectsLocationsBatchTranslateDocumentCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "translate.projects.locations.batchTranslateDocument" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsBatchTranslateDocumentCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4133,38 +3243,7 @@ func (c *ProjectsLocationsBatchTranslateDocumentCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Translates a large volume of document in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:batchTranslateDocument",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.batchTranslateDocument",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Location to make a regional call. Format: `projects/{project-number-or-id}/locations/{location-id}`. The `global` location is not supported for batch translation. Only AutoML Translation models or glossaries within the same region (have the same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:batchTranslateDocument",
-	//   "request": {
-	//     "$ref": "BatchTranslateDocumentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.batchTranslateText":
 
 type ProjectsLocationsBatchTranslateTextCall struct {
 	s                         *Service
@@ -4175,20 +3254,18 @@ type ProjectsLocationsBatchTranslateTextCall struct {
 	header_                   http.Header
 }
 
-// BatchTranslateText: Translates a large volume of text in asynchronous
-// batch mode. This function provides real-time output as the inputs are
-// being processed. If caller cancels a request, the partial results
-// (for an input file, it's all or nothing) may still be available on
-// the specified output location. This call returns immediately and you
-// can use google.longrunning.Operation.name to poll the status of the
-// call.
+// BatchTranslateText: Translates a large volume of text in asynchronous batch
+// mode. This function provides real-time output as the inputs are being
+// processed. If caller cancels a request, the partial results (for an input
+// file, it's all or nothing) may still be available on the specified output
+// location. This call returns immediately and you can use
+// google.longrunning.Operation.name to poll the status of the call.
 //
-//   - parent: Location to make a call. Must refer to a caller's project.
-//     Format: `projects/{project-number-or-id}/locations/{location-id}`.
-//     The `global` location is not supported for batch translation. Only
-//     AutoML Translation models or glossaries within the same region
-//     (have the same location-id) can be used, otherwise an
-//     INVALID_ARGUMENT (400) error is returned.
+//   - parent: Location to make a call. Must refer to a caller's project. Format:
+//     `projects/{project-number-or-id}/locations/{location-id}`. The `global`
+//     location is not supported for batch translation. Only AutoML Translation
+//     models or glossaries within the same region (have the same location-id)
+//     can be used, otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtranslatetextrequest *BatchTranslateTextRequest) *ProjectsLocationsBatchTranslateTextCall {
 	c := &ProjectsLocationsBatchTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4197,23 +3274,21 @@ func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtransl
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsBatchTranslateTextCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchTranslateTextCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsBatchTranslateTextCall) Context(ctx context.Context) *ProjectsLocationsBatchTranslateTextCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4222,18 +3297,12 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchtranslatetextrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:batchTranslateText")
@@ -4250,12 +3319,10 @@ func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "translate.projects.locations.batchTranslateText" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4286,38 +3353,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Translates a large volume of text in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:batchTranslateText",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.batchTranslateText",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}`. The `global` location is not supported for batch translation. Only AutoML Translation models or glossaries within the same region (have the same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:batchTranslateText",
-	//   "request": {
-	//     "$ref": "BatchTranslateTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.detectLanguage":
 
 type ProjectsLocationsDetectLanguageCall struct {
 	s                     *Service
@@ -4330,14 +3366,13 @@ type ProjectsLocationsDetectLanguageCall struct {
 
 // DetectLanguage: Detects the language of text within a request.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format:
-//     `projects/{project-number-or-id}/locations/{location-id}` or
-//     `projects/{project-number-or-id}`. For global calls, use
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}/locations/{location-id}`
+//     or `projects/{project-number-or-id}`. For global calls, use
 //     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Only models within the same
-//     region (has same location-id) can be used. Otherwise an
-//     INVALID_ARGUMENT (400) error is returned.
+//     `projects/{project-number-or-id}`. Only models within the same region (has
+//     same location-id) can be used. Otherwise an INVALID_ARGUMENT (400) error
+//     is returned.
 func (r *ProjectsLocationsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsLocationsDetectLanguageCall {
 	c := &ProjectsLocationsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4346,23 +3381,21 @@ func (r *ProjectsLocationsService) DetectLanguage(parent string, detectlanguager
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDetectLanguageCall) Fields(s ...googleapi.Field) *ProjectsLocationsDetectLanguageCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDetectLanguageCall) Context(ctx context.Context) *ProjectsLocationsDetectLanguageCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4371,18 +3404,12 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.detectlanguagerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:detectLanguage")
@@ -4399,12 +3426,11 @@ func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "translate.projects.locations.detectLanguage" call.
-// Exactly one of *DetectLanguageResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DetectLanguageResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *DetectLanguageResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (*DetectLanguageResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4435,39 +3461,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Detects the language of text within a request.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:detectLanguage",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.detectLanguage",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Only models within the same region (has same location-id) can be used. Otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:detectLanguage",
-	//   "request": {
-	//     "$ref": "DetectLanguageRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DetectLanguageResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
 	s            *Service
@@ -4488,33 +3482,29 @@ func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4523,12 +3513,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4549,12 +3534,10 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "translate.projects.locations.get" call.
-// Exactly one of *Location or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Location.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4585,36 +3568,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about a location.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for the location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Location"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.getSupportedLanguages":
 
 type ProjectsLocationsGetSupportedLanguagesCall struct {
 	s            *Service
@@ -4628,71 +3582,65 @@ type ProjectsLocationsGetSupportedLanguagesCall struct {
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format: `projects/{project-number-or-id}` or
-//     `projects/{project-number-or-id}/locations/{location-id}`. For
-//     global calls, use
-//     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Non-global location is required
-//     for AutoML models. Only models within the same region (have same
-//     location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
-//     is returned.
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For global
+//     calls, use `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required for
+//     AutoML models. Only models within the same region (have same location-id)
+//     can be used, otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) GetSupportedLanguages(parent string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c := &ProjectsLocationsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// DisplayLanguageCode sets the optional parameter
-// "displayLanguageCode": The language to use to return localized, human
-// readable names of supported languages. If missing, then display names
-// are not returned in a response.
+// DisplayLanguageCode sets the optional parameter "displayLanguageCode": The
+// language to use to return localized, human readable names of supported
+// languages. If missing, then display names are not returned in a response.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) DisplayLanguageCode(displayLanguageCode string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("displayLanguageCode", displayLanguageCode)
 	return c
 }
 
-// Model sets the optional parameter "model": Get supported languages of
-// this model. The format depends on model type: - AutoML Translation
-// models:
-// `projects/{project-number-or-id}/locations/{location-id}/models/{model
-// -id}` - General (built-in) models:
-// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/nmt`, Returns languages supported by the specified model. If
-// missing, we get supported languages of Google general NMT model.
+// Model sets the optional parameter "model": Get supported languages of this
+// model. The format depends on model type: - AutoML Translation models:
+// `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}`
+// - General (built-in) models:
+// `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`,
+//
+//	Returns languages supported by the specified model. If missing, we get
+//
+// supported languages of Google general NMT model.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Model(model string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Context(ctx context.Context) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4701,12 +3649,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4727,12 +3670,11 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "translate.projects.locations.getSupportedLanguages" call.
-// Exactly one of *SupportedLanguages or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *SupportedLanguages.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SupportedLanguages.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*SupportedLanguages, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4763,46 +3705,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a list of supported languages for translation.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/supportedLanguages",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.getSupportedLanguages",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "displayLanguageCode": {
-	//       "description": "Optional. The language to use to return localized, human readable names of supported languages. If missing, then display names are not returned in a response.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "model": {
-	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, Returns languages supported by the specified model. If missing, we get supported languages of Google general NMT model.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for AutoML models. Only models within the same region (have same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/supportedLanguages",
-	//   "response": {
-	//     "$ref": "SupportedLanguages"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
 	s            *Service
@@ -4813,69 +3716,63 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this
-// service.
+// List: Lists information about the supported locations for this service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to narrow down
-// results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in
-// AIP-160 (https://google.aip.dev/160).
+// Filter sets the optional parameter "filter": A filter to narrow down results
+// to a preferred subset. The filtering language accepts strings like
+// "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service selects a default.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// received from the `next_page_token` field in the response. Send that
-// page token to receive the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token received
+// from the `next_page_token` field in the response. Send that page token to
+// receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4884,12 +3781,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4910,12 +3802,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "translate.projects.locations.list" call.
-// Exactly one of *ListLocationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListLocationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4946,49 +3837,6 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about the supported locations for this service.",
-	//   "flatPath": "v3/projects/{projectsId}/locations",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The resource that owns the locations collection, if applicable.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}/locations",
-	//   "response": {
-	//     "$ref": "ListLocationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4996,7 +3844,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5012,8 +3860,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-// method id "translate.projects.locations.romanizeText":
-
 type ProjectsLocationsRomanizeTextCall struct {
 	s                   *Service
 	parent              string
@@ -5023,13 +3869,12 @@ type ProjectsLocationsRomanizeTextCall struct {
 	header_             http.Header
 }
 
-// RomanizeText: Romanize input text written in non-Latin scripts to
-// Latin text.
+// RomanizeText: Romanize input text written in non-Latin scripts to Latin
+// text.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format:
-//     `projects/{project-number-or-id}/locations/{location-id}` or
-//     `projects/{project-number-or-id}`. For global calls, use
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}/locations/{location-id}`
+//     or `projects/{project-number-or-id}`. For global calls, use
 //     `projects/{project-number-or-id}/locations/global` or
 //     `projects/{project-number-or-id}`.
 func (r *ProjectsLocationsService) RomanizeText(parent string, romanizetextrequest *RomanizeTextRequest) *ProjectsLocationsRomanizeTextCall {
@@ -5040,23 +3885,21 @@ func (r *ProjectsLocationsService) RomanizeText(parent string, romanizetextreque
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsRomanizeTextCall) Fields(s ...googleapi.Field) *ProjectsLocationsRomanizeTextCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsRomanizeTextCall) Context(ctx context.Context) *ProjectsLocationsRomanizeTextCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsRomanizeTextCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5065,18 +3908,12 @@ func (c *ProjectsLocationsRomanizeTextCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsRomanizeTextCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.romanizetextrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:romanizeText")
@@ -5093,12 +3930,11 @@ func (c *ProjectsLocationsRomanizeTextCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "translate.projects.locations.romanizeText" call.
-// Exactly one of *RomanizeTextResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *RomanizeTextResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *RomanizeTextResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*RomanizeTextResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5129,39 +3965,7 @@ func (c *ProjectsLocationsRomanizeTextCall) Do(opts ...googleapi.CallOption) (*R
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Romanize input text written in non-Latin scripts to Latin text.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:romanizeText",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.romanizeText",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}/locations/{location-id}` or `projects/{project-number-or-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:romanizeText",
-	//   "request": {
-	//     "$ref": "RomanizeTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RomanizeTextResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.translateDocument":
 
 type ProjectsLocationsTranslateDocumentCall struct {
 	s                        *Service
@@ -5175,14 +3979,12 @@ type ProjectsLocationsTranslateDocumentCall struct {
 // TranslateDocument: Translates documents in synchronous mode.
 //
 //   - parent: Location to make a regional call. Format:
-//     `projects/{project-number-or-id}/locations/{location-id}`. For
-//     global calls, use
-//     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Non-global location is required
-//     for requests using AutoML models or custom glossaries. Models and
-//     glossaries must be within the same region (have the same
-//     location-id), otherwise an INVALID_ARGUMENT (400) error is
-//     returned.
+//     `projects/{project-number-or-id}/locations/{location-id}`. For global
+//     calls, use `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required for
+//     requests using AutoML models or custom glossaries. Models and glossaries
+//     must be within the same region (have the same location-id), otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) TranslateDocument(parent string, translatedocumentrequest *TranslateDocumentRequest) *ProjectsLocationsTranslateDocumentCall {
 	c := &ProjectsLocationsTranslateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5191,23 +3993,21 @@ func (r *ProjectsLocationsService) TranslateDocument(parent string, translatedoc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTranslateDocumentCall) Fields(s ...googleapi.Field) *ProjectsLocationsTranslateDocumentCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTranslateDocumentCall) Context(ctx context.Context) *ProjectsLocationsTranslateDocumentCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTranslateDocumentCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5216,18 +4016,12 @@ func (c *ProjectsLocationsTranslateDocumentCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTranslateDocumentCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.translatedocumentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:translateDocument")
@@ -5244,12 +4038,11 @@ func (c *ProjectsLocationsTranslateDocumentCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "translate.projects.locations.translateDocument" call.
-// Exactly one of *TranslateDocumentResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TranslateDocumentResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TranslateDocumentResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsTranslateDocumentCall) Do(opts ...googleapi.CallOption) (*TranslateDocumentResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5280,39 +4073,7 @@ func (c *ProjectsLocationsTranslateDocumentCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Translates documents in synchronous mode.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:translateDocument",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.translateDocument",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Location to make a regional call. Format: `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for requests using AutoML models or custom glossaries. Models and glossaries must be within the same region (have the same location-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:translateDocument",
-	//   "request": {
-	//     "$ref": "TranslateDocumentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TranslateDocumentResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.translateText":
 
 type ProjectsLocationsTranslateTextCall struct {
 	s                    *Service
@@ -5325,15 +4086,14 @@ type ProjectsLocationsTranslateTextCall struct {
 
 // TranslateText: Translates input text and returns translated text.
 //
-//   - parent: Project or location to make a call. Must refer to a
-//     caller's project. Format: `projects/{project-number-or-id}` or
-//     `projects/{project-number-or-id}/locations/{location-id}`. For
-//     global calls, use
-//     `projects/{project-number-or-id}/locations/global` or
-//     `projects/{project-number-or-id}`. Non-global location is required
-//     for requests using AutoML models or custom glossaries. Models and
-//     glossaries must be within the same region (have same location-id),
-//     otherwise an INVALID_ARGUMENT (400) error is returned.
+//   - parent: Project or location to make a call. Must refer to a caller's
+//     project. Format: `projects/{project-number-or-id}` or
+//     `projects/{project-number-or-id}/locations/{location-id}`. For global
+//     calls, use `projects/{project-number-or-id}/locations/global` or
+//     `projects/{project-number-or-id}`. Non-global location is required for
+//     requests using AutoML models or custom glossaries. Models and glossaries
+//     must be within the same region (have same location-id), otherwise an
+//     INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsLocationsTranslateTextCall {
 	c := &ProjectsLocationsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5342,23 +4102,21 @@ func (r *ProjectsLocationsService) TranslateText(parent string, translatetextreq
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsTranslateTextCall) Fields(s ...googleapi.Field) *ProjectsLocationsTranslateTextCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsTranslateTextCall) Context(ctx context.Context) *ProjectsLocationsTranslateTextCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5367,18 +4125,12 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.translatetextrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:translateText")
@@ -5395,12 +4147,11 @@ func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "translate.projects.locations.translateText" call.
-// Exactly one of *TranslateTextResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *TranslateTextResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TranslateTextResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*TranslateTextResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5431,39 +4182,7 @@ func (c *ProjectsLocationsTranslateTextCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Translates input text and returns translated text.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}:translateText",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.translateText",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Project or location to make a call. Must refer to a caller's project. Format: `projects/{project-number-or-id}` or `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global` or `projects/{project-number-or-id}`. Non-global location is required for requests using AutoML models or custom glossaries. Models and glossaries must be within the same region (have same location-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:translateText",
-	//   "request": {
-	//     "$ref": "TranslateTextRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TranslateTextResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.create":
 
 type ProjectsLocationsAdaptiveMtDatasetsCreateCall struct {
 	s                 *Service
@@ -5486,23 +4205,21 @@ func (r *ProjectsLocationsAdaptiveMtDatasetsService) Create(parent string, adapt
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5511,18 +4228,12 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adaptivemtdataset)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/adaptiveMtDatasets")
@@ -5539,12 +4250,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) doRequest(alt string) (*
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.create" call.
-// Exactly one of *AdaptiveMtDataset or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *AdaptiveMtDataset.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdaptiveMtDataset.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtDataset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5575,39 +4285,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsCreateCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an Adaptive MT dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/adaptiveMtDatasets",
-	//   "request": {
-	//     "$ref": "AdaptiveMtDataset"
-	//   },
-	//   "response": {
-	//     "$ref": "AdaptiveMtDataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.delete":
 
 type ProjectsLocationsAdaptiveMtDatasetsDeleteCall struct {
 	s          *Service
@@ -5621,8 +4299,8 @@ type ProjectsLocationsAdaptiveMtDatasetsDeleteCall struct {
 // associated metadata.
 //
 //   - name: Name of the dataset. In the form of
-//     `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtD
-//     atasets/{adaptive-mt-dataset-id}`.
+//     `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets
+//     /{adaptive-mt-dataset-id}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsService) Delete(name string) *ProjectsLocationsAdaptiveMtDatasetsDeleteCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5630,23 +4308,21 @@ func (r *ProjectsLocationsAdaptiveMtDatasetsService) Delete(name string) *Projec
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5655,12 +4331,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5678,12 +4349,10 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) doRequest(alt string) (*
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5714,36 +4383,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsDeleteCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an Adaptive MT dataset, including all its entries and associated metadata.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the dataset. In the form of `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.get":
 
 type ProjectsLocationsAdaptiveMtDatasetsGetCall struct {
 	s            *Service
@@ -5757,8 +4397,8 @@ type ProjectsLocationsAdaptiveMtDatasetsGetCall struct {
 // Get: Gets the Adaptive MT dataset.
 //
 //   - name: Name of the dataset. In the form of
-//     `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtD
-//     atasets/{adaptive-mt-dataset-id}`.
+//     `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets
+//     /{adaptive-mt-dataset-id}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsService) Get(name string) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5766,33 +4406,29 @@ func (r *ProjectsLocationsAdaptiveMtDatasetsService) Get(name string) *ProjectsL
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5801,12 +4437,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5827,12 +4458,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.get" call.
-// Exactly one of *AdaptiveMtDataset or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *AdaptiveMtDataset.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdaptiveMtDataset.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtDataset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5863,36 +4493,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the Adaptive MT dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the dataset. In the form of `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "AdaptiveMtDataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.importAdaptiveMtFile":
 
 type ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall struct {
 	s                           *Service
@@ -5907,8 +4508,8 @@ type ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall struct {
 // sentences into the AdaptiveMtDataset.
 //
 //   - parent: The resource name of the file, in form of
-//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
-//     atasets/{dataset}`.
+//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets
+//     /{dataset}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsService) ImportAdaptiveMtFile(parent string, importadaptivemtfilerequest *ImportAdaptiveMtFileRequest) *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5917,23 +4518,21 @@ func (r *ProjectsLocationsAdaptiveMtDatasetsService) ImportAdaptiveMtFile(parent
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5942,18 +4541,12 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Header() h
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importadaptivemtfilerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}:importAdaptiveMtFile")
@@ -5970,12 +4563,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) doRequest(
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.importAdaptiveMtFile" call.
-// Exactly one of *ImportAdaptiveMtFileResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ImportAdaptiveMtFileResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ImportAdaptiveMtFileResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Do(opts ...googleapi.CallOption) (*ImportAdaptiveMtFileResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6006,39 +4598,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsImportAdaptiveMtFileCall) Do(opts ..
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports an AdaptiveMtFile and adds all of its sentences into the AdaptiveMtDataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}:importAdaptiveMtFile",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.importAdaptiveMtFile",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}:importAdaptiveMtFile",
-	//   "request": {
-	//     "$ref": "ImportAdaptiveMtFileRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ImportAdaptiveMtFileResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.list":
 
 type ProjectsLocationsAdaptiveMtDatasetsListCall struct {
 	s            *Service
@@ -6052,68 +4612,63 @@ type ProjectsLocationsAdaptiveMtDatasetsListCall struct {
 // List: Lists all Adaptive MT datasets for which the caller has read
 // permission.
 //
-//   - parent: The resource name of the project from which to list the
-//     Adaptive MT datasets.
-//     `projects/{project-number-or-id}/locations/{location-id}`.
+//   - parent: The resource name of the project from which to list the Adaptive
+//     MT datasets. `projects/{project-number-or-id}/locations/{location-id}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression for
-// filtering the results of the request. Filter is not supported yet.
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request. Filter is not supported yet.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Filter(filter string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer results than requested. If unspecified,
-// the server picks an appropriate default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server may return fewer results than requested. If unspecified, the server
+// picks an appropriate default.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) PageSize(pageSize int64) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of ListAdaptiveMtDatasetsResponse.next_page_token
-// returned from the previous call to `ListAdaptiveMtDatasets` method.
-// The first page is returned if `page_token`is empty or missing.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// ListAdaptiveMtDatasetsResponse.next_page_token returned from the previous
+// call to `ListAdaptiveMtDatasets` method. The first page is returned if
+// `page_token`is empty or missing.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6122,12 +4677,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6148,12 +4698,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.list" call.
-// Exactly one of *ListAdaptiveMtDatasetsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListAdaptiveMtDatasetsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdaptiveMtDatasetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtDatasetsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6184,49 +4733,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all Adaptive MT datasets for which the caller has read permission.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. An expression for filtering the results of the request. Filter is not supported yet.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server may return fewer results than requested. If unspecified, the server picks an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtDatasetsResponse.next_page_token returned from the previous call to `ListAdaptiveMtDatasets` method. The first page is returned if `page_token`is empty or missing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the project from which to list the Adaptive MT datasets. `projects/{project-number-or-id}/locations/{location-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/adaptiveMtDatasets",
-	//   "response": {
-	//     "$ref": "ListAdaptiveMtDatasetsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6234,7 +4740,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Do(opts ...googleapi.CallO
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtDatasetsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6250,8 +4756,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsListCall) Pages(ctx context.Context,
 	}
 }
 
-// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.delete":
-
 type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall struct {
 	s          *Service
 	name       string
@@ -6263,8 +4767,8 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall struct {
 // Delete: Deletes an AdaptiveMtFile along with its sentences.
 //
 //   - name: The resource name of the file to delete, in form of
-//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
-//     atasets/{dataset}/adaptiveMtFiles/{file}`.
+//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets
+//     /{dataset}/adaptiveMtFiles/{file}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Delete(name string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6272,23 +4776,21 @@ func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Delete(name 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6297,12 +4799,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Header() 
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6320,12 +4817,10 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) doRequest
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6356,36 +4851,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesDeleteCall) Do(opts .
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes an AdaptiveMtFile along with its sentences.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles/{adaptiveMtFilesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the file to delete, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.get":
 
 type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall struct {
 	s            *Service
@@ -6399,8 +4865,8 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall struct {
 // Get: Gets and AdaptiveMtFile
 //
 //   - name: The resource name of the file, in form of
-//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtD
-//     atasets/{dataset}/adaptiveMtFiles/{file}`.
+//     `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets
+//     /{dataset}/adaptiveMtFiles/{file}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Get(name string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6408,33 +4874,29 @@ func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) Get(name str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6443,12 +4905,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Header() htt
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6469,12 +4926,10 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) doRequest(al
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.get" call.
-// Exactly one of *AdaptiveMtFile or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *AdaptiveMtFile.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdaptiveMtFile.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Do(opts ...googleapi.CallOption) (*AdaptiveMtFile, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6505,36 +4960,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesGetCall) Do(opts ...g
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets and AdaptiveMtFile",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles/{adaptiveMtFilesId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "AdaptiveMtFile"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.list":
 
 type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall struct {
 	s            *Service
@@ -6547,10 +4973,9 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall struct {
 
 // List: Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.
 //
-//   - parent: The resource name of the project from which to list the
-//     Adaptive MT files.
-//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
-//     }`.
+//   - parent: The resource name of the project from which to list the Adaptive
+//     MT files.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6563,44 +4988,40 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) PageSize(pa
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of ListAdaptiveMtFilesResponse.next_page_token
-// returned from the previous call to `ListAdaptiveMtFiles` method. The
-// first page is returned if `page_token`is empty or missing.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// ListAdaptiveMtFilesResponse.next_page_token returned from the previous call
+// to `ListAdaptiveMtFiles` method. The first page is returned if
+// `page_token`is empty or missing.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6609,12 +5030,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Header() ht
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6635,12 +5051,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) doRequest(a
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.list" call.
-// Exactly one of *ListAdaptiveMtFilesResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListAdaptiveMtFilesResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListAdaptiveMtFilesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtFilesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6671,44 +5086,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Do(opts ...
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all AdaptiveMtFiles associated to an AdaptiveMtDataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. ",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtFilesResponse.next_page_token returned from the previous call to `ListAdaptiveMtFiles` method. The first page is returned if `page_token`is empty or missing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the project from which to list the Adaptive MT files. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/adaptiveMtFiles",
-	//   "response": {
-	//     "$ref": "ListAdaptiveMtFilesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6716,7 +5093,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Do(opts ...
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtFilesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6732,8 +5109,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesListCall) Pages(ctx c
 	}
 }
 
-// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.adaptiveMtSentences.list":
-
 type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall struct {
 	s            *Service
 	parent       string
@@ -6745,14 +5120,12 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCa
 
 // List: Lists all AdaptiveMtSentences under a given file/dataset.
 //
-//   - parent: The resource name of the project from which to list the
-//     Adaptive MT files. The following format lists all sentences under a
-//     file.
-//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
-//     }/adaptiveMtFiles/{file}` The following format lists all sentences
-//     within a dataset.
-//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
-//     }`.
+//   - parent: The resource name of the project from which to list the Adaptive
+//     MT files. The following format lists all sentences under a file.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adapt
+//     iveMtFiles/{file}` The following format lists all sentences within a
+//     dataset.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6765,44 +5138,40 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesLi
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of ListAdaptiveMtSentencesRequest.next_page_token
-// returned from the previous call to `ListTranslationMemories` method.
-// The first page is returned if `page_token` is empty or missing.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// ListAdaptiveMtSentencesRequest.next_page_token returned from the previous
+// call to `ListTranslationMemories` method. The first page is returned if
+// `page_token` is empty or missing.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6811,12 +5180,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesLi
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6837,12 +5201,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesLi
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.adaptiveMtSentences.list" call.
-// Exactly one of *ListAdaptiveMtSentencesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListAdaptiveMtSentencesResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdaptiveMtSentencesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtSentencesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6873,43 +5236,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesLi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all AdaptiveMtSentences under a given file/dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtFiles/{adaptiveMtFilesId}/adaptiveMtSentences",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.adaptiveMtSentences.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtSentencesRequest.next_page_token returned from the previous call to `ListTranslationMemories` method. The first page is returned if `page_token` is empty or missing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the project from which to list the Adaptive MT files. The following format lists all sentences under a file. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}` The following format lists all sentences within a dataset. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+/adaptiveMtFiles/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/adaptiveMtSentences",
-	//   "response": {
-	//     "$ref": "ListAdaptiveMtSentencesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6917,7 +5243,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesLi
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtSentencesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6933,8 +5259,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtFilesAdaptiveMtSentencesLi
 	}
 }
 
-// method id "translate.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.list":
-
 type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall struct {
 	s            *Service
 	parent       string
@@ -6946,14 +5270,12 @@ type ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall struct {
 
 // List: Lists all AdaptiveMtSentences under a given file/dataset.
 //
-//   - parent: The resource name of the project from which to list the
-//     Adaptive MT files. The following format lists all sentences under a
-//     file.
-//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
-//     }/adaptiveMtFiles/{file}` The following format lists all sentences
-//     within a dataset.
-//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset
-//     }`.
+//   - parent: The resource name of the project from which to list the Adaptive
+//     MT files. The following format lists all sentences under a file.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adapt
+//     iveMtFiles/{file}` The following format lists all sentences within a
+//     dataset.
+//     `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`.
 func (r *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesService) List(parent string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
 	c := &ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6966,44 +5288,40 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) PageSiz
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of ListAdaptiveMtSentencesRequest.next_page_token
-// returned from the previous call to `ListTranslationMemories` method.
-// The first page is returned if `page_token` is empty or missing.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// ListAdaptiveMtSentencesRequest.next_page_token returned from the previous
+// call to `ListTranslationMemories` method. The first page is returned if
+// `page_token` is empty or missing.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) PageToken(pageToken string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Context(ctx context.Context) *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7012,12 +5330,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Header(
 }
 
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7038,12 +5351,11 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) doReque
 }
 
 // Do executes the "translate.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.list" call.
-// Exactly one of *ListAdaptiveMtSentencesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListAdaptiveMtSentencesResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdaptiveMtSentencesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Do(opts ...googleapi.CallOption) (*ListAdaptiveMtSentencesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7074,43 +5386,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Do(opts
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all AdaptiveMtSentences under a given file/dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/adaptiveMtDatasets/{adaptiveMtDatasetsId}/adaptiveMtSentences",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtSentencesRequest.next_page_token returned from the previous call to `ListTranslationMemories` method. The first page is returned if `page_token` is empty or missing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The resource name of the project from which to list the Adaptive MT files. The following format lists all sentences under a file. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}/adaptiveMtFiles/{file}` The following format lists all sentences within a dataset. `projects/{project}/locations/{location}/adaptiveMtDatasets/{dataset}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/adaptiveMtDatasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/adaptiveMtSentences",
-	//   "response": {
-	//     "$ref": "ListAdaptiveMtSentencesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7118,7 +5393,7 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Do(opts
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Pages(ctx context.Context, f func(*ListAdaptiveMtSentencesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7133,8 +5408,6 @@ func (c *ProjectsLocationsAdaptiveMtDatasetsAdaptiveMtSentencesListCall) Pages(c
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "translate.projects.locations.datasets.create":
 
 type ProjectsLocationsDatasetsCreateCall struct {
 	s          *Service
@@ -7156,23 +5429,21 @@ func (r *ProjectsLocationsDatasetsService) Create(parent string, dataset *Datase
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7181,18 +5452,12 @@ func (c *ProjectsLocationsDatasetsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.dataset)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/datasets")
@@ -7209,12 +5474,10 @@ func (c *ProjectsLocationsDatasetsCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "translate.projects.locations.datasets.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7245,39 +5508,7 @@ func (c *ProjectsLocationsDatasetsCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.datasets.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The project name.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/datasets",
-	//   "request": {
-	//     "$ref": "Dataset"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.datasets.delete":
 
 type ProjectsLocationsDatasetsDeleteCall struct {
 	s          *Service
@@ -7297,23 +5528,21 @@ func (r *ProjectsLocationsDatasetsService) Delete(name string) *ProjectsLocation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7322,12 +5551,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -7345,12 +5569,10 @@ func (c *ProjectsLocationsDatasetsDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "translate.projects.locations.datasets.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7381,36 +5603,7 @@ func (c *ProjectsLocationsDatasetsDeleteCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a dataset and all of its contents.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.datasets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the dataset to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.datasets.exportData":
 
 type ProjectsLocationsDatasetsExportDataCall struct {
 	s                 *Service
@@ -7424,8 +5617,8 @@ type ProjectsLocationsDatasetsExportDataCall struct {
 // ExportData: Exports dataset's data to the provided output location.
 //
 //   - dataset: Name of the dataset. In form of
-//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{d
-//     ataset-id}`.
+//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-
+//     id}`.
 func (r *ProjectsLocationsDatasetsService) ExportData(dataset string, exportdatarequest *ExportDataRequest) *ProjectsLocationsDatasetsExportDataCall {
 	c := &ProjectsLocationsDatasetsExportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dataset = dataset
@@ -7434,23 +5627,21 @@ func (r *ProjectsLocationsDatasetsService) ExportData(dataset string, exportdata
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsExportDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsExportDataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsExportDataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsExportDataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsExportDataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7459,18 +5650,12 @@ func (c *ProjectsLocationsDatasetsExportDataCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsExportDataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportdatarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+dataset}:exportData")
@@ -7487,12 +5672,10 @@ func (c *ProjectsLocationsDatasetsExportDataCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "translate.projects.locations.datasets.exportData" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsExportDataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7523,39 +5706,7 @@ func (c *ProjectsLocationsDatasetsExportDataCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Exports dataset's data to the provided output location.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:exportData",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.datasets.exportData",
-	//   "parameterOrder": [
-	//     "dataset"
-	//   ],
-	//   "parameters": {
-	//     "dataset": {
-	//       "description": "Required. Name of the dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+dataset}:exportData",
-	//   "request": {
-	//     "$ref": "ExportDataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.datasets.get":
 
 type ProjectsLocationsDatasetsGetCall struct {
 	s            *Service
@@ -7576,33 +5727,29 @@ func (r *ProjectsLocationsDatasetsService) Get(name string) *ProjectsLocationsDa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDatasetsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7611,12 +5758,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7637,12 +5779,10 @@ func (c *ProjectsLocationsDatasetsGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "translate.projects.locations.datasets.get" call.
-// Exactly one of *Dataset or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Dataset.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Dataset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7673,36 +5813,7 @@ func (c *ProjectsLocationsDatasetsGetCall) Do(opts ...googleapi.CallOption) (*Da
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a Dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.datasets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the dataset to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Dataset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.datasets.importData":
 
 type ProjectsLocationsDatasetsImportDataCall struct {
 	s                 *Service
@@ -7716,8 +5827,8 @@ type ProjectsLocationsDatasetsImportDataCall struct {
 // ImportData: Import sentence pairs into translation Dataset.
 //
 //   - dataset: Name of the dataset. In form of
-//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{d
-//     ataset-id}`.
+//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-
+//     id}`.
 func (r *ProjectsLocationsDatasetsService) ImportData(dataset string, importdatarequest *ImportDataRequest) *ProjectsLocationsDatasetsImportDataCall {
 	c := &ProjectsLocationsDatasetsImportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dataset = dataset
@@ -7726,23 +5837,21 @@ func (r *ProjectsLocationsDatasetsService) ImportData(dataset string, importdata
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsImportDataCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsImportDataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsImportDataCall) Context(ctx context.Context) *ProjectsLocationsDatasetsImportDataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsImportDataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7751,18 +5860,12 @@ func (c *ProjectsLocationsDatasetsImportDataCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsImportDataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.importdatarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+dataset}:importData")
@@ -7779,12 +5882,10 @@ func (c *ProjectsLocationsDatasetsImportDataCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "translate.projects.locations.datasets.importData" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsImportDataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7815,39 +5916,7 @@ func (c *ProjectsLocationsDatasetsImportDataCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Import sentence pairs into translation Dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:importData",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.datasets.importData",
-	//   "parameterOrder": [
-	//     "dataset"
-	//   ],
-	//   "parameters": {
-	//     "dataset": {
-	//       "description": "Required. Name of the dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+dataset}:importData",
-	//   "request": {
-	//     "$ref": "ImportDataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.datasets.list":
 
 type ProjectsLocationsDatasetsListCall struct {
 	s            *Service
@@ -7868,50 +5937,45 @@ func (r *ProjectsLocationsDatasetsService) List(parent string) *ProjectsLocation
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server can return fewer results than requested.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server can return fewer results than requested.
 func (c *ProjectsLocationsDatasetsListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained from next_page_token field in the response of a ListDatasets
-// call.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained from
+// next_page_token field in the response of a ListDatasets call.
 func (c *ProjectsLocationsDatasetsListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDatasetsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7920,12 +5984,7 @@ func (c *ProjectsLocationsDatasetsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7946,12 +6005,11 @@ func (c *ProjectsLocationsDatasetsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "translate.projects.locations.datasets.list" call.
-// Exactly one of *ListDatasetsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListDatasetsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatasetsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*ListDatasetsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7982,44 +6040,6 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists datasets.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.datasets.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server can return fewer results than requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListDatasets call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/datasets",
-	//   "response": {
-	//     "$ref": "ListDatasetsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8027,7 +6047,7 @@ func (c *ProjectsLocationsDatasetsListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDatasetsListCall) Pages(ctx context.Context, f func(*ListDatasetsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8043,8 +6063,6 @@ func (c *ProjectsLocationsDatasetsListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "translate.projects.locations.datasets.examples.list":
-
 type ProjectsLocationsDatasetsExamplesListCall struct {
 	s            *Service
 	parent       string
@@ -8057,66 +6075,60 @@ type ProjectsLocationsDatasetsExamplesListCall struct {
 // List: Lists sentence pairs in the dataset.
 //
 //   - parent: Name of the parent dataset. In form of
-//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{d
-//     ataset-id}`.
+//     `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-
+//     id}`.
 func (r *ProjectsLocationsDatasetsExamplesService) List(parent string) *ProjectsLocationsDatasetsExamplesListCall {
 	c := &ProjectsLocationsDatasetsExamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression for
-// filtering the examples that will be returned. Example filter: *
-// `usage=TRAIN`
+// Filter sets the optional parameter "filter": An expression for filtering the
+// examples that will be returned. Example filter: * `usage=TRAIN`
 func (c *ProjectsLocationsDatasetsExamplesListCall) Filter(filter string) *ProjectsLocationsDatasetsExamplesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server can return fewer results than requested.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server can return fewer results than requested.
 func (c *ProjectsLocationsDatasetsExamplesListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsExamplesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained from next_page_token field in the response of a ListExamples
-// call.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained from
+// next_page_token field in the response of a ListExamples call.
 func (c *ProjectsLocationsDatasetsExamplesListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsExamplesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsExamplesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsExamplesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDatasetsExamplesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsExamplesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsExamplesListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsExamplesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsExamplesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8125,12 +6137,7 @@ func (c *ProjectsLocationsDatasetsExamplesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsExamplesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8151,12 +6158,11 @@ func (c *ProjectsLocationsDatasetsExamplesListCall) doRequest(alt string) (*http
 }
 
 // Do executes the "translate.projects.locations.datasets.examples.list" call.
-// Exactly one of *ListExamplesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListExamplesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListExamplesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsDatasetsExamplesListCall) Do(opts ...googleapi.CallOption) (*ListExamplesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8187,49 +6193,6 @@ func (c *ProjectsLocationsDatasetsExamplesListCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists sentence pairs in the dataset.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/examples",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.datasets.examples.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. An expression for filtering the examples that will be returned. Example filter: * `usage=TRAIN`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server can return fewer results than requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListExamples call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the parent dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/examples",
-	//   "response": {
-	//     "$ref": "ListExamplesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8237,7 +6200,7 @@ func (c *ProjectsLocationsDatasetsExamplesListCall) Do(opts ...googleapi.CallOpt
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDatasetsExamplesListCall) Pages(ctx context.Context, f func(*ListExamplesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8253,8 +6216,6 @@ func (c *ProjectsLocationsDatasetsExamplesListCall) Pages(ctx context.Context, f
 	}
 }
 
-// method id "translate.projects.locations.glossaries.create":
-
 type ProjectsLocationsGlossariesCreateCall struct {
 	s          *Service
 	parent     string
@@ -8264,8 +6225,8 @@ type ProjectsLocationsGlossariesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a glossary and returns the long-running operation.
-// Returns NOT_FOUND, if the project doesn't exist.
+// Create: Creates a glossary and returns the long-running operation. Returns
+// NOT_FOUND, if the project doesn't exist.
 //
 // - parent: The project name.
 func (r *ProjectsLocationsGlossariesService) Create(parent string, glossary *Glossary) *ProjectsLocationsGlossariesCreateCall {
@@ -8276,23 +6237,21 @@ func (r *ProjectsLocationsGlossariesService) Create(parent string, glossary *Glo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesCreateCall) Context(ctx context.Context) *ProjectsLocationsGlossariesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8301,18 +6260,12 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.glossary)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/glossaries")
@@ -8329,12 +6282,10 @@ func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "translate.projects.locations.glossaries.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8365,38 +6316,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a glossary and returns the long-running operation. Returns NOT_FOUND, if the project doesn't exist.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.glossaries.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The project name.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/glossaries",
-	//   "request": {
-	//     "$ref": "Glossary"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.delete":
 
 type ProjectsLocationsGlossariesDeleteCall struct {
 	s          *Service
@@ -8406,9 +6326,8 @@ type ProjectsLocationsGlossariesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a glossary, or cancels glossary construction if the
-// glossary isn't created yet. Returns NOT_FOUND, if the glossary
-// doesn't exist.
+// Delete: Deletes a glossary, or cancels glossary construction if the glossary
+// isn't created yet. Returns NOT_FOUND, if the glossary doesn't exist.
 //
 // - name: The name of the glossary to delete.
 func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocationsGlossariesDeleteCall {
@@ -8418,23 +6337,21 @@ func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlossariesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8443,12 +6360,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8466,12 +6378,10 @@ func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "translate.projects.locations.glossaries.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8502,36 +6412,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a glossary, or cancels glossary construction if the glossary isn't created yet. Returns NOT_FOUND, if the glossary doesn't exist.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.glossaries.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the glossary to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.get":
 
 type ProjectsLocationsGlossariesGetCall struct {
 	s            *Service
@@ -8542,8 +6423,7 @@ type ProjectsLocationsGlossariesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a glossary. Returns NOT_FOUND, if the glossary doesn't
-// exist.
+// Get: Gets a glossary. Returns NOT_FOUND, if the glossary doesn't exist.
 //
 // - name: The name of the glossary to retrieve.
 func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocationsGlossariesGetCall {
@@ -8553,33 +6433,29 @@ func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGlossariesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesGetCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8588,12 +6464,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8614,12 +6485,10 @@ func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "translate.projects.locations.glossaries.get" call.
-// Exactly one of *Glossary or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Glossary.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Glossary.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*Glossary, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8650,36 +6519,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a glossary. Returns NOT_FOUND, if the glossary doesn't exist.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.glossaries.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the glossary to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Glossary"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.list":
 
 type ProjectsLocationsGlossariesListCall struct {
 	s            *Service
@@ -8690,84 +6530,78 @@ type ProjectsLocationsGlossariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists glossaries in a project. Returns NOT_FOUND, if the
-// project doesn't exist.
+// List: Lists glossaries in a project. Returns NOT_FOUND, if the project
+// doesn't exist.
 //
-//   - parent: The name of the project from which to list all of the
-//     glossaries.
+// - parent: The name of the project from which to list all of the glossaries.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter specifying
-// constraints of a list operation. Specify the constraint by the format
-// of "key=value", where key must be "src" or "tgt", and the value must
-// be a valid language code. For multiple restrictions, concatenate them
-// by "AND" (uppercase only), such as: "src=en-US AND tgt=zh-CN". Notice
-// that the exact match is used here, which means using 'en-US' and 'en'
-// can lead to different results, which depends on the language code you
-// used when you create the glossary. For the unidirectional glossaries,
-// the "src" and "tgt" add restrictions on the source and target
-// language code separately. For the equivalent term set glossaries, the
-// "src" and/or "tgt" add restrictions on the term set. For example:
-// "src=en-US AND tgt=zh-CN" will only pick the unidirectional
-// glossaries which exactly match the source language code as "en-US"
-// and the target language code "zh-CN", but all equivalent term set
-// glossaries which contain "en-US" and "zh-CN" in their language set
-// will be picked. If missing, no filtering is performed.
+// Filter sets the optional parameter "filter": Filter specifying constraints
+// of a list operation. Specify the constraint by the format of "key=value",
+// where key must be "src" or "tgt", and the value must be a valid language
+// code. For multiple restrictions, concatenate them by "AND" (uppercase only),
+// such as: "src=en-US AND tgt=zh-CN". Notice that the exact match is used
+// here, which means using 'en-US' and 'en' can lead to different results,
+// which depends on the language code you used when you create the glossary.
+// For the unidirectional glossaries, the "src" and "tgt" add restrictions on
+// the source and target language code separately. For the equivalent term set
+// glossaries, the "src" and/or "tgt" add restrictions on the term set. For
+// example: "src=en-US AND tgt=zh-CN" will only pick the unidirectional
+// glossaries which exactly match the source language code as "en-US" and the
+// target language code "zh-CN", but all equivalent term set glossaries which
+// contain "en-US" and "zh-CN" in their language set will be picked. If
+// missing, no filtering is performed.
 func (c *ProjectsLocationsGlossariesListCall) Filter(filter string) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer glossaries than requested. If
-// unspecified, the server picks an appropriate default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server may return fewer glossaries than requested. If unspecified, the
+// server picks an appropriate default.
 func (c *ProjectsLocationsGlossariesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of [ListGlossariesResponse.next_page_token]
-// returned from the previous call to `ListGlossaries` method. The first
-// page is returned if `page_token`is empty or missing.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// [ListGlossariesResponse.next_page_token] returned from the previous call to
+// `ListGlossaries` method. The first page is returned if `page_token`is empty
+// or missing.
 func (c *ProjectsLocationsGlossariesListCall) PageToken(pageToken string) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGlossariesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesListCall) Context(ctx context.Context) *ProjectsLocationsGlossariesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8776,12 +6610,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8802,12 +6631,11 @@ func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "translate.projects.locations.glossaries.list" call.
-// Exactly one of *ListGlossariesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListGlossariesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListGlossariesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (*ListGlossariesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8838,49 +6666,6 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists glossaries in a project. Returns NOT_FOUND, if the project doesn't exist.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.glossaries.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter specifying constraints of a list operation. Specify the constraint by the format of \"key=value\", where key must be \"src\" or \"tgt\", and the value must be a valid language code. For multiple restrictions, concatenate them by \"AND\" (uppercase only), such as: \"src=en-US AND tgt=zh-CN\". Notice that the exact match is used here, which means using 'en-US' and 'en' can lead to different results, which depends on the language code you used when you create the glossary. For the unidirectional glossaries, the \"src\" and \"tgt\" add restrictions on the source and target language code separately. For the equivalent term set glossaries, the \"src\" and/or \"tgt\" add restrictions on the term set. For example: \"src=en-US AND tgt=zh-CN\" will only pick the unidirectional glossaries which exactly match the source language code as \"en-US\" and the target language code \"zh-CN\", but all equivalent term set glossaries which contain \"en-US\" and \"zh-CN\" in their language set will be picked. If missing, no filtering is performed.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server may return fewer glossaries than requested. If unspecified, the server picks an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of [ListGlossariesResponse.next_page_token] returned from the previous call to `ListGlossaries` method. The first page is returned if `page_token`is empty or missing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the project from which to list all of the glossaries.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/glossaries",
-	//   "response": {
-	//     "$ref": "ListGlossariesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8888,7 +6673,7 @@ func (c *ProjectsLocationsGlossariesListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsGlossariesListCall) Pages(ctx context.Context, f func(*ListGlossariesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -8904,8 +6689,6 @@ func (c *ProjectsLocationsGlossariesListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "translate.projects.locations.glossaries.patch":
-
 type ProjectsLocationsGlossariesPatchCall struct {
 	s          *Service
 	name       string
@@ -8915,13 +6698,12 @@ type ProjectsLocationsGlossariesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a glossary. A LRO is used since the update can be
-// async if the glossary's entry file is updated.
+// Patch: Updates a glossary. A LRO is used since the update can be async if
+// the glossary's entry file is updated.
 //
-//   - name: The resource name of the glossary. Glossary names have the
-//     form
-//     `projects/{project-number-or-id}/locations/{location-id}/glossaries/
-//     {glossary-id}`.
+//   - name: The resource name of the glossary. Glossary names have the form
+//     `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossa
+//     ry-id}`.
 func (r *ProjectsLocationsGlossariesService) Patch(name string, glossary *Glossary) *ProjectsLocationsGlossariesPatchCall {
 	c := &ProjectsLocationsGlossariesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8929,32 +6711,29 @@ func (r *ProjectsLocationsGlossariesService) Patch(name string, glossary *Glossa
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of
-// fields to be updated. Currently only `display_name` and
-// 'input_config'
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// be updated. Currently only `display_name` and 'input_config'
 func (c *ProjectsLocationsGlossariesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlossariesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesPatchCall) Context(ctx context.Context) *ProjectsLocationsGlossariesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8963,18 +6742,12 @@ func (c *ProjectsLocationsGlossariesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGlossariesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.glossary)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
@@ -8991,12 +6764,10 @@ func (c *ProjectsLocationsGlossariesPatchCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "translate.projects.locations.glossaries.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9027,44 +6798,7 @@ func (c *ProjectsLocationsGlossariesPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a glossary. A LRO is used since the update can be async if the glossary's entry file is updated.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "translate.projects.locations.glossaries.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the glossary. Glossary names have the form `projects/{project-number-or-id}/locations/{location-id}/glossaries/{glossary-id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The list of fields to be updated. Currently only `display_name` and 'input_config'",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "request": {
-	//     "$ref": "Glossary"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.glossaryEntries.create":
 
 type ProjectsLocationsGlossariesGlossaryEntriesCreateCall struct {
 	s             *Service
@@ -9077,8 +6811,7 @@ type ProjectsLocationsGlossariesGlossaryEntriesCreateCall struct {
 
 // Create: Creates a glossary entry.
 //
-//   - parent: The resource name of the glossary to create the entry
-//     under.
+// - parent: The resource name of the glossary to create the entry under.
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Create(parent string, glossaryentry *GlossaryEntry) *ProjectsLocationsGlossariesGlossaryEntriesCreateCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9087,23 +6820,21 @@ func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Create(parent string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGlossaryEntriesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGlossaryEntriesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9112,18 +6843,12 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Header() http.Hea
 }
 
 func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.glossaryentry)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/glossaryEntries")
@@ -9140,12 +6865,10 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) doRequest(alt str
 }
 
 // Do executes the "translate.projects.locations.glossaries.glossaryEntries.create" call.
-// Exactly one of *GlossaryEntry or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *GlossaryEntry.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlossaryEntry.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Do(opts ...googleapi.CallOption) (*GlossaryEntry, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9176,39 +6899,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesCreateCall) Do(opts ...google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a glossary entry.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}/glossaryEntries",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.glossaries.glossaryEntries.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource name of the glossary to create the entry under.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/glossaryEntries",
-	//   "request": {
-	//     "$ref": "GlossaryEntry"
-	//   },
-	//   "response": {
-	//     "$ref": "GlossaryEntry"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.glossaryEntries.delete":
 
 type ProjectsLocationsGlossariesGlossaryEntriesDeleteCall struct {
 	s          *Service
@@ -9228,23 +6919,21 @@ func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Delete(name string) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9253,12 +6942,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Header() http.Hea
 }
 
 func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9276,12 +6960,10 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) doRequest(alt str
 }
 
 // Do executes the "translate.projects.locations.glossaries.glossaryEntries.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9312,36 +6994,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesDeleteCall) Do(opts ...google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single entry from the glossary",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}/glossaryEntries/{glossaryEntriesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.glossaries.glossaryEntries.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the glossary entry to delete",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+/glossaryEntries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.glossaryEntries.get":
 
 type ProjectsLocationsGlossariesGlossaryEntriesGetCall struct {
 	s            *Service
@@ -9362,33 +7015,29 @@ func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Get(name string) *Pr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGlossaryEntriesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesGlossaryEntriesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGlossaryEntriesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9397,12 +7046,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Header() http.Header
 }
 
 func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9423,12 +7067,10 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) doRequest(alt string
 }
 
 // Do executes the "translate.projects.locations.glossaries.glossaryEntries.get" call.
-// Exactly one of *GlossaryEntry or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *GlossaryEntry.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlossaryEntry.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Do(opts ...googleapi.CallOption) (*GlossaryEntry, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9459,36 +7101,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesGetCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a single glossary entry by the given id.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}/glossaryEntries/{glossaryEntriesId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.glossaries.glossaryEntries.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the glossary entry to get",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+/glossaryEntries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "GlossaryEntry"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.glossaries.glossaryEntries.list":
 
 type ProjectsLocationsGlossariesGlossaryEntriesListCall struct {
 	s            *Service
@@ -9501,60 +7114,55 @@ type ProjectsLocationsGlossariesGlossaryEntriesListCall struct {
 
 // List: List the entries for the glossary.
 //
-//   - parent: The parent glossary resource name for listing the
-//     glossary's entries.
+//   - parent: The parent glossary resource name for listing the glossary's
+//     entries.
 func (r *ProjectsLocationsGlossariesGlossaryEntriesService) List(parent string) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c := &ProjectsLocationsGlossariesGlossaryEntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server may return fewer glossary entries than requested. If
-// unspecified, the server picks an appropriate default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server may return fewer glossary entries than requested. If unspecified, the
+// server picks an appropriate default.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) PageSize(pageSize int64) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return. Typically,
-// this is the value of [ListGlossaryEntriesResponse.next_page_token]
-// returned from the previous call. The first page is returned if
-// `page_token`is empty or missing.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return. Typically, this is the value of
+// [ListGlossaryEntriesResponse.next_page_token] returned from the previous
+// call. The first page is returned if `page_token`is empty or missing.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) PageToken(pageToken string) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGlossaryEntriesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9563,12 +7171,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9589,12 +7192,11 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) doRequest(alt strin
 }
 
 // Do executes the "translate.projects.locations.glossaries.glossaryEntries.list" call.
-// Exactly one of *ListGlossaryEntriesResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListGlossaryEntriesResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListGlossaryEntriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Do(opts ...googleapi.CallOption) (*ListGlossaryEntriesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9625,44 +7227,6 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the entries for the glossary.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}/glossaryEntries",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.glossaries.glossaryEntries.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server may return fewer glossary entries than requested. If unspecified, the server picks an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of [ListGlossaryEntriesResponse.next_page_token] returned from the previous call. The first page is returned if `page_token`is empty or missing.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent glossary resource name for listing the glossary's entries.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/glossaryEntries",
-	//   "response": {
-	//     "$ref": "ListGlossaryEntriesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9670,7 +7234,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Do(opts ...googleap
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Pages(ctx context.Context, f func(*ListGlossaryEntriesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9685,8 +7249,6 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesListCall) Pages(ctx context.C
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "translate.projects.locations.glossaries.glossaryEntries.patch":
 
 type ProjectsLocationsGlossariesGlossaryEntriesPatchCall struct {
 	s             *Service
@@ -9709,23 +7271,21 @@ func (r *ProjectsLocationsGlossariesGlossaryEntriesService) Patch(name string, g
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlossariesGlossaryEntriesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Context(ctx context.Context) *ProjectsLocationsGlossariesGlossaryEntriesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9734,18 +7294,12 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Header() http.Head
 }
 
 func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.glossaryentry)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
@@ -9762,12 +7316,10 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) doRequest(alt stri
 }
 
 // Do executes the "translate.projects.locations.glossaries.glossaryEntries.patch" call.
-// Exactly one of *GlossaryEntry or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *GlossaryEntry.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlossaryEntry.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Do(opts ...googleapi.CallOption) (*GlossaryEntry, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9798,39 +7350,7 @@ func (c *ProjectsLocationsGlossariesGlossaryEntriesPatchCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a glossary entry.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/glossaries/{glossariesId}/glossaryEntries/{glossaryEntriesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "translate.projects.locations.glossaries.glossaryEntries.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the entry. Format: \"projects/*/locations/*/glossaries/*/glossaryEntries/*\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/glossaries/[^/]+/glossaryEntries/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "request": {
-	//     "$ref": "GlossaryEntry"
-	//   },
-	//   "response": {
-	//     "$ref": "GlossaryEntry"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.models.create":
 
 type ProjectsLocationsModelsCreateCall struct {
 	s          *Service
@@ -9853,23 +7373,21 @@ func (r *ProjectsLocationsModelsService) Create(parent string, model *Model) *Pr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsModelsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsModelsCreateCall) Context(ctx context.Context) *ProjectsLocationsModelsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsModelsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9878,18 +7396,12 @@ func (c *ProjectsLocationsModelsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsModelsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.model)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/models")
@@ -9906,12 +7418,10 @@ func (c *ProjectsLocationsModelsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "translate.projects.locations.models.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsModelsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9942,39 +7452,7 @@ func (c *ProjectsLocationsModelsCreateCall) Do(opts ...googleapi.CallOption) (*O
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Model.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.models.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The project name, in form of `projects/{project}/locations/{location}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/models",
-	//   "request": {
-	//     "$ref": "Model"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.models.delete":
 
 type ProjectsLocationsModelsDeleteCall struct {
 	s          *Service
@@ -9994,23 +7472,21 @@ func (r *ProjectsLocationsModelsService) Delete(name string) *ProjectsLocationsM
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsModelsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsModelsDeleteCall) Context(ctx context.Context) *ProjectsLocationsModelsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsModelsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10019,12 +7495,7 @@ func (c *ProjectsLocationsModelsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsModelsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10042,12 +7513,10 @@ func (c *ProjectsLocationsModelsDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "translate.projects.locations.models.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10078,36 +7547,7 @@ func (c *ProjectsLocationsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*O
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a model.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models/{modelsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.models.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the model to delete.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/models/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.models.get":
 
 type ProjectsLocationsModelsGetCall struct {
 	s            *Service
@@ -10128,33 +7568,29 @@ func (r *ProjectsLocationsModelsService) Get(name string) *ProjectsLocationsMode
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsModelsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsModelsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsModelsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsModelsGetCall) Context(ctx context.Context) *ProjectsLocationsModelsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsModelsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10163,12 +7599,7 @@ func (c *ProjectsLocationsModelsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsModelsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10189,12 +7620,10 @@ func (c *ProjectsLocationsModelsGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "translate.projects.locations.models.get" call.
-// Exactly one of *Model or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Model.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Model.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsModelsGetCall) Do(opts ...googleapi.CallOption) (*Model, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10225,36 +7654,7 @@ func (c *ProjectsLocationsModelsGetCall) Do(opts ...googleapi.CallOption) (*Mode
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a model.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models/{modelsId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.models.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the model to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/models/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Model"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.models.list":
 
 type ProjectsLocationsModelsListCall struct {
 	s            *Service
@@ -10275,58 +7675,52 @@ func (r *ProjectsLocationsModelsService) List(parent string) *ProjectsLocationsM
 	return c
 }
 
-// Filter sets the optional parameter "filter": An expression for
-// filtering the models that will be returned. Supported filter:
-// `dataset_id=${dataset_id}`
+// Filter sets the optional parameter "filter": An expression for filtering the
+// models that will be returned. Supported filter: `dataset_id=${dataset_id}`
 func (c *ProjectsLocationsModelsListCall) Filter(filter string) *ProjectsLocationsModelsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The server can return fewer results than requested.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server can return fewer results than requested.
 func (c *ProjectsLocationsModelsListCall) PageSize(pageSize int64) *ProjectsLocationsModelsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results for the server to return. Typically
-// obtained from next_page_token field in the response of a ListModels
-// call.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results for the server to return. Typically obtained from
+// next_page_token field in the response of a ListModels call.
 func (c *ProjectsLocationsModelsListCall) PageToken(pageToken string) *ProjectsLocationsModelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsModelsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsModelsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsModelsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsModelsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsModelsListCall) Context(ctx context.Context) *ProjectsLocationsModelsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsModelsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10335,12 +7729,7 @@ func (c *ProjectsLocationsModelsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsModelsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10361,12 +7750,11 @@ func (c *ProjectsLocationsModelsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "translate.projects.locations.models.list" call.
-// Exactly one of *ListModelsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListModelsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListModelsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsModelsListCall) Do(opts ...googleapi.CallOption) (*ListModelsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10397,49 +7785,6 @@ func (c *ProjectsLocationsModelsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists models.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/models",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.models.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. An expression for filtering the models that will be returned. Supported filter: `dataset_id=${dataset_id}`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. The server can return fewer results than requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListModels call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+parent}/models",
-	//   "response": {
-	//     "$ref": "ListModelsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -10447,7 +7792,7 @@ func (c *ProjectsLocationsModelsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsModelsListCall) Pages(ctx context.Context, f func(*ListModelsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -10463,8 +7808,6 @@ func (c *ProjectsLocationsModelsListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
-// method id "translate.projects.locations.operations.cancel":
-
 type ProjectsLocationsOperationsCancelCall struct {
 	s                      *Service
 	name                   string
@@ -10474,15 +7817,14 @@ type ProjectsLocationsOperationsCancelCall struct {
 	header_                http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -10494,23 +7836,21 @@ func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10519,18 +7859,12 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}:cancel")
@@ -10547,12 +7881,10 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "translate.projects.locations.operations.cancel" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10583,39 +7915,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "CancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.operations.delete":
 
 type ProjectsLocationsOperationsDeleteCall struct {
 	s          *Service
@@ -10625,10 +7925,10 @@ type ProjectsLocationsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
@@ -10638,23 +7938,21 @@ func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10663,12 +7961,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -10686,12 +7979,10 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "translate.projects.locations.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10722,36 +8013,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "translate.projects.locations.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.operations.get":
 
 type ProjectsLocationsOperationsGetCall struct {
 	s            *Service
@@ -10762,9 +8024,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
@@ -10774,33 +8036,29 @@ func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10809,12 +8067,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10835,12 +8088,10 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "translate.projects.locations.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10871,36 +8122,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
-
-// method id "translate.projects.locations.operations.list":
 
 type ProjectsLocationsOperationsListCall struct {
 	s            *Service
@@ -10911,9 +8133,8 @@ type ProjectsLocationsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -10922,55 +8143,50 @@ func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocation
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10979,12 +8195,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11005,12 +8216,11 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "translate.projects.locations.operations.list" call.
-// Exactly one of *ListOperationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListOperationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11041,49 +8251,6 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "translate.projects.locations.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}/operations",
-	//   "response": {
-	//     "$ref": "ListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11091,7 +8258,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11107,8 +8274,6 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "translate.projects.locations.operations.wait":
-
 type ProjectsLocationsOperationsWaitCall struct {
 	s                    *Service
 	name                 string
@@ -11118,16 +8283,15 @@ type ProjectsLocationsOperationsWaitCall struct {
 	header_              http.Header
 }
 
-// Wait: Waits until the specified long-running operation is done or
-// reaches at most a specified timeout, returning the latest state. If
-// the operation is already done, the latest state is immediately
-// returned. If the timeout specified is greater than the default
-// HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does
-// not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
-// Note that this method is on a best-effort basis. It may return the
-// latest state before the specified timeout (including immediately),
-// meaning even an immediate response is no guarantee that the operation
-// is done.
+// Wait: Waits until the specified long-running operation is done or reaches at
+// most a specified timeout, returning the latest state. If the operation is
+// already done, the latest state is immediately returned. If the timeout
+// specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout
+// is used. If the server does not support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort
+// basis. It may return the latest state before the specified timeout
+// (including immediately), meaning even an immediate response is no guarantee
+// that the operation is done.
 //
 // - name: The name of the operation resource to wait on.
 func (r *ProjectsLocationsOperationsService) Wait(name string, waitoperationrequest *WaitOperationRequest) *ProjectsLocationsOperationsWaitCall {
@@ -11138,23 +8302,21 @@ func (r *ProjectsLocationsOperationsService) Wait(name string, waitoperationrequ
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsWaitCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsWaitCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsWaitCall) Context(ctx context.Context) *ProjectsLocationsOperationsWaitCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11163,18 +8325,12 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.waitoperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}:wait")
@@ -11191,12 +8347,10 @@ func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "translate.projects.locations.operations.wait" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11227,34 +8381,4 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
-	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:wait",
-	//   "httpMethod": "POST",
-	//   "id": "translate.projects.locations.operations.wait",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to wait on.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/{+name}:wait",
-	//   "request": {
-	//     "$ref": "WaitOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-translation"
-	//   ]
-	// }
-
 }

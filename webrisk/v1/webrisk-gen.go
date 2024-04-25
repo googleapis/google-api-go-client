@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -227,479 +227,380 @@ type UrisService struct {
 type GoogleCloudWebriskV1ComputeThreatListDiffResponse struct {
 	// Additions: A set of entries to add to a local threat type's list.
 	Additions *GoogleCloudWebriskV1ThreatEntryAdditions `json:"additions,omitempty"`
-
-	// Checksum: The expected SHA256 hash of the client state; that is, of
-	// the sorted list of all hashes present in the database after applying
-	// the provided diff. If the client state doesn't match the expected
-	// state, the client must discard this diff and retry later.
+	// Checksum: The expected SHA256 hash of the client state; that is, of the
+	// sorted list of all hashes present in the database after applying the
+	// provided diff. If the client state doesn't match the expected state, the
+	// client must discard this diff and retry later.
 	Checksum *GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum `json:"checksum,omitempty"`
-
 	// NewVersionToken: The new opaque client version token. This should be
 	// retained by the client and passed into the next call of
-	// ComputeThreatListDiff as 'version_token'. A separate version token
-	// should be stored and used for each threatList.
+	// ComputeThreatListDiff as 'version_token'. A separate version token should be
+	// stored and used for each threatList.
 	NewVersionToken string `json:"newVersionToken,omitempty"`
-
-	// RecommendedNextDiff: The soonest the client should wait before
-	// issuing any diff request. Querying sooner is unlikely to produce a
-	// meaningful diff. Waiting longer is acceptable considering the use
-	// case. If this field is not set clients may update as soon as they
-	// want.
+	// RecommendedNextDiff: The soonest the client should wait before issuing any
+	// diff request. Querying sooner is unlikely to produce a meaningful diff.
+	// Waiting longer is acceptable considering the use case. If this field is not
+	// set clients may update as soon as they want.
 	RecommendedNextDiff string `json:"recommendedNextDiff,omitempty"`
-
-	// Removals: A set of entries to remove from a local threat type's list.
-	// This field may be empty.
+	// Removals: A set of entries to remove from a local threat type's list. This
+	// field may be empty.
 	Removals *GoogleCloudWebriskV1ThreatEntryRemovals `json:"removals,omitempty"`
-
-	// ResponseType: The type of response. This may indicate that an action
-	// must be taken by the client when the response is received.
+	// ResponseType: The type of response. This may indicate that an action must be
+	// taken by the client when the response is received.
 	//
 	// Possible values:
 	//   "RESPONSE_TYPE_UNSPECIFIED" - Unknown.
 	//   "DIFF" - Partial updates are applied to the client's existing local
 	// database.
-	//   "RESET" - Full updates resets the client's entire local database.
-	// This means that either the client had no state, was seriously
-	// out-of-date, or the client is believed to be corrupt.
+	//   "RESET" - Full updates resets the client's entire local database. This
+	// means that either the client had no state, was seriously out-of-date, or the
+	// client is believed to be corrupt.
 	ResponseType string `json:"responseType,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Additions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Additions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Additions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1ComputeThreatListDiffResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ComputeThreatListDiffResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum: The
-// expected state of a client's local database.
+// GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum: The expected
+// state of a client's local database.
 type GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum struct {
-	// Sha256: The SHA256 hash of the client state; that is, of the sorted
-	// list of all hashes present in the database.
+	// Sha256: The SHA256 hash of the client state; that is, of the sorted list of
+	// all hashes present in the database.
 	Sha256 string `json:"sha256,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Sha256") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Sha256") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Sha256") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ComputeThreatListDiffResponseChecksum
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1RawHashes: The uncompressed threat entries in
-// hash format. Hashes can be anywhere from 4 to 32 bytes in size. A
-// large majority are 4 bytes, but some hashes are lengthened if they
-// collide with the hash of a popular URI. Used for sending
-// ThreatEntryAdditons to clients that do not support compression, or
-// when sending non-4-byte hashes to clients that do support
-// compression.
+// GoogleCloudWebriskV1RawHashes: The uncompressed threat entries in hash
+// format. Hashes can be anywhere from 4 to 32 bytes in size. A large majority
+// are 4 bytes, but some hashes are lengthened if they collide with the hash of
+// a popular URI. Used for sending ThreatEntryAdditons to clients that do not
+// support compression, or when sending non-4-byte hashes to clients that do
+// support compression.
 type GoogleCloudWebriskV1RawHashes struct {
-	// PrefixSize: The number of bytes for each prefix encoded below. This
-	// field can be anywhere from 4 (shortest prefix) to 32 (full SHA256
-	// hash). In practice this is almost always 4, except in exceptional
-	// circumstances.
+	// PrefixSize: The number of bytes for each prefix encoded below. This field
+	// can be anywhere from 4 (shortest prefix) to 32 (full SHA256 hash). In
+	// practice this is almost always 4, except in exceptional circumstances.
 	PrefixSize int64 `json:"prefixSize,omitempty"`
-
-	// RawHashes: The hashes, in binary format, concatenated into one long
-	// string. Hashes are sorted in lexicographic order. For JSON API users,
-	// hashes are base64-encoded.
+	// RawHashes: The hashes, in binary format, concatenated into one long string.
+	// Hashes are sorted in lexicographic order. For JSON API users, hashes are
+	// base64-encoded.
 	RawHashes string `json:"rawHashes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PrefixSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrefixSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PrefixSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1RawHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1RawHashes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1RawIndices: A set of raw indices to remove from a
-// local list.
+// GoogleCloudWebriskV1RawIndices: A set of raw indices to remove from a local
+// list.
 type GoogleCloudWebriskV1RawIndices struct {
-	// Indices: The indices to remove from a lexicographically-sorted local
-	// list.
+	// Indices: The indices to remove from a lexicographically-sorted local list.
 	Indices []int64 `json:"indices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Indices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Indices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Indices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Indices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1RawIndices) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1RawIndices
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1RiceDeltaEncoding: The Rice-Golomb encoded data.
-// Used for sending compressed 4-byte hashes or compressed removal
-// indices.
+// GoogleCloudWebriskV1RiceDeltaEncoding: The Rice-Golomb encoded data. Used
+// for sending compressed 4-byte hashes or compressed removal indices.
 type GoogleCloudWebriskV1RiceDeltaEncoding struct {
-	// EncodedData: The encoded deltas that are encoded using the
-	// Golomb-Rice coder.
+	// EncodedData: The encoded deltas that are encoded using the Golomb-Rice
+	// coder.
 	EncodedData string `json:"encodedData,omitempty"`
-
-	// EntryCount: The number of entries that are delta encoded in the
-	// encoded data. If only a single integer was encoded, this will be zero
-	// and the single value will be stored in `first_value`.
+	// EntryCount: The number of entries that are delta encoded in the encoded
+	// data. If only a single integer was encoded, this will be zero and the single
+	// value will be stored in `first_value`.
 	EntryCount int64 `json:"entryCount,omitempty"`
-
-	// FirstValue: The offset of the first entry in the encoded data, or, if
-	// only a single integer was encoded, that single integer's value. If
-	// the field is empty or missing, assume zero.
+	// FirstValue: The offset of the first entry in the encoded data, or, if only a
+	// single integer was encoded, that single integer's value. If the field is
+	// empty or missing, assume zero.
 	FirstValue int64 `json:"firstValue,omitempty,string"`
-
-	// RiceParameter: The Golomb-Rice parameter, which is a number between 2
-	// and 28. This field is missing (that is, zero) if `num_entries` is
-	// zero.
+	// RiceParameter: The Golomb-Rice parameter, which is a number between 2 and
+	// 28. This field is missing (that is, zero) if `num_entries` is zero.
 	RiceParameter int64 `json:"riceParameter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EncodedData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EncodedData") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncodedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1RiceDeltaEncoding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudWebriskV1SearchHashesResponse struct {
-	// NegativeExpireTime: For requested entities that did not match the
-	// threat list, how long to cache the response until.
+	// NegativeExpireTime: For requested entities that did not match the threat
+	// list, how long to cache the response until.
 	NegativeExpireTime string `json:"negativeExpireTime,omitempty"`
-
-	// Threats: The full hashes that matched the requested prefixes. The
-	// hash will be populated in the key.
+	// Threats: The full hashes that matched the requested prefixes. The hash will
+	// be populated in the key.
 	Threats []*GoogleCloudWebriskV1SearchHashesResponseThreatHash `json:"threats,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "NegativeExpireTime")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "NegativeExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NegativeExpireTime") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "NegativeExpireTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1SearchHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchHashesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1SearchHashesResponseThreatHash: Contains threat
 // information on a matching hash.
 type GoogleCloudWebriskV1SearchHashesResponseThreatHash struct {
-	// ExpireTime: The cache lifetime for the returned match. Clients must
-	// not cache this response past this timestamp to avoid false positives.
+	// ExpireTime: The cache lifetime for the returned match. Clients must not
+	// cache this response past this timestamp to avoid false positives.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// Hash: A 32 byte SHA256 hash. This field is in binary format. For JSON
 	// requests, hashes are base64-encoded.
 	Hash string `json:"hash,omitempty"`
-
-	// ThreatTypes: The ThreatList this threat belongs to. This must contain
-	// at least one entry.
+	// ThreatTypes: The ThreatList this threat belongs to. This must contain at
+	// least one entry.
 	//
 	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
-	// type. This threat type is unused.
+	//   "THREAT_TYPE_UNSPECIFIED" - No entries should match this threat type. This
+	// threat type is unused.
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
-	// coverage social engineering URIs targeting any platform.
+	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended coverage
+	// social engineering URIs targeting any platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExpireTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1SearchHashesResponseThreatHash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchHashesResponseThreatHash
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleCloudWebriskV1SearchUrisResponse struct {
-	// Threat: The threat list matches. This might be empty if the URI is on
-	// no list.
+	// Threat: The threat list matches. This might be empty if the URI is on no
+	// list.
 	Threat *GoogleCloudWebriskV1SearchUrisResponseThreatUri `json:"threat,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Threat") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Threat") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Threat") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1SearchUrisResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchUrisResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1SearchUrisResponseThreatUri: Contains threat
-// information on a matching uri.
+// GoogleCloudWebriskV1SearchUrisResponseThreatUri: Contains threat information
+// on a matching uri.
 type GoogleCloudWebriskV1SearchUrisResponseThreatUri struct {
-	// ExpireTime: The cache lifetime for the returned match. Clients must
-	// not cache this response past this timestamp to avoid false positives.
+	// ExpireTime: The cache lifetime for the returned match. Clients must not
+	// cache this response past this timestamp to avoid false positives.
 	ExpireTime string `json:"expireTime,omitempty"`
-
 	// ThreatTypes: The ThreatList this threat belongs to.
 	//
 	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
-	// type. This threat type is unused.
+	//   "THREAT_TYPE_UNSPECIFIED" - No entries should match this threat type. This
+	// threat type is unused.
 	//   "MALWARE" - Malware targeting any platform.
 	//   "SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 	//   "UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
-	// coverage social engineering URIs targeting any platform.
+	//   "SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended coverage
+	// social engineering URIs targeting any platform.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExpireTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1SearchUrisResponseThreatUri) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1SearchUrisResponseThreatUri
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudWebriskV1Submission: Wraps a URI that might be displaying
 // malicious content.
 type GoogleCloudWebriskV1Submission struct {
-	// Uri: Required. The URI that is being reported for malicious content
-	// to be analyzed.
+	// Uri: Required. The URI that is being reported for malicious content to be
+	// analyzed.
 	Uri string `json:"uri,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Uri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Uri") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1Submission) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1Submission
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1ThreatEntryAdditions: Contains the set of entries
-// to add to a local database. May contain a combination of compressed
-// and raw data in a single response.
+// GoogleCloudWebriskV1ThreatEntryAdditions: Contains the set of entries to add
+// to a local database. May contain a combination of compressed and raw data in
+// a single response.
 type GoogleCloudWebriskV1ThreatEntryAdditions struct {
-	// RawHashes: The raw SHA256-formatted entries. Repeated to allow
-	// returning sets of hashes with different prefix sizes.
+	// RawHashes: The raw SHA256-formatted entries. Repeated to allow returning
+	// sets of hashes with different prefix sizes.
 	RawHashes []*GoogleCloudWebriskV1RawHashes `json:"rawHashes,omitempty"`
-
-	// RiceHashes: The encoded 4-byte prefixes of SHA256-formatted entries,
-	// using a Golomb-Rice encoding. The hashes are converted to uint32,
-	// sorted in ascending order, then delta encoded and stored as
-	// encoded_data.
+	// RiceHashes: The encoded 4-byte prefixes of SHA256-formatted entries, using a
+	// Golomb-Rice encoding. The hashes are converted to uint32, sorted in
+	// ascending order, then delta encoded and stored as encoded_data.
 	RiceHashes *GoogleCloudWebriskV1RiceDeltaEncoding `json:"riceHashes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RawHashes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RawHashes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RawHashes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1ThreatEntryAdditions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ThreatEntryAdditions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudWebriskV1ThreatEntryRemovals: Contains the set of entries
-// to remove from a local database.
+// GoogleCloudWebriskV1ThreatEntryRemovals: Contains the set of entries to
+// remove from a local database.
 type GoogleCloudWebriskV1ThreatEntryRemovals struct {
 	// RawIndices: The raw removal indices for a local list.
 	RawIndices *GoogleCloudWebriskV1RawIndices `json:"rawIndices,omitempty"`
-
-	// RiceIndices: The encoded local, lexicographically-sorted list
-	// indices, using a Golomb-Rice encoding. Used for sending compressed
-	// removal indices. The removal indices (uint32) are sorted in ascending
-	// order, then delta encoded and stored as encoded_data.
+	// RiceIndices: The encoded local, lexicographically-sorted list indices, using
+	// a Golomb-Rice encoding. Used for sending compressed removal indices. The
+	// removal indices (uint32) are sorted in ascending order, then delta encoded
+	// and stored as encoded_data.
 	RiceIndices *GoogleCloudWebriskV1RiceDeltaEncoding `json:"riceIndices,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RawIndices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RawIndices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RawIndices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudWebriskV1ThreatEntryRemovals) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudWebriskV1ThreatEntryRemovals
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningCancelOperationRequest: The request message for
@@ -712,150 +613,115 @@ type GoogleLongrunningCancelOperationRequest struct {
 type GoogleLongrunningListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
 // operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
-
 	// Metadata: Contains a `SubmitUriMetadata` object.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: Matches the `/v1/{project-name}/operations/{operation-id}`
-	// pattern.
+	// Name: Matches the `/v1/{project-name}/operations/{operation-id}` pattern.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different programming environments, including REST
-// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// GoogleRpcStatus: The `Status` type defines a logical error model that is
+// suitable for different programming environments, including REST APIs and RPC
+// APIs. It is used by gRPC (https://github.com/grpc). Each `Status` message
+// contains three pieces of data: error code, error message, and error details.
+// You can find out more about this error model and how to work with it in the
+// API Design Guide (https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "webrisk.hashes.search":
 
 type HashesSearchCall struct {
 	s            *Service
@@ -865,21 +731,20 @@ type HashesSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Gets the full hashes that match the requested hash prefix.
-// This is used after a hash prefix is looked up in a threatList and
-// there is a match. The client side threatList only holds partial
-// hashes so the client must query this method to determine if there is
-// a full hash match of a threat.
+// Search: Gets the full hashes that match the requested hash prefix. This is
+// used after a hash prefix is looked up in a threatList and there is a match.
+// The client side threatList only holds partial hashes so the client must
+// query this method to determine if there is a full hash match of a threat.
 func (r *HashesService) Search() *HashesSearchCall {
 	c := &HashesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // HashPrefix sets the optional parameter "hashPrefix": A hash prefix,
-// consisting of the most significant 4-32 bytes of a SHA256 hash. For
-// JSON requests, this field is base64-encoded. Note that if this
-// parameter is provided by a URI, it must be encoded using the web safe
-// base64 variant (RFC 4648).
+// consisting of the most significant 4-32 bytes of a SHA256 hash. For JSON
+// requests, this field is base64-encoded. Note that if this parameter is
+// provided by a URI, it must be encoded using the web safe base64 variant (RFC
+// 4648).
 func (c *HashesSearchCall) HashPrefix(hashPrefix string) *HashesSearchCall {
 	c.urlParams_.Set("hashPrefix", hashPrefix)
 	return c
@@ -890,49 +755,45 @@ func (c *HashesSearchCall) HashPrefix(hashPrefix string) *HashesSearchCall {
 //
 // Possible values:
 //
-//	"THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
+//	"THREAT_TYPE_UNSPECIFIED" - No entries should match this threat type. This
 //
-// type. This threat type is unused.
+// threat type is unused.
 //
 //	"MALWARE" - Malware targeting any platform.
 //	"SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //	"UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
+//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended coverage
 //
-// coverage social engineering URIs targeting any platform.
+// social engineering URIs targeting any platform.
 func (c *HashesSearchCall) ThreatTypes(threatTypes ...string) *HashesSearchCall {
 	c.urlParams_.SetMulti("threatTypes", append([]string{}, threatTypes...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *HashesSearchCall) Fields(s ...googleapi.Field) *HashesSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *HashesSearchCall) IfNoneMatch(entityTag string) *HashesSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *HashesSearchCall) Context(ctx context.Context) *HashesSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *HashesSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -941,12 +802,7 @@ func (c *HashesSearchCall) Header() http.Header {
 }
 
 func (c *HashesSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -964,14 +820,11 @@ func (c *HashesSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "webrisk.hashes.search" call.
-// Exactly one of *GoogleCloudWebriskV1SearchHashesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudWebriskV1SearchHashesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudWebriskV1SearchHashesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1SearchHashesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1002,52 +855,7 @@ func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebrisk
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the full hashes that match the requested hash prefix. This is used after a hash prefix is looked up in a threatList and there is a match. The client side threatList only holds partial hashes so the client must query this method to determine if there is a full hash match of a threat.",
-	//   "flatPath": "v1/hashes:search",
-	//   "httpMethod": "GET",
-	//   "id": "webrisk.hashes.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "hashPrefix": {
-	//       "description": "A hash prefix, consisting of the most significant 4-32 bytes of a SHA256 hash. For JSON requests, this field is base64-encoded. Note that if this parameter is provided by a URI, it must be encoded using the web safe base64 variant (RFC 4648).",
-	//       "format": "byte",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "threatTypes": {
-	//       "description": "Required. The ThreatLists to search in. Multiple ThreatLists may be specified.",
-	//       "enum": [
-	//         "THREAT_TYPE_UNSPECIFIED",
-	//         "MALWARE",
-	//         "SOCIAL_ENGINEERING",
-	//         "UNWANTED_SOFTWARE",
-	//         "SOCIAL_ENGINEERING_EXTENDED_COVERAGE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No entries should match this threat type. This threat type is unused.",
-	//         "Malware targeting any platform.",
-	//         "Social engineering targeting any platform.",
-	//         "Unwanted software targeting any platform.",
-	//         "A list of extended coverage social engineering URIs targeting any platform."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/hashes:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudWebriskV1SearchHashesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "webrisk.projects.operations.cancel":
 
 type ProjectsOperationsCancelCall struct {
 	s                                       *Service
@@ -1058,15 +866,14 @@ type ProjectsOperationsCancelCall struct {
 	header_                                 http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -1078,23 +885,21 @@ func (r *ProjectsOperationsService) Cancel(name string, googlelongrunningcancelo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsCancelCall) Context(ctx context.Context) *ProjectsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1103,18 +908,12 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlelongrunningcanceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -1131,12 +930,11 @@ func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "webrisk.projects.operations.cancel" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1167,35 +965,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "webrisk.projects.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleLongrunningCancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   }
-	// }
-
 }
-
-// method id "webrisk.projects.operations.delete":
 
 type ProjectsOperationsDeleteCall struct {
 	s          *Service
@@ -1205,10 +975,10 @@ type ProjectsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns `google.rpc.Code.UNIMPLEMENTED`.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
@@ -1218,23 +988,21 @@ func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDelet
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsDeleteCall) Context(ctx context.Context) *ProjectsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1243,12 +1011,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1266,12 +1029,11 @@ func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "webrisk.projects.operations.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1302,32 +1064,7 @@ func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "webrisk.projects.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   }
-	// }
-
 }
-
-// method id "webrisk.projects.operations.get":
 
 type ProjectsOperationsGetCall struct {
 	s            *Service
@@ -1338,9 +1075,9 @@ type ProjectsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
@@ -1350,33 +1087,29 @@ func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsGetCall) Context(ctx context.Context) *ProjectsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1385,12 +1118,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1411,12 +1139,11 @@ func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "webrisk.projects.operations.get" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1447,35 +1174,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "webrisk.projects.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "webrisk.projects.operations.list":
 
 type ProjectsOperationsListCall struct {
 	s            *Service
@@ -1486,9 +1185,8 @@ type ProjectsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// `UNIMPLEMENTED`.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
@@ -1497,55 +1195,50 @@ func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCal
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsOperationsListCall) Filter(filter string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsOperationsListCall) PageSize(pageSize int64) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsOperationsListCall) PageToken(pageToken string) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsOperationsListCall) Context(ctx context.Context) *ProjectsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1554,12 +1247,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1580,13 +1268,11 @@ func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "webrisk.projects.operations.list" call.
-// Exactly one of *GoogleLongrunningListOperationsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1617,45 +1303,6 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-	//   "flatPath": "v1/projects/{projectsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "webrisk.projects.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/operations",
-	//   "response": {
-	//     "$ref": "GoogleLongrunningListOperationsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1663,7 +1310,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1679,8 +1326,6 @@ func (c *ProjectsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLo
 	}
 }
 
-// method id "webrisk.projects.submissions.create":
-
 type ProjectsSubmissionsCreateCall struct {
 	s                              *Service
 	parent                         string
@@ -1690,17 +1335,16 @@ type ProjectsSubmissionsCreateCall struct {
 	header_                        http.Header
 }
 
-// Create: Creates a Submission of a URI suspected of containing
-// phishing content to be reviewed. If the result verifies the existence
-// of malicious phishing content, the site will be added to the Google's
-// Social Engineering lists
-// (https://support.google.com/webmasters/answer/6350487/) in order to
-// protect users that could get exposed to this threat in the future.
-// Only allowlisted projects can use this method during Early Access.
-// Please reach out to Sales or your customer engineer to obtain access.
+// Create: Creates a Submission of a URI suspected of containing phishing
+// content to be reviewed. If the result verifies the existence of malicious
+// phishing content, the site will be added to the Google's Social Engineering
+// lists (https://support.google.com/webmasters/answer/6350487/) in order to
+// protect users that could get exposed to this threat in the future. Only
+// allowlisted projects can use this method during Early Access. Please reach
+// out to Sales or your customer engineer to obtain access.
 //
-//   - parent: The name of the project that is making the submission. This
-//     string is in the format "projects/{project_number}".
+//   - parent: The name of the project that is making the submission. This string
+//     is in the format "projects/{project_number}".
 func (r *ProjectsSubmissionsService) Create(parent string, googlecloudwebriskv1submission *GoogleCloudWebriskV1Submission) *ProjectsSubmissionsCreateCall {
 	c := &ProjectsSubmissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1709,23 +1353,21 @@ func (r *ProjectsSubmissionsService) Create(parent string, googlecloudwebriskv1s
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsSubmissionsCreateCall) Fields(s ...googleapi.Field) *ProjectsSubmissionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsSubmissionsCreateCall) Context(ctx context.Context) *ProjectsSubmissionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsSubmissionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1734,18 +1376,12 @@ func (c *ProjectsSubmissionsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsSubmissionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudwebriskv1submission)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/submissions")
@@ -1762,12 +1398,11 @@ func (c *ProjectsSubmissionsCreateCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "webrisk.projects.submissions.create" call.
-// Exactly one of *GoogleCloudWebriskV1Submission or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudWebriskV1Submission.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudWebriskV1Submission.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsSubmissionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1Submission, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1798,38 +1433,7 @@ func (c *ProjectsSubmissionsCreateCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Submission of a URI suspected of containing phishing content to be reviewed. If the result verifies the existence of malicious phishing content, the site will be added to the [Google's Social Engineering lists](https://support.google.com/webmasters/answer/6350487/) in order to protect users that could get exposed to this threat in the future. Only allowlisted projects can use this method during Early Access. Please reach out to Sales or your customer engineer to obtain access.",
-	//   "flatPath": "v1/projects/{projectsId}/submissions",
-	//   "httpMethod": "POST",
-	//   "id": "webrisk.projects.submissions.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the project that is making the submission. This string is in the format \"projects/{project_number}\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/submissions",
-	//   "request": {
-	//     "$ref": "GoogleCloudWebriskV1Submission"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudWebriskV1Submission"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "webrisk.threatLists.computeDiff":
 
 type ThreatListsComputeDiffCall struct {
 	s            *Service
@@ -1839,41 +1443,38 @@ type ThreatListsComputeDiffCall struct {
 	header_      http.Header
 }
 
-// ComputeDiff: Gets the most recent threat list diffs. These diffs
-// should be applied to a local database of hashes to keep it
-// up-to-date. If the local database is empty or excessively
-// out-of-date, a complete snapshot of the database will be returned.
-// This Method only updates a single ThreatList at a time. To update
-// multiple ThreatList databases, this method needs to be called once
-// for each list.
+// ComputeDiff: Gets the most recent threat list diffs. These diffs should be
+// applied to a local database of hashes to keep it up-to-date. If the local
+// database is empty or excessively out-of-date, a complete snapshot of the
+// database will be returned. This Method only updates a single ThreatList at a
+// time. To update multiple ThreatList databases, this method needs to be
+// called once for each list.
 func (r *ThreatListsService) ComputeDiff() *ThreatListsComputeDiffCall {
 	c := &ThreatListsComputeDiffCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // ConstraintsMaxDatabaseEntries sets the optional parameter
-// "constraints.maxDatabaseEntries": Sets the maximum number of entries
-// that the client is willing to have in the local database. This should
-// be a power of 2 between 2**10 and 2**20. If zero, no database size
-// limit is set.
+// "constraints.maxDatabaseEntries": Sets the maximum number of entries that
+// the client is willing to have in the local database. This should be a power
+// of 2 between 2**10 and 2**20. If zero, no database size limit is set.
 func (c *ThreatListsComputeDiffCall) ConstraintsMaxDatabaseEntries(constraintsMaxDatabaseEntries int64) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("constraints.maxDatabaseEntries", fmt.Sprint(constraintsMaxDatabaseEntries))
 	return c
 }
 
 // ConstraintsMaxDiffEntries sets the optional parameter
-// "constraints.maxDiffEntries": The maximum size in number of entries.
-// The diff will not contain more entries than this value. This should
-// be a power of 2 between 2**10 and 2**20. If zero, no diff size limit
-// is set.
+// "constraints.maxDiffEntries": The maximum size in number of entries. The
+// diff will not contain more entries than this value. This should be a power
+// of 2 between 2**10 and 2**20. If zero, no diff size limit is set.
 func (c *ThreatListsComputeDiffCall) ConstraintsMaxDiffEntries(constraintsMaxDiffEntries int64) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("constraints.maxDiffEntries", fmt.Sprint(constraintsMaxDiffEntries))
 	return c
 }
 
 // ConstraintsSupportedCompressions sets the optional parameter
-// "constraints.supportedCompressions": The compression types supported
-// by the client.
+// "constraints.supportedCompressions": The compression types supported by the
+// client.
 //
 // Possible values:
 //
@@ -1885,67 +1486,62 @@ func (c *ThreatListsComputeDiffCall) ConstraintsSupportedCompressions(constraint
 	return c
 }
 
-// ThreatType sets the optional parameter "threatType": Required. The
-// threat list to update. Only a single ThreatType should be specified
-// per request. If you want to handle multiple ThreatTypes, you must
-// make one request per ThreatType.
+// ThreatType sets the optional parameter "threatType": Required. The threat
+// list to update. Only a single ThreatType should be specified per request. If
+// you want to handle multiple ThreatTypes, you must make one request per
+// ThreatType.
 //
 // Possible values:
 //
-//	"THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
+//	"THREAT_TYPE_UNSPECIFIED" - No entries should match this threat type. This
 //
-// type. This threat type is unused.
+// threat type is unused.
 //
 //	"MALWARE" - Malware targeting any platform.
 //	"SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //	"UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
+//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended coverage
 //
-// coverage social engineering URIs targeting any platform.
+// social engineering URIs targeting any platform.
 func (c *ThreatListsComputeDiffCall) ThreatType(threatType string) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("threatType", threatType)
 	return c
 }
 
-// VersionToken sets the optional parameter "versionToken": The current
-// version token of the client for the requested list (the client
-// version that was received from the last successful diff). If the
-// client does not have a version token (this is the first time calling
-// ComputeThreatListDiff), this may be left empty and a full database
-// snapshot will be returned.
+// VersionToken sets the optional parameter "versionToken": The current version
+// token of the client for the requested list (the client version that was
+// received from the last successful diff). If the client does not have a
+// version token (this is the first time calling ComputeThreatListDiff), this
+// may be left empty and a full database snapshot will be returned.
 func (c *ThreatListsComputeDiffCall) VersionToken(versionToken string) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("versionToken", versionToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ThreatListsComputeDiffCall) Fields(s ...googleapi.Field) *ThreatListsComputeDiffCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ThreatListsComputeDiffCall) IfNoneMatch(entityTag string) *ThreatListsComputeDiffCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ThreatListsComputeDiffCall) Context(ctx context.Context) *ThreatListsComputeDiffCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ThreatListsComputeDiffCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1954,12 +1550,7 @@ func (c *ThreatListsComputeDiffCall) Header() http.Header {
 }
 
 func (c *ThreatListsComputeDiffCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1977,14 +1568,11 @@ func (c *ThreatListsComputeDiffCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "webrisk.threatLists.computeDiff" call.
-// Exactly one of *GoogleCloudWebriskV1ComputeThreatListDiffResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudWebriskV1ComputeThreatListDiffResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudWebriskV1ComputeThreatListDiffResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ThreatListsComputeDiffCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1ComputeThreatListDiffResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2015,79 +1603,7 @@ func (c *ThreatListsComputeDiffCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the most recent threat list diffs. These diffs should be applied to a local database of hashes to keep it up-to-date. If the local database is empty or excessively out-of-date, a complete snapshot of the database will be returned. This Method only updates a single ThreatList at a time. To update multiple ThreatList databases, this method needs to be called once for each list.",
-	//   "flatPath": "v1/threatLists:computeDiff",
-	//   "httpMethod": "GET",
-	//   "id": "webrisk.threatLists.computeDiff",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "constraints.maxDatabaseEntries": {
-	//       "description": "Sets the maximum number of entries that the client is willing to have in the local database. This should be a power of 2 between 2**10 and 2**20. If zero, no database size limit is set.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "constraints.maxDiffEntries": {
-	//       "description": "The maximum size in number of entries. The diff will not contain more entries than this value. This should be a power of 2 between 2**10 and 2**20. If zero, no diff size limit is set.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "constraints.supportedCompressions": {
-	//       "description": "The compression types supported by the client.",
-	//       "enum": [
-	//         "COMPRESSION_TYPE_UNSPECIFIED",
-	//         "RAW",
-	//         "RICE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown.",
-	//         "Raw, uncompressed data.",
-	//         "Rice-Golomb encoded data."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "threatType": {
-	//       "description": "Required. The threat list to update. Only a single ThreatType should be specified per request. If you want to handle multiple ThreatTypes, you must make one request per ThreatType.",
-	//       "enum": [
-	//         "THREAT_TYPE_UNSPECIFIED",
-	//         "MALWARE",
-	//         "SOCIAL_ENGINEERING",
-	//         "UNWANTED_SOFTWARE",
-	//         "SOCIAL_ENGINEERING_EXTENDED_COVERAGE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No entries should match this threat type. This threat type is unused.",
-	//         "Malware targeting any platform.",
-	//         "Social engineering targeting any platform.",
-	//         "Unwanted software targeting any platform.",
-	//         "A list of extended coverage social engineering URIs targeting any platform."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "versionToken": {
-	//       "description": "The current version token of the client for the requested list (the client version that was received from the last successful diff). If the client does not have a version token (this is the first time calling ComputeThreatListDiff), this may be left empty and a full database snapshot will be returned.",
-	//       "format": "byte",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/threatLists:computeDiff",
-	//   "response": {
-	//     "$ref": "GoogleCloudWebriskV1ComputeThreatListDiffResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "webrisk.uris.search":
 
 type UrisSearchCall struct {
 	s            *Service
@@ -2097,11 +1613,10 @@ type UrisSearchCall struct {
 	header_      http.Header
 }
 
-// Search: This method is used to check whether a URI is on a given
-// threatList. Multiple threatLists may be searched in a single query.
-// The response will list all requested threatLists the URI was found to
-// match. If the URI is not found on any of the requested ThreatList an
-// empty response will be returned.
+// Search: This method is used to check whether a URI is on a given threatList.
+// Multiple threatLists may be searched in a single query. The response will
+// list all requested threatLists the URI was found to match. If the URI is not
+// found on any of the requested ThreatList an empty response will be returned.
 func (r *UrisService) Search() *UrisSearchCall {
 	c := &UrisSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2112,56 +1627,52 @@ func (r *UrisService) Search() *UrisSearchCall {
 //
 // Possible values:
 //
-//	"THREAT_TYPE_UNSPECIFIED" - No entries should match this threat
+//	"THREAT_TYPE_UNSPECIFIED" - No entries should match this threat type. This
 //
-// type. This threat type is unused.
+// threat type is unused.
 //
 //	"MALWARE" - Malware targeting any platform.
 //	"SOCIAL_ENGINEERING" - Social engineering targeting any platform.
 //	"UNWANTED_SOFTWARE" - Unwanted software targeting any platform.
-//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended
+//	"SOCIAL_ENGINEERING_EXTENDED_COVERAGE" - A list of extended coverage
 //
-// coverage social engineering URIs targeting any platform.
+// social engineering URIs targeting any platform.
 func (c *UrisSearchCall) ThreatTypes(threatTypes ...string) *UrisSearchCall {
 	c.urlParams_.SetMulti("threatTypes", append([]string{}, threatTypes...))
 	return c
 }
 
-// Uri sets the optional parameter "uri": Required. The URI to be
-// checked for matches.
+// Uri sets the optional parameter "uri": Required. The URI to be checked for
+// matches.
 func (c *UrisSearchCall) Uri(uri string) *UrisSearchCall {
 	c.urlParams_.Set("uri", uri)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UrisSearchCall) Fields(s ...googleapi.Field) *UrisSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UrisSearchCall) IfNoneMatch(entityTag string) *UrisSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UrisSearchCall) Context(ctx context.Context) *UrisSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UrisSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2170,12 +1681,7 @@ func (c *UrisSearchCall) Header() http.Header {
 }
 
 func (c *UrisSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2193,13 +1699,11 @@ func (c *UrisSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "webrisk.uris.search" call.
-// Exactly one of *GoogleCloudWebriskV1SearchUrisResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudWebriskV1SearchUrisResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudWebriskV1SearchUrisResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *UrisSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1SearchUrisResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2230,46 +1734,4 @@ func (c *UrisSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudWebriskV1
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "This method is used to check whether a URI is on a given threatList. Multiple threatLists may be searched in a single query. The response will list all requested threatLists the URI was found to match. If the URI is not found on any of the requested ThreatList an empty response will be returned.",
-	//   "flatPath": "v1/uris:search",
-	//   "httpMethod": "GET",
-	//   "id": "webrisk.uris.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "threatTypes": {
-	//       "description": "Required. The ThreatLists to search in. Multiple ThreatLists may be specified.",
-	//       "enum": [
-	//         "THREAT_TYPE_UNSPECIFIED",
-	//         "MALWARE",
-	//         "SOCIAL_ENGINEERING",
-	//         "UNWANTED_SOFTWARE",
-	//         "SOCIAL_ENGINEERING_EXTENDED_COVERAGE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "No entries should match this threat type. This threat type is unused.",
-	//         "Malware targeting any platform.",
-	//         "Social engineering targeting any platform.",
-	//         "Unwanted software targeting any platform.",
-	//         "A list of extended coverage social engineering URIs targeting any platform."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "uri": {
-	//       "description": "Required. The URI to be checked for matches.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/uris:search",
-	//   "response": {
-	//     "$ref": "GoogleCloudWebriskV1SearchUrisResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

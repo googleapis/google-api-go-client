@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -224,140 +224,110 @@ type ProjectsLocationsNotificationsService struct {
 	s *Service
 }
 
-// GoogleCloudAdvisorynotificationsV1Attachment: Attachment with
-// specific information about the issue.
+// GoogleCloudAdvisorynotificationsV1Attachment: Attachment with specific
+// information about the issue.
 type GoogleCloudAdvisorynotificationsV1Attachment struct {
 	// Csv: A CSV file attachment. Max size is 10 MB.
 	Csv *GoogleCloudAdvisorynotificationsV1Csv `json:"csv,omitempty"`
-
 	// DisplayName: The title of the attachment.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Csv") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Csv") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Csv") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Csv") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Attachment) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Attachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Csv: A representation of a CSV file
 // attachment, as a list of column headers and a list of data rows.
 type GoogleCloudAdvisorynotificationsV1Csv struct {
-	// DataRows: The list of data rows in a CSV file, as string arrays
-	// rather than as a single comma-separated string.
+	// DataRows: The list of data rows in a CSV file, as string arrays rather than
+	// as a single comma-separated string.
 	DataRows []*GoogleCloudAdvisorynotificationsV1CsvCsvRow `json:"dataRows,omitempty"`
-
 	// Headers: The list of headers for data columns in a CSV file.
 	Headers []string `json:"headers,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataRows") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataRows") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataRows") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Csv) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Csv
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1CsvCsvRow: A representation of a
-// single data row in a CSV file.
+// GoogleCloudAdvisorynotificationsV1CsvCsvRow: A representation of a single
+// data row in a CSV file.
 type GoogleCloudAdvisorynotificationsV1CsvCsvRow struct {
-	// Entries: The data entries in a CSV file row, as a string array rather
-	// than a single comma-separated string.
+	// Entries: The data entries in a CSV file row, as a string array rather than a
+	// single comma-separated string.
 	Entries []string `json:"entries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Entries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entries") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1CsvCsvRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1CsvCsvRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1ListNotificationsResponse: Response
-// of ListNotifications endpoint.
+// GoogleCloudAdvisorynotificationsV1ListNotificationsResponse: Response of
+// ListNotifications endpoint.
 type GoogleCloudAdvisorynotificationsV1ListNotificationsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Notifications: List of notifications under a given parent.
 	Notifications []*GoogleCloudAdvisorynotificationsV1Notification `json:"notifications,omitempty"`
-
 	// TotalSize: Estimation of a total number of notifications.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1ListNotificationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Message: A message which contains
@@ -365,278 +335,217 @@ func (s *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) MarshalJSO
 type GoogleCloudAdvisorynotificationsV1Message struct {
 	// Attachments: The attachments to download.
 	Attachments []*GoogleCloudAdvisorynotificationsV1Attachment `json:"attachments,omitempty"`
-
 	// Body: The message content.
 	Body *GoogleCloudAdvisorynotificationsV1MessageBody `json:"body,omitempty"`
-
 	// CreateTime: The Message creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// LocalizationTime: Time when Message was localized
 	LocalizationTime string `json:"localizationTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attachments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attachments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Message) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Message
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1MessageBody: A message body
-// containing text.
+// GoogleCloudAdvisorynotificationsV1MessageBody: A message body containing
+// text.
 type GoogleCloudAdvisorynotificationsV1MessageBody struct {
 	// Text: The text content of the message body.
 	Text *GoogleCloudAdvisorynotificationsV1Text `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1MessageBody) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1MessageBody
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1Notification: A notification object
-// for notifying customers about security and privacy issues.
+// GoogleCloudAdvisorynotificationsV1Notification: A notification object for
+// notifying customers about security and privacy issues.
 type GoogleCloudAdvisorynotificationsV1Notification struct {
 	// CreateTime: Output only. Time the notification was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Messages: A list of messages in the notification.
 	Messages []*GoogleCloudAdvisorynotificationsV1Message `json:"messages,omitempty"`
-
 	// Name: The resource name of the notification. Format:
-	// organizations/{organization}/locations/{location}/notifications/{notif
-	// ication} or
-	// projects/{project}/locations/{location}/notifications/{notification}.
+	// organizations/{organization}/locations/{location}/notifications/{notification
+	// } or projects/{project}/locations/{location}/notifications/{notification}.
 	Name string `json:"name,omitempty"`
-
 	// NotificationType: Type of notification
 	//
 	// Possible values:
 	//   "NOTIFICATION_TYPE_UNSPECIFIED" - Default type
-	//   "NOTIFICATION_TYPE_SECURITY_PRIVACY_ADVISORY" - Security and
-	// privacy advisory notifications
-	//   "NOTIFICATION_TYPE_SENSITIVE_ACTIONS" - Sensitive action
-	// notifications
+	//   "NOTIFICATION_TYPE_SECURITY_PRIVACY_ADVISORY" - Security and privacy
+	// advisory notifications
+	//   "NOTIFICATION_TYPE_SENSITIVE_ACTIONS" - Sensitive action notifications
 	//   "NOTIFICATION_TYPE_SECURITY_MSA" - General security MSA
 	//   "NOTIFICATION_TYPE_THREAT_HORIZONS" - Threat horizons MSA
 	NotificationType string `json:"notificationType,omitempty"`
-
 	// Subject: The subject line of the notification.
 	Subject *GoogleCloudAdvisorynotificationsV1Subject `json:"subject,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Notification) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Notification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1NotificationSettings: Settings for
-// each NotificationType.
+// GoogleCloudAdvisorynotificationsV1NotificationSettings: Settings for each
+// NotificationType.
 type GoogleCloudAdvisorynotificationsV1NotificationSettings struct {
 	// Enabled: Whether the associated NotificationType is enabled.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1NotificationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1NotificationSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAdvisorynotificationsV1Settings: Settings for Advisory
 // Notifications.
 type GoogleCloudAdvisorynotificationsV1Settings struct {
-	// Etag: Required. Fingerprint for optimistic concurrency returned in
-	// Get requests. Must be provided for Update requests. If the value
-	// provided does not match the value known to the server, ABORTED will
-	// be thrown, and the client should retry the read-modify-write cycle.
+	// Etag: Required. Fingerprint for optimistic concurrency returned in Get
+	// requests. Must be provided for Update requests. If the value provided does
+	// not match the value known to the server, ABORTED will be thrown, and the
+	// client should retry the read-modify-write cycle.
 	Etag string `json:"etag,omitempty"`
-
-	// Name: Identifier. The resource name of the settings to retrieve.
-	// Format: organizations/{organization}/locations/{location}/settings or
+	// Name: Identifier. The resource name of the settings to retrieve. Format:
+	// organizations/{organization}/locations/{location}/settings or
 	// projects/{projects}/locations/{location}/settings.
 	Name string `json:"name,omitempty"`
-
 	// NotificationSettings: Required. Map of each notification type and its
-	// settings to get/set all settings at once. The server will validate
-	// the value for each notification type.
+	// settings to get/set all settings at once. The server will validate the value
+	// for each notification type.
 	NotificationSettings map[string]GoogleCloudAdvisorynotificationsV1NotificationSettings `json:"notificationSettings,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Settings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1Subject: A subject line of a
-// notification.
+// GoogleCloudAdvisorynotificationsV1Subject: A subject line of a notification.
 type GoogleCloudAdvisorynotificationsV1Subject struct {
 	// Text: The text content.
 	Text *GoogleCloudAdvisorynotificationsV1Text `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Text") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Text") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Subject) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Subject
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAdvisorynotificationsV1Text: A text object containing the
-// English text and its localized copies.
+// GoogleCloudAdvisorynotificationsV1Text: A text object containing the English
+// text and its localized copies.
 type GoogleCloudAdvisorynotificationsV1Text struct {
 	// EnText: The English copy.
 	EnText string `json:"enText,omitempty"`
-
 	// LocalizationState: Status of the localization.
 	//
 	// Possible values:
 	//   "LOCALIZATION_STATE_UNSPECIFIED" - Not used.
-	//   "LOCALIZATION_STATE_NOT_APPLICABLE" - Localization is not
-	// applicable for requested language. This can happen when: - The
-	// requested language was not supported by Advisory Notifications at the
-	// time of localization (including notifications created before the
-	// localization feature was launched). - The requested language is
-	// English, so only the English text is returned.
-	//   "LOCALIZATION_STATE_PENDING" - Localization for requested language
-	// is in progress, and not ready yet.
-	//   "LOCALIZATION_STATE_COMPLETED" - Localization for requested
-	// language is completed.
+	//   "LOCALIZATION_STATE_NOT_APPLICABLE" - Localization is not applicable for
+	// requested language. This can happen when: - The requested language was not
+	// supported by Advisory Notifications at the time of localization (including
+	// notifications created before the localization feature was launched). - The
+	// requested language is English, so only the English text is returned.
+	//   "LOCALIZATION_STATE_PENDING" - Localization for requested language is in
+	// progress, and not ready yet.
+	//   "LOCALIZATION_STATE_COMPLETED" - Localization for requested language is
+	// completed.
 	LocalizationState string `json:"localizationState,omitempty"`
-
 	// LocalizedText: The requested localized copy (if applicable).
 	LocalizedText string `json:"localizedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EnText") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EnText") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "EnText") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudAdvisorynotificationsV1Text) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAdvisorynotificationsV1Text
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "advisorynotifications.organizations.locations.getSettings":
 
 type OrganizationsLocationsGetSettingsCall struct {
 	s            *Service
@@ -659,33 +568,29 @@ func (r *OrganizationsLocationsService) GetSettings(name string) *OrganizationsL
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsLocationsGetSettingsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsGetSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsLocationsGetSettingsCall) IfNoneMatch(entityTag string) *OrganizationsLocationsGetSettingsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsLocationsGetSettingsCall) Context(ctx context.Context) *OrganizationsLocationsGetSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsLocationsGetSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -694,12 +599,7 @@ func (c *OrganizationsLocationsGetSettingsCall) Header() http.Header {
 }
 
 func (c *OrganizationsLocationsGetSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -720,14 +620,11 @@ func (c *OrganizationsLocationsGetSettingsCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "advisorynotifications.organizations.locations.getSettings" call.
-// Exactly one of *GoogleCloudAdvisorynotificationsV1Settings or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsLocationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Settings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -758,35 +655,7 @@ func (c *OrganizationsLocationsGetSettingsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get notification settings.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/settings",
-	//   "httpMethod": "GET",
-	//   "id": "advisorynotifications.organizations.locations.getSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/settings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "advisorynotifications.organizations.locations.updateSettings":
 
 type OrganizationsLocationsUpdateSettingsCall struct {
 	s                                          *Service
@@ -799,9 +668,9 @@ type OrganizationsLocationsUpdateSettingsCall struct {
 
 // UpdateSettings: Update notification settings.
 //
-//   - name: Identifier. The resource name of the settings to retrieve.
-//     Format: organizations/{organization}/locations/{location}/settings
-//     or projects/{projects}/locations/{location}/settings.
+//   - name: Identifier. The resource name of the settings to retrieve. Format:
+//     organizations/{organization}/locations/{location}/settings or
+//     projects/{projects}/locations/{location}/settings.
 func (r *OrganizationsLocationsService) UpdateSettings(name string, googlecloudadvisorynotificationsv1settings *GoogleCloudAdvisorynotificationsV1Settings) *OrganizationsLocationsUpdateSettingsCall {
 	c := &OrganizationsLocationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -810,23 +679,21 @@ func (r *OrganizationsLocationsService) UpdateSettings(name string, googleclouda
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsLocationsUpdateSettingsCall) Fields(s ...googleapi.Field) *OrganizationsLocationsUpdateSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsLocationsUpdateSettingsCall) Context(ctx context.Context) *OrganizationsLocationsUpdateSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsLocationsUpdateSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -835,18 +702,12 @@ func (c *OrganizationsLocationsUpdateSettingsCall) Header() http.Header {
 }
 
 func (c *OrganizationsLocationsUpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudadvisorynotificationsv1settings)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -863,14 +724,11 @@ func (c *OrganizationsLocationsUpdateSettingsCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "advisorynotifications.organizations.locations.updateSettings" call.
-// Exactly one of *GoogleCloudAdvisorynotificationsV1Settings or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Settings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -901,38 +759,7 @@ func (c *OrganizationsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update notification settings.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/settings",
-	//   "httpMethod": "PATCH",
-	//   "id": "advisorynotifications.organizations.locations.updateSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Identifier. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/settings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "advisorynotifications.organizations.locations.notifications.get":
 
 type OrganizationsLocationsNotificationsGetCall struct {
 	s            *Service
@@ -946,10 +773,9 @@ type OrganizationsLocationsNotificationsGetCall struct {
 // Get: Gets a notification.
 //
 //   - name: A name of the notification to retrieve. Format:
-//     organizations/{organization}/locations/{location}/notifications/{not
-//     ification} or
-//     projects/{projects}/locations/{location}/notifications/{notification
-//     }.
+//     organizations/{organization}/locations/{location}/notifications/{notificati
+//     on} or
+//     projects/{projects}/locations/{location}/notifications/{notification}.
 func (r *OrganizationsLocationsNotificationsService) Get(name string) *OrganizationsLocationsNotificationsGetCall {
 	c := &OrganizationsLocationsNotificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -957,44 +783,40 @@ func (r *OrganizationsLocationsNotificationsService) Get(name string) *Organizat
 }
 
 // LanguageCode sets the optional parameter "languageCode": ISO code for
-// requested localization language. If unset, will be interpereted as
-// "en". If the requested language is valid, but not supported for this
-// notification, English will be returned with an "Not applicable"
-// LocalizationState. If the ISO code is invalid (i.e. not a real
-// language), this RPC will throw an error.
+// requested localization language. If unset, will be interpereted as "en". If
+// the requested language is valid, but not supported for this notification,
+// English will be returned with an "Not applicable" LocalizationState. If the
+// ISO code is invalid (i.e. not a real language), this RPC will throw an
+// error.
 func (c *OrganizationsLocationsNotificationsGetCall) LanguageCode(languageCode string) *OrganizationsLocationsNotificationsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsLocationsNotificationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsNotificationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsLocationsNotificationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsNotificationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsLocationsNotificationsGetCall) Context(ctx context.Context) *OrganizationsLocationsNotificationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsLocationsNotificationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1003,12 +825,7 @@ func (c *OrganizationsLocationsNotificationsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsLocationsNotificationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1029,14 +846,11 @@ func (c *OrganizationsLocationsNotificationsGetCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "advisorynotifications.organizations.locations.notifications.get" call.
-// Exactly one of *GoogleCloudAdvisorynotificationsV1Notification or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1Notification.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1Notification.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsLocationsNotificationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Notification, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1067,40 +881,7 @@ func (c *OrganizationsLocationsNotificationsGetCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a notification.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/notifications/{notificationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "advisorynotifications.organizations.locations.notifications.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "languageCode": {
-	//       "description": "ISO code for requested localization language. If unset, will be interpereted as \"en\". If the requested language is valid, but not supported for this notification, English will be returned with an \"Not applicable\" LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. A name of the notification to retrieve. Format: organizations/{organization}/locations/{location}/notifications/{notification} or projects/{projects}/locations/{location}/notifications/{notification}.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+/notifications/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Notification"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "advisorynotifications.organizations.locations.notifications.list":
 
 type OrganizationsLocationsNotificationsListCall struct {
 	s            *Service
@@ -1113,9 +894,8 @@ type OrganizationsLocationsNotificationsListCall struct {
 
 // List: Lists notifications under a given parent.
 //
-//   - parent: The parent, which owns this collection of notifications.
-//     Must be of the form
-//     "organizations/{organization}/locations/{location}" or
+//   - parent: The parent, which owns this collection of notifications. Must be
+//     of the form "organizations/{organization}/locations/{location}" or
 //     "projects/{project}/locations/{location}".
 func (r *OrganizationsLocationsNotificationsService) List(parent string) *OrganizationsLocationsNotificationsListCall {
 	c := &OrganizationsLocationsNotificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1124,30 +904,28 @@ func (r *OrganizationsLocationsNotificationsService) List(parent string) *Organi
 }
 
 // LanguageCode sets the optional parameter "languageCode": ISO code for
-// requested localization language. If unset, will be interpereted as
-// "en". If the requested language is valid, but not supported for this
-// notification, English will be returned with an "Not applicable"
-// LocalizationState. If the ISO code is invalid (i.e. not a real
-// language), this RPC will throw an error.
+// requested localization language. If unset, will be interpereted as "en". If
+// the requested language is valid, but not supported for this notification,
+// English will be returned with an "Not applicable" LocalizationState. If the
+// ISO code is invalid (i.e. not a real language), this RPC will throw an
+// error.
 func (c *OrganizationsLocationsNotificationsListCall) LanguageCode(languageCode string) *OrganizationsLocationsNotificationsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of notifications to return. The service may return fewer than this
-// value. If unspecified or equal to 0, at most 50 notifications will be
-// returned. The maximum value is 50; values above 50 will be coerced to
-// 50.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// notifications to return. The service may return fewer than this value. If
+// unspecified or equal to 0, at most 50 notifications will be returned. The
+// maximum value is 50; values above 50 will be coerced to 50.
 func (c *OrganizationsLocationsNotificationsListCall) PageSize(pageSize int64) *OrganizationsLocationsNotificationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// returned from a previous request. When paginating, all other
-// parameters provided in the request must match the call that returned
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token returned
+// from a previous request. When paginating, all other parameters provided in
+// the request must match the call that returned the page token.
 func (c *OrganizationsLocationsNotificationsListCall) PageToken(pageToken string) *OrganizationsLocationsNotificationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1158,15 +936,12 @@ func (c *OrganizationsLocationsNotificationsListCall) PageToken(pageToken string
 //
 // Possible values:
 //
-//	"NOTIFICATION_VIEW_UNSPECIFIED" - Not specified, equivalent to
-//
-// BASIC.
-//
+//	"NOTIFICATION_VIEW_UNSPECIFIED" - Not specified, equivalent to BASIC.
 //	"BASIC" - Server responses only include title, creation time and
 //
-// Notification ID. Note: for internal use responses also include the
-// last update time, the latest message text and whether notification
-// has attachments.
+// Notification ID. Note: for internal use responses also include the last
+// update time, the latest message text and whether notification has
+// attachments.
 //
 //	"FULL" - Include everything.
 func (c *OrganizationsLocationsNotificationsListCall) View(view string) *OrganizationsLocationsNotificationsListCall {
@@ -1175,33 +950,29 @@ func (c *OrganizationsLocationsNotificationsListCall) View(view string) *Organiz
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsLocationsNotificationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsNotificationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsLocationsNotificationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsNotificationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsLocationsNotificationsListCall) Context(ctx context.Context) *OrganizationsLocationsNotificationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsLocationsNotificationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1210,12 +981,7 @@ func (c *OrganizationsLocationsNotificationsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsLocationsNotificationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1236,15 +1002,11 @@ func (c *OrganizationsLocationsNotificationsListCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "advisorynotifications.organizations.locations.notifications.list" call.
-// Exactly one of
-// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OrganizationsLocationsNotificationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1275,63 +1037,6 @@ func (c *OrganizationsLocationsNotificationsListCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists notifications under a given parent.",
-	//   "flatPath": "v1/organizations/{organizationsId}/locations/{locationsId}/notifications",
-	//   "httpMethod": "GET",
-	//   "id": "advisorynotifications.organizations.locations.notifications.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "languageCode": {
-	//       "description": "ISO code for requested localization language. If unset, will be interpereted as \"en\". If the requested language is valid, but not supported for this notification, English will be returned with an \"Not applicable\" LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of notifications to return. The service may return fewer than this value. If unspecified or equal to 0, at most 50 notifications will be returned. The maximum value is 50; values above 50 will be coerced to 50.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token returned from a previous request. When paginating, all other parameters provided in the request must match the call that returned the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\".",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Specifies which parts of the notification resource should be returned in the response.",
-	//       "enum": [
-	//         "NOTIFICATION_VIEW_UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Not specified, equivalent to BASIC.",
-	//         "Server responses only include title, creation time and Notification ID. Note: for internal use responses also include the last update time, the latest message text and whether notification has attachments.",
-	//         "Include everything."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/notifications",
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1ListNotificationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1339,7 +1044,7 @@ func (c *OrganizationsLocationsNotificationsListCall) Do(opts ...googleapi.CallO
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsNotificationsListCall) Pages(ctx context.Context, f func(*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1354,8 +1059,6 @@ func (c *OrganizationsLocationsNotificationsListCall) Pages(ctx context.Context,
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "advisorynotifications.projects.locations.getSettings":
 
 type ProjectsLocationsGetSettingsCall struct {
 	s            *Service
@@ -1378,33 +1081,29 @@ func (r *ProjectsLocationsService) GetSettings(name string) *ProjectsLocationsGe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetSettingsCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetSettingsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetSettingsCall) Context(ctx context.Context) *ProjectsLocationsGetSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1413,12 +1112,7 @@ func (c *ProjectsLocationsGetSettingsCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1439,14 +1133,11 @@ func (c *ProjectsLocationsGetSettingsCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "advisorynotifications.projects.locations.getSettings" call.
-// Exactly one of *GoogleCloudAdvisorynotificationsV1Settings or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Settings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1477,35 +1168,7 @@ func (c *ProjectsLocationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get notification settings.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/settings",
-	//   "httpMethod": "GET",
-	//   "id": "advisorynotifications.projects.locations.getSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/settings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "advisorynotifications.projects.locations.updateSettings":
 
 type ProjectsLocationsUpdateSettingsCall struct {
 	s                                          *Service
@@ -1518,9 +1181,9 @@ type ProjectsLocationsUpdateSettingsCall struct {
 
 // UpdateSettings: Update notification settings.
 //
-//   - name: Identifier. The resource name of the settings to retrieve.
-//     Format: organizations/{organization}/locations/{location}/settings
-//     or projects/{projects}/locations/{location}/settings.
+//   - name: Identifier. The resource name of the settings to retrieve. Format:
+//     organizations/{organization}/locations/{location}/settings or
+//     projects/{projects}/locations/{location}/settings.
 func (r *ProjectsLocationsService) UpdateSettings(name string, googlecloudadvisorynotificationsv1settings *GoogleCloudAdvisorynotificationsV1Settings) *ProjectsLocationsUpdateSettingsCall {
 	c := &ProjectsLocationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1529,23 +1192,21 @@ func (r *ProjectsLocationsService) UpdateSettings(name string, googlecloudadviso
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsUpdateSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsUpdateSettingsCall) Context(ctx context.Context) *ProjectsLocationsUpdateSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsUpdateSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1554,18 +1215,12 @@ func (c *ProjectsLocationsUpdateSettingsCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsUpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudadvisorynotificationsv1settings)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1582,14 +1237,11 @@ func (c *ProjectsLocationsUpdateSettingsCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "advisorynotifications.projects.locations.updateSettings" call.
-// Exactly one of *GoogleCloudAdvisorynotificationsV1Settings or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Settings, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1620,38 +1272,7 @@ func (c *ProjectsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update notification settings.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/settings",
-	//   "httpMethod": "PATCH",
-	//   "id": "advisorynotifications.projects.locations.updateSettings",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Identifier. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/settings$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "advisorynotifications.projects.locations.notifications.get":
 
 type ProjectsLocationsNotificationsGetCall struct {
 	s            *Service
@@ -1665,10 +1286,9 @@ type ProjectsLocationsNotificationsGetCall struct {
 // Get: Gets a notification.
 //
 //   - name: A name of the notification to retrieve. Format:
-//     organizations/{organization}/locations/{location}/notifications/{not
-//     ification} or
-//     projects/{projects}/locations/{location}/notifications/{notification
-//     }.
+//     organizations/{organization}/locations/{location}/notifications/{notificati
+//     on} or
+//     projects/{projects}/locations/{location}/notifications/{notification}.
 func (r *ProjectsLocationsNotificationsService) Get(name string) *ProjectsLocationsNotificationsGetCall {
 	c := &ProjectsLocationsNotificationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1676,44 +1296,40 @@ func (r *ProjectsLocationsNotificationsService) Get(name string) *ProjectsLocati
 }
 
 // LanguageCode sets the optional parameter "languageCode": ISO code for
-// requested localization language. If unset, will be interpereted as
-// "en". If the requested language is valid, but not supported for this
-// notification, English will be returned with an "Not applicable"
-// LocalizationState. If the ISO code is invalid (i.e. not a real
-// language), this RPC will throw an error.
+// requested localization language. If unset, will be interpereted as "en". If
+// the requested language is valid, but not supported for this notification,
+// English will be returned with an "Not applicable" LocalizationState. If the
+// ISO code is invalid (i.e. not a real language), this RPC will throw an
+// error.
 func (c *ProjectsLocationsNotificationsGetCall) LanguageCode(languageCode string) *ProjectsLocationsNotificationsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsNotificationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotificationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsNotificationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotificationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsNotificationsGetCall) Context(ctx context.Context) *ProjectsLocationsNotificationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsNotificationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1722,12 +1338,7 @@ func (c *ProjectsLocationsNotificationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsNotificationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1748,14 +1359,11 @@ func (c *ProjectsLocationsNotificationsGetCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "advisorynotifications.projects.locations.notifications.get" call.
-// Exactly one of *GoogleCloudAdvisorynotificationsV1Notification or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1Notification.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1Notification.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsNotificationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Notification, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1786,40 +1394,7 @@ func (c *ProjectsLocationsNotificationsGetCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a notification.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notifications/{notificationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "advisorynotifications.projects.locations.notifications.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "languageCode": {
-	//       "description": "ISO code for requested localization language. If unset, will be interpereted as \"en\". If the requested language is valid, but not supported for this notification, English will be returned with an \"Not applicable\" LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. A name of the notification to retrieve. Format: organizations/{organization}/locations/{location}/notifications/{notification} or projects/{projects}/locations/{location}/notifications/{notification}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/notifications/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1Notification"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "advisorynotifications.projects.locations.notifications.list":
 
 type ProjectsLocationsNotificationsListCall struct {
 	s            *Service
@@ -1832,9 +1407,8 @@ type ProjectsLocationsNotificationsListCall struct {
 
 // List: Lists notifications under a given parent.
 //
-//   - parent: The parent, which owns this collection of notifications.
-//     Must be of the form
-//     "organizations/{organization}/locations/{location}" or
+//   - parent: The parent, which owns this collection of notifications. Must be
+//     of the form "organizations/{organization}/locations/{location}" or
 //     "projects/{project}/locations/{location}".
 func (r *ProjectsLocationsNotificationsService) List(parent string) *ProjectsLocationsNotificationsListCall {
 	c := &ProjectsLocationsNotificationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1843,30 +1417,28 @@ func (r *ProjectsLocationsNotificationsService) List(parent string) *ProjectsLoc
 }
 
 // LanguageCode sets the optional parameter "languageCode": ISO code for
-// requested localization language. If unset, will be interpereted as
-// "en". If the requested language is valid, but not supported for this
-// notification, English will be returned with an "Not applicable"
-// LocalizationState. If the ISO code is invalid (i.e. not a real
-// language), this RPC will throw an error.
+// requested localization language. If unset, will be interpereted as "en". If
+// the requested language is valid, but not supported for this notification,
+// English will be returned with an "Not applicable" LocalizationState. If the
+// ISO code is invalid (i.e. not a real language), this RPC will throw an
+// error.
 func (c *ProjectsLocationsNotificationsListCall) LanguageCode(languageCode string) *ProjectsLocationsNotificationsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of notifications to return. The service may return fewer than this
-// value. If unspecified or equal to 0, at most 50 notifications will be
-// returned. The maximum value is 50; values above 50 will be coerced to
-// 50.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// notifications to return. The service may return fewer than this value. If
+// unspecified or equal to 0, at most 50 notifications will be returned. The
+// maximum value is 50; values above 50 will be coerced to 50.
 func (c *ProjectsLocationsNotificationsListCall) PageSize(pageSize int64) *ProjectsLocationsNotificationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// returned from a previous request. When paginating, all other
-// parameters provided in the request must match the call that returned
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token returned
+// from a previous request. When paginating, all other parameters provided in
+// the request must match the call that returned the page token.
 func (c *ProjectsLocationsNotificationsListCall) PageToken(pageToken string) *ProjectsLocationsNotificationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1877,15 +1449,12 @@ func (c *ProjectsLocationsNotificationsListCall) PageToken(pageToken string) *Pr
 //
 // Possible values:
 //
-//	"NOTIFICATION_VIEW_UNSPECIFIED" - Not specified, equivalent to
-//
-// BASIC.
-//
+//	"NOTIFICATION_VIEW_UNSPECIFIED" - Not specified, equivalent to BASIC.
 //	"BASIC" - Server responses only include title, creation time and
 //
-// Notification ID. Note: for internal use responses also include the
-// last update time, the latest message text and whether notification
-// has attachments.
+// Notification ID. Note: for internal use responses also include the last
+// update time, the latest message text and whether notification has
+// attachments.
 //
 //	"FULL" - Include everything.
 func (c *ProjectsLocationsNotificationsListCall) View(view string) *ProjectsLocationsNotificationsListCall {
@@ -1894,33 +1463,29 @@ func (c *ProjectsLocationsNotificationsListCall) View(view string) *ProjectsLoca
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsNotificationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsNotificationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsNotificationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsNotificationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsNotificationsListCall) Context(ctx context.Context) *ProjectsLocationsNotificationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsNotificationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1929,12 +1494,7 @@ func (c *ProjectsLocationsNotificationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsNotificationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1955,15 +1515,11 @@ func (c *ProjectsLocationsNotificationsListCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "advisorynotifications.projects.locations.notifications.list" call.
-// Exactly one of
-// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse.ServerRes
-// ponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAdvisorynotificationsV1ListNotificationsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsNotificationsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1994,63 +1550,6 @@ func (c *ProjectsLocationsNotificationsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists notifications under a given parent.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/notifications",
-	//   "httpMethod": "GET",
-	//   "id": "advisorynotifications.projects.locations.notifications.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "languageCode": {
-	//       "description": "ISO code for requested localization language. If unset, will be interpereted as \"en\". If the requested language is valid, but not supported for this notification, English will be returned with an \"Not applicable\" LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of notifications to return. The service may return fewer than this value. If unspecified or equal to 0, at most 50 notifications will be returned. The maximum value is 50; values above 50 will be coerced to 50.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token returned from a previous request. When paginating, all other parameters provided in the request must match the call that returned the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\".",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "Specifies which parts of the notification resource should be returned in the response.",
-	//       "enum": [
-	//         "NOTIFICATION_VIEW_UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Not specified, equivalent to BASIC.",
-	//         "Server responses only include title, creation time and Notification ID. Note: for internal use responses also include the last update time, the latest message text and whether notification has attachments.",
-	//         "Include everything."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/notifications",
-	//   "response": {
-	//     "$ref": "GoogleCloudAdvisorynotificationsV1ListNotificationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2058,7 +1557,7 @@ func (c *ProjectsLocationsNotificationsListCall) Do(opts ...googleapi.CallOption
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsNotificationsListCall) Pages(ctx context.Context, f func(*GoogleCloudAdvisorynotificationsV1ListNotificationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

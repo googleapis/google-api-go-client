@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -229,105 +229,82 @@ type ProjectsSettingsService struct {
 type GoogleCloudResourcesettingsV1ListSettingsResponse struct {
 	// NextPageToken: Unused. A page token used to retrieve the next page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Settings: A list of settings that are available at the specified
-	// Cloud resource.
+	// Settings: A list of settings that are available at the specified Cloud
+	// resource.
 	Settings []*GoogleCloudResourcesettingsV1Setting `json:"settings,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1ListSettingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ListSettingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1Setting: The schema for settings.
 type GoogleCloudResourcesettingsV1Setting struct {
-	// EffectiveValue: Output only. The effective value of the setting at
-	// the given parent resource, evaluated based on the resource hierarchy
-	// The effective value evaluates to one of the following options, in
-	// this order. If an option is not valid or doesn't exist, then the next
-	// option is used: 1. The local setting value on the given resource:
-	// Setting.local_value 2. If one of the given resource's ancestors in
-	// the resource hierarchy have a local setting value, the local value at
-	// the nearest such ancestor. 3. The setting's default value:
-	// SettingMetadata.default_value 4. An empty value, defined as a `Value`
-	// with all fields unset. The data type of Value must always be
+	// EffectiveValue: Output only. The effective value of the setting at the given
+	// parent resource, evaluated based on the resource hierarchy The effective
+	// value evaluates to one of the following options, in this order. If an option
+	// is not valid or doesn't exist, then the next option is used: 1. The local
+	// setting value on the given resource: Setting.local_value 2. If one of the
+	// given resource's ancestors in the resource hierarchy have a local setting
+	// value, the local value at the nearest such ancestor. 3. The setting's
+	// default value: SettingMetadata.default_value 4. An empty value, defined as a
+	// `Value` with all fields unset. The data type of Value must always be
 	// consistent with the data type defined in Setting.metadata.
 	EffectiveValue *GoogleCloudResourcesettingsV1Value `json:"effectiveValue,omitempty"`
-
-	// Etag: A fingerprint used for optimistic concurrency. See
-	// UpdateSetting for more details.
+	// Etag: A fingerprint used for optimistic concurrency. See UpdateSetting for
+	// more details.
 	Etag string `json:"etag,omitempty"`
-
 	// LocalValue: The configured value of the setting at the given parent
-	// resource, ignoring the resource hierarchy. The data type of Value
-	// must always be consistent with the data type defined in
-	// Setting.metadata.
+	// resource, ignoring the resource hierarchy. The data type of Value must
+	// always be consistent with the data type defined in Setting.metadata.
 	LocalValue *GoogleCloudResourcesettingsV1Value `json:"localValue,omitempty"`
-
-	// Metadata: Output only. Metadata about a setting which is not editable
-	// by the end user.
+	// Metadata: Output only. Metadata about a setting which is not editable by the
+	// end user.
 	Metadata *GoogleCloudResourcesettingsV1SettingMetadata `json:"metadata,omitempty"`
-
-	// Name: The resource name of the setting. Must be in one of the
-	// following forms: *
-	// `projects/{project_number}/settings/{setting_name}` *
+	// Name: The resource name of the setting. Must be in one of the following
+	// forms: * `projects/{project_number}/settings/{setting_name}` *
 	// `folders/{folder_id}/settings/{setting_name}` *
-	// `organizations/{organization_id}/settings/{setting_name}` For
-	// example, "/projects/123/settings/gcp-enableMyFeature"
+	// `organizations/{organization_id}/settings/{setting_name}` For example,
+	// "/projects/123/settings/gcp-enableMyFeature"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "EffectiveValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EffectiveValue") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EffectiveValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1Setting) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1Setting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudResourcesettingsV1SettingMetadata: Metadata about a
-// setting which is not editable by the end user.
+// GoogleCloudResourcesettingsV1SettingMetadata: Metadata about a setting which
+// is not editable by the end user.
 type GoogleCloudResourcesettingsV1SettingMetadata struct {
 	// DataType: The data type for this setting.
 	//
@@ -340,182 +317,138 @@ type GoogleCloudResourcesettingsV1SettingMetadata struct {
 	//   "DURATION_VALUE" - A Duration setting
 	//   "STRING_MAP" - A string->string map setting
 	DataType string `json:"dataType,omitempty"`
-
-	// DefaultValue: The value provided by Setting.effective_value if no
-	// setting value is explicitly set. Note: not all settings have a
-	// default value.
+	// DefaultValue: The value provided by Setting.effective_value if no setting
+	// value is explicitly set. Note: not all settings have a default value.
 	DefaultValue *GoogleCloudResourcesettingsV1Value `json:"defaultValue,omitempty"`
-
 	// Description: A detailed description of what this setting does.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: The human readable name for this setting.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// ReadOnly: A flag indicating that values of this setting cannot be
-	// modified. See documentation for the specific setting for updates and
-	// reasons.
+	// ReadOnly: A flag indicating that values of this setting cannot be modified.
+	// See documentation for the specific setting for updates and reasons.
 	ReadOnly bool `json:"readOnly,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DataType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1SettingMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1SettingMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudResourcesettingsV1Value: The data in a setting value.
 type GoogleCloudResourcesettingsV1Value struct {
 	// BooleanValue: Defines this value as being a boolean value.
 	BooleanValue bool `json:"booleanValue,omitempty"`
-
 	// DurationValue: Defines this value as being a Duration.
 	DurationValue string `json:"durationValue,omitempty"`
-
 	// EnumValue: Defines this value as being a Enum.
 	EnumValue *GoogleCloudResourcesettingsV1ValueEnumValue `json:"enumValue,omitempty"`
-
 	// StringMapValue: Defines this value as being a StringMap.
 	StringMapValue *GoogleCloudResourcesettingsV1ValueStringMap `json:"stringMapValue,omitempty"`
-
 	// StringSetValue: Defines this value as being a StringSet.
 	StringSetValue *GoogleCloudResourcesettingsV1ValueStringSet `json:"stringSetValue,omitempty"`
-
 	// StringValue: Defines this value as being a string value.
 	StringValue string `json:"stringValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BooleanValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BooleanValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BooleanValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1Value) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1Value
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudResourcesettingsV1ValueEnumValue: A enum value that can
-// hold any enum type setting values. Each enum type is represented by a
-// number, this representation is stored in the definitions.
+// GoogleCloudResourcesettingsV1ValueEnumValue: A enum value that can hold any
+// enum type setting values. Each enum type is represented by a number, this
+// representation is stored in the definitions.
 type GoogleCloudResourcesettingsV1ValueEnumValue struct {
 	// Value: The value of this enum
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1ValueEnumValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ValueEnumValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudResourcesettingsV1ValueStringMap: A string->string map
-// value that can hold a map of string keys to string values. The
-// maximum length of each string is 200 characters and there can be a
-// maximum of 50 key-value pairs in the map.
+// GoogleCloudResourcesettingsV1ValueStringMap: A string->string map value that
+// can hold a map of string keys to string values. The maximum length of each
+// string is 200 characters and there can be a maximum of 50 key-value pairs in
+// the map.
 type GoogleCloudResourcesettingsV1ValueStringMap struct {
 	// Mappings: The key-value pairs in the map
 	Mappings map[string]string `json:"mappings,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Mappings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Mappings") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Mappings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1ValueStringMap) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ValueStringMap
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudResourcesettingsV1ValueStringSet: A string set value that
-// can hold a set of strings. The maximum length of each string is 200
-// characters and there can be a maximum of 50 strings in the string
-// set.
+// GoogleCloudResourcesettingsV1ValueStringSet: A string set value that can
+// hold a set of strings. The maximum length of each string is 200 characters
+// and there can be a maximum of 50 strings in the string set.
 type GoogleCloudResourcesettingsV1ValueStringSet struct {
 	// Values: The strings in the set
 	Values []string `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Values") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Values") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudResourcesettingsV1ValueStringSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudResourcesettingsV1ValueStringSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "resourcesettings.folders.settings.get":
 
 type FoldersSettingsGetCall struct {
 	s            *Service
@@ -529,67 +462,61 @@ type FoldersSettingsGetCall struct {
 // Get: Returns a specified setting. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the setting does not exist.
 //
-//   - name: The name of the setting to get. See Setting for naming
-//     requirements.
+// - name: The name of the setting to get. See Setting for naming requirements.
 func (r *FoldersSettingsService) Get(name string) *FoldersSettingsGetCall {
 	c := &FoldersSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// View sets the optional parameter "view": The SettingView for this
-// request.
+// View sets the optional parameter "view": The SettingView for this request.
 //
 // Possible values:
 //
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
+//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// will default to the SETTING_VIEW_BASIC view.
+// default to the SETTING_VIEW_BASIC view.
 //
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
+//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else. This is
 //
-// This is the default value (for both ListSettings and GetSetting).
+// the default value (for both ListSettings and GetSetting).
 //
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
-// but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
+//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value, but
 //
 // nothing else.
+//
+//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but nothing
+//
+// else.
 func (c *FoldersSettingsGetCall) View(view string) *FoldersSettingsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersSettingsGetCall) Fields(s ...googleapi.Field) *FoldersSettingsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersSettingsGetCall) IfNoneMatch(entityTag string) *FoldersSettingsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersSettingsGetCall) Context(ctx context.Context) *FoldersSettingsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersSettingsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -598,12 +525,7 @@ func (c *FoldersSettingsGetCall) Header() http.Header {
 }
 
 func (c *FoldersSettingsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -624,13 +546,11 @@ func (c *FoldersSettingsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "resourcesettings.folders.settings.get" call.
-// Exactly one of *GoogleCloudResourcesettingsV1Setting or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersSettingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1Setting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -661,52 +581,7 @@ func (c *FoldersSettingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist.",
-	//   "flatPath": "v1/folders/{foldersId}/settings/{settingsId}",
-	//   "httpMethod": "GET",
-	//   "id": "resourcesettings.folders.settings.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the setting to get. See Setting for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/settings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The SettingView for this request.",
-	//       "enum": [
-	//         "SETTING_VIEW_UNSPECIFIED",
-	//         "SETTING_VIEW_BASIC",
-	//         "SETTING_VIEW_EFFECTIVE_VALUE",
-	//         "SETTING_VIEW_LOCAL_VALUE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the SETTING_VIEW_BASIC view.",
-	//         "Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).",
-	//         "Include Setting.effective_value, but nothing else.",
-	//         "Include Setting.local_value, but nothing else."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "resourcesettings.folders.settings.list":
 
 type FoldersSettingsListCall struct {
 	s            *Service
@@ -720,8 +595,8 @@ type FoldersSettingsListCall struct {
 // List: Lists all the settings that are available on the Cloud resource
 // `parent`.
 //
-//   - parent: The project, folder, or organization that is the parent
-//     resource for this setting. Must be in one of the following forms: *
+//   - parent: The project, folder, or organization that is the parent resource
+//     for this setting. Must be in one of the following forms: *
 //     `projects/{project_number}` * `projects/{project_id}` *
 //     `folders/{folder_id}` * `organizations/{organization_id}`.
 func (r *FoldersSettingsService) List(parent string) *FoldersSettingsListCall {
@@ -730,73 +605,68 @@ func (r *FoldersSettingsService) List(parent string) *FoldersSettingsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Unused. The size of
-// the page to be returned.
+// PageSize sets the optional parameter "pageSize": Unused. The size of the
+// page to be returned.
 func (c *FoldersSettingsListCall) PageSize(pageSize int64) *FoldersSettingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Unused. A page
-// token used to retrieve the next page.
+// PageToken sets the optional parameter "pageToken": Unused. A page token used
+// to retrieve the next page.
 func (c *FoldersSettingsListCall) PageToken(pageToken string) *FoldersSettingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": The SettingView for this
-// request.
+// View sets the optional parameter "view": The SettingView for this request.
 //
 // Possible values:
 //
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
+//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// will default to the SETTING_VIEW_BASIC view.
+// default to the SETTING_VIEW_BASIC view.
 //
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
+//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else. This is
 //
-// This is the default value (for both ListSettings and GetSetting).
+// the default value (for both ListSettings and GetSetting).
 //
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
-// but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
+//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value, but
 //
 // nothing else.
+//
+//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but nothing
+//
+// else.
 func (c *FoldersSettingsListCall) View(view string) *FoldersSettingsListCall {
 	c.urlParams_.Set("view", view)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersSettingsListCall) Fields(s ...googleapi.Field) *FoldersSettingsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersSettingsListCall) IfNoneMatch(entityTag string) *FoldersSettingsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersSettingsListCall) Context(ctx context.Context) *FoldersSettingsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersSettingsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -805,12 +675,7 @@ func (c *FoldersSettingsListCall) Header() http.Header {
 }
 
 func (c *FoldersSettingsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -831,14 +696,11 @@ func (c *FoldersSettingsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "resourcesettings.folders.settings.list" call.
-// Exactly one of *GoogleCloudResourcesettingsV1ListSettingsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudResourcesettingsV1ListSettingsResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1ListSettingsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1ListSettingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -869,60 +731,6 @@ func (c *FoldersSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the settings that are available on the Cloud resource `parent`.",
-	//   "flatPath": "v1/folders/{foldersId}/settings",
-	//   "httpMethod": "GET",
-	//   "id": "resourcesettings.folders.settings.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Unused. The size of the page to be returned.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Unused. A page token used to retrieve the next page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project, folder, or organization that is the parent resource for this setting. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The SettingView for this request.",
-	//       "enum": [
-	//         "SETTING_VIEW_UNSPECIFIED",
-	//         "SETTING_VIEW_BASIC",
-	//         "SETTING_VIEW_EFFECTIVE_VALUE",
-	//         "SETTING_VIEW_LOCAL_VALUE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the SETTING_VIEW_BASIC view.",
-	//         "Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).",
-	//         "Include Setting.effective_value, but nothing else.",
-	//         "Include Setting.local_value, but nothing else."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/settings",
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1ListSettingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -930,7 +738,7 @@ func (c *FoldersSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersSettingsListCall) Pages(ctx context.Context, f func(*GoogleCloudResourcesettingsV1ListSettingsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -946,8 +754,6 @@ func (c *FoldersSettingsListCall) Pages(ctx context.Context, f func(*GoogleCloud
 	}
 }
 
-// method id "resourcesettings.folders.settings.patch":
-
 type FoldersSettingsPatchCall struct {
 	s                                    *Service
 	name                                 string
@@ -957,24 +763,21 @@ type FoldersSettingsPatchCall struct {
 	header_                              http.Header
 }
 
-// Patch: Updates a specified setting. Returns a `google.rpc.Status`
-// with `google.rpc.Code.NOT_FOUND` if the setting does not exist.
-// Returns a `google.rpc.Status` with
-// `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as
-// read only. Returns a `google.rpc.Status` with
-// `google.rpc.Code.ABORTED` if the etag supplied in the request does
-// not match the persisted etag of the setting value. On success, the
-// response will contain only `name`, `local_value` and `etag`. The
-// `metadata` and `effective_value` cannot be updated through this API.
-// Note: the supplied setting will perform a full overwrite of the
-// `local_value` field.
+// Patch: Updates a specified setting. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the
+// setting is flagged as read only. Returns a `google.rpc.Status` with
+// `google.rpc.Code.ABORTED` if the etag supplied in the request does not match
+// the persisted etag of the setting value. On success, the response will
+// contain only `name`, `local_value` and `etag`. The `metadata` and
+// `effective_value` cannot be updated through this API. Note: the supplied
+// setting will perform a full overwrite of the `local_value` field.
 //
-//   - name: The resource name of the setting. Must be in one of the
-//     following forms: *
-//     `projects/{project_number}/settings/{setting_name}` *
+//   - name: The resource name of the setting. Must be in one of the following
+//     forms: * `projects/{project_number}/settings/{setting_name}` *
 //     `folders/{folder_id}/settings/{setting_name}` *
-//     `organizations/{organization_id}/settings/{setting_name}` For
-//     example, "/projects/123/settings/gcp-enableMyFeature".
+//     `organizations/{organization_id}/settings/{setting_name}` For example,
+//     "/projects/123/settings/gcp-enableMyFeature".
 func (r *FoldersSettingsService) Patch(name string, googlecloudresourcesettingsv1setting *GoogleCloudResourcesettingsV1Setting) *FoldersSettingsPatchCall {
 	c := &FoldersSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -983,23 +786,21 @@ func (r *FoldersSettingsService) Patch(name string, googlecloudresourcesettingsv
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersSettingsPatchCall) Fields(s ...googleapi.Field) *FoldersSettingsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersSettingsPatchCall) Context(ctx context.Context) *FoldersSettingsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersSettingsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1008,18 +809,12 @@ func (c *FoldersSettingsPatchCall) Header() http.Header {
 }
 
 func (c *FoldersSettingsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudresourcesettingsv1setting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1036,13 +831,11 @@ func (c *FoldersSettingsPatchCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "resourcesettings.folders.settings.patch" call.
-// Exactly one of *GoogleCloudResourcesettingsV1Setting or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersSettingsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1Setting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1073,38 +866,7 @@ func (c *FoldersSettingsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as read only. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the setting value. On success, the response will contain only `name`, `local_value` and `etag`. The `metadata` and `effective_value` cannot be updated through this API. Note: the supplied setting will perform a full overwrite of the `local_value` field.",
-	//   "flatPath": "v1/folders/{foldersId}/settings/{settingsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "resourcesettings.folders.settings.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the setting. Must be in one of the following forms: * `projects/{project_number}/settings/{setting_name}` * `folders/{folder_id}/settings/{setting_name}` * `organizations/{organization_id}/settings/{setting_name}` For example, \"/projects/123/settings/gcp-enableMyFeature\"",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/settings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "resourcesettings.organizations.settings.get":
 
 type OrganizationsSettingsGetCall struct {
 	s            *Service
@@ -1118,67 +880,61 @@ type OrganizationsSettingsGetCall struct {
 // Get: Returns a specified setting. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the setting does not exist.
 //
-//   - name: The name of the setting to get. See Setting for naming
-//     requirements.
+// - name: The name of the setting to get. See Setting for naming requirements.
 func (r *OrganizationsSettingsService) Get(name string) *OrganizationsSettingsGetCall {
 	c := &OrganizationsSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// View sets the optional parameter "view": The SettingView for this
-// request.
+// View sets the optional parameter "view": The SettingView for this request.
 //
 // Possible values:
 //
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
+//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// will default to the SETTING_VIEW_BASIC view.
+// default to the SETTING_VIEW_BASIC view.
 //
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
+//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else. This is
 //
-// This is the default value (for both ListSettings and GetSetting).
+// the default value (for both ListSettings and GetSetting).
 //
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
-// but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
+//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value, but
 //
 // nothing else.
+//
+//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but nothing
+//
+// else.
 func (c *OrganizationsSettingsGetCall) View(view string) *OrganizationsSettingsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsSettingsGetCall) Fields(s ...googleapi.Field) *OrganizationsSettingsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsSettingsGetCall) IfNoneMatch(entityTag string) *OrganizationsSettingsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsSettingsGetCall) Context(ctx context.Context) *OrganizationsSettingsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsSettingsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1187,12 +943,7 @@ func (c *OrganizationsSettingsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsSettingsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1213,13 +964,11 @@ func (c *OrganizationsSettingsGetCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "resourcesettings.organizations.settings.get" call.
-// Exactly one of *GoogleCloudResourcesettingsV1Setting or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsSettingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1Setting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1250,52 +999,7 @@ func (c *OrganizationsSettingsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist.",
-	//   "flatPath": "v1/organizations/{organizationsId}/settings/{settingsId}",
-	//   "httpMethod": "GET",
-	//   "id": "resourcesettings.organizations.settings.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the setting to get. See Setting for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/settings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The SettingView for this request.",
-	//       "enum": [
-	//         "SETTING_VIEW_UNSPECIFIED",
-	//         "SETTING_VIEW_BASIC",
-	//         "SETTING_VIEW_EFFECTIVE_VALUE",
-	//         "SETTING_VIEW_LOCAL_VALUE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the SETTING_VIEW_BASIC view.",
-	//         "Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).",
-	//         "Include Setting.effective_value, but nothing else.",
-	//         "Include Setting.local_value, but nothing else."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "resourcesettings.organizations.settings.list":
 
 type OrganizationsSettingsListCall struct {
 	s            *Service
@@ -1309,8 +1013,8 @@ type OrganizationsSettingsListCall struct {
 // List: Lists all the settings that are available on the Cloud resource
 // `parent`.
 //
-//   - parent: The project, folder, or organization that is the parent
-//     resource for this setting. Must be in one of the following forms: *
+//   - parent: The project, folder, or organization that is the parent resource
+//     for this setting. Must be in one of the following forms: *
 //     `projects/{project_number}` * `projects/{project_id}` *
 //     `folders/{folder_id}` * `organizations/{organization_id}`.
 func (r *OrganizationsSettingsService) List(parent string) *OrganizationsSettingsListCall {
@@ -1319,73 +1023,68 @@ func (r *OrganizationsSettingsService) List(parent string) *OrganizationsSetting
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Unused. The size of
-// the page to be returned.
+// PageSize sets the optional parameter "pageSize": Unused. The size of the
+// page to be returned.
 func (c *OrganizationsSettingsListCall) PageSize(pageSize int64) *OrganizationsSettingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Unused. A page
-// token used to retrieve the next page.
+// PageToken sets the optional parameter "pageToken": Unused. A page token used
+// to retrieve the next page.
 func (c *OrganizationsSettingsListCall) PageToken(pageToken string) *OrganizationsSettingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": The SettingView for this
-// request.
+// View sets the optional parameter "view": The SettingView for this request.
 //
 // Possible values:
 //
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
+//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// will default to the SETTING_VIEW_BASIC view.
+// default to the SETTING_VIEW_BASIC view.
 //
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
+//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else. This is
 //
-// This is the default value (for both ListSettings and GetSetting).
+// the default value (for both ListSettings and GetSetting).
 //
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
-// but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
+//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value, but
 //
 // nothing else.
+//
+//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but nothing
+//
+// else.
 func (c *OrganizationsSettingsListCall) View(view string) *OrganizationsSettingsListCall {
 	c.urlParams_.Set("view", view)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsSettingsListCall) Fields(s ...googleapi.Field) *OrganizationsSettingsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsSettingsListCall) IfNoneMatch(entityTag string) *OrganizationsSettingsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsSettingsListCall) Context(ctx context.Context) *OrganizationsSettingsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsSettingsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1394,12 +1093,7 @@ func (c *OrganizationsSettingsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsSettingsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1420,14 +1114,11 @@ func (c *OrganizationsSettingsListCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "resourcesettings.organizations.settings.list" call.
-// Exactly one of *GoogleCloudResourcesettingsV1ListSettingsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudResourcesettingsV1ListSettingsResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1ListSettingsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1ListSettingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1458,60 +1149,6 @@ func (c *OrganizationsSettingsListCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the settings that are available on the Cloud resource `parent`.",
-	//   "flatPath": "v1/organizations/{organizationsId}/settings",
-	//   "httpMethod": "GET",
-	//   "id": "resourcesettings.organizations.settings.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Unused. The size of the page to be returned.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Unused. A page token used to retrieve the next page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project, folder, or organization that is the parent resource for this setting. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The SettingView for this request.",
-	//       "enum": [
-	//         "SETTING_VIEW_UNSPECIFIED",
-	//         "SETTING_VIEW_BASIC",
-	//         "SETTING_VIEW_EFFECTIVE_VALUE",
-	//         "SETTING_VIEW_LOCAL_VALUE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the SETTING_VIEW_BASIC view.",
-	//         "Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).",
-	//         "Include Setting.effective_value, but nothing else.",
-	//         "Include Setting.local_value, but nothing else."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/settings",
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1ListSettingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1519,7 +1156,7 @@ func (c *OrganizationsSettingsListCall) Do(opts ...googleapi.CallOption) (*Googl
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsSettingsListCall) Pages(ctx context.Context, f func(*GoogleCloudResourcesettingsV1ListSettingsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1535,8 +1172,6 @@ func (c *OrganizationsSettingsListCall) Pages(ctx context.Context, f func(*Googl
 	}
 }
 
-// method id "resourcesettings.organizations.settings.patch":
-
 type OrganizationsSettingsPatchCall struct {
 	s                                    *Service
 	name                                 string
@@ -1546,24 +1181,21 @@ type OrganizationsSettingsPatchCall struct {
 	header_                              http.Header
 }
 
-// Patch: Updates a specified setting. Returns a `google.rpc.Status`
-// with `google.rpc.Code.NOT_FOUND` if the setting does not exist.
-// Returns a `google.rpc.Status` with
-// `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as
-// read only. Returns a `google.rpc.Status` with
-// `google.rpc.Code.ABORTED` if the etag supplied in the request does
-// not match the persisted etag of the setting value. On success, the
-// response will contain only `name`, `local_value` and `etag`. The
-// `metadata` and `effective_value` cannot be updated through this API.
-// Note: the supplied setting will perform a full overwrite of the
-// `local_value` field.
+// Patch: Updates a specified setting. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the
+// setting is flagged as read only. Returns a `google.rpc.Status` with
+// `google.rpc.Code.ABORTED` if the etag supplied in the request does not match
+// the persisted etag of the setting value. On success, the response will
+// contain only `name`, `local_value` and `etag`. The `metadata` and
+// `effective_value` cannot be updated through this API. Note: the supplied
+// setting will perform a full overwrite of the `local_value` field.
 //
-//   - name: The resource name of the setting. Must be in one of the
-//     following forms: *
-//     `projects/{project_number}/settings/{setting_name}` *
+//   - name: The resource name of the setting. Must be in one of the following
+//     forms: * `projects/{project_number}/settings/{setting_name}` *
 //     `folders/{folder_id}/settings/{setting_name}` *
-//     `organizations/{organization_id}/settings/{setting_name}` For
-//     example, "/projects/123/settings/gcp-enableMyFeature".
+//     `organizations/{organization_id}/settings/{setting_name}` For example,
+//     "/projects/123/settings/gcp-enableMyFeature".
 func (r *OrganizationsSettingsService) Patch(name string, googlecloudresourcesettingsv1setting *GoogleCloudResourcesettingsV1Setting) *OrganizationsSettingsPatchCall {
 	c := &OrganizationsSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1572,23 +1204,21 @@ func (r *OrganizationsSettingsService) Patch(name string, googlecloudresourceset
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsSettingsPatchCall) Fields(s ...googleapi.Field) *OrganizationsSettingsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsSettingsPatchCall) Context(ctx context.Context) *OrganizationsSettingsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsSettingsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1597,18 +1227,12 @@ func (c *OrganizationsSettingsPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsSettingsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudresourcesettingsv1setting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -1625,13 +1249,11 @@ func (c *OrganizationsSettingsPatchCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "resourcesettings.organizations.settings.patch" call.
-// Exactly one of *GoogleCloudResourcesettingsV1Setting or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsSettingsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1Setting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1662,38 +1284,7 @@ func (c *OrganizationsSettingsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as read only. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the setting value. On success, the response will contain only `name`, `local_value` and `etag`. The `metadata` and `effective_value` cannot be updated through this API. Note: the supplied setting will perform a full overwrite of the `local_value` field.",
-	//   "flatPath": "v1/organizations/{organizationsId}/settings/{settingsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "resourcesettings.organizations.settings.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the setting. Must be in one of the following forms: * `projects/{project_number}/settings/{setting_name}` * `folders/{folder_id}/settings/{setting_name}` * `organizations/{organization_id}/settings/{setting_name}` For example, \"/projects/123/settings/gcp-enableMyFeature\"",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/settings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "resourcesettings.projects.settings.get":
 
 type ProjectsSettingsGetCall struct {
 	s            *Service
@@ -1707,67 +1298,61 @@ type ProjectsSettingsGetCall struct {
 // Get: Returns a specified setting. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the setting does not exist.
 //
-//   - name: The name of the setting to get. See Setting for naming
-//     requirements.
+// - name: The name of the setting to get. See Setting for naming requirements.
 func (r *ProjectsSettingsService) Get(name string) *ProjectsSettingsGetCall {
 	c := &ProjectsSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// View sets the optional parameter "view": The SettingView for this
-// request.
+// View sets the optional parameter "view": The SettingView for this request.
 //
 // Possible values:
 //
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
+//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// will default to the SETTING_VIEW_BASIC view.
+// default to the SETTING_VIEW_BASIC view.
 //
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
+//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else. This is
 //
-// This is the default value (for both ListSettings and GetSetting).
+// the default value (for both ListSettings and GetSetting).
 //
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
-// but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
+//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value, but
 //
 // nothing else.
+//
+//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but nothing
+//
+// else.
 func (c *ProjectsSettingsGetCall) View(view string) *ProjectsSettingsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsSettingsGetCall) Fields(s ...googleapi.Field) *ProjectsSettingsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsSettingsGetCall) IfNoneMatch(entityTag string) *ProjectsSettingsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsSettingsGetCall) Context(ctx context.Context) *ProjectsSettingsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsSettingsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1776,12 +1361,7 @@ func (c *ProjectsSettingsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsSettingsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1802,13 +1382,11 @@ func (c *ProjectsSettingsGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "resourcesettings.projects.settings.get" call.
-// Exactly one of *GoogleCloudResourcesettingsV1Setting or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsSettingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1Setting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1839,52 +1417,7 @@ func (c *ProjectsSettingsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist.",
-	//   "flatPath": "v1/projects/{projectsId}/settings/{settingsId}",
-	//   "httpMethod": "GET",
-	//   "id": "resourcesettings.projects.settings.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the setting to get. See Setting for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/settings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The SettingView for this request.",
-	//       "enum": [
-	//         "SETTING_VIEW_UNSPECIFIED",
-	//         "SETTING_VIEW_BASIC",
-	//         "SETTING_VIEW_EFFECTIVE_VALUE",
-	//         "SETTING_VIEW_LOCAL_VALUE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the SETTING_VIEW_BASIC view.",
-	//         "Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).",
-	//         "Include Setting.effective_value, but nothing else.",
-	//         "Include Setting.local_value, but nothing else."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "resourcesettings.projects.settings.list":
 
 type ProjectsSettingsListCall struct {
 	s            *Service
@@ -1898,8 +1431,8 @@ type ProjectsSettingsListCall struct {
 // List: Lists all the settings that are available on the Cloud resource
 // `parent`.
 //
-//   - parent: The project, folder, or organization that is the parent
-//     resource for this setting. Must be in one of the following forms: *
+//   - parent: The project, folder, or organization that is the parent resource
+//     for this setting. Must be in one of the following forms: *
 //     `projects/{project_number}` * `projects/{project_id}` *
 //     `folders/{folder_id}` * `organizations/{organization_id}`.
 func (r *ProjectsSettingsService) List(parent string) *ProjectsSettingsListCall {
@@ -1908,73 +1441,68 @@ func (r *ProjectsSettingsService) List(parent string) *ProjectsSettingsListCall 
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Unused. The size of
-// the page to be returned.
+// PageSize sets the optional parameter "pageSize": Unused. The size of the
+// page to be returned.
 func (c *ProjectsSettingsListCall) PageSize(pageSize int64) *ProjectsSettingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Unused. A page
-// token used to retrieve the next page.
+// PageToken sets the optional parameter "pageToken": Unused. A page token used
+// to retrieve the next page.
 func (c *ProjectsSettingsListCall) PageToken(pageToken string) *ProjectsSettingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": The SettingView for this
-// request.
+// View sets the optional parameter "view": The SettingView for this request.
 //
 // Possible values:
 //
-//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API
+//	"SETTING_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// will default to the SETTING_VIEW_BASIC view.
+// default to the SETTING_VIEW_BASIC view.
 //
-//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else.
+//	"SETTING_VIEW_BASIC" - Include Setting.metadata, but nothing else. This is
 //
-// This is the default value (for both ListSettings and GetSetting).
+// the default value (for both ListSettings and GetSetting).
 //
-//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value,
-//
-// but nothing else.
-//
-//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but
+//	"SETTING_VIEW_EFFECTIVE_VALUE" - Include Setting.effective_value, but
 //
 // nothing else.
+//
+//	"SETTING_VIEW_LOCAL_VALUE" - Include Setting.local_value, but nothing
+//
+// else.
 func (c *ProjectsSettingsListCall) View(view string) *ProjectsSettingsListCall {
 	c.urlParams_.Set("view", view)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsSettingsListCall) Fields(s ...googleapi.Field) *ProjectsSettingsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsSettingsListCall) IfNoneMatch(entityTag string) *ProjectsSettingsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsSettingsListCall) Context(ctx context.Context) *ProjectsSettingsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsSettingsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1983,12 +1511,7 @@ func (c *ProjectsSettingsListCall) Header() http.Header {
 }
 
 func (c *ProjectsSettingsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2009,14 +1532,11 @@ func (c *ProjectsSettingsListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "resourcesettings.projects.settings.list" call.
-// Exactly one of *GoogleCloudResourcesettingsV1ListSettingsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudResourcesettingsV1ListSettingsResponse.ServerResponse.Head
-// er or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1ListSettingsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1ListSettingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2047,60 +1567,6 @@ func (c *ProjectsSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all the settings that are available on the Cloud resource `parent`.",
-	//   "flatPath": "v1/projects/{projectsId}/settings",
-	//   "httpMethod": "GET",
-	//   "id": "resourcesettings.projects.settings.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Unused. The size of the page to be returned.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Unused. A page token used to retrieve the next page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The project, folder, or organization that is the parent resource for this setting. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "description": "The SettingView for this request.",
-	//       "enum": [
-	//         "SETTING_VIEW_UNSPECIFIED",
-	//         "SETTING_VIEW_BASIC",
-	//         "SETTING_VIEW_EFFECTIVE_VALUE",
-	//         "SETTING_VIEW_LOCAL_VALUE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The default / unset value. The API will default to the SETTING_VIEW_BASIC view.",
-	//         "Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).",
-	//         "Include Setting.effective_value, but nothing else.",
-	//         "Include Setting.local_value, but nothing else."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/settings",
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1ListSettingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2108,7 +1574,7 @@ func (c *ProjectsSettingsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsSettingsListCall) Pages(ctx context.Context, f func(*GoogleCloudResourcesettingsV1ListSettingsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2124,8 +1590,6 @@ func (c *ProjectsSettingsListCall) Pages(ctx context.Context, f func(*GoogleClou
 	}
 }
 
-// method id "resourcesettings.projects.settings.patch":
-
 type ProjectsSettingsPatchCall struct {
 	s                                    *Service
 	name                                 string
@@ -2135,24 +1599,21 @@ type ProjectsSettingsPatchCall struct {
 	header_                              http.Header
 }
 
-// Patch: Updates a specified setting. Returns a `google.rpc.Status`
-// with `google.rpc.Code.NOT_FOUND` if the setting does not exist.
-// Returns a `google.rpc.Status` with
-// `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as
-// read only. Returns a `google.rpc.Status` with
-// `google.rpc.Code.ABORTED` if the etag supplied in the request does
-// not match the persisted etag of the setting value. On success, the
-// response will contain only `name`, `local_value` and `etag`. The
-// `metadata` and `effective_value` cannot be updated through this API.
-// Note: the supplied setting will perform a full overwrite of the
-// `local_value` field.
+// Patch: Updates a specified setting. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the
+// setting is flagged as read only. Returns a `google.rpc.Status` with
+// `google.rpc.Code.ABORTED` if the etag supplied in the request does not match
+// the persisted etag of the setting value. On success, the response will
+// contain only `name`, `local_value` and `etag`. The `metadata` and
+// `effective_value` cannot be updated through this API. Note: the supplied
+// setting will perform a full overwrite of the `local_value` field.
 //
-//   - name: The resource name of the setting. Must be in one of the
-//     following forms: *
-//     `projects/{project_number}/settings/{setting_name}` *
+//   - name: The resource name of the setting. Must be in one of the following
+//     forms: * `projects/{project_number}/settings/{setting_name}` *
 //     `folders/{folder_id}/settings/{setting_name}` *
-//     `organizations/{organization_id}/settings/{setting_name}` For
-//     example, "/projects/123/settings/gcp-enableMyFeature".
+//     `organizations/{organization_id}/settings/{setting_name}` For example,
+//     "/projects/123/settings/gcp-enableMyFeature".
 func (r *ProjectsSettingsService) Patch(name string, googlecloudresourcesettingsv1setting *GoogleCloudResourcesettingsV1Setting) *ProjectsSettingsPatchCall {
 	c := &ProjectsSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2161,23 +1622,21 @@ func (r *ProjectsSettingsService) Patch(name string, googlecloudresourcesettings
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsSettingsPatchCall) Fields(s ...googleapi.Field) *ProjectsSettingsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsSettingsPatchCall) Context(ctx context.Context) *ProjectsSettingsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsSettingsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2186,18 +1645,12 @@ func (c *ProjectsSettingsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsSettingsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudresourcesettingsv1setting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2214,13 +1667,11 @@ func (c *ProjectsSettingsPatchCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "resourcesettings.projects.settings.patch" call.
-// Exactly one of *GoogleCloudResourcesettingsV1Setting or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudResourcesettingsV1Setting.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsSettingsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudResourcesettingsV1Setting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2251,33 +1702,4 @@ func (c *ProjectsSettingsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as read only. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the setting value. On success, the response will contain only `name`, `local_value` and `etag`. The `metadata` and `effective_value` cannot be updated through this API. Note: the supplied setting will perform a full overwrite of the `local_value` field.",
-	//   "flatPath": "v1/projects/{projectsId}/settings/{settingsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "resourcesettings.projects.settings.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the setting. Must be in one of the following forms: * `projects/{project_number}/settings/{setting_name}` * `folders/{folder_id}/settings/{setting_name}` * `organizations/{organization_id}/settings/{setting_name}` For example, \"/projects/123/settings/gcp-enableMyFeature\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/settings/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudResourcesettingsV1Setting"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

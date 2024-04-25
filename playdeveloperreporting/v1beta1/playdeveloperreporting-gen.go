@@ -96,8 +96,7 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See metrics and data about the apps in your Google Play Developer
-	// account
+	// See metrics and data about the apps in your Google Play Developer account
 	PlaydeveloperreportingScope = "https://www.googleapis.com/auth/playdeveloperreporting"
 )
 
@@ -308,889 +307,729 @@ type VitalsStuckbackgroundwakelockrateService struct {
 	s *Service
 }
 
-// GooglePlayDeveloperReportingV1beta1Anomaly: Represents an anomaly
-// detected in a dataset. Our anomaly detection systems flag datapoints
-// in a time series that fall outside of and expected range derived from
-// historical data. Although those expected ranges have an upper and a
-// lower bound, we only flag anomalies when the data has become
-// unexpectedly _worse_, which usually corresponds to the case where the
-// metric crosses the upper bound. Multiple contiguous datapoints in a
-// timeline outside of the expected range will be grouped into a single
-// anomaly. Therefore, an anomaly represents effectively a segment of a
-// metric's timeline. The information stored in the `timeline_spec`,
-// `dimensions` and `metric` can be used to fetch a full timeline with
-// extended ragne for context. **Required permissions**: to access this
-// resource, the calling user needs the _View app information
+// GooglePlayDeveloperReportingV1beta1Anomaly: Represents an anomaly detected
+// in a dataset. Our anomaly detection systems flag datapoints in a time series
+// that fall outside of and expected range derived from historical data.
+// Although those expected ranges have an upper and a lower bound, we only flag
+// anomalies when the data has become unexpectedly _worse_, which usually
+// corresponds to the case where the metric crosses the upper bound. Multiple
+// contiguous datapoints in a timeline outside of the expected range will be
+// grouped into a single anomaly. Therefore, an anomaly represents effectively
+// a segment of a metric's timeline. The information stored in the
+// `timeline_spec`, `dimensions` and `metric` can be used to fetch a full
+// timeline with extended ragne for context. **Required permissions**: to
+// access this resource, the calling user needs the _View app information
 // (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1beta1Anomaly struct {
-	// Dimensions: Combination of dimensions in which the anomaly was
-	// detected.
+	// Dimensions: Combination of dimensions in which the anomaly was detected.
 	Dimensions []*GooglePlayDeveloperReportingV1beta1DimensionValue `json:"dimensions,omitempty"`
-
-	// Metric: Metric where the anomaly was detected, together with the
-	// anomalous value.
+	// Metric: Metric where the anomaly was detected, together with the anomalous
+	// value.
 	Metric *GooglePlayDeveloperReportingV1beta1MetricValue `json:"metric,omitempty"`
-
 	// MetricSet: Metric set resource where the anomaly was detected.
 	MetricSet string `json:"metricSet,omitempty"`
-
 	// Name: Identifier. Name of the anomaly. Format:
 	// apps/{app}/anomalies/{anomaly}
 	Name string `json:"name,omitempty"`
-
 	// TimelineSpec: Timeline specification that covers the anomaly period.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1Anomaly) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1Anomaly
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1AnrRateMetricSet: Singleton
-// resource representing the set of ANR (Application not responding)
-// metrics. This metric set contains ANRs data combined with usage data
-// to produce a normalized metric independent of user counts.
-// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-// calendar date intervals. Due to historical constraints, the only
-// supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
-// aggregated in hourly intervals. The default and only supported
-// timezone is `UTC`. **Supported metrics:** * `anrRate`
-// (`google.type.Decimal`): Percentage of distinct users in the
+// GooglePlayDeveloperReportingV1beta1AnrRateMetricSet: Singleton resource
+// representing the set of ANR (Application not responding) metrics. This
+// metric set contains ANRs data combined with usage data to produce a
+// normalized metric independent of user counts. **Supported aggregation
+// periods:** * DAILY: metrics are aggregated in calendar date intervals. Due
+// to historical constraints, the only supported timezone is
+// `America/Los_Angeles`. * HOURLY: metrics are aggregated in hourly intervals.
+// The default and only supported timezone is `UTC`. **Supported metrics:** *
+// `anrRate` (`google.type.Decimal`): Percentage of distinct users in the
 // aggregation period that experienced at least one ANR. *
-// `anrRate7dUserWeighted` (`google.type.Decimal`): Rolling average
-// value of `anrRate` in the last 7 days. The daily values are weighted
-// by the count of distinct users for the day. Not supported in HOURLY
-// granularity. * `anrRate28dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `anrRate` in the last 28 days. The daily
-// values are weighted by the count of distinct users for the day. Not
-// supported in HOURLY granularity. * `userPerceivedAnrRate`
-// (`google.type.Decimal`): Percentage of distinct users in the
-// aggregation period that experienced at least one user-perceived ANR.
-// User-perceived ANRs are currently those of 'Input dispatching' type.
-// * `userPerceivedAnrRate7dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `userPerceivedAnrRate` in the last 7 days.
-// The daily values are weighted by the count of distinct users for the
-// day. Not supported in HOURLY granularity. *
-// `userPerceivedAnrRate28dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `userPerceivedAnrRate` in the last 28 days.
-// The daily values are weighted by the count of distinct users for the
-// day. * `distinctUsers` (`google.type.Decimal`): Count of distinct
-// users in the aggregation period that were used as normalization value
-// for the `anrRate` and `userPerceivedAnrRate` metrics. A user is
-// counted in this metric if they used the app in the foreground during
-// the aggregation period. Care must be taken not to aggregate this
-// count further, as it may result in users being counted multiple
-// times. The value is rounded to the nearest multiple of 10, 100, 1,000
-// or 1,000,000, depending on the magnitude of the value. **Supported
-// dimensions:** * `apiLevel` (string): the API level of Android that
-// was running on the user's device, e.g., 26. * `versionCode` (int64):
-// version of the app that was running on the user's device. *
-// `deviceModel` (string): unique identifier of the user's device model.
-// The form of the identifier is 'deviceBrand/device', where deviceBrand
-// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-// the user's device brand, e.g., google. * `deviceType` (string): the
-// type (also known as form factor) of the user's device, e.g., PHONE. *
-// `countryCode` (string): the country or region of the user's device
-// based on their IP address, represented as a 2-letter ISO-3166 code
-// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-// Reference
+// `anrRate7dUserWeighted` (`google.type.Decimal`): Rolling average value of
+// `anrRate` in the last 7 days. The daily values are weighted by the count of
+// distinct users for the day. Not supported in HOURLY granularity. *
+// `anrRate28dUserWeighted` (`google.type.Decimal`): Rolling average value of
+// `anrRate` in the last 28 days. The daily values are weighted by the count of
+// distinct users for the day. Not supported in HOURLY granularity. *
+// `userPerceivedAnrRate` (`google.type.Decimal`): Percentage of distinct users
+// in the aggregation period that experienced at least one user-perceived ANR.
+// User-perceived ANRs are currently those of 'Input dispatching' type. *
+// `userPerceivedAnrRate7dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `userPerceivedAnrRate` in the last 7 days. The daily values
+// are weighted by the count of distinct users for the day. Not supported in
+// HOURLY granularity. * `userPerceivedAnrRate28dUserWeighted`
+// (`google.type.Decimal`): Rolling average value of `userPerceivedAnrRate` in
+// the last 28 days. The daily values are weighted by the count of distinct
+// users for the day. * `distinctUsers` (`google.type.Decimal`): Count of
+// distinct users in the aggregation period that were used as normalization
+// value for the `anrRate` and `userPerceivedAnrRate` metrics. A user is
+// counted in this metric if they used the app in the foreground during the
+// aggregation period. Care must be taken not to aggregate this count further,
+// as it may result in users being counted multiple times. The value is rounded
+// to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
+// magnitude of the value. **Supported dimensions:** * `apiLevel` (string): the
+// API level of Android that was running on the user's device, e.g., 26. *
+// `versionCode` (int64): version of the app that was running on the user's
+// device. * `deviceModel` (string): unique identifier of the user's device
+// model. The form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g.,
+// google/coral. * `deviceBrand` (string): unique identifier of the user's
+// device brand, e.g., google. * `deviceType` (string): the type (also known as
+// form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// the country or region of the user's device based on their IP address,
+// represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
+// etc.). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app. **Related
-// metric sets:** * vitals.errors contains unnormalized version
-// (absolute counts) of crashes. * vitals.errors contains normalized
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app. **Related metric sets:** * vitals.errors contains unnormalized
+// version (absolute counts) of crashes. * vitals.errors contains normalized
 // metrics about crashes, another stability metric.
 type GooglePlayDeveloperReportingV1beta1AnrRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
-	// Name: Identifier. The resource name. Format:
-	// apps/{app}/anrRateMetricSet
+	// Name: Identifier. The resource name. Format: apps/{app}/anrRateMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1AnrRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1AnrRateMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1App: A representation of an app in
-// the Play Store.
+// GooglePlayDeveloperReportingV1beta1App: A representation of an app in the
+// Play Store.
 type GooglePlayDeveloperReportingV1beta1App struct {
-	// DisplayName: Title of the app. This is the latest title as set in the
-	// Play Console and may not yet have been reviewed, so might not match
-	// the Play Store. Example: `Google Maps`.
+	// DisplayName: Title of the app. This is the latest title as set in the Play
+	// Console and may not yet have been reviewed, so might not match the Play
+	// Store. Example: `Google Maps`.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Identifier. The resource name. Format: apps/{app}
 	Name string `json:"name,omitempty"`
-
 	// PackageName: Package name of the app. Example: `com.example.app123`.
 	PackageName string `json:"packageName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1App) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1App
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1AppVersion: Representations of an
-// app version.
+// GooglePlayDeveloperReportingV1beta1AppVersion: Representations of an app
+// version.
 type GooglePlayDeveloperReportingV1beta1AppVersion struct {
-	// VersionCode: Numeric version code of the app version (set by the
-	// app's developer).
+	// VersionCode: Numeric version code of the app version (set by the app's
+	// developer).
 	VersionCode int64 `json:"versionCode,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "VersionCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "VersionCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "VersionCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1AppVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1AppVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1CrashRateMetricSet: Singleton
-// resource representing the set of crashrate metrics. This metric set
-// contains crashes data combined with usage data to produce a
-// normalized metric independent of user counts. **Supported aggregation
-// periods:** * DAILY: metrics are aggregated in calendar date
-// intervals. Due to historical constraints, the only supported timezone
-// is `America/Los_Angeles`. * HOURLY: metrics are aggregated in hourly
-// intervals. The default and only supported timezone is `UTC`.
-// **Supported metrics:** * `crashRate` (`google.type.Decimal`):
-// Percentage of distinct users in the aggregation period that
-// experienced at least one crash. * `crashRate7dUserWeighted`
-// (`google.type.Decimal`): Rolling average value of `crashRate` in the
-// last 7 days. The daily values are weighted by the count of distinct
-// users for the day. Not supported in HOURLY granularity. *
-// `crashRate28dUserWeighted` (`google.type.Decimal`): Rolling average
-// value of `crashRate` in the last 28 days. The daily values are
-// weighted by the count of distinct users for the day. Not supported in
-// HOURLY granularity. * `userPerceivedCrashRate`
-// (`google.type.Decimal`): Percentage of distinct users in the
-// aggregation period that experienced at least one crash while they
-// were actively using your app (a user-perceived crash). An app is
-// considered to be in active use if it is displaying any activity or
-// executing any foreground service. *
-// `userPerceivedCrashRate7dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `userPerceivedCrashRate` in the last 7 days.
-// The daily values are weighted by the count of distinct users for the
-// day. Not supported in HOURLY granularity. *
-// `userPerceivedCrashRate28dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `userPerceivedCrashRate` in the last 28
-// days. The daily values are weighted by the count of distinct users
-// for the day. Not supported in HOURLY granularity. * `distinctUsers`
-// (`google.type.Decimal`): Count of distinct users in the aggregation
-// period that were used as normalization value for the `crashRate` and
-// `userPerceivedCrashRate` metrics. A user is counted in this metric if
-// they used the app actively during the aggregation period. An app is
-// considered to be in active use if it is displaying any activity or
-// executing any foreground service. Care must be taken not to aggregate
-// this count further, as it may result in users being counted multiple
-// times. The value is rounded to the nearest multiple of 10, 100, 1,000
-// or 1,000,000, depending on the magnitude of the value. **Supported
-// dimensions:** * `apiLevel` (string): the API level of Android that
-// was running on the user's device, e.g., 26. * `versionCode` (int64):
-// version of the app that was running on the user's device. *
-// `deviceModel` (string): unique identifier of the user's device model.
-// The form of the identifier is 'deviceBrand/device', where deviceBrand
-// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-// the user's device brand, e.g., google. * `deviceType` (string): the
-// type (also known as form factor) of the user's device, e.g., PHONE. *
-// `countryCode` (string): the country or region of the user's device
-// based on their IP address, represented as a 2-letter ISO-3166 code
-// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-// Reference
+// GooglePlayDeveloperReportingV1beta1CrashRateMetricSet: Singleton resource
+// representing the set of crashrate metrics. This metric set contains crashes
+// data combined with usage data to produce a normalized metric independent of
+// user counts. **Supported aggregation periods:** * DAILY: metrics are
+// aggregated in calendar date intervals. Due to historical constraints, the
+// only supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
+// aggregated in hourly intervals. The default and only supported timezone is
+// `UTC`. **Supported metrics:** * `crashRate` (`google.type.Decimal`):
+// Percentage of distinct users in the aggregation period that experienced at
+// least one crash. * `crashRate7dUserWeighted` (`google.type.Decimal`):
+// Rolling average value of `crashRate` in the last 7 days. The daily values
+// are weighted by the count of distinct users for the day. Not supported in
+// HOURLY granularity. * `crashRate28dUserWeighted` (`google.type.Decimal`):
+// Rolling average value of `crashRate` in the last 28 days. The daily values
+// are weighted by the count of distinct users for the day. Not supported in
+// HOURLY granularity. * `userPerceivedCrashRate` (`google.type.Decimal`):
+// Percentage of distinct users in the aggregation period that experienced at
+// least one crash while they were actively using your app (a user-perceived
+// crash). An app is considered to be in active use if it is displaying any
+// activity or executing any foreground service. *
+// `userPerceivedCrashRate7dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `userPerceivedCrashRate` in the last 7 days. The daily
+// values are weighted by the count of distinct users for the day. Not
+// supported in HOURLY granularity. * `userPerceivedCrashRate28dUserWeighted`
+// (`google.type.Decimal`): Rolling average value of `userPerceivedCrashRate`
+// in the last 28 days. The daily values are weighted by the count of distinct
+// users for the day. Not supported in HOURLY granularity. * `distinctUsers`
+// (`google.type.Decimal`): Count of distinct users in the aggregation period
+// that were used as normalization value for the `crashRate` and
+// `userPerceivedCrashRate` metrics. A user is counted in this metric if they
+// used the app actively during the aggregation period. An app is considered to
+// be in active use if it is displaying any activity or executing any
+// foreground service. Care must be taken not to aggregate this count further,
+// as it may result in users being counted multiple times. The value is rounded
+// to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
+// magnitude of the value. **Supported dimensions:** * `apiLevel` (string): the
+// API level of Android that was running on the user's device, e.g., 26. *
+// `versionCode` (int64): version of the app that was running on the user's
+// device. * `deviceModel` (string): unique identifier of the user's device
+// model. The form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g.,
+// google/coral. * `deviceBrand` (string): unique identifier of the user's
+// device brand, e.g., google. * `deviceType` (string): the type (also known as
+// form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// the country or region of the user's device based on their IP address,
+// represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
+// etc.). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app. **Related
-// metric sets:** * vitals.errors contains unnormalized version
-// (absolute counts) of crashes. * vitals.errors contains normalized
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app. **Related metric sets:** * vitals.errors contains unnormalized
+// version (absolute counts) of crashes. * vitals.errors contains normalized
 // metrics about ANRs, another stability metric.
 type GooglePlayDeveloperReportingV1beta1CrashRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
-	// Name: Identifier. The resource name. Format:
-	// apps/{app}/crashRateMetricSet
+	// Name: Identifier. The resource name. Format: apps/{app}/crashRateMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1CrashRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1CrashRateMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1DecimalConfidenceInterval:
-// Represents the confidence interval of a metric.
+// GooglePlayDeveloperReportingV1beta1DecimalConfidenceInterval: Represents the
+// confidence interval of a metric.
 type GooglePlayDeveloperReportingV1beta1DecimalConfidenceInterval struct {
 	// LowerBound: The confidence interval's lower bound.
 	LowerBound *GoogleTypeDecimal `json:"lowerBound,omitempty"`
-
 	// UpperBound: The confidence interval's upper bound.
 	UpperBound *GoogleTypeDecimal `json:"upperBound,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LowerBound") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LowerBound") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LowerBound") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1DecimalConfidenceInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1DecimalConfidenceInterval
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1DeviceId: Identifier of a device.
 type GooglePlayDeveloperReportingV1beta1DeviceId struct {
 	// BuildBrand: Value of Build.BRAND.
 	BuildBrand string `json:"buildBrand,omitempty"`
-
 	// BuildDevice: Value of Build.DEVICE.
 	BuildDevice string `json:"buildDevice,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BuildBrand") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BuildBrand") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BuildBrand") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1DeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1DeviceId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1DeviceModelSummary: Summary of a
-// device
+// GooglePlayDeveloperReportingV1beta1DeviceModelSummary: Summary of a device
 type GooglePlayDeveloperReportingV1beta1DeviceModelSummary struct {
 	// DeviceId: Identifier of the device.
 	DeviceId *GooglePlayDeveloperReportingV1beta1DeviceId `json:"deviceId,omitempty"`
-
 	// DeviceUri: Link to the device in Play Device Catalog.
 	DeviceUri string `json:"deviceUri,omitempty"`
-
 	// MarketingName: Display name of the device.
 	MarketingName string `json:"marketingName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeviceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DeviceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1DeviceModelSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1DeviceModelSummary
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1DimensionValue: Represents the
-// value of a single dimension.
+// GooglePlayDeveloperReportingV1beta1DimensionValue: Represents the value of a
+// single dimension.
 type GooglePlayDeveloperReportingV1beta1DimensionValue struct {
 	// Dimension: Name of the dimension.
 	Dimension string `json:"dimension,omitempty"`
-
 	// Int64Value: Actual value, represented as an int64.
 	Int64Value int64 `json:"int64Value,omitempty,string"`
-
 	// StringValue: Actual value, represented as a string.
 	StringValue string `json:"stringValue,omitempty"`
-
-	// ValueLabel: Optional. Human-friendly label for the value, always in
-	// English. For example, 'Spain' for the 'ES' country code. Whereas the
-	// dimension value is stable, this value label is subject to change. Do
-	// not assume that the (value, value_label) relationship is stable. For
-	// example, the ISO country code 'MK' changed its name recently to
-	// 'North Macedonia'.
+	// ValueLabel: Optional. Human-friendly label for the value, always in English.
+	// For example, 'Spain' for the 'ES' country code. Whereas the dimension value
+	// is stable, this value label is subject to change. Do not assume that the
+	// (value, value_label) relationship is stable. For example, the ISO country
+	// code 'MK' changed its name recently to 'North Macedonia'.
 	ValueLabel string `json:"valueLabel,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1DimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1DimensionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet: Singleton
-// resource representing the set of error report metrics. This metric
-// set contains un-normalized error report counts. **Supported
-// aggregation periods:** * HOURLY: metrics are aggregated in hourly
-// intervals. The default and only supported timezone is `UTC`. * DAILY:
-// metrics are aggregated in calendar date intervals. The default and
-// only supported timezone is `America/Los_Angeles`. **Supported
-// metrics:** * `errorReportCount` (`google.type.Decimal`): Absolute
-// count of individual error reports that have been received for an app.
-// * `distinctUsers` (`google.type.Decimal`): Count of distinct users
-// for which reports have been received. Care must be taken not to
-// aggregate this count further, as it may result in users being counted
-// multiple times. This value is not rounded, however it may be an
+// GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet: Singleton resource
+// representing the set of error report metrics. This metric set contains
+// un-normalized error report counts. **Supported aggregation periods:** *
+// HOURLY: metrics are aggregated in hourly intervals. The default and only
+// supported timezone is `UTC`. * DAILY: metrics are aggregated in calendar
+// date intervals. The default and only supported timezone is
+// `America/Los_Angeles`. **Supported metrics:** * `errorReportCount`
+// (`google.type.Decimal`): Absolute count of individual error reports that
+// have been received for an app. * `distinctUsers` (`google.type.Decimal`):
+// Count of distinct users for which reports have been received. Care must be
+// taken not to aggregate this count further, as it may result in users being
+// counted multiple times. This value is not rounded, however it may be an
 // approximation. **Required dimension:** This dimension must be always
-// specified in all requests in the `dimensions` field in query
-// requests. * `reportType` (string): the type of error. The value
-// should correspond to one of the possible values in ErrorType.
-// **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device, e.g., 26. *
-// `versionCode` (int64): version of the app that was running on the
-// user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. The form of the identifier is
-// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
-// and device corresponds to Build.DEVICE, e.g., google/coral. *
-// `deviceType` (string): identifier of the device's form factor, e.g.,
-// PHONE. * `issueId` (string): the id an error was assigned to. The
-// value should correspond to the `{issue}` component of the issue name.
-// * `deviceRamBucket` (int64): RAM of the device, in MB, in buckets
-// (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the device's
+// specified in all requests in the `dimensions` field in query requests. *
+// `reportType` (string): the type of error. The value should correspond to one
+// of the possible values in ErrorType. **Supported dimensions:** * `apiLevel`
+// (string): the API level of Android that was running on the user's device,
+// e.g., 26. * `versionCode` (int64): version of the app that was running on
+// the user's device. * `deviceModel` (string): unique identifier of the user's
+// device model. The form of the identifier is 'deviceBrand/device', where
+// deviceBrand corresponds to Build.BRAND and device corresponds to
+// Build.DEVICE, e.g., google/coral. * `deviceType` (string): identifier of the
+// device's form factor, e.g., PHONE. * `issueId` (string): the id an error was
+// assigned to. The value should correspond to the `{issue}` component of the
+// issue name. * `deviceRamBucket` (int64): RAM of the device, in MB, in
+// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the device's
 // primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app. **Related
-// metric sets:** * vitals.errors.counts contains normalized metrics
-// about Crashes, another stability metric. * vitals.errors.counts
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app. **Related metric sets:** * vitals.errors.counts contains normalized
+// metrics about Crashes, another stability metric. * vitals.errors.counts
 // contains normalized metrics about ANRs, another stability metric.
 type GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
 	// Name: The resource name. Format: apps/{app}/errorCountMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1ErrorIssue: A group of related
-// ErrorReports received for an app. Similar error reports are grouped
-// together into issues with a likely identical root cause. **Please
-// note:** this resource is currently in Alpha. There could be changes
-// to the issue grouping that would result in similar but more recent
-// error reports being assigned to different issues. This could also
-// cause some issues disappearing entirely and being replaced by new
-// ones. **Required permissions**: to access this resource, the calling
-// user needs the _View app information (read-only)_ permission for the
-// app.
+// ErrorReports received for an app. Similar error reports are grouped together
+// into issues with a likely identical root cause. **Please note:** this
+// resource is currently in Alpha. There could be changes to the issue grouping
+// that would result in similar but more recent error reports being assigned to
+// different issues. This could also cause some issues disappearing entirely
+// and being replaced by new ones. **Required permissions**: to access this
+// resource, the calling user needs the _View app information (read-only)_
+// permission for the app.
 type GooglePlayDeveloperReportingV1beta1ErrorIssue struct {
-	// Cause: Cause of the issue. Depending on the type this can be either:
-	// * APPLICATION_NOT_RESPONDING: the type of ANR that occurred, e.g.,
-	// 'Input dispatching timed out'. * CRASH: for Java unhandled exception
-	// errors, the type of the innermost exception that was thrown, e.g.,
-	// IllegalArgumentException. For signals in native code, the signal that
-	// was raised, e.g. SIGSEGV.
+	// Cause: Cause of the issue. Depending on the type this can be either: *
+	// APPLICATION_NOT_RESPONDING: the type of ANR that occurred, e.g., 'Input
+	// dispatching timed out'. * CRASH: for Java unhandled exception errors, the
+	// type of the innermost exception that was thrown, e.g.,
+	// IllegalArgumentException. For signals in native code, the signal that was
+	// raised, e.g. SIGSEGV.
 	Cause string `json:"cause,omitempty"`
-
 	// DistinctUsers: An estimate of the number of unique users who have
-	// experienced this issue (only considering occurrences matching the
-	// filters and within the requested time period).
+	// experienced this issue (only considering occurrences matching the filters
+	// and within the requested time period).
 	DistinctUsers int64 `json:"distinctUsers,omitempty,string"`
-
-	// DistinctUsersPercent: An estimated percentage of users affected by
-	// any issue that are affected by this issue (only considering
-	// occurrences matching the filters and within the requested time
-	// period).
+	// DistinctUsersPercent: An estimated percentage of users affected by any issue
+	// that are affected by this issue (only considering occurrences matching the
+	// filters and within the requested time period).
 	DistinctUsersPercent *GoogleTypeDecimal `json:"distinctUsersPercent,omitempty"`
-
-	// ErrorReportCount: The total number of error reports in this issue
-	// (only considering occurrences matching the filters and within the
-	// requested time period).
-	ErrorReportCount int64 `json:"errorReportCount,omitempty,string"`
-
-	// FirstAppVersion: The earliest (inclusive) app version appearing in
-	// this ErrorIssue in the requested time period (only considering
-	// occurrences matching the filters).
-	FirstAppVersion *GooglePlayDeveloperReportingV1beta1AppVersion `json:"firstAppVersion,omitempty"`
-
-	// FirstOsVersion: The smallest OS version in which this error cluster
-	// has occurred in the requested time period (only considering
-	// occurrences matching the filters and within the requested time
+	// ErrorReportCount: The total number of error reports in this issue (only
+	// considering occurrences matching the filters and within the requested time
 	// period).
+	ErrorReportCount int64 `json:"errorReportCount,omitempty,string"`
+	// FirstAppVersion: The earliest (inclusive) app version appearing in this
+	// ErrorIssue in the requested time period (only considering occurrences
+	// matching the filters).
+	FirstAppVersion *GooglePlayDeveloperReportingV1beta1AppVersion `json:"firstAppVersion,omitempty"`
+	// FirstOsVersion: The smallest OS version in which this error cluster has
+	// occurred in the requested time period (only considering occurrences matching
+	// the filters and within the requested time period).
 	FirstOsVersion *GooglePlayDeveloperReportingV1beta1OsVersion `json:"firstOsVersion,omitempty"`
-
 	// IssueUri: Link to the issue in Android vitals in the Play Console.
 	IssueUri string `json:"issueUri,omitempty"`
-
 	// LastAppVersion: The latest (inclusive) app version appearing in this
 	// ErrorIssue in the requested time period (only considering occurrences
 	// matching the filters).
 	LastAppVersion *GooglePlayDeveloperReportingV1beta1AppVersion `json:"lastAppVersion,omitempty"`
-
-	// LastErrorReportTime: Start of the hour during which the last error
-	// report in this issue occurred.
+	// LastErrorReportTime: Start of the hour during which the last error report in
+	// this issue occurred.
 	LastErrorReportTime string `json:"lastErrorReportTime,omitempty"`
-
 	// LastOsVersion: The latest OS version in which this error cluster has
-	// occurred in the requested time period (only considering occurrences
-	// matching the filters and within the requested time period).
+	// occurred in the requested time period (only considering occurrences matching
+	// the filters and within the requested time period).
 	LastOsVersion *GooglePlayDeveloperReportingV1beta1OsVersion `json:"lastOsVersion,omitempty"`
-
-	// Location: Location where the issue happened. Depending on the type
-	// this can be either: * APPLICATION_NOT_RESPONDING: the name of the
-	// activity or service that stopped responding. * CRASH: the likely
-	// method name that caused the error.
+	// Location: Location where the issue happened. Depending on the type this can
+	// be either: * APPLICATION_NOT_RESPONDING: the name of the activity or service
+	// that stopped responding. * CRASH: the likely method name that caused the
+	// error.
 	Location string `json:"location,omitempty"`
-
-	// Name: Identifier. The resource name of the issue. Format:
-	// apps/{app}/{issue}
+	// Name: Identifier. The resource name of the issue. Format: apps/{app}/{issue}
 	Name string `json:"name,omitempty"`
-
-	// SampleErrorReports: Output only. Sample error reports which belong to
-	// this ErrorIssue. *Note:* currently a maximum of 1 per ErrorIssue is
-	// supported. Format: "apps/{app}/{report}"
+	// SampleErrorReports: Output only. Sample error reports which belong to this
+	// ErrorIssue. *Note:* currently a maximum of 1 per ErrorIssue is supported.
+	// Format: "apps/{app}/{report}"
 	SampleErrorReports []string `json:"sampleErrorReports,omitempty"`
-
 	// Type: Type of the errors grouped in this issue.
 	//
 	// Possible values:
 	//   "ERROR_TYPE_UNSPECIFIED" - Unspecified error type.
-	//   "APPLICATION_NOT_RESPONDING" - Application Not Responding (ANR)
-	// error. To learn more about this type of errors visit the
-	// corresponding Android Developers documentation.
-	//   "CRASH" - Crash caused by an unhandled exception in Java (or Kotlin
-	// or any other JVM language) or a signal in native code such as
-	// SIGSEGV.
+	//   "APPLICATION_NOT_RESPONDING" - Application Not Responding (ANR) error. To
+	// learn more about this type of errors visit the corresponding Android
+	// Developers documentation.
+	//   "CRASH" - Crash caused by an unhandled exception in Java (or Kotlin or any
+	// other JVM language) or a signal in native code such as SIGSEGV.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Cause") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Cause") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Cause") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1ErrorIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1ErrorIssue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1ErrorReport: An error report
-// received for an app. There reports are produced by the Android
-// platform code when a (potentially fatal) error condition is detected.
-// Identical reports from many users will be deduplicated and coalesced
-// into a single ErrorReport. **Required permissions**: to access this
-// resource, the calling user needs the _View app information
-// (read-only)_ permission for the app.
+// GooglePlayDeveloperReportingV1beta1ErrorReport: An error report received for
+// an app. There reports are produced by the Android platform code when a
+// (potentially fatal) error condition is detected. Identical reports from many
+// users will be deduplicated and coalesced into a single ErrorReport.
+// **Required permissions**: to access this resource, the calling user needs
+// the _View app information (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
-	// AppVersion: The app version on which an event in this error report
-	// occurred on.
+	// AppVersion: The app version on which an event in this error report occurred
+	// on.
 	AppVersion *GooglePlayDeveloperReportingV1beta1AppVersion `json:"appVersion,omitempty"`
-
-	// DeviceModel: A device model on which an event in this error report
-	// occurred on.
+	// DeviceModel: A device model on which an event in this error report occurred
+	// on.
 	DeviceModel *GooglePlayDeveloperReportingV1beta1DeviceModelSummary `json:"deviceModel,omitempty"`
-
-	// EventTime: Start of the hour during which the latest event in this
-	// error report occurred.
+	// EventTime: Start of the hour during which the latest event in this error
+	// report occurred.
 	EventTime string `json:"eventTime,omitempty"`
-
-	// Issue: The issue this report was associated with. **Please note:**
-	// this resource is currently in Alpha. There could be changes to the
-	// issue grouping that would result in similar but more recent error
-	// reports being assigned to a different issue.
+	// Issue: The issue this report was associated with. **Please note:** this
+	// resource is currently in Alpha. There could be changes to the issue grouping
+	// that would result in similar but more recent error reports being assigned to
+	// a different issue.
 	Issue string `json:"issue,omitempty"`
-
 	// Name: The resource name of the report. Format: apps/{app}/{report}
 	Name string `json:"name,omitempty"`
-
-	// OsVersion: The OS version on which an event in this error report
-	// occurred on.
+	// OsVersion: The OS version on which an event in this error report occurred
+	// on.
 	OsVersion *GooglePlayDeveloperReportingV1beta1OsVersion `json:"osVersion,omitempty"`
-
 	// ReportText: Textual representation of the error report. These textual
-	// reports are produced by the platform. The reports are then sanitized
-	// and filtered to remove any potentially sensitive information.
-	// Although their format is fairly stable, they are not entirely meant
-	// for machine consumption and we cannot guarantee that there won't be
-	// subtle changes to the formatting that may break systems trying to
-	// parse information out of the reports.
+	// reports are produced by the platform. The reports are then sanitized and
+	// filtered to remove any potentially sensitive information. Although their
+	// format is fairly stable, they are not entirely meant for machine consumption
+	// and we cannot guarantee that there won't be subtle changes to the formatting
+	// that may break systems trying to parse information out of the reports.
 	ReportText string `json:"reportText,omitempty"`
-
 	// Type: Type of the error for which this report was generated.
 	//
 	// Possible values:
 	//   "ERROR_TYPE_UNSPECIFIED" - Unspecified error type.
-	//   "APPLICATION_NOT_RESPONDING" - Application Not Responding (ANR)
-	// error. To learn more about this type of errors visit the
-	// corresponding Android Developers documentation.
-	//   "CRASH" - Crash caused by an unhandled exception in Java (or Kotlin
-	// or any other JVM language) or a signal in native code such as
-	// SIGSEGV.
+	//   "APPLICATION_NOT_RESPONDING" - Application Not Responding (ANR) error. To
+	// learn more about this type of errors visit the corresponding Android
+	// Developers documentation.
+	//   "CRASH" - Crash caused by an unhandled exception in Java (or Kotlin or any
+	// other JVM language) or a signal in native code such as SIGSEGV.
 	Type string `json:"type,omitempty"`
-
 	// VcsInformation: Version control system information from
 	// BUNDLE-METADATA/version-control-info.textproto or
 	// META-INF/version-control-info.textproto of the app bundle or APK,
 	// respectively.
 	VcsInformation string `json:"vcsInformation,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AppVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1ErrorReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1ErrorReport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet:
-// Singleton resource representing the set of Excessive Weakeups
-// metrics. This metric set contains AlarmManager wakeup counts data
-// combined with process state data to produce a normalized metric
-// independent of user counts. **Supported aggregation periods:** *
-// DAILY: metrics are aggregated in calendar date intervals. Due to
-// historical constraints, the only supported timezone is
+// GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet: Singleton
+// resource representing the set of Excessive Weakeups metrics. This metric set
+// contains AlarmManager wakeup counts data combined with process state data to
+// produce a normalized metric independent of user counts. **Supported
+// aggregation periods:** * DAILY: metrics are aggregated in calendar date
+// intervals. Due to historical constraints, the only supported timezone is
 // `America/Los_Angeles`. **Supported metrics:** * `excessiveWakeupRate`
-// (`google.type.Decimal`): Percentage of distinct users in the
-// aggregation period that had more than 10 wakeups per hour. *
-// `excessiveWakeupRate7dUserWeighted` (`google.type.Decimal`): Rolling
-// average value of `excessiveWakeupRate` in the last 7 days. The daily
-// values are weighted by the count of distinct users for the day. *
+// (`google.type.Decimal`): Percentage of distinct users in the aggregation
+// period that had more than 10 wakeups per hour. *
+// `excessiveWakeupRate7dUserWeighted` (`google.type.Decimal`): Rolling average
+// value of `excessiveWakeupRate` in the last 7 days. The daily values are
+// weighted by the count of distinct users for the day. *
 // `excessiveWakeupRate28dUserWeighted` (`google.type.Decimal`): Rolling
-// average value of `excessiveWakeupRate` in the last 28 days. The daily
-// values are weighted by the count of distinct users for the day. *
-// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-// the aggregation period that were used as normalization value for the
-// `excessiveWakeupRate` metric. A user is counted in this metric if
-// they app was doing any work on the device, i.e., not just active
-// foreground usage but also background work. Care must be taken not to
-// aggregate this count further, as it may result in users being counted
-// multiple times. The value is rounded to the nearest multiple of 10,
-// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
-// **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device, e.g., 26. *
-// `versionCode` (int64): version of the app that was running on the
-// user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. The form of the identifier is
-// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
-// and device corresponds to Build.DEVICE, e.g., google/coral. *
-// `deviceBrand` (string): unique identifier of the user's device brand,
-// e.g., google. * `deviceType` (string): the type (also known as form
-// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// average value of `excessiveWakeupRate` in the last 28 days. The daily values
+// are weighted by the count of distinct users for the day. * `distinctUsers`
+// (`google.type.Decimal`): Count of distinct users in the aggregation period
+// that were used as normalization value for the `excessiveWakeupRate` metric.
+// A user is counted in this metric if they app was doing any work on the
+// device, i.e., not just active foreground usage but also background work.
+// Care must be taken not to aggregate this count further, as it may result in
+// users being counted multiple times. The value is rounded to the nearest
+// multiple of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
+// value. **Supported dimensions:** * `apiLevel` (string): the API level of
+// Android that was running on the user's device, e.g., 26. * `versionCode`
+// (int64): version of the app that was running on the user's device. *
+// `deviceModel` (string): unique identifier of the user's device model. The
+// form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g.,
+// google/coral. * `deviceBrand` (string): unique identifier of the user's
+// device brand, e.g., google. * `deviceType` (string): the type (also known as
+// form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
-// represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
-// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-// device's primary system-on-chip, e.g., Samsung. Reference
+// represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
+// etc.). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app.
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app.
 type GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
 	// Name: Identifier. The resource name. Format:
 	// apps/{app}/excessiveWakeupRateMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1FreshnessInfo: Represents the
-// latest available time that can be requested in a TimelineSpec.
-// Different aggregation periods have different freshness. For example,
-// `DAILY` aggregation may lag behind `HOURLY` in cases where such
-// aggregation is computed only once at the end of the day.
+// GooglePlayDeveloperReportingV1beta1FreshnessInfo: Represents the latest
+// available time that can be requested in a TimelineSpec. Different
+// aggregation periods have different freshness. For example, `DAILY`
+// aggregation may lag behind `HOURLY` in cases where such aggregation is
+// computed only once at the end of the day.
 type GooglePlayDeveloperReportingV1beta1FreshnessInfo struct {
 	// Freshnesses: Information about data freshness for every supported
 	// aggregation period. This field has set semantics, keyed by the
 	// `aggregation_period` field.
 	Freshnesses []*GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness `json:"freshnesses,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Freshnesses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Freshnesses") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Freshnesses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1FreshnessInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1FreshnessInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness:
-// Information about data freshness for a single aggregation period.
+// GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness: Information about
+// data freshness for a single aggregation period.
 type GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness struct {
 	// AggregationPeriod: Aggregation period for which data is available.
 	//
@@ -1201,111 +1040,86 @@ type GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness struct {
 	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
 	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
-
 	// LatestEndTime: Latest end time for which data is available, for the
 	// aggregation period. The time is specified in the metric set's default
 	// timezone. *Note:* time ranges in TimelineSpec are represented as
-	// `start_time, end_time)`. For example, if the latest available
-	// timeline data point for a `DAILY` aggregation period is `2021-06-23
-	// 00:00:00 America/Los_Angeles`, the value of this field would be
-	// `2021-06-24 00:00:00 America/Los_Angeles` so it can be easily reused
-	// in [TimelineSpec.end_time.
+	// `start_time, end_time)`. For example, if the latest available timeline data
+	// point for a `DAILY` aggregation period is `2021-06-23 00:00:00
+	// America/Los_Angeles`, the value of this field would be `2021-06-24 00:00:00
+	// America/Los_Angeles` so it can be easily reused in [TimelineSpec.end_time.
 	LatestEndTime *GoogleTypeDateTime `json:"latestEndTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AggregationPeriod")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AggregationPeriod") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationPeriod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationPeriod") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1FreshnessInfoFreshness
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse: Response
-// with a list of anomalies in datasets.
+// GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse: Response with a
+// list of anomalies in datasets.
 type GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse struct {
 	// Anomalies: Anomalies that were found.
 	Anomalies []*GooglePlayDeveloperReportingV1beta1Anomaly `json:"anomalies,omitempty"`
-
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Anomalies") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Anomalies") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Anomalies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1MetricValue: Represents the value
-// of a metric.
+// GooglePlayDeveloperReportingV1beta1MetricValue: Represents the value of a
+// metric.
 type GooglePlayDeveloperReportingV1beta1MetricValue struct {
 	// DecimalValue: Actual value, represented as a decimal number.
 	DecimalValue *GoogleTypeDecimal `json:"decimalValue,omitempty"`
-
-	// DecimalValueConfidenceInterval: Confidence interval of a value that
-	// is of type `type.Decimal`.
+	// DecimalValueConfidenceInterval: Confidence interval of a value that is of
+	// type `type.Decimal`.
 	DecimalValueConfidenceInterval *GooglePlayDeveloperReportingV1beta1DecimalConfidenceInterval `json:"decimalValueConfidenceInterval,omitempty"`
-
 	// Metric: Name of the metric.
 	Metric string `json:"metric,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DecimalValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DecimalValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DecimalValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1MetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1MetricValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1MetricsRow: Represents a row of
@@ -1320,39 +1134,29 @@ type GooglePlayDeveloperReportingV1beta1MetricsRow struct {
 	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
 	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
-
 	// Dimensions: Dimension columns in the row.
 	Dimensions []*GooglePlayDeveloperReportingV1beta1DimensionValue `json:"dimensions,omitempty"`
-
 	// Metrics: Metric columns in the row.
 	Metrics []*GooglePlayDeveloperReportingV1beta1MetricValue `json:"metrics,omitempty"`
-
-	// StartTime: Starting date (and time for hourly aggregation) of the
-	// period covered by this row.
+	// StartTime: Starting date (and time for hourly aggregation) of the period
+	// covered by this row.
 	StartTime *GoogleTypeDateTime `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AggregationPeriod")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AggregationPeriod") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationPeriod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationPeriod") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1MetricsRow) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1MetricsRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1OsVersion: Representation of an OS
@@ -1360,1624 +1164,1359 @@ func (s *GooglePlayDeveloperReportingV1beta1MetricsRow) MarshalJSON() ([]byte, e
 type GooglePlayDeveloperReportingV1beta1OsVersion struct {
 	// ApiLevel: Numeric version code of the OS - API level
 	ApiLevel int64 `json:"apiLevel,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiLevel") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiLevel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1OsVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1OsVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest:
-// Request message for QueryAnrRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest: Request
+// message for QueryAnrRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the metrics by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// version of the app that was running on the user's device. *
-	// `deviceModel` (string): unique identifier of the user's device model.
-	// The form of the identifier is 'deviceBrand/device', where deviceBrand
-	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-	// the user's device brand, e.g., google. * `deviceType` (string): the
-	// type (also known as form factor) of the user's device, e.g., PHONE. *
-	// `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code
-	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// Dimensions: Dimensions to slice the metrics by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): version of the app that was
+	// running on the user's device. * `deviceModel` (string): unique identifier of
+	// the user's device model. The form of the identifier is 'deviceBrand/device',
+	// where deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+	// identifier of the user's device brand, e.g., google. * `deviceType`
+	// (string): the type (also known as form factor) of the user's device, e.g.,
+	// PHONE. * `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
+	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
+	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+	// device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
 	// Metrics: Metrics to aggregate. **Supported metrics:** * `anrRate`
-	// (`google.type.Decimal`): Percentage of distinct users in the
-	// aggregation period that experienced at least one ANR. *
-	// `anrRate7dUserWeighted` (`google.type.Decimal`): Rolling average
-	// value of `anrRate` in the last 7 days. The daily values are weighted
-	// by the count of distinct users for the day. Not supported in HOURLY
-	// granularity. * `anrRate28dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `anrRate` in the last 28 days. The daily
-	// values are weighted by the count of distinct users for the day. Not
-	// supported in HOURLY granularity. * `userPerceivedAnrRate`
-	// (`google.type.Decimal`): Percentage of distinct users in the
-	// aggregation period that experienced at least one user-perceived ANR.
-	// User-perceived ANRs are currently those of 'Input dispatching' type.
-	// * `userPerceivedAnrRate7dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `userPerceivedAnrRate` in the last 7 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. Not supported in HOURLY granularity. *
-	// `userPerceivedAnrRate28dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `userPerceivedAnrRate` in the last 28 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. Not . supported in HOURLY granularity. * `distinctUsers`
-	// (`google.type.Decimal`): Count of distinct users in the aggregation
-	// period that were used as normalization value for the `anrRate` and
-	// `userPerceivedAnrRate` metrics. A user is counted in this metric if
-	// they used the app in the foreground during the aggregation period.
-	// Care must be taken not to aggregate this count further, as it may
-	// result in users being counted multiple times. The value is rounded to
-	// the nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
-	// magnitude of the value.
+	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
+	// period that experienced at least one ANR. * `anrRate7dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `anrRate` in the last 7
+	// days. The daily values are weighted by the count of distinct users for the
+	// day. Not supported in HOURLY granularity. * `anrRate28dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `anrRate` in the last 28
+	// days. The daily values are weighted by the count of distinct users for the
+	// day. Not supported in HOURLY granularity. * `userPerceivedAnrRate`
+	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
+	// period that experienced at least one user-perceived ANR. User-perceived ANRs
+	// are currently those of 'Input dispatching' type. *
+	// `userPerceivedAnrRate7dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `userPerceivedAnrRate` in the last 7 days. The daily values
+	// are weighted by the count of distinct users for the day. Not supported in
+	// HOURLY granularity. * `userPerceivedAnrRate28dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `userPerceivedAnrRate` in
+	// the last 28 days. The daily values are weighted by the count of distinct
+	// users for the day. Not . supported in HOURLY granularity. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users in the aggregation period
+	// that were used as normalization value for the `anrRate` and
+	// `userPerceivedAnrRate` metrics. A user is counted in this metric if they
+	// used the app in the foreground during the aggregation period. Care must be
+	// taken not to aggregate this count further, as it may result in users being
+	// counted multiple times. The value is rounded to the nearest multiple of 10,
+	// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100,000; values
-	// above 100,000 will be coerced to 100,000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100,000; values above 100,000
+	// will be coerced to 100,000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the default
-	// and only supported timezone is `America/Los_Angeles`. * HOURLY:
-	// metrics are aggregated in hourly intervals. The default and only
-	// supported timezone is `UTC`.
+	// calendar date intervals. Due to historical constraints, the default and only
+	// supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
+	// aggregated in hourly intervals. The default and only supported timezone is
+	// `UTC`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
-	// UserCohort: User view to select. The output data will correspond to
-	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
-	// from all publicly released Android versions. This is the default.
-	// Supports all the above dimensions. * `APP_TESTERS` To select data
-	// from users who have opted in to be testers. Supports all the above
-	// dimensions. * `OS_BETA` To select data from beta android versions
-	// only, excluding data from released android versions. Only the
-	// following dimensions are supported: * `versionCode` (int64): version
-	// of the app that was running on the user's device. * `osBuild`
-	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: User view to select. The output data will correspond to the
+	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
+	// publicly released Android versions. This is the default. Supports all the
+	// above dimensions. * `APP_TESTERS` To select data from users who have opted
+	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
+	// data from beta android versions only, excluding data from released android
+	// versions. Only the following dimensions are supported: * `versionCode`
+	// (int64): version of the app that was running on the user's device. *
+	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
 	// automatically choose the default value.
-	//   "OS_PUBLIC" - This is default view. Contains data from public
-	// released android versions only.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
 	//   "OS_BETA" - This is the view with just android beta data excluding
 	// released OS version data.
-	//   "APP_TESTERS" - This is the view with data only from users who have
-	// opted in to be testers for a given app, excluding OS beta data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
 	UserCohort string `json:"userCohort,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse:
-// Response message for QueryAnrRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse: Response
+// message for QueryAnrRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows of data.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest:
-// Request message for QueryCrashRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest: Request
+// message for QueryCrashRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the metrics by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// version of the app that was running on the user's device. *
-	// `deviceModel` (string): unique identifier of the user's device model.
-	// The form of the identifier is 'deviceBrand/device', where deviceBrand
-	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-	// the user's device brand, e.g., google. * `deviceType` (string): the
-	// type (also known as form factor) of the user's device, e.g., PHONE. *
-	// `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code
-	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// Dimensions: Dimensions to slice the metrics by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): version of the app that was
+	// running on the user's device. * `deviceModel` (string): unique identifier of
+	// the user's device model. The form of the identifier is 'deviceBrand/device',
+	// where deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+	// identifier of the user's device brand, e.g., google. * `deviceType`
+	// (string): the type (also known as form factor) of the user's device, e.g.,
+	// PHONE. * `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
+	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
+	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+	// device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
 	// Metrics: Metrics to aggregate. **Supported metrics:** * `crashRate`
-	// (`google.type.Decimal`): Percentage of distinct users in the
-	// aggregation period that experienced at least one crash. *
-	// `crashRate7dUserWeighted` (`google.type.Decimal`): Rolling average
-	// value of `crashRate` in the last 7 days. The daily values are
-	// weighted by the count of distinct users for the day. *
-	// `crashRate28dUserWeighted` (`google.type.Decimal`): Rolling average
-	// value of `crashRate` in the last 28 days. The daily values are
-	// weighted by the count of distinct users for the day. Not supported in
-	// HOURLY granularity. * `userPerceivedCrashRate`
-	// (`google.type.Decimal`): Percentage of distinct users in the
-	// aggregation period that experienced at least one crash while they
-	// were actively using your app (a user-perceived crash). An app is
-	// considered to be in active use if it is displaying any activity or
-	// executing any foreground service. *
-	// `userPerceivedCrashRate7dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `userPerceivedCrashRate` in the last 7 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. Not supported in HOURLY granularity. *
-	// `userPerceivedCrashRate28dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `userPerceivedCrashRate` in the last 28
-	// days. The daily values are weighted by the count of distinct users
-	// for the day. Not supported in HOURLY granularity. * `distinctUsers`
-	// (`google.type.Decimal`): Count of distinct users in the aggregation
-	// period that were used as normalization value for the `crashRate` and
-	// `userPerceivedCrashRate` metrics. A user is counted in this metric if
-	// they used the app actively during the aggregation period. An app is
-	// considered to be in active use if it is displaying any activity or
-	// executing any foreground service. Care must be taken not to aggregate
-	// this count further, as it may result in users being counted multiple
-	// times. The value is rounded to the nearest multiple of 10, 100, 1,000
-	// or 1,000,000, depending on the magnitude of the value.
+	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
+	// period that experienced at least one crash. * `crashRate7dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `crashRate` in the last 7
+	// days. The daily values are weighted by the count of distinct users for the
+	// day. * `crashRate28dUserWeighted` (`google.type.Decimal`): Rolling average
+	// value of `crashRate` in the last 28 days. The daily values are weighted by
+	// the count of distinct users for the day. Not supported in HOURLY
+	// granularity. * `userPerceivedCrashRate` (`google.type.Decimal`): Percentage
+	// of distinct users in the aggregation period that experienced at least one
+	// crash while they were actively using your app (a user-perceived crash). An
+	// app is considered to be in active use if it is displaying any activity or
+	// executing any foreground service. * `userPerceivedCrashRate7dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `userPerceivedCrashRate`
+	// in the last 7 days. The daily values are weighted by the count of distinct
+	// users for the day. Not supported in HOURLY granularity. *
+	// `userPerceivedCrashRate28dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `userPerceivedCrashRate` in the last 28 days. The daily
+	// values are weighted by the count of distinct users for the day. Not
+	// supported in HOURLY granularity. * `distinctUsers` (`google.type.Decimal`):
+	// Count of distinct users in the aggregation period that were used as
+	// normalization value for the `crashRate` and `userPerceivedCrashRate`
+	// metrics. A user is counted in this metric if they used the app actively
+	// during the aggregation period. An app is considered to be in active use if
+	// it is displaying any activity or executing any foreground service. Care must
+	// be taken not to aggregate this count further, as it may result in users
+	// being counted multiple times. The value is rounded to the nearest multiple
+	// of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100,000; values
-	// above 100,000 will be coerced to 100,000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100,000; values above 100,000
+	// will be coerced to 100,000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the default
-	// and only supported timezone is `America/Los_Angeles`. * HOURLY:
-	// metrics are aggregated in hourly intervals. The default and only
-	// supported timezone is `UTC`.
+	// calendar date intervals. Due to historical constraints, the default and only
+	// supported timezone is `America/Los_Angeles`. * HOURLY: metrics are
+	// aggregated in hourly intervals. The default and only supported timezone is
+	// `UTC`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
-	// UserCohort: User view to select. The output data will correspond to
-	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
-	// from all publicly released Android versions. This is the default.
-	// Supports all the above dimensions. * `APP_TESTERS` To select data
-	// from users who have opted in to be testers. Supports all the above
-	// dimensions. * `OS_BETA` To select data from beta android versions
-	// only, excluding data from released android versions. Only the
-	// following dimensions are supported: * `versionCode` (int64): version
-	// of the app that was running on the user's device. * `osBuild`
-	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: User view to select. The output data will correspond to the
+	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
+	// publicly released Android versions. This is the default. Supports all the
+	// above dimensions. * `APP_TESTERS` To select data from users who have opted
+	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
+	// data from beta android versions only, excluding data from released android
+	// versions. Only the following dimensions are supported: * `versionCode`
+	// (int64): version of the app that was running on the user's device. *
+	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
 	// automatically choose the default value.
-	//   "OS_PUBLIC" - This is default view. Contains data from public
-	// released android versions only.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
 	//   "OS_BETA" - This is the view with just android beta data excluding
 	// released OS version data.
-	//   "APP_TESTERS" - This is the view with data only from users who have
-	// opted in to be testers for a given app, excluding OS beta data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
 	UserCohort string `json:"userCohort,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse:
-// Response message for QueryCrashRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse: Response
+// message for QueryCrashRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows of data.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest:
-// Request message for QueryErrorCountMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest: Request
+// message for QueryErrorCountMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// unique identifier of the user's device model. The form of the
-	// identifier is 'deviceBrand/device', where deviceBrand corresponds to
-	// Build.BRAND and device corresponds to Build.DEVICE, e.g.,
-	// google/coral. * `deviceModel` (string): unique identifier of the
-	// user's device model. * `deviceType` (string): identifier of the
-	// device's form factor, e.g., PHONE. * `reportType` (string): the type
-	// of error. The value should correspond to one of the possible values
-	// in ErrorType. * `isUserPerceived` (string): denotes whether error is
-	// user perceived or not, USER_PERCEIVED or NOT_USER_PERCEIVED. *
-	// `issueId` (string): the id an error was assigned to. The value should
-	// correspond to the `{issue}` component of the issue name. *
-	// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB,
-	// 4GB, etc.). * `deviceSocMake` (string): Make of the device's primary
-	// system-on-chip, e.g., Samsung. Reference
+	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): unique identifier of the user's
+	// device model. The form of the identifier is 'deviceBrand/device', where
+	// deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceModel` (string): unique
+	// identifier of the user's device model. * `deviceType` (string): identifier
+	// of the device's form factor, e.g., PHONE. * `reportType` (string): the type
+	// of error. The value should correspond to one of the possible values in
+	// ErrorType. * `isUserPerceived` (string): denotes whether error is user
+	// perceived or not, USER_PERCEIVED or NOT_USER_PERCEIVED. * `issueId`
+	// (string): the id an error was assigned to. The value should correspond to
+	// the `{issue}` component of the issue name. * `deviceRamBucket` (int64): RAM
+	// of the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
-	// Metrics: Metrics to aggregate. **Supported metrics:** *
-	// `errorReportCount` (`google.type.Decimal`): Absolute count of
-	// individual error reports that have been received for an app. *
-	// `distinctUsers` (`google.type.Decimal`): Count of distinct users for
-	// which reports have been received. Care must be taken not to aggregate
-	// this count further, as it may result in users being counted multiple
-	// times. This value is not rounded, however it may be an approximation.
+	// Metrics: Metrics to aggregate. **Supported metrics:** * `errorReportCount`
+	// (`google.type.Decimal`): Absolute count of individual error reports that
+	// have been received for an app. * `distinctUsers` (`google.type.Decimal`):
+	// Count of distinct users for which reports have been received. Care must be
+	// taken not to aggregate this count further, as it may result in users being
+	// counted multiple times. This value is not rounded, however it may be an
+	// approximation.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100000; values above 100000 will
+	// be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
 	// calendar date intervals. The default and only supported timezone is
 	// `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse:
-// Error counts query response.
+// GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse: Error
+// counts query response.
 type GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRe
-// quest: Request message for QueryExcessiveWakeupRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest:
+// Request message for QueryExcessiveWakeupRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// version of the app that was running on the user's device. *
-	// `deviceModel` (string): unique identifier of the user's device model.
-	// The form of the identifier is 'deviceBrand/device', where deviceBrand
-	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-	// the user's device brand, e.g., google. * `deviceType` (string): the
-	// type (also known as form factor) of the user's device, e.g., PHONE. *
-	// `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code
-	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): version of the app that was
+	// running on the user's device. * `deviceModel` (string): unique identifier of
+	// the user's device model. The form of the identifier is 'deviceBrand/device',
+	// where deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+	// identifier of the user's device brand, e.g., google. * `deviceType`
+	// (string): the type (also known as form factor) of the user's device, e.g.,
+	// PHONE. * `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
+	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
+	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+	// device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
 	// Metrics: Metrics to aggregate. **Supported metrics:** *
-	// `excessiveWakeupRate` (`google.type.Decimal`): Percentage of distinct
-	// users in the aggregation period that had more than 10 wakeups per
-	// hour. * `excessiveWakeupRate7dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `excessiveWakeupRate` in the last 7 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. * `excessiveWakeupRate28dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `excessiveWakeupRate` in the last 28 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. * `distinctUsers` (`google.type.Decimal`): Count of distinct
-	// users in the aggregation period that were used as normalization value
-	// for the `excessiveWakeupRate` metric. A user is counted in this
-	// metric if they app was doing any work on the device, i.e., not just
-	// active foreground usage but also background work. Care must be taken
-	// not to aggregate this count further, as it may result in users being
-	// counted multiple times. The value is rounded to the nearest multiple
-	// of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
+	// `excessiveWakeupRate` (`google.type.Decimal`): Percentage of distinct users
+	// in the aggregation period that had more than 10 wakeups per hour. *
+	// `excessiveWakeupRate7dUserWeighted` (`google.type.Decimal`): Rolling average
+	// value of `excessiveWakeupRate` in the last 7 days. The daily values are
+	// weighted by the count of distinct users for the day. *
+	// `excessiveWakeupRate28dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `excessiveWakeupRate` in the last 28 days. The daily values
+	// are weighted by the count of distinct users for the day. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users in the aggregation period
+	// that were used as normalization value for the `excessiveWakeupRate` metric.
+	// A user is counted in this metric if they app was doing any work on the
+	// device, i.e., not just active foreground usage but also background work.
+	// Care must be taken not to aggregate this count further, as it may result in
+	// users being counted multiple times. The value is rounded to the nearest
+	// multiple of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
 	// value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100000; values above 100000 will
+	// be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only
-	// supported timezone is `America/Los_Angeles`.
+	// calendar date intervals. Due to historical constraints, the only supported
+	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
-	// UserCohort: User view to select. The output data will correspond to
-	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
-	// from all publicly released Android versions. This is the default.
-	// Supports all the above dimensions. * `APP_TESTERS` To select data
-	// from users who have opted in to be testers. Supports all the above
-	// dimensions. * `OS_BETA` To select data from beta android versions
-	// only, excluding data from released android versions. Only the
-	// following dimensions are supported: * `versionCode` (int64): version
-	// of the app that was running on the user's device. * `osBuild`
-	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: User view to select. The output data will correspond to the
+	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
+	// publicly released Android versions. This is the default. Supports all the
+	// above dimensions. * `APP_TESTERS` To select data from users who have opted
+	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
+	// data from beta android versions only, excluding data from released android
+	// versions. Only the following dimensions are supported: * `versionCode`
+	// (int64): version of the app that was running on the user's device. *
+	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
 	// automatically choose the default value.
-	//   "OS_PUBLIC" - This is default view. Contains data from public
-	// released android versions only.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
 	//   "OS_BETA" - This is the view with just android beta data excluding
 	// released OS version data.
-	//   "APP_TESTERS" - This is the view with data only from users who have
-	// opted in to be testers for a given app, excluding OS beta data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
 	UserCohort string `json:"userCohort,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRe
-// sponse: Response message for QueryExcessiveWakeupRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse:
+//
+//	Response message for QueryExcessiveWakeupRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows of data.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequ
-// est: Request message for QuerySlowRenderingRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest:
+// Request message for QuerySlowRenderingRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// version of the app that was running on the user's device. *
-	// `deviceModel` (string): unique identifier of the user's device model.
-	// The form of the identifier is 'deviceBrand/device', where deviceBrand
-	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-	// the user's device brand, e.g., google. * `deviceType` (string): the
-	// type (also known as form factor) of the user's device, e.g., PHONE. *
-	// `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code
-	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): version of the app that was
+	// running on the user's device. * `deviceModel` (string): unique identifier of
+	// the user's device model. The form of the identifier is 'deviceBrand/device',
+	// where deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+	// identifier of the user's device brand, e.g., google. * `deviceType`
+	// (string): the type (also known as form factor) of the user's device, e.g.,
+	// PHONE. * `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
+	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
+	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+	// device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
 	// Metrics: Metrics to aggregate. **Supported metrics:** *
-	// `slowRenderingRate20Fps` (`google.type.Decimal`): Percentage of
-	// distinct users in the aggregation period that had a slow rendering. *
-	// `slowRenderingRate20Fps7dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `slowRenderingRate20Fps` in the last 7 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. * `slowRenderingRate20Fps28dUserWeighted`
-	// (`google.type.Decimal`): Rolling average value of
-	// `slowRenderingRate20Fps` in the last 28 days. The daily values are
-	// weighted by the count of distinct users for the day. *
-	// `slowRenderingRate30Fps` (`google.type.Decimal`): Percentage of
-	// distinct users in the aggregation period that had a slow rendering. *
-	// `slowRenderingRate30Fps7dUserWeighted` (`google.type.Decimal`):
-	// Rolling average value of `slowRenderingRate30Fps` in the last 7 days.
-	// The daily values are weighted by the count of distinct users for the
-	// day. * `slowRenderingRate30Fps28dUserWeighted`
-	// (`google.type.Decimal`): Rolling average value of
-	// `slowRenderingRate30Fps` in the last 28 days. The daily values are
-	// weighted by the count of distinct users for the day. *
-	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-	// the aggregation period that were used as normalization value for the
-	// `slowRenderingRate20Fps`/`slowRenderingRate30Fps` metric. A user is
-	// counted in this metric if their app was launched in the device. Care
-	// must be taken not to aggregate this count further, as it may result
-	// in users being counted multiple times. The value is rounded to the
-	// nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
-	// magnitude of the value.
+	// `slowRenderingRate20Fps` (`google.type.Decimal`): Percentage of distinct
+	// users in the aggregation period that had a slow rendering. *
+	// `slowRenderingRate20Fps7dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `slowRenderingRate20Fps` in the last 7 days. The daily
+	// values are weighted by the count of distinct users for the day. *
+	// `slowRenderingRate20Fps28dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `slowRenderingRate20Fps` in the last 28 days. The daily
+	// values are weighted by the count of distinct users for the day. *
+	// `slowRenderingRate30Fps` (`google.type.Decimal`): Percentage of distinct
+	// users in the aggregation period that had a slow rendering. *
+	// `slowRenderingRate30Fps7dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `slowRenderingRate30Fps` in the last 7 days. The daily
+	// values are weighted by the count of distinct users for the day. *
+	// `slowRenderingRate30Fps28dUserWeighted` (`google.type.Decimal`): Rolling
+	// average value of `slowRenderingRate30Fps` in the last 28 days. The daily
+	// values are weighted by the count of distinct users for the day. *
+	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in the
+	// aggregation period that were used as normalization value for the
+	// `slowRenderingRate20Fps`/`slowRenderingRate30Fps` metric. A user is counted
+	// in this metric if their app was launched in the device. Care must be taken
+	// not to aggregate this count further, as it may result in users being counted
+	// multiple times. The value is rounded to the nearest multiple of 10, 100,
+	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100000; values above 100000 will
+	// be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only
-	// supported timezone is `America/Los_Angeles`.
+	// calendar date intervals. Due to historical constraints, the only supported
+	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
-	// UserCohort: User view to select. The output data will correspond to
-	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
-	// from all publicly released Android versions. This is the default.
-	// Supports all the above dimensions. * `APP_TESTERS` To select data
-	// from users who have opted in to be testers. Supports all the above
-	// dimensions. * `OS_BETA` To select data from beta Android versions
-	// only, excluding data from released Android versions. Only the
-	// following dimensions are supported: * `versionCode` (int64): version
-	// of the app that was running on the user's device. * `osBuild`
-	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: User view to select. The output data will correspond to the
+	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
+	// publicly released Android versions. This is the default. Supports all the
+	// above dimensions. * `APP_TESTERS` To select data from users who have opted
+	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
+	// data from beta Android versions only, excluding data from released Android
+	// versions. Only the following dimensions are supported: * `versionCode`
+	// (int64): version of the app that was running on the user's device. *
+	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
 	// automatically choose the default value.
-	//   "OS_PUBLIC" - This is default view. Contains data from public
-	// released android versions only.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
 	//   "OS_BETA" - This is the view with just android beta data excluding
 	// released OS version data.
-	//   "APP_TESTERS" - This is the view with data only from users who have
-	// opted in to be testers for a given app, excluding OS beta data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
 	UserCohort string `json:"userCohort,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResp
-// onse: Response message for QuerySlowRenderingRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse:
+// Response message for QuerySlowRenderingRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows of data.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest:
-//
-//	Request message for QuerySlowStartRateMetricSet.
+// Request message for QuerySlowStartRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// version of the app that was running on the user's device. *
-	// `deviceModel` (string): unique identifier of the user's device model.
-	// The form of the identifier is 'deviceBrand/device', where deviceBrand
-	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-	// the user's device brand, e.g., google. * `deviceType` (string): the
-	// type (also known as form factor) of the user's device, e.g., PHONE. *
-	// `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code
-	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): version of the app that was
+	// running on the user's device. * `deviceModel` (string): unique identifier of
+	// the user's device model. The form of the identifier is 'deviceBrand/device',
+	// where deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+	// identifier of the user's device brand, e.g., google. * `deviceType`
+	// (string): the type (also known as form factor) of the user's device, e.g.,
+	// PHONE. * `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
+	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
+	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+	// device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
-	// Metrics: Metrics to aggregate. **Supported metrics:** *
-	// `slowStartRate` (`google.type.Decimal`): Percentage of distinct users
-	// in the aggregation period that had a slow start. *
-	// `slowStartRate7dUserWeighted` (`google.type.Decimal`): Rolling
-	// average value of `slowStartRate` in the last 7 days. The daily values
-	// are weighted by the count of distinct users for the day. *
-	// `slowStartRate28dUserWeighted` (`google.type.Decimal`): Rolling
-	// average value of `slowStartRate` in the last 28 days. The daily
+	// Metrics: Metrics to aggregate. **Supported metrics:** * `slowStartRate`
+	// (`google.type.Decimal`): Percentage of distinct users in the aggregation
+	// period that had a slow start. * `slowStartRate7dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `slowStartRate` in the
+	// last 7 days. The daily values are weighted by the count of distinct users
+	// for the day. * `slowStartRate28dUserWeighted` (`google.type.Decimal`):
+	// Rolling average value of `slowStartRate` in the last 28 days. The daily
 	// values are weighted by the count of distinct users for the day. *
-	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-	// the aggregation period that were used as normalization value for the
-	// `slowStartRate` metric. A user is counted in this metric if their app
-	// was launched in the device. Care must be taken not to aggregate this
-	// count further, as it may result in users being counted multiple
-	// times. The value is rounded to the nearest multiple of 10, 100, 1,000
-	// or 1,000,000, depending on the magnitude of the value.
+	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in the
+	// aggregation period that were used as normalization value for the
+	// `slowStartRate` metric. A user is counted in this metric if their app was
+	// launched in the device. Care must be taken not to aggregate this count
+	// further, as it may result in users being counted multiple times. The value
+	// is rounded to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending
+	// on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100000; values above 100000 will
+	// be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only
-	// supported timezone is `America/Los_Angeles`.
+	// calendar date intervals. Due to historical constraints, the only supported
+	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
-	// UserCohort: User view to select. The output data will correspond to
-	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
-	// from all publicly released Android versions. This is the default.
-	// Supports all the above dimensions. * `APP_TESTERS` To select data
-	// from users who have opted in to be testers. Supports all the above
-	// dimensions. * `OS_BETA` To select data from beta Android versions
-	// only, excluding data from released Android versions. Only the
-	// following dimensions are supported: * `versionCode` (int64): version
-	// of the app that was running on the user's device. * `osBuild`
-	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: User view to select. The output data will correspond to the
+	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
+	// publicly released Android versions. This is the default. Supports all the
+	// above dimensions. * `APP_TESTERS` To select data from users who have opted
+	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
+	// data from beta Android versions only, excluding data from released Android
+	// versions. Only the following dimensions are supported: * `versionCode`
+	// (int64): version of the app that was running on the user's device. *
+	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
 	// automatically choose the default value.
-	//   "OS_PUBLIC" - This is default view. Contains data from public
-	// released android versions only.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
 	//   "OS_BETA" - This is the view with just android beta data excluding
 	// released OS version data.
-	//   "APP_TESTERS" - This is the view with data only from users who have
-	// opted in to be testers for a given app, excluding OS beta data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
 	UserCohort string `json:"userCohort,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse
-// : Response message for QuerySlowStartRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse:
+// Response message for QuerySlowStartRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows of data.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMet
-// ricSetRequest: Request message for
-// QueryStuckBackgroundWakelockRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetR
+// equest: Request message for QueryStuckBackgroundWakelockRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetRequest struct {
-	// Dimensions: Dimensions to slice the data by. **Supported
-	// dimensions:** * `apiLevel` (string): the API level of Android that
-	// was running on the user's device, e.g., 26. * `versionCode` (int64):
-	// version of the app that was running on the user's device. *
-	// `deviceModel` (string): unique identifier of the user's device model.
-	// The form of the identifier is 'deviceBrand/device', where deviceBrand
-	// corresponds to Build.BRAND and device corresponds to Build.DEVICE,
-	// e.g., google/coral. * `deviceBrand` (string): unique identifier of
-	// the user's device brand, e.g., google. * `deviceType` (string): the
-	// type (also known as form factor) of the user's device, e.g., PHONE. *
-	// `countryCode` (string): the country or region of the user's device
-	// based on their IP address, represented as a 2-letter ISO-3166 code
-	// (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-	// Reference
+	// Dimensions: Dimensions to slice the data by. **Supported dimensions:** *
+	// `apiLevel` (string): the API level of Android that was running on the user's
+	// device, e.g., 26. * `versionCode` (int64): version of the app that was
+	// running on the user's device. * `deviceModel` (string): unique identifier of
+	// the user's device model. The form of the identifier is 'deviceBrand/device',
+	// where deviceBrand corresponds to Build.BRAND and device corresponds to
+	// Build.DEVICE, e.g., google/coral. * `deviceBrand` (string): unique
+	// identifier of the user's device brand, e.g., google. * `deviceType`
+	// (string): the type (also known as form factor) of the user's device, e.g.,
+	// PHONE. * `countryCode` (string): the country or region of the user's device
+	// based on their IP address, represented as a 2-letter ISO-3166 code (e.g. US
+	// for the United States). * `deviceRamBucket` (int64): RAM of the device, in
+	// MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
+	// device's primary system-on-chip, e.g., Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-	// * `deviceSocModel` (string): Model of the device's primary
-	// system-on-chip, e.g., "Exynos 2100". Reference
-	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-	// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-	// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-	// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-	// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-	// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-	// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-	// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-	// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-	// (string): Screen density of the device, e.g., mdpi, hdpi.
+	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". Reference
+	// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+	// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+	// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+	// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+	// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+	// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+	// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi.
 	Dimensions []string `json:"dimensions,omitempty"`
-
-	// Filter: Filters to apply to data. The filtering expression follows
-	// AIP-160 (https://google.aip.dev/160) standard and supports filtering
-	// by equality of all breakdown dimensions.
+	// Filter: Filters to apply to data. The filtering expression follows AIP-160
+	// (https://google.aip.dev/160) standard and supports filtering by equality of
+	// all breakdown dimensions.
 	Filter string `json:"filter,omitempty"`
-
 	// Metrics: Metrics to aggregate. **Supported metrics:** *
-	// `stuckBgWakelockRate` (`google.type.Decimal`): Percentage of distinct
-	// users in the aggregation period that had a wakelock held in the
-	// background for longer than 1 hour. *
-	// `stuckBgWakelockRate7dUserWeighted` (`google.type.Decimal`): Rolling
-	// average value of `stuckBgWakelockRate` in the last 7 days. The daily
-	// values are weighted by the count of distinct users for the day. *
-	// `stuckBgWakelockRate28dUserWeighted` (`google.type.Decimal`): Rolling
-	// average value of `stuckBgWakelockRate` in the last 28 days. The daily
-	// values are weighted by the count of distinct users for the day. *
-	// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-	// the aggregation period that were used as normalization value for the
-	// `stuckBgWakelockRate` metric. A user is counted in this metric if
-	// they app was doing any work on the device, i.e., not just active
+	// `stuckBgWakelockRate` (`google.type.Decimal`): Percentage of distinct users
+	// in the aggregation period that had a wakelock held in the background for
+	// longer than 1 hour. * `stuckBgWakelockRate7dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `stuckBgWakelockRate` in
+	// the last 7 days. The daily values are weighted by the count of distinct
+	// users for the day. * `stuckBgWakelockRate28dUserWeighted`
+	// (`google.type.Decimal`): Rolling average value of `stuckBgWakelockRate` in
+	// the last 28 days. The daily values are weighted by the count of distinct
+	// users for the day. * `distinctUsers` (`google.type.Decimal`): Count of
+	// distinct users in the aggregation period that were used as normalization
+	// value for the `stuckBgWakelockRate` metric. A user is counted in this metric
+	// if they app was doing any work on the device, i.e., not just active
 	// foreground usage but also background work. Care must be taken not to
 	// aggregate this count further, as it may result in users being counted
-	// multiple times. The value is rounded to the nearest multiple of 10,
-	// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
+	// multiple times. The value is rounded to the nearest multiple of 10, 100,
+	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// PageSize: Maximum size of the returned data. If unspecified, at most
-	// 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// PageSize: Maximum size of the returned data. If unspecified, at most 1000
+	// rows will be returned. The maximum value is 100000; values above 100000 will
+	// be coerced to 100000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: A page token, received from a previous call. Provide this
-	// to retrieve the subsequent page. When paginating, all other
-	// parameters provided to the request must match the call that provided
-	// the page token.
+	// PageToken: A page token, received from a previous call. Provide this to
+	// retrieve the subsequent page. When paginating, all other parameters provided
+	// to the request must match the call that provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
 	// TimelineSpec: Specification of the timeline aggregation parameters.
 	// **Supported aggregation periods:** * DAILY: metrics are aggregated in
-	// calendar date intervals. Due to historical constraints, the only
-	// supported timezone is `America/Los_Angeles`.
+	// calendar date intervals. Due to historical constraints, the only supported
+	// timezone is `America/Los_Angeles`.
 	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
-
-	// UserCohort: User view to select. The output data will correspond to
-	// the selected view. **Supported values:** * `OS_PUBLIC` To select data
-	// from all publicly released Android versions. This is the default.
-	// Supports all the above dimensions. * `APP_TESTERS` To select data
-	// from users who have opted in to be testers. Supports all the above
-	// dimensions. * `OS_BETA` To select data from beta android versions
-	// only, excluding data from released android versions. Only the
-	// following dimensions are supported: * `versionCode` (int64): version
-	// of the app that was running on the user's device. * `osBuild`
-	// (string): OS build of the user's device, e.g., "T1B2.220916.004".
+	// UserCohort: User view to select. The output data will correspond to the
+	// selected view. **Supported values:** * `OS_PUBLIC` To select data from all
+	// publicly released Android versions. This is the default. Supports all the
+	// above dimensions. * `APP_TESTERS` To select data from users who have opted
+	// in to be testers. Supports all the above dimensions. * `OS_BETA` To select
+	// data from beta android versions only, excluding data from released android
+	// versions. Only the following dimensions are supported: * `versionCode`
+	// (int64): version of the app that was running on the user's device. *
+	// `osBuild` (string): OS build of the user's device, e.g., "T1B2.220916.004".
 	//
 	// Possible values:
 	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
 	// automatically choose the default value.
-	//   "OS_PUBLIC" - This is default view. Contains data from public
-	// released android versions only.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
 	//   "OS_BETA" - This is the view with just android beta data excluding
 	// released OS version data.
-	//   "APP_TESTERS" - This is the view with data only from users who have
-	// opted in to be testers for a given app, excluding OS beta data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
 	UserCohort string `json:"userCohort,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimensions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMet
-// ricSetResponse: Response message for
-// QueryStuckBackgroundWakelockRateMetricSet.
+// GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetR
+// esponse: Response message for QueryStuckBackgroundWakelockRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse struct {
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rows: Returned rows of data.
 	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1Release: A representation of an
-// app release.
+// GooglePlayDeveloperReportingV1beta1Release: A representation of an app
+// release.
 type GooglePlayDeveloperReportingV1beta1Release struct {
 	// DisplayName: Readable identifier of the release.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// VersionCodes: The version codes contained in this release.
 	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1Release) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1Release
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions: A set of
-// filtering options for releases and version codes specific to an app.
+// GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions: A set of filtering
+// options for releases and version codes specific to an app.
 type GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions struct {
-	// Tracks: List of tracks to filter releases over. Provides the grouping
-	// of version codes under releases and tracks.
+	// Tracks: List of tracks to filter releases over. Provides the grouping of
+	// version codes under releases and tracks.
 	Tracks []*GooglePlayDeveloperReportingV1beta1Track `json:"tracks,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Tracks") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Tracks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Tracks") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse:
-// Response message for SearchAccessibleApps.
+// GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse: Response
+// message for SearchAccessibleApps.
 type GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse struct {
 	// Apps: The apps accessible to the user calling the endpoint.
 	Apps []*GooglePlayDeveloperReportingV1beta1App `json:"apps,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Apps") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Apps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Apps") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Apps") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse:
-// Response with a paginated list of issues that matched the request.
+// GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse: Response with
+// a paginated list of issues that matched the request.
 type GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse struct {
 	// ErrorIssues: ErrorIssues that were found.
 	ErrorIssues []*GooglePlayDeveloperReportingV1beta1ErrorIssue `json:"errorIssues,omitempty"`
-
 	// NextPageToken: Continuation token to fetch the next page of data.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorIssues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorIssues") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorIssues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse:
-// Response with a paginated list of error reports matching the search
-// query.
+// GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse: Response with
+// a paginated list of error reports matching the search query.
 type GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse struct {
 	// ErrorReports: Error reports that were found.
 	ErrorReports []*GooglePlayDeveloperReportingV1beta1ErrorReport `json:"errorReports,omitempty"`
-
 	// NextPageToken: Page token to fetch the next page of reports.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorReports") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorReports") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorReports") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet:
-// Singleton resource representing the set of Slow Rendering metrics.
-// This metric set contains low-level rendering data captured by
-// SurafeFlinger. Sessions are evaluated based on the present-to-present
-// histogram of frames handled by any SurfaceFlinger layer owned by the
-// app. A slow session is a session where more than 25% of frames for
-// the session did not meet the metric's target frame rate (either
-// 20fps, or 30fps). *NOTE:* This metric set is only available for
-// games. **Supported aggregation periods:** * DAILY: metrics are
-// aggregated in calendar date intervals. Due to historical constraints,
-// the only supported timezone is `America/Los_Angeles`. **Supported
-// metrics:** * `slowRenderingRate20Fps` (`google.type.Decimal`):
-// Percentage of distinct users in the aggregation period that had slow
-// rendering. * `slowRenderingRate20Fps7dUserWeighted`
-// (`google.type.Decimal`): Rolling average value of
-// `slowRenderingRate20Fps` in the last 7 days. The daily values are
-// weighted by the count of distinct users for the day. *
-// `slowRenderingRate20Fps28dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `slowRenderingRate20Fps` in the last 28
-// days. The daily values are weighted by the count of distinct users
-// for the day. * `slowRenderingRate30Fps` (`google.type.Decimal`):
-// Percentage of distinct users in the aggregation period that had slow
-// rendering. * `slowRenderingRate30Fps7dUserWeighted`
-// (`google.type.Decimal`): Rolling average value of
-// `slowRenderingRate30Fps` in the last 7 days. The daily values are
-// weighted by the count of distinct users for the day. *
-// `slowRenderingRate30Fps28dUserWeighted` (`google.type.Decimal`):
-// Rolling average value of `slowRenderingRate30Fps` in the last 28
-// days. The daily values are weighted by the count of distinct users
-// for the day. * `distinctUsers` (`google.type.Decimal`): Count of
-// distinct users in the aggregation period that were used as
-// normalization value for the
-// `slowRenderingRate20Fps`/`slowRenderingRate30Fps` metric. A user is
-// counted in this metric if their app rendered any frames. Care must be
-// taken not to aggregate this count further, as it may result in users
-// being counted multiple times. The value is rounded to the nearest
-// multiple of 10, 100, 1,000 or 1,000,000, depending on the magnitude
-// of the value. **Supported dimensions:** * `apiLevel` (string): the
-// API level of Android that was running on the user's device, e.g., 26.
-// * `versionCode` (int64): version of the app that was running on the
-// user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. The form of the identifier is
-// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
-// and device corresponds to Build.DEVICE, e.g., google/coral. *
-// `deviceBrand` (string): unique identifier of the user's device brand,
-// e.g., google. * `deviceType` (string): the type (also known as form
-// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
-// the country or region of the user's device based on their IP address,
-// represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
-// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-// device's primary system-on-chip, e.g., Samsung. Reference
+// GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet: Singleton
+// resource representing the set of Slow Rendering metrics. This metric set
+// contains low-level rendering data captured by SurafeFlinger. Sessions are
+// evaluated based on the present-to-present histogram of frames handled by any
+// SurfaceFlinger layer owned by the app. A slow session is a session where
+// more than 25% of frames for the session did not meet the metric's target
+// frame rate (either 20fps, or 30fps). *NOTE:* This metric set is only
+// available for games. **Supported aggregation periods:** * DAILY: metrics are
+// aggregated in calendar date intervals. Due to historical constraints, the
+// only supported timezone is `America/Los_Angeles`. **Supported metrics:** *
+// `slowRenderingRate20Fps` (`google.type.Decimal`): Percentage of distinct
+// users in the aggregation period that had slow rendering. *
+// `slowRenderingRate20Fps7dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `slowRenderingRate20Fps` in the last 7 days. The daily
+// values are weighted by the count of distinct users for the day. *
+// `slowRenderingRate20Fps28dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `slowRenderingRate20Fps` in the last 28 days. The daily
+// values are weighted by the count of distinct users for the day. *
+// `slowRenderingRate30Fps` (`google.type.Decimal`): Percentage of distinct
+// users in the aggregation period that had slow rendering. *
+// `slowRenderingRate30Fps7dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `slowRenderingRate30Fps` in the last 7 days. The daily
+// values are weighted by the count of distinct users for the day. *
+// `slowRenderingRate30Fps28dUserWeighted` (`google.type.Decimal`): Rolling
+// average value of `slowRenderingRate30Fps` in the last 28 days. The daily
+// values are weighted by the count of distinct users for the day. *
+// `distinctUsers` (`google.type.Decimal`): Count of distinct users in the
+// aggregation period that were used as normalization value for the
+// `slowRenderingRate20Fps`/`slowRenderingRate30Fps` metric. A user is counted
+// in this metric if their app rendered any frames. Care must be taken not to
+// aggregate this count further, as it may result in users being counted
+// multiple times. The value is rounded to the nearest multiple of 10, 100,
+// 1,000 or 1,000,000, depending on the magnitude of the value. **Supported
+// dimensions:** * `apiLevel` (string): the API level of Android that was
+// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+// the app that was running on the user's device. * `deviceModel` (string):
+// unique identifier of the user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+// (string): unique identifier of the user's device brand, e.g., google. *
+// `deviceType` (string): the type (also known as form factor) of the user's
+// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+// user's device based on their IP address, represented as a 2-letter ISO-3166
+// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app.
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app.
 type GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
 	// Name: Identifier. The resource name. Format:
 	// apps/{app}/slowRenderingRateMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet: Singleton
 // resource representing the set of Slow Start metrics. This metric set
-// contains Activity start duration data. **Supported aggregation
-// periods:** * DAILY: metrics are aggregated in calendar date
-// intervals. Due to historical constraints, the only supported timezone
-// is `America/Los_Angeles`. **Supported metrics:** * `slowStartRate`
-// (`google.type.Decimal`): Percentage of distinct users in the
-// aggregation period that had a slow start. *
-// `slowStartRate7dUserWeighted` (`google.type.Decimal`): Rolling
-// average value of `slowStartRate` in the last 7 days. The daily values
-// are weighted by the count of distinct users for the day. *
-// `slowStartRate28dUserWeighted` (`google.type.Decimal`): Rolling
-// average value of `slowStartRate` in the last 28 days. The daily
-// values are weighted by the count of distinct users for the day. *
-// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-// the aggregation period that were used as normalization value for the
-// `slowStartRate` metric. A user is counted in this metric if their app
-// was launched in the device. Care must be taken not to aggregate this
-// count further, as it may result in users being counted multiple
-// times. The value is rounded to the nearest multiple of 10, 100, 1,000
-// or 1,000,000, depending on the magnitude of the value. **Required
-// dimension:** This dimension must be specified with each request for
-// the request to be valid. * `startType` (string): the type of start
-// that was measured. Valid types are `HOT`, `WARM` and `COLD`.
-// **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device, e.g., 26. *
-// `versionCode` (int64): version of the app that was running on the
-// user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. The form of the identifier is
-// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
-// and device corresponds to Build.DEVICE, e.g., google/coral. *
-// `deviceBrand` (string): unique identifier of the user's device brand,
-// e.g., google. * `deviceType` (string): the type (also known as form
-// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// contains Activity start duration data. **Supported aggregation periods:** *
+// DAILY: metrics are aggregated in calendar date intervals. Due to historical
+// constraints, the only supported timezone is `America/Los_Angeles`.
+// **Supported metrics:** * `slowStartRate` (`google.type.Decimal`): Percentage
+// of distinct users in the aggregation period that had a slow start. *
+// `slowStartRate7dUserWeighted` (`google.type.Decimal`): Rolling average value
+// of `slowStartRate` in the last 7 days. The daily values are weighted by the
+// count of distinct users for the day. * `slowStartRate28dUserWeighted`
+// (`google.type.Decimal`): Rolling average value of `slowStartRate` in the
+// last 28 days. The daily values are weighted by the count of distinct users
+// for the day. * `distinctUsers` (`google.type.Decimal`): Count of distinct
+// users in the aggregation period that were used as normalization value for
+// the `slowStartRate` metric. A user is counted in this metric if their app
+// was launched in the device. Care must be taken not to aggregate this count
+// further, as it may result in users being counted multiple times. The value
+// is rounded to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending
+// on the magnitude of the value. **Required dimension:** This dimension must
+// be specified with each request for the request to be valid. * `startType`
+// (string): the type of start that was measured. Valid types are `HOT`, `WARM`
+// and `COLD`. **Supported dimensions:** * `apiLevel` (string): the API level
+// of Android that was running on the user's device, e.g., 26. * `versionCode`
+// (int64): version of the app that was running on the user's device. *
+// `deviceModel` (string): unique identifier of the user's device model. The
+// form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g.,
+// google/coral. * `deviceBrand` (string): unique identifier of the user's
+// device brand, e.g., google. * `deviceType` (string): the type (also known as
+// form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
-// represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
-// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-// device's primary system-on-chip, e.g., Samsung. Reference
+// represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
+// etc.). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app.
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app.
 type GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
 	// Name: Identifier. The resource name. Format:
 	// apps/{app}/slowStartRateMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSe
-// t: Singleton resource representing the set of Stuck Background
-// Wakelocks metrics. This metric set contains PowerManager wakelock
-// duration data combined with process state data to produce a
-// normalized metric independent of user counts. **Supported aggregation
-// periods:** * DAILY: metrics are aggregated in calendar date
-// intervals. Due to historical constraints, the only supported timezone
-// is `America/Los_Angeles`. **Supported metrics:** *
-// `stuckBgWakelockRate` (`google.type.Decimal`): Percentage of distinct
-// users in the aggregation period that had a wakelock held in the
-// background for longer than 1 hour. *
-// `stuckBgWakelockRate7dUserWeighted` (`google.type.Decimal`): Rolling
-// average value of `stuckBgWakelockRate` in the last 7 days. The daily
-// values are weighted by the count of distinct users for the day. *
-// `stuckBgWakelockRate28dUserWeighted` (`google.type.Decimal`): Rolling
-// average value of `stuckBgWakelockRate` in the last 28 days. The daily
-// values are weighted by the count of distinct users for the day. *
-// `distinctUsers` (`google.type.Decimal`): Count of distinct users in
-// the aggregation period that were used as normalization value for the
-// `stuckBgWakelockRate` metric. A user is counted in this metric if
-// their app was doing any work on the device, i.e., not just active
+// GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet:
+// Singleton resource representing the set of Stuck Background Wakelocks
+// metrics. This metric set contains PowerManager wakelock duration data
+// combined with process state data to produce a normalized metric independent
+// of user counts. **Supported aggregation periods:** * DAILY: metrics are
+// aggregated in calendar date intervals. Due to historical constraints, the
+// only supported timezone is `America/Los_Angeles`. **Supported metrics:** *
+// `stuckBgWakelockRate` (`google.type.Decimal`): Percentage of distinct users
+// in the aggregation period that had a wakelock held in the background for
+// longer than 1 hour. * `stuckBgWakelockRate7dUserWeighted`
+// (`google.type.Decimal`): Rolling average value of `stuckBgWakelockRate` in
+// the last 7 days. The daily values are weighted by the count of distinct
+// users for the day. * `stuckBgWakelockRate28dUserWeighted`
+// (`google.type.Decimal`): Rolling average value of `stuckBgWakelockRate` in
+// the last 28 days. The daily values are weighted by the count of distinct
+// users for the day. * `distinctUsers` (`google.type.Decimal`): Count of
+// distinct users in the aggregation period that were used as normalization
+// value for the `stuckBgWakelockRate` metric. A user is counted in this metric
+// if their app was doing any work on the device, i.e., not just active
 // foreground usage but also background work. Care must be taken not to
 // aggregate this count further, as it may result in users being counted
-// multiple times. The value is rounded to the nearest multiple of 10,
-// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
-// **Supported dimensions:** * `apiLevel` (string): the API level of
-// Android that was running on the user's device, e.g., 26. *
-// `versionCode` (int64): version of the app that was running on the
-// user's device. * `deviceModel` (string): unique identifier of the
-// user's device model. The form of the identifier is
-// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND
-// and device corresponds to Build.DEVICE, e.g., google/coral. *
-// `deviceBrand` (string): unique identifier of the user's device brand,
-// e.g., google. * `deviceType` (string): the type (also known as form
-// factor) of the user's device, e.g., PHONE. * `countryCode` (string):
-// the country or region of the user's device based on their IP address,
-// represented as a 2-letter ISO-3166 code (e.g. US for the United
-// States). * `deviceRamBucket` (int64): RAM of the device, in MB, in
-// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the
-// device's primary system-on-chip, e.g., Samsung. Reference
+// multiple times. The value is rounded to the nearest multiple of 10, 100,
+// 1,000 or 1,000,000, depending on the magnitude of the value. **Supported
+// dimensions:** * `apiLevel` (string): the API level of Android that was
+// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+// the app that was running on the user's device. * `deviceModel` (string):
+// unique identifier of the user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+// (string): unique identifier of the user's device brand, e.g., google. *
+// `deviceType` (string): the type (also known as form factor) of the user's
+// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+// user's device based on their IP address, represented as a 2-letter ISO-3166
+// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+// Make of the device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
-// * `deviceSocModel` (string): Model of the device's primary
-// system-on-chip, e.g., "Exynos 2100". Reference
-// (https://developer.android.com/reference/android/os/Build#SOC_MODEL)
-// * `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm.
-// * `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo
-// 240". * `deviceGpuMake` (string): Make of the device's GPU, e.g.,
-// ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
-// Mali. * `deviceGpuVersion` (string): Version of the device's GPU,
-// e.g., T750. * `deviceVulkanVersion` (string): Vulkan version of the
-// device, e.g., "4198400". * `deviceGlEsVersion` (string): OpenGL ES
-// version of the device, e.g., "196610". * `deviceScreenSize` (string):
-// Screen size of the device, e.g., NORMAL, LARGE. * `deviceScreenDpi`
-// (string): Screen density of the device, e.g., mdpi, hdpi. **Required
-// permissions**: to access this resource, the calling user needs the
-// _View app information (read-only)_ permission for the app.
+// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". Reference
+// (https://developer.android.com/reference/android/os/Build#SOC_MODEL) *
+// `deviceCpuMake` (string): Make of the device's CPU, e.g., Qualcomm. *
+// `deviceCpuModel` (string): Model of the device's CPU, e.g., "Kryo 240". *
+// `deviceGpuMake` (string): Make of the device's GPU, e.g., ARM. *
+// `deviceGpuModel` (string): Model of the device's GPU, e.g., Mali. *
+// `deviceGpuVersion` (string): Version of the device's GPU, e.g., T750. *
+// `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. **Required permissions**: to access this resource,
+// the calling user needs the _View app information (read-only)_ permission for
+// the app.
 type GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
-
 	// Name: Identifier. The resource name. Format:
 	// apps/{app}/stuckBackgroundWakelockRateMetricSet
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreshnessInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GooglePlayDeveloperReportingV1beta1TimelineSpec: Specification of the
 // time-related aggregation parameters of a timeline. Timelines have an
-// aggregation period (`DAILY`, `HOURLY`, etc) which defines how events
-// are aggregated in metrics. The points in a timeline are defined by
-// the starting DateTime of the aggregation period. The duration is
-// implicit in the AggregationPeriod. Hourly aggregation periods, when
-// supported by a metric set, are always specified in UTC to avoid
-// ambiguities around daylight saving time transitions, where an hour is
-// skipped when adopting DST, and repeated when abandoning DST. For
-// example, the timestamp '2021-11-07 01:00:00 America/Los_Angeles' is
-// ambiguous since it can correspond to '2021-11-07 08:00:00 UTC' or
-// '2021-11-07 09:00:00 UTC'. Daily aggregation periods require
-// specifying a timezone which will determine the precise instants of
-// the start and the end of the day. Not all metric sets support all
-// timezones, so make sure to check which timezones are supported by the
-// metric set you want to query.
+// aggregation period (`DAILY`, `HOURLY`, etc) which defines how events are
+// aggregated in metrics. The points in a timeline are defined by the starting
+// DateTime of the aggregation period. The duration is implicit in the
+// AggregationPeriod. Hourly aggregation periods, when supported by a metric
+// set, are always specified in UTC to avoid ambiguities around daylight saving
+// time transitions, where an hour is skipped when adopting DST, and repeated
+// when abandoning DST. For example, the timestamp '2021-11-07 01:00:00
+// America/Los_Angeles' is ambiguous since it can correspond to '2021-11-07
+// 08:00:00 UTC' or '2021-11-07 09:00:00 UTC'. Daily aggregation periods
+// require specifying a timezone which will determine the precise instants of
+// the start and the end of the day. Not all metric sets support all timezones,
+// so make sure to check which timezones are supported by the metric set you
+// want to query.
 type GooglePlayDeveloperReportingV1beta1TimelineSpec struct {
-	// AggregationPeriod: Type of the aggregation period of the datapoints
-	// in the timeline. Intervals are identified by the date and time at the
-	// start of the interval.
+	// AggregationPeriod: Type of the aggregation period of the datapoints in the
+	// timeline. Intervals are identified by the date and time at the start of the
+	// interval.
 	//
 	// Possible values:
 	//   "AGGREGATION_PERIOD_UNSPECIFIED" - Unspecified granularity.
@@ -2986,266 +2525,213 @@ type GooglePlayDeveloperReportingV1beta1TimelineSpec struct {
 	//   "FULL_RANGE" - Data is aggregated over the full timeline range.
 	// Effectively this produces a single value rather than a timeline.
 	AggregationPeriod string `json:"aggregationPeriod,omitempty"`
-
-	// EndTime: Ending datapoint of the timeline (exclusive). See start_time
-	// for restrictions. The timezone of the end point must match the
-	// timezone of the start point.
+	// EndTime: Ending datapoint of the timeline (exclusive). See start_time for
+	// restrictions. The timezone of the end point must match the timezone of the
+	// start point.
 	EndTime *GoogleTypeDateTime `json:"endTime,omitempty"`
-
-	// StartTime: Starting datapoint of the timeline (inclusive). Must be
-	// aligned to the aggregation period as follows: * HOURLY: the
-	// 'minutes', 'seconds' and 'nanos' fields must be unset. The time_zone
-	// can be left unset (defaults to UTC) or set explicitly to "UTC".
-	// Setting any other utc_offset or timezone id will result in a
-	// validation error. * DAILY: the 'hours', 'minutes', 'seconds' and
-	// 'nanos' fields must be unset. Different metric sets support different
-	// timezones. It can be left unset to use the default timezone specified
-	// by the metric set. The timezone of the end point must match the
+	// StartTime: Starting datapoint of the timeline (inclusive). Must be aligned
+	// to the aggregation period as follows: * HOURLY: the 'minutes', 'seconds' and
+	// 'nanos' fields must be unset. The time_zone can be left unset (defaults to
+	// UTC) or set explicitly to "UTC". Setting any other utc_offset or timezone id
+	// will result in a validation error. * DAILY: the 'hours', 'minutes',
+	// 'seconds' and 'nanos' fields must be unset. Different metric sets support
+	// different timezones. It can be left unset to use the default timezone
+	// specified by the metric set. The timezone of the end point must match the
 	// timezone of the start point.
 	StartTime *GoogleTypeDateTime `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AggregationPeriod")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AggregationPeriod") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationPeriod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationPeriod") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1TimelineSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1TimelineSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GooglePlayDeveloperReportingV1beta1Track: A representation of a Play
-// release track.
+// GooglePlayDeveloperReportingV1beta1Track: A representation of a Play release
+// track.
 type GooglePlayDeveloperReportingV1beta1Track struct {
 	// DisplayName: Readable identifier of the track.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ServingReleases: Represents all active releases in the track.
 	ServingReleases []*GooglePlayDeveloperReportingV1beta1Release `json:"servingReleases,omitempty"`
-
 	// Type: The type of the track.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GooglePlayDeveloperReportingV1beta1Track) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePlayDeveloperReportingV1beta1Track
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDateTime: Represents civil time (or occasionally physical
-// time). This type can represent a civil time in one of a few possible
-// ways: * When utc_offset is set and time_zone is unset: a civil time
-// on a calendar day with a particular offset from UTC. * When time_zone
-// is set and utc_offset is unset: a civil time on a calendar day in a
-// particular time zone. * When neither time_zone nor utc_offset is set:
-// a civil time on a calendar day in local time. The date is relative to
-// the Proleptic Gregorian Calendar. If year, month, or day are 0, the
-// DateTime is considered not to have a specific year, month, or day
-// respectively. This type may also be used to represent a physical time
-// if all the date and time fields are set and either case of the
-// `time_offset` oneof is set. Consider using `Timestamp` message for
-// physical time instead. If your use case also would like to store the
-// user's timezone, that can be done in another field. This type is more
-// flexible than some applications may want. Make sure to document and
-// validate your application's limitations.
+// GoogleTypeDateTime: Represents civil time (or occasionally physical time).
+// This type can represent a civil time in one of a few possible ways: * When
+// utc_offset is set and time_zone is unset: a civil time on a calendar day
+// with a particular offset from UTC. * When time_zone is set and utc_offset is
+// unset: a civil time on a calendar day in a particular time zone. * When
+// neither time_zone nor utc_offset is set: a civil time on a calendar day in
+// local time. The date is relative to the Proleptic Gregorian Calendar. If
+// year, month, or day are 0, the DateTime is considered not to have a specific
+// year, month, or day respectively. This type may also be used to represent a
+// physical time if all the date and time fields are set and either case of the
+// `time_offset` oneof is set. Consider using `Timestamp` message for physical
+// time instead. If your use case also would like to store the user's timezone,
+// that can be done in another field. This type is more flexible than some
+// applications may want. Make sure to document and validate your application's
+// limitations.
 type GoogleTypeDateTime struct {
-	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the
-	// year and month, or 0 if specifying a datetime without a day.
+	// Day: Optional. Day of month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 if specifying a datetime without a day.
 	Day int64 `json:"day,omitempty"`
-
-	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to
-	// 23, defaults to 0 (midnight). An API may choose to allow the value
-	// "24:00:00" for scenarios like business closing time.
+	// Hours: Optional. Hours of day in 24 hour format. Should be from 0 to 23,
+	// defaults to 0 (midnight). An API may choose to allow the value "24:00:00"
+	// for scenarios like business closing time.
 	Hours int64 `json:"hours,omitempty"`
-
-	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59,
-	// defaults to 0.
+	// Minutes: Optional. Minutes of hour of day. Must be from 0 to 59, defaults to
+	// 0.
 	Minutes int64 `json:"minutes,omitempty"`
-
-	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if
-	// specifying a datetime without a month.
+	// Month: Optional. Month of year. Must be from 1 to 12, or 0 if specifying a
+	// datetime without a month.
 	Month int64 `json:"month,omitempty"`
-
-	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0
-	// to 999,999,999, defaults to 0.
+	// Nanos: Optional. Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999, defaults to 0.
 	Nanos int64 `json:"nanos,omitempty"`
-
-	// Seconds: Optional. Seconds of minutes of the time. Must normally be
-	// from 0 to 59, defaults to 0. An API may allow the value 60 if it
-	// allows leap-seconds.
+	// Seconds: Optional. Seconds of minutes of the time. Must normally be from 0
+	// to 59, defaults to 0. An API may allow the value 60 if it allows
+	// leap-seconds.
 	Seconds int64 `json:"seconds,omitempty"`
-
 	// TimeZone: Time zone.
 	TimeZone *GoogleTypeTimeZone `json:"timeZone,omitempty"`
-
-	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and
-	// +18 hours. For example, a UTC offset of -4:00 would be represented as
-	// { seconds: -14400 }.
+	// UtcOffset: UTC offset. Must be whole seconds, between -18 hours and +18
+	// hours. For example, a UTC offset of -4:00 would be represented as { seconds:
+	// -14400 }.
 	UtcOffset string `json:"utcOffset,omitempty"`
-
-	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if
-	// specifying a datetime without a year.
+	// Year: Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a
+	// datetime without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeDateTime) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDateTime
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDecimal: A representation of a decimal value, such as 2.5.
-// Clients may convert values into language-native decimal formats, such
-// as Java's BigDecimal or Python's decimal.Decimal. [BigDecimal]:
+// GoogleTypeDecimal: A representation of a decimal value, such as 2.5. Clients
+// may convert values into language-native decimal formats, such as Java's
+// BigDecimal or Python's decimal.Decimal. [BigDecimal]:
 // https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/math/BigDecimal.html
 // [decimal.Decimal]: https://docs.python.org/3/library/decimal.html
 type GoogleTypeDecimal struct {
-	// Value: The decimal value, as a string. The string representation
-	// consists of an optional sign, `+` (`U+002B`) or `-` (`U+002D`),
-	// followed by a sequence of zero or more decimal digits ("the
-	// integer"), optionally followed by a fraction, optionally followed by
-	// an exponent. An empty string **should** be interpreted as `0`. The
-	// fraction consists of a decimal point followed by zero or more decimal
-	// digits. The string must contain at least one digit in either the
-	// integer or the fraction. The number formed by the sign, the integer
-	// and the fraction is referred to as the significand. The exponent
-	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed
-	// by one or more decimal digits. Services **should** normalize decimal
-	// values before storing them by: - Removing an explicitly-provided `+`
-	// sign (`+2.5` -> `2.5`). - Replacing a zero-length integer value with
-	// `0` (`.5` -> `0.5`). - Coercing the exponent character to upper-case,
-	// with explicit sign (`2.5e8` -> `2.5E+8`). - Removing an
-	// explicitly-provided zero exponent (`2.5E0` -> `2.5`). Services
-	// **may** perform additional normalization based on its own needs and
-	// the internal decimal implementation selected, such as shifting the
-	// decimal point and exponent value together (example: `2.5E-1` <->
-	// `0.25`). Additionally, services **may** preserve trailing zeroes in
-	// the fraction to indicate increased precision, but are not required to
-	// do so. Note that only the `.` character is supported to divide the
-	// integer and the fraction; `,` **should not** be supported regardless
-	// of locale. Additionally, thousand separators **should not** be
-	// supported. If a service does support them, values **must** be
-	// normalized. The ENBF grammar is: DecimalString = '' | [Sign]
-	// Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
-	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = {
-	// '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services
-	// **should** clearly document the range of supported values, the
-	// maximum supported precision (total number of digits), and, if
-	// applicable, the scale (number of digits after the decimal point), as
-	// well as how it behaves when receiving out-of-bounds values. Services
-	// **may** choose to accept values passed as input even when the value
-	// has a higher precision or scale than the service supports, and
-	// **should** round the value to fit the supported scale. Alternatively,
-	// the service **may** error with `400 Bad Request` (`INVALID_ARGUMENT`
-	// in gRPC) if precision would be lost. Services **should** error with
-	// `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
+	// Value: The decimal value, as a string. The string representation consists of
+	// an optional sign, `+` (`U+002B`) or `-` (`U+002D`), followed by a sequence
+	// of zero or more decimal digits ("the integer"), optionally followed by a
+	// fraction, optionally followed by an exponent. An empty string **should** be
+	// interpreted as `0`. The fraction consists of a decimal point followed by
+	// zero or more decimal digits. The string must contain at least one digit in
+	// either the integer or the fraction. The number formed by the sign, the
+	// integer and the fraction is referred to as the significand. The exponent
+	// consists of the character `e` (`U+0065`) or `E` (`U+0045`) followed by one
+	// or more decimal digits. Services **should** normalize decimal values before
+	// storing them by: - Removing an explicitly-provided `+` sign (`+2.5` ->
+	// `2.5`). - Replacing a zero-length integer value with `0` (`.5` -> `0.5`). -
+	// Coercing the exponent character to upper-case, with explicit sign (`2.5e8`
+	// -> `2.5E+8`). - Removing an explicitly-provided zero exponent (`2.5E0` ->
+	// `2.5`). Services **may** perform additional normalization based on its own
+	// needs and the internal decimal implementation selected, such as shifting the
+	// decimal point and exponent value together (example: `2.5E-1` <-> `0.25`).
+	// Additionally, services **may** preserve trailing zeroes in the fraction to
+	// indicate increased precision, but are not required to do so. Note that only
+	// the `.` character is supported to divide the integer and the fraction; `,`
+	// **should not** be supported regardless of locale. Additionally, thousand
+	// separators **should not** be supported. If a service does support them,
+	// values **must** be normalized. The ENBF grammar is: DecimalString = '' |
+	// [Sign] Significand [Exponent]; Sign = '+' | '-'; Significand = Digits '.' |
+	// [Digits] '.' Digits; Exponent = ('e' | 'E') [Sign] Digits; Digits = { '0' |
+	// '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' }; Services **should**
+	// clearly document the range of supported values, the maximum supported
+	// precision (total number of digits), and, if applicable, the scale (number of
+	// digits after the decimal point), as well as how it behaves when receiving
+	// out-of-bounds values. Services **may** choose to accept values passed as
+	// input even when the value has a higher precision or scale than the service
+	// supports, and **should** round the value to fit the supported scale.
+	// Alternatively, the service **may** error with `400 Bad Request`
+	// (`INVALID_ARGUMENT` in gRPC) if precision would be lost. Services **should**
+	// error with `400 Bad Request` (`INVALID_ARGUMENT` in gRPC) if the service
 	// receives a value outside of the supported range.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Value") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Value") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Value") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeDecimal) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDecimal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone
-// Database (https://www.iana.org/time-zones).
+// GoogleTypeTimeZone: Represents a time zone from the IANA Time Zone Database
+// (https://www.iana.org/time-zones).
 type GoogleTypeTimeZone struct {
 	// Id: IANA Time Zone Database time zone, e.g. "America/New_York".
 	Id string `json:"id,omitempty"`
-
-	// Version: Optional. IANA Time Zone Database version number, e.g.
-	// "2019a".
+	// Version: Optional. IANA Time Zone Database version number, e.g. "2019a".
 	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeTimeZone
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "playdeveloperreporting.anomalies.list":
 
 type AnomaliesListCall struct {
 	s            *Service
@@ -3258,8 +2744,7 @@ type AnomaliesListCall struct {
 
 // List: Lists anomalies in any of the datasets.
 //
-//   - parent: Parent app for which anomalies were detected. Format:
-//     apps/{app}.
+// - parent: Parent app for which anomalies were detected. Format: apps/{app}.
 func (r *AnomaliesService) List(parent string) *AnomaliesListCall {
 	c := &AnomaliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3269,13 +2754,12 @@ func (r *AnomaliesService) List(parent string) *AnomaliesListCall {
 // Filter sets the optional parameter "filter": Filtering criteria for
 // anomalies. For basic filter guidance, please check:
 // https://google.aip.dev/160. **Supported functions:** *
-// `activeBetween(startTime, endTime)`: If specified, only list
-// anomalies that were active in between `startTime` (inclusive) and
-// `endTime` (exclusive). Both parameters are expected to conform to an
-// RFC-3339 formatted string (e.g. `2012-04-21T11:30:00-04:00`). UTC
-// offsets are supported. Both `startTime` and `endTime` accept the
-// special value `UNBOUNDED`, to signify intervals with no lower or
-// upper bound, respectively. Examples: *
+// `activeBetween(startTime, endTime)`: If specified, only list anomalies that
+// were active in between `startTime` (inclusive) and `endTime` (exclusive).
+// Both parameters are expected to conform to an RFC-3339 formatted string
+// (e.g. `2012-04-21T11:30:00-04:00`). UTC offsets are supported. Both
+// `startTime` and `endTime` accept the special value `UNBOUNDED`, to signify
+// intervals with no lower or upper bound, respectively. Examples: *
 // `activeBetween("2021-04-21T11:30:00Z", "2021-07-21T00:00:00Z")` *
 // `activeBetween(UNBOUNDED, "2021-11-21T00:00:00-04:00")` *
 // `activeBetween("2021-07-21T00:00:00-04:00", UNBOUNDED)`
@@ -3285,51 +2769,46 @@ func (c *AnomaliesListCall) Filter(filter string) *AnomaliesListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum size of the
-// returned data. If unspecified, at most 10 anomalies will be returned.
-// The maximum value is 100; values above 100 will be coerced to 100.
+// returned data. If unspecified, at most 10 anomalies will be returned. The
+// maximum value is 100; values above 100 will be coerced to 100.
 func (c *AnomaliesListCall) PageSize(pageSize int64) *AnomaliesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListErrorReports` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListErrorReports` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListErrorReports` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListErrorReports` must match the call that provided the page token.
 func (c *AnomaliesListCall) PageToken(pageToken string) *AnomaliesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AnomaliesListCall) Fields(s ...googleapi.Field) *AnomaliesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AnomaliesListCall) IfNoneMatch(entityTag string) *AnomaliesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AnomaliesListCall) Context(ctx context.Context) *AnomaliesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AnomaliesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3338,12 +2817,7 @@ func (c *AnomaliesListCall) Header() http.Header {
 }
 
 func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3364,15 +2838,11 @@ func (c *AnomaliesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "playdeveloperreporting.anomalies.list" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse.ServerRespon
-// se.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse.ServerResponse.Head
+// er or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3403,48 +2873,6 @@ func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDevelop
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists anomalies in any of the datasets.",
-	//   "flatPath": "v1beta1/apps/{appsId}/anomalies",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.anomalies.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Filtering criteria for anomalies. For basic filter guidance, please check: https://google.aip.dev/160. **Supported functions:** * `activeBetween(startTime, endTime)`: If specified, only list anomalies that were active in between `startTime` (inclusive) and `endTime` (exclusive). Both parameters are expected to conform to an RFC-3339 formatted string (e.g. `2012-04-21T11:30:00-04:00`). UTC offsets are supported. Both `startTime` and `endTime` accept the special value `UNBOUNDED`, to signify intervals with no lower or upper bound, respectively. Examples: * `activeBetween(\"2021-04-21T11:30:00Z\", \"2021-07-21T00:00:00Z\")` * `activeBetween(UNBOUNDED, \"2021-11-21T00:00:00-04:00\")` * `activeBetween(\"2021-07-21T00:00:00-04:00\", UNBOUNDED)`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Maximum size of the returned data. If unspecified, at most 10 anomalies will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListErrorReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListErrorReports` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent app for which anomalies were detected. Format: apps/{app}",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/anomalies",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3452,7 +2880,7 @@ func (c *AnomaliesListCall) Do(opts ...googleapi.CallOption) (*GooglePlayDevelop
 // The provided context supersedes any context provided to the Context method.
 func (c *AnomaliesListCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3467,8 +2895,6 @@ func (c *AnomaliesListCall) Pages(ctx context.Context, f func(*GooglePlayDevelop
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "playdeveloperreporting.apps.fetchReleaseFilterOptions":
 
 type AppsFetchReleaseFilterOptionsCall struct {
 	s            *Service
@@ -3490,33 +2916,29 @@ func (r *AppsService) FetchReleaseFilterOptions(name string) *AppsFetchReleaseFi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsFetchReleaseFilterOptionsCall) Fields(s ...googleapi.Field) *AppsFetchReleaseFilterOptionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsFetchReleaseFilterOptionsCall) IfNoneMatch(entityTag string) *AppsFetchReleaseFilterOptionsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsFetchReleaseFilterOptionsCall) Context(ctx context.Context) *AppsFetchReleaseFilterOptionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsFetchReleaseFilterOptionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3525,12 +2947,7 @@ func (c *AppsFetchReleaseFilterOptionsCall) Header() http.Header {
 }
 
 func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3551,15 +2968,11 @@ func (c *AppsFetchReleaseFilterOptionsCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "playdeveloperreporting.apps.fetchReleaseFilterOptions" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions.ServerRespons
-// e.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AppsFetchReleaseFilterOptionsCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3590,35 +3003,7 @@ func (c *AppsFetchReleaseFilterOptionsCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes filtering options for releases.",
-	//   "flatPath": "v1beta1/apps/{appsId}:fetchReleaseFilterOptions",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.apps.fetchReleaseFilterOptions",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the resource, i.e. app the filtering options are for. Format: apps/{app}",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:fetchReleaseFilterOptions",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1ReleaseFilterOptions"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.apps.search":
 
 type AppsSearchCall struct {
 	s            *Service
@@ -3634,53 +3019,48 @@ func (r *AppsService) Search() *AppsSearchCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of apps to return. The service may return fewer than this value. If
-// unspecified, at most 50 apps will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of apps
+// to return. The service may return fewer than this value. If unspecified, at
+// most 50 apps will be returned. The maximum value is 1000; values above 1000
+// will be coerced to 1000.
 func (c *AppsSearchCall) PageSize(pageSize int64) *AppsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `SearchAccessibleApps` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `SearchAccessibleApps` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `SearchAccessibleApps` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `SearchAccessibleApps` must match the call that provided the page token.
 func (c *AppsSearchCall) PageToken(pageToken string) *AppsSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AppsSearchCall) Fields(s ...googleapi.Field) *AppsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AppsSearchCall) IfNoneMatch(entityTag string) *AppsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AppsSearchCall) Context(ctx context.Context) *AppsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AppsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3689,12 +3069,7 @@ func (c *AppsSearchCall) Header() http.Header {
 }
 
 func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3712,15 +3087,11 @@ func (c *AppsSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "playdeveloperreporting.apps.search" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AppsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3751,34 +3122,6 @@ func (c *AppsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperR
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches for Apps accessible by the user.",
-	//   "flatPath": "v1beta1/apps:search",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.apps.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of apps to return. The service may return fewer than this value. If unspecified, at most 50 apps will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `SearchAccessibleApps` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchAccessibleApps` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/apps:search",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3786,7 +3129,7 @@ func (c *AppsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperR
 // The provided context supersedes any context provided to the Context method.
 func (c *AppsSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1SearchAccessibleAppsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3801,8 +3144,6 @@ func (c *AppsSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperR
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "playdeveloperreporting.vitals.anrrate.get":
 
 type VitalsAnrrateGetCall struct {
 	s            *Service
@@ -3823,33 +3164,29 @@ func (r *VitalsAnrrateService) Get(name string) *VitalsAnrrateGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsAnrrateGetCall) Fields(s ...googleapi.Field) *VitalsAnrrateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsAnrrateGetCall) IfNoneMatch(entityTag string) *VitalsAnrrateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsAnrrateGetCall) Context(ctx context.Context) *VitalsAnrrateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsAnrrateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3858,12 +3195,7 @@ func (c *VitalsAnrrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3884,14 +3216,11 @@ func (c *VitalsAnrrateGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "playdeveloperreporting.vitals.anrrate.get" call.
-// Exactly one of *GooglePlayDeveloperReportingV1beta1AnrRateMetricSet
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1AnrRateMetricSet.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1AnrRateMetricSet.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *VitalsAnrrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1AnrRateMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3922,35 +3251,7 @@ func (c *VitalsAnrrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeve
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/anrRateMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.anrrate.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/anrRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/anrRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1AnrRateMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.anrrate.query":
 
 type VitalsAnrrateQueryCall struct {
 	s                                                               *Service
@@ -3972,23 +3273,21 @@ func (r *VitalsAnrrateService) Query(name string, googleplaydeveloperreportingv1
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsAnrrateQueryCall) Fields(s ...googleapi.Field) *VitalsAnrrateQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsAnrrateQueryCall) Context(ctx context.Context) *VitalsAnrrateQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsAnrrateQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3997,18 +3296,12 @@ func (c *VitalsAnrrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -4025,15 +3318,11 @@ func (c *VitalsAnrrateQueryCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "playdeveloperreporting.vitals.anrrate.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse.Serv
-// erResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsAnrrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4064,35 +3353,6 @@ func (c *VitalsAnrrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/anrRateMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.anrrate.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/anrRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/anrRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4100,7 +3360,7 @@ func (c *VitalsAnrrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 // The provided context supersedes any context provided to the Context method.
 func (c *VitalsAnrrateQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4115,8 +3375,6 @@ func (c *VitalsAnrrateQueryCall) Pages(ctx context.Context, f func(*GooglePlayDe
 		c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest.PageToken = x.NextPageToken
 	}
 }
-
-// method id "playdeveloperreporting.vitals.crashrate.get":
 
 type VitalsCrashrateGetCall struct {
 	s            *Service
@@ -4137,33 +3395,29 @@ func (r *VitalsCrashrateService) Get(name string) *VitalsCrashrateGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsCrashrateGetCall) Fields(s ...googleapi.Field) *VitalsCrashrateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsCrashrateGetCall) IfNoneMatch(entityTag string) *VitalsCrashrateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsCrashrateGetCall) Context(ctx context.Context) *VitalsCrashrateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsCrashrateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4172,12 +3426,7 @@ func (c *VitalsCrashrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4198,14 +3447,11 @@ func (c *VitalsCrashrateGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "playdeveloperreporting.vitals.crashrate.get" call.
-// Exactly one of *GooglePlayDeveloperReportingV1beta1CrashRateMetricSet
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1CrashRateMetricSet.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1CrashRateMetricSet.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *VitalsCrashrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1CrashRateMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4236,35 +3482,7 @@ func (c *VitalsCrashrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/crashRateMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.crashrate.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/crashRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/crashRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1CrashRateMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.crashrate.query":
 
 type VitalsCrashrateQueryCall struct {
 	s                                                                 *Service
@@ -4286,23 +3504,21 @@ func (r *VitalsCrashrateService) Query(name string, googleplaydeveloperreporting
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsCrashrateQueryCall) Fields(s ...googleapi.Field) *VitalsCrashrateQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsCrashrateQueryCall) Context(ctx context.Context) *VitalsCrashrateQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsCrashrateQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4311,18 +3527,12 @@ func (c *VitalsCrashrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -4339,15 +3549,11 @@ func (c *VitalsCrashrateQueryCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "playdeveloperreporting.vitals.crashrate.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse.Se
-// rverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse.ServerRes
+// ponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsCrashrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4378,35 +3584,6 @@ func (c *VitalsCrashrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlay
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/crashRateMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.crashrate.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/crashRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/crashRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4414,7 +3591,7 @@ func (c *VitalsCrashrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlay
 // The provided context supersedes any context provided to the Context method.
 func (c *VitalsCrashrateQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4429,8 +3606,6 @@ func (c *VitalsCrashrateQueryCall) Pages(ctx context.Context, f func(*GooglePlay
 		c.googleplaydeveloperreportingv1beta1querycrashratemetricsetrequest.PageToken = x.NextPageToken
 	}
 }
-
-// method id "playdeveloperreporting.vitals.errors.counts.get":
 
 type VitalsErrorsCountsGetCall struct {
 	s            *Service
@@ -4452,33 +3627,29 @@ func (r *VitalsErrorsCountsService) Get(name string) *VitalsErrorsCountsGetCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsErrorsCountsGetCall) Fields(s ...googleapi.Field) *VitalsErrorsCountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsErrorsCountsGetCall) IfNoneMatch(entityTag string) *VitalsErrorsCountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsErrorsCountsGetCall) Context(ctx context.Context) *VitalsErrorsCountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsErrorsCountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4487,12 +3658,7 @@ func (c *VitalsErrorsCountsGetCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4513,15 +3679,13 @@ func (c *VitalsErrorsCountsGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.counts.get" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet.ServerResponse
-// .Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet.ServerResponse.Header
+//
+//	or (if a response was returned at all) in error.(*googleapi.Error).Header.
+//
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *VitalsErrorsCountsGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4552,35 +3716,7 @@ func (c *VitalsErrorsCountsGetCall) Do(opts ...googleapi.CallOption) (*GooglePla
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metrics set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/errorCountMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.errors.counts.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the errors metric set. Format: apps/{app}/errorCountMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/errorCountMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1ErrorCountMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.errors.counts.query":
 
 type VitalsErrorsCountsQueryCall struct {
 	s                                                                  *Service
@@ -4602,23 +3738,21 @@ func (r *VitalsErrorsCountsService) Query(name string, googleplaydeveloperreport
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsErrorsCountsQueryCall) Fields(s ...googleapi.Field) *VitalsErrorsCountsQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsErrorsCountsQueryCall) Context(ctx context.Context) *VitalsErrorsCountsQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsErrorsCountsQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4627,18 +3761,12 @@ func (c *VitalsErrorsCountsQueryCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1queryerrorcountmetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -4655,15 +3783,11 @@ func (c *VitalsErrorsCountsQueryCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.counts.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse.S
-// erverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsErrorsCountsQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4694,35 +3818,6 @@ func (c *VitalsErrorsCountsQueryCall) Do(opts ...googleapi.CallOption) (*GoogleP
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metrics set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/errorCountMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.errors.counts.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/errorCountMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/errorCountMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4730,7 +3825,7 @@ func (c *VitalsErrorsCountsQueryCall) Do(opts ...googleapi.CallOption) (*GoogleP
 // The provided context supersedes any context provided to the Context method.
 func (c *VitalsErrorsCountsQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetResponse) error) error {
 	c.ctx_ = ctx
-	defer func(pt string) { c.googleplaydeveloperreportingv1beta1queryerrorcountmetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1queryerrorcountmetricsetrequest.PageToken) // reset paging to original point
+	defer func(pt string) { c.googleplaydeveloperreportingv1beta1queryerrorcountmetricsetrequest.PageToken = pt }(c.googleplaydeveloperreportingv1beta1queryerrorcountmetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4746,8 +3841,6 @@ func (c *VitalsErrorsCountsQueryCall) Pages(ctx context.Context, f func(*GoogleP
 	}
 }
 
-// method id "playdeveloperreporting.vitals.errors.issues.search":
-
 type VitalsErrorsIssuesSearchCall struct {
 	s            *Service
 	parent       string
@@ -4759,8 +3852,8 @@ type VitalsErrorsIssuesSearchCall struct {
 
 // Search: Searches all error issues in which reports have been grouped.
 //
-//   - parent: Parent resource of the error issues, indicating the
-//     application for which they were received. Format: apps/{app}.
+//   - parent: Parent resource of the error issues, indicating the application
+//     for which they were received. Format: apps/{app}.
 func (r *VitalsErrorsIssuesService) Search(parent string) *VitalsErrorsIssuesSearchCall {
 	c := &VitalsErrorsIssuesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4768,281 +3861,271 @@ func (r *VitalsErrorsIssuesService) Search(parent string) *VitalsErrorsIssuesSea
 }
 
 // Filter sets the optional parameter "filter": A selection predicate to
-// retrieve only a subset of the issues. Counts in the returned error
-// issues will only reflect occurrences that matched the filter. For
-// filtering basics, please check AIP-160 (https://google.aip.dev/160).
-// ** Supported field names:** * `apiLevel`: Matches error issues that
-// occurred in the requested Android versions (specified as the numeric
-// API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. *
-// `versionCode`: Matches error issues that occurred in the requested
-// app version codes only. Example: `versionCode = 123 OR versionCode =
-// 456`. * `deviceModel`: Matches error issues that occurred in the
-// requested devices. Example: `deviceModel = "google/walleye" OR
-// deviceModel = "google/marlin". * `deviceBrand`: Matches error issues
+// retrieve only a subset of the issues. Counts in the returned error issues
+// will only reflect occurrences that matched the filter. For filtering basics,
+// please check AIP-160 (https://google.aip.dev/160). ** Supported field
+// names:** * `apiLevel`: Matches error issues that occurred in the requested
+// Android versions (specified as the numeric API level) only. Example:
+// `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error issues that
+// occurred in the requested app version codes only. Example: `versionCode =
+// 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that
+// occurred in the requested devices. Example: `deviceModel = "google/walleye"
+// OR deviceModel = "google/marlin". * `deviceBrand`: Matches error issues
 // that occurred in the requested device brands. Example: `deviceBrand =
 // "Google". * `deviceType`: Matches error issues that occurred in the
-// requested device types. Example: `deviceType = "PHONE". *
-// `errorIssueType`: Matches error issues of the requested types only.
-// Valid candidates: `CRASH`, `ANR`. Example: `errorIssueType = CRASH OR
-// errorIssueType = ANR`. * `appProcessState`: Matches error issues on
-// the process state of an app, indicating whether an app runs in the
-// foreground (user-visible) or background. Valid candidates:
-// `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`.
-// * `isUserPerceived`: Matches error issues that are user-perceived. It
-// is not accompanied by any operators. Example: `isUserPerceived`. **
-// Supported operators:** * Comparison operators: The only supported
-// comparison operator is equality. The filtered field must appear on
-// the left hand side of the comparison. * Logical Operators: Logical
-// operators `AND` and `OR` can be used to build complex filters
-// following a conjunctive normal form (CNF), i.e., conjunctions of
-// disjunctions. The `OR` operator takes precedence over `AND` so the
-// use of parenthesis is not necessary when building CNF. The `OR`
-// operator is only supported to build disjunctions that apply to the
-// same field, e.g., `versionCode = 123 OR errorIssueType = ANR` is not
-// a valid filter. ** Examples ** Some valid filtering expressions: *
-// `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND
-// errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND
-// (errorIssueType = OR errorIssueType = CRASH)`
+// requested device types. Example: `deviceType = "PHONE". * `errorIssueType`:
+// Matches error issues of the requested types only. Valid candidates: `CRASH`,
+// `ANR`. Example: `errorIssueType = CRASH OR errorIssueType = ANR`. *
+// `appProcessState`: Matches error issues on the process state of an app,
+// indicating whether an app runs in the foreground (user-visible) or
+// background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example:
+// `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error issues
+// that are user-perceived. It is not accompanied by any operators. Example:
+// `isUserPerceived`. ** Supported operators:** * Comparison operators: The
+// only supported comparison operator is equality. The filtered field must
+// appear on the left hand side of the comparison. * Logical Operators: Logical
+// operators `AND` and `OR` can be used to build complex filters following a
+// conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR`
+// operator takes precedence over `AND` so the use of parenthesis is not
+// necessary when building CNF. The `OR` operator is only supported to build
+// disjunctions that apply to the same field, e.g., `versionCode = 123 OR
+// errorIssueType = ANR` is not a valid filter. ** Examples ** Some valid
+// filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` *
+// `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` *
+// `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`
 func (c *VitalsErrorsIssuesSearchCall) Filter(filter string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// IntervalEndTimeDay sets the optional parameter
-// "interval.endTime.day": Day of month. Must be from 1 to 31 and valid
-// for the year and month, or 0 if specifying a datetime without a day.
+// IntervalEndTimeDay sets the optional parameter "interval.endTime.day": Day
+// of month. Must be from 1 to 31 and valid for the year and month, or 0 if
+// specifying a datetime without a day.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeDay(intervalEndTimeDay int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.day", fmt.Sprint(intervalEndTimeDay))
 	return c
 }
 
-// IntervalEndTimeHours sets the optional parameter
-// "interval.endTime.hours": Hours of day in 24 hour format. Should be
-// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
-// the value "24:00:00" for scenarios like business closing time.
+// IntervalEndTimeHours sets the optional parameter "interval.endTime.hours":
+// Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0
+// (midnight). An API may choose to allow the value "24:00:00" for scenarios
+// like business closing time.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeHours(intervalEndTimeHours int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.hours", fmt.Sprint(intervalEndTimeHours))
 	return c
 }
 
 // IntervalEndTimeMinutes sets the optional parameter
-// "interval.endTime.minutes": Minutes of hour of day. Must be from 0 to
-// 59, defaults to 0.
+// "interval.endTime.minutes": Minutes of hour of day. Must be from 0 to 59,
+// defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeMinutes(intervalEndTimeMinutes int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.minutes", fmt.Sprint(intervalEndTimeMinutes))
 	return c
 }
 
-// IntervalEndTimeMonth sets the optional parameter
-// "interval.endTime.month": Month of year. Must be from 1 to 12, or 0
-// if specifying a datetime without a month.
+// IntervalEndTimeMonth sets the optional parameter "interval.endTime.month":
+// Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a
+// month.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeMonth(intervalEndTimeMonth int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.month", fmt.Sprint(intervalEndTimeMonth))
 	return c
 }
 
-// IntervalEndTimeNanos sets the optional parameter
-// "interval.endTime.nanos": Fractions of seconds in nanoseconds. Must
-// be from 0 to 999,999,999, defaults to 0.
+// IntervalEndTimeNanos sets the optional parameter "interval.endTime.nanos":
+// Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults
+// to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeNanos(intervalEndTimeNanos int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.nanos", fmt.Sprint(intervalEndTimeNanos))
 	return c
 }
 
 // IntervalEndTimeSeconds sets the optional parameter
-// "interval.endTime.seconds": Seconds of minutes of the time. Must
-// normally be from 0 to 59, defaults to 0. An API may allow the value
-// 60 if it allows leap-seconds.
+// "interval.endTime.seconds": Seconds of minutes of the time. Must normally be
+// from 0 to 59, defaults to 0. An API may allow the value 60 if it allows
+// leap-seconds.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeSeconds(intervalEndTimeSeconds int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.seconds", fmt.Sprint(intervalEndTimeSeconds))
 	return c
 }
 
 // IntervalEndTimeTimeZoneId sets the optional parameter
-// "interval.endTime.timeZone.id": IANA Time Zone Database time zone,
-// e.g. "America/New_York".
+// "interval.endTime.timeZone.id": IANA Time Zone Database time zone, e.g.
+// "America/New_York".
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeTimeZoneId(intervalEndTimeTimeZoneId string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.id", intervalEndTimeTimeZoneId)
 	return c
 }
 
 // IntervalEndTimeTimeZoneVersion sets the optional parameter
-// "interval.endTime.timeZone.version": IANA Time Zone Database version
-// number, e.g. "2019a".
+// "interval.endTime.timeZone.version": IANA Time Zone Database version number,
+// e.g. "2019a".
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeTimeZoneVersion(intervalEndTimeTimeZoneVersion string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.version", intervalEndTimeTimeZoneVersion)
 	return c
 }
 
 // IntervalEndTimeUtcOffset sets the optional parameter
-// "interval.endTime.utcOffset": UTC offset. Must be whole seconds,
-// between -18 hours and +18 hours. For example, a UTC offset of -4:00
-// would be represented as { seconds: -14400 }.
+// "interval.endTime.utcOffset": UTC offset. Must be whole seconds, between -18
+// hours and +18 hours. For example, a UTC offset of -4:00 would be represented
+// as { seconds: -14400 }.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeUtcOffset(intervalEndTimeUtcOffset string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.utcOffset", intervalEndTimeUtcOffset)
 	return c
 }
 
-// IntervalEndTimeYear sets the optional parameter
-// "interval.endTime.year": Year of date. Must be from 1 to 9999, or 0
-// if specifying a datetime without a year.
+// IntervalEndTimeYear sets the optional parameter "interval.endTime.year":
+// Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without
+// a year.
 func (c *VitalsErrorsIssuesSearchCall) IntervalEndTimeYear(intervalEndTimeYear int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.endTime.year", fmt.Sprint(intervalEndTimeYear))
 	return c
 }
 
-// IntervalStartTimeDay sets the optional parameter
-// "interval.startTime.day": Day of month. Must be from 1 to 31 and
-// valid for the year and month, or 0 if specifying a datetime without a
-// day.
+// IntervalStartTimeDay sets the optional parameter "interval.startTime.day":
+// Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if
+// specifying a datetime without a day.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeDay(intervalStartTimeDay int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.day", fmt.Sprint(intervalStartTimeDay))
 	return c
 }
 
 // IntervalStartTimeHours sets the optional parameter
-// "interval.startTime.hours": Hours of day in 24 hour format. Should be
-// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
-// the value "24:00:00" for scenarios like business closing time.
+// "interval.startTime.hours": Hours of day in 24 hour format. Should be from 0
+// to 23, defaults to 0 (midnight). An API may choose to allow the value
+// "24:00:00" for scenarios like business closing time.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeHours(intervalStartTimeHours int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.hours", fmt.Sprint(intervalStartTimeHours))
 	return c
 }
 
 // IntervalStartTimeMinutes sets the optional parameter
-// "interval.startTime.minutes": Minutes of hour of day. Must be from 0
-// to 59, defaults to 0.
+// "interval.startTime.minutes": Minutes of hour of day. Must be from 0 to 59,
+// defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeMinutes(intervalStartTimeMinutes int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.minutes", fmt.Sprint(intervalStartTimeMinutes))
 	return c
 }
 
 // IntervalStartTimeMonth sets the optional parameter
-// "interval.startTime.month": Month of year. Must be from 1 to 12, or 0
-// if specifying a datetime without a month.
+// "interval.startTime.month": Month of year. Must be from 1 to 12, or 0 if
+// specifying a datetime without a month.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeMonth(intervalStartTimeMonth int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.month", fmt.Sprint(intervalStartTimeMonth))
 	return c
 }
 
 // IntervalStartTimeNanos sets the optional parameter
-// "interval.startTime.nanos": Fractions of seconds in nanoseconds. Must
-// be from 0 to 999,999,999, defaults to 0.
+// "interval.startTime.nanos": Fractions of seconds in nanoseconds. Must be
+// from 0 to 999,999,999, defaults to 0.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeNanos(intervalStartTimeNanos int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.nanos", fmt.Sprint(intervalStartTimeNanos))
 	return c
 }
 
 // IntervalStartTimeSeconds sets the optional parameter
-// "interval.startTime.seconds": Seconds of minutes of the time. Must
-// normally be from 0 to 59, defaults to 0. An API may allow the value
-// 60 if it allows leap-seconds.
+// "interval.startTime.seconds": Seconds of minutes of the time. Must normally
+// be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows
+// leap-seconds.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeSeconds(intervalStartTimeSeconds int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.seconds", fmt.Sprint(intervalStartTimeSeconds))
 	return c
 }
 
 // IntervalStartTimeTimeZoneId sets the optional parameter
-// "interval.startTime.timeZone.id": IANA Time Zone Database time zone,
-// e.g. "America/New_York".
+// "interval.startTime.timeZone.id": IANA Time Zone Database time zone, e.g.
+// "America/New_York".
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeTimeZoneId(intervalStartTimeTimeZoneId string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.id", intervalStartTimeTimeZoneId)
 	return c
 }
 
 // IntervalStartTimeTimeZoneVersion sets the optional parameter
-// "interval.startTime.timeZone.version": IANA Time Zone Database
-// version number, e.g. "2019a".
+// "interval.startTime.timeZone.version": IANA Time Zone Database version
+// number, e.g. "2019a".
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeTimeZoneVersion(intervalStartTimeTimeZoneVersion string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.version", intervalStartTimeTimeZoneVersion)
 	return c
 }
 
 // IntervalStartTimeUtcOffset sets the optional parameter
-// "interval.startTime.utcOffset": UTC offset. Must be whole seconds,
-// between -18 hours and +18 hours. For example, a UTC offset of -4:00
-// would be represented as { seconds: -14400 }.
+// "interval.startTime.utcOffset": UTC offset. Must be whole seconds, between
+// -18 hours and +18 hours. For example, a UTC offset of -4:00 would be
+// represented as { seconds: -14400 }.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeUtcOffset(intervalStartTimeUtcOffset string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.utcOffset", intervalStartTimeUtcOffset)
 	return c
 }
 
-// IntervalStartTimeYear sets the optional parameter
-// "interval.startTime.year": Year of date. Must be from 1 to 9999, or 0
-// if specifying a datetime without a year.
+// IntervalStartTimeYear sets the optional parameter "interval.startTime.year":
+// Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without
+// a year.
 func (c *VitalsErrorsIssuesSearchCall) IntervalStartTimeYear(intervalStartTimeYear int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("interval.startTime.year", fmt.Sprint(intervalStartTimeYear))
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Specifies a field that
-// will be used to order the results. ** Supported dimensions:** *
+// OrderBy sets the optional parameter "orderBy": Specifies a field that will
+// be used to order the results. ** Supported dimensions:** *
 // `errorReportCount`: Orders issues by number of error reports. *
 // `distinctUsers`: Orders issues by number of unique affected users. **
-// Supported operations:** * `asc` for ascending order. * `desc` for
-// descending order. Format: A field and an operation, e.g.,
-// `errorReportCount desc` *Note:* currently only one field is supported
-// at a time.
+// Supported operations:** * `asc` for ascending order. * `desc` for descending
+// order. Format: A field and an operation, e.g., `errorReportCount desc`
+// *Note:* currently only one field is supported at a time.
 func (c *VitalsErrorsIssuesSearchCall) OrderBy(orderBy string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of error issues to return. The service may return fewer than this
-// value. If unspecified, at most 50 error issues will be returned. The
-// maximum value is 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of error
+// issues to return. The service may return fewer than this value. If
+// unspecified, at most 50 error issues will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *VitalsErrorsIssuesSearchCall) PageSize(pageSize int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// the request must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call. Provide this to retrieve the subsequent page. When
+// paginating, all other parameters provided to the request must match the call
+// that provided the page token.
 func (c *VitalsErrorsIssuesSearchCall) PageToken(pageToken string) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// SampleErrorReportLimit sets the optional parameter
-// "sampleErrorReportLimit": Number of sample error reports to return
-// per ErrorIssue. If unspecified, 0 will be used. *Note:* currently
-// only 0 and 1 are supported.
+// SampleErrorReportLimit sets the optional parameter "sampleErrorReportLimit":
+// Number of sample error reports to return per ErrorIssue. If unspecified, 0
+// will be used. *Note:* currently only 0 and 1 are supported.
 func (c *VitalsErrorsIssuesSearchCall) SampleErrorReportLimit(sampleErrorReportLimit int64) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("sampleErrorReportLimit", fmt.Sprint(sampleErrorReportLimit))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsErrorsIssuesSearchCall) Fields(s ...googleapi.Field) *VitalsErrorsIssuesSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsErrorsIssuesSearchCall) IfNoneMatch(entityTag string) *VitalsErrorsIssuesSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsErrorsIssuesSearchCall) Context(ctx context.Context) *VitalsErrorsIssuesSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsErrorsIssuesSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5051,12 +4134,7 @@ func (c *VitalsErrorsIssuesSearchCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5077,15 +4155,11 @@ func (c *VitalsErrorsIssuesSearchCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.issues.search" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse.ServerRe
-// sponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse.ServerResponse.
+// Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5116,175 +4190,6 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches all error issues in which reports have been grouped.",
-	//   "flatPath": "v1beta1/apps/{appsId}/errorIssues:search",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.errors.issues.search",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A selection predicate to retrieve only a subset of the issues. Counts in the returned error issues will only reflect occurrences that matched the filter. For filtering basics, please check [AIP-160](https://google.aip.dev/160). ** Supported field names:** * `apiLevel`: Matches error issues that occurred in the requested Android versions (specified as the numeric API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error issues that occurred in the requested app version codes only. Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that occurred in the requested devices. Example: `deviceModel = \"google/walleye\" OR deviceModel = \"google/marlin\"`. * `deviceBrand`: Matches error issues that occurred in the requested device brands. Example: `deviceBrand = \"Google\". * `deviceType`: Matches error issues that occurred in the requested device types. Example: `deviceType = \"PHONE\"`. * `errorIssueType`: Matches error issues of the requested types only. Valid candidates: `CRASH`, `ANR`. Example: `errorIssueType = CRASH OR errorIssueType = ANR`. * `appProcessState`: Matches error issues on the process state of an app, indicating whether an app runs in the foreground (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error issues that are user-perceived. It is not accompanied by any operators. Example: `isUserPerceived`. ** Supported operators:** * Comparison operators: The only supported comparison operator is equality. The filtered field must appear on the left hand side of the comparison. * Logical Operators: Logical operators `AND` and `OR` can be used to build complex filters following a conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes precedence over `AND` so the use of parenthesis is not necessary when building CNF. The `OR` operator is only supported to build disjunctions that apply to the same field, e.g., `versionCode = 123 OR errorIssueType = ANR` is not a valid filter. ** Examples ** Some valid filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.day": {
-	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.hours": {
-	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.minutes": {
-	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.month": {
-	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.nanos": {
-	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.seconds": {
-	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.timeZone.id": {
-	//       "description": "IANA Time Zone Database time zone, e.g. \"America/New_York\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.timeZone.version": {
-	//       "description": "Optional. IANA Time Zone Database version number, e.g. \"2019a\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.utcOffset": {
-	//       "description": "UTC offset. Must be whole seconds, between -18 hours and +18 hours. For example, a UTC offset of -4:00 would be represented as { seconds: -14400 }.",
-	//       "format": "google-duration",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.year": {
-	//       "description": "Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without a year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.day": {
-	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.hours": {
-	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.minutes": {
-	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.month": {
-	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.nanos": {
-	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.seconds": {
-	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.timeZone.id": {
-	//       "description": "IANA Time Zone Database time zone, e.g. \"America/New_York\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.startTime.timeZone.version": {
-	//       "description": "Optional. IANA Time Zone Database version number, e.g. \"2019a\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.startTime.utcOffset": {
-	//       "description": "UTC offset. Must be whole seconds, between -18 hours and +18 hours. For example, a UTC offset of -4:00 would be represented as { seconds: -14400 }.",
-	//       "format": "google-duration",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.startTime.year": {
-	//       "description": "Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without a year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "orderBy": {
-	//       "description": "Specifies a field that will be used to order the results. ** Supported dimensions:** * `errorReportCount`: Orders issues by number of error reports. * `distinctUsers`: Orders issues by number of unique affected users. ** Supported operations:** * `asc` for ascending order. * `desc` for descending order. Format: A field and an operation, e.g., `errorReportCount desc` *Note:* currently only one field is supported at a time.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of error issues to return. The service may return fewer than this value. If unspecified, at most 50 error issues will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to the request must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource of the error issues, indicating the application for which they were received. Format: apps/{app}",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sampleErrorReportLimit": {
-	//       "description": "Optional. Number of sample error reports to return per ErrorIssue. If unspecified, 0 will be used. *Note:* currently only 0 and 1 are supported.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/errorIssues:search",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5292,7 +4197,7 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 // The provided context supersedes any context provided to the Context method.
 func (c *VitalsErrorsIssuesSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1SearchErrorIssuesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5308,8 +4213,6 @@ func (c *VitalsErrorsIssuesSearchCall) Pages(ctx context.Context, f func(*Google
 	}
 }
 
-// method id "playdeveloperreporting.vitals.errors.reports.search":
-
 type VitalsErrorsReportsSearchCall struct {
 	s            *Service
 	parent       string
@@ -5321,8 +4224,8 @@ type VitalsErrorsReportsSearchCall struct {
 
 // Search: Searches all error reports received for an app.
 //
-//   - parent: Parent resource of the reports, indicating the application
-//     for which they were received. Format: apps/{app}.
+//   - parent: Parent resource of the reports, indicating the application for
+//     which they were received. Format: apps/{app}.
 func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsSearchCall {
 	c := &VitalsErrorsReportsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5330,265 +4233,255 @@ func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsS
 }
 
 // Filter sets the optional parameter "filter": A selection predicate to
-// retrieve only a subset of the reports. For filtering basics, please
-// check AIP-160 (https://google.aip.dev/160). ** Supported field
-// names:** * `apiLevel`: Matches error reports that occurred in the
-// requested Android versions (specified as the numeric API level) only.
-// Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches
-// error reports that occurred in the requested app version codes only.
-// Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`:
-// Matches error issues that occurred in the requested devices. Example:
-// `deviceModel = "google/walleye" OR deviceModel = "google/marlin". *
-// `deviceBrand`: Matches error issues that occurred in the requested
-// device brands. Example: `deviceBrand = "Google". * `deviceType`:
-// Matches error reports that occurred in the requested device types.
-// Example: `deviceType = "PHONE". * `errorIssueType`: Matches error
+// retrieve only a subset of the reports. For filtering basics, please check
+// AIP-160 (https://google.aip.dev/160). ** Supported field names:** *
+// `apiLevel`: Matches error reports that occurred in the requested Android
+// versions (specified as the numeric API level) only. Example: `apiLevel = 28
+// OR apiLevel = 29`. * `versionCode`: Matches error reports that occurred in
+// the requested app version codes only. Example: `versionCode = 123 OR
+// versionCode = 456`. * `deviceModel`: Matches error issues that occurred in
+// the requested devices. Example: `deviceModel = "google/walleye" OR
+// deviceModel = "google/marlin". * `deviceBrand`: Matches error issues that
+// occurred in the requested device brands. Example: `deviceBrand = "Google". *
+// `deviceType`: Matches error reports that occurred in the requested device
+// types. Example: `deviceType = "PHONE". * `errorIssueType`: Matches error
 // reports of the requested types only. Valid candidates: `JAVA_CRASH`,
 // `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR
-// errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error
-// reports belonging to the requested error issue ids only. Example:
-// `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`:
-// Matches error reports with the requested error report id. Example:
-// `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`:
-// Matches error reports on the process state of an app, indicating
-// whether an app runs in the foreground (user-visible) or background.
-// Valid candidates: `FOREGROUND`, `BACKGROUND`. Example:
-// `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error
-// reports that are user-perceived. It is not accompanied by any
-// operators. Example: `isUserPerceived`. ** Supported operators:** *
-// Comparison operators: The only supported comparison operator is
-// equality. The filtered field must appear on the left hand side of the
-// comparison. * Logical Operators: Logical operators `AND` and `OR` can
-// be used to build complex filters following a conjunctive normal form
-// (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes
-// precedence over `AND` so the use of parenthesis is not necessary when
-// building CNF. The `OR` operator is only supported to build
-// disjunctions that apply to the same field, e.g., `versionCode = 123
-// OR versionCode = ANR`. The filter expression `versionCode = 123 OR
-// errorIssueType = ANR` is not valid. ** Examples ** Some valid
-// filtering expressions: * `versionCode = 123 AND errorIssueType = ANR`
-// * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH`
-// * `versionCode = 123 AND (errorIssueType = OR errorIssueType =
-// CRASH)`
+// errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports
+// belonging to the requested error issue ids only. Example: `errorIssueId =
+// 1234 OR errorIssueId = 4567`. * `errorReportId`: Matches error reports with
+// the requested error report id. Example: `errorReportId = 1234 OR
+// errorReportId = 4567`. * `appProcessState`: Matches error reports on the
+// process state of an app, indicating whether an app runs in the foreground
+// (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`.
+// Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error
+// reports that are user-perceived. It is not accompanied by any operators.
+// Example: `isUserPerceived`. ** Supported operators:** * Comparison
+// operators: The only supported comparison operator is equality. The filtered
+// field must appear on the left hand side of the comparison. * Logical
+// Operators: Logical operators `AND` and `OR` can be used to build complex
+// filters following a conjunctive normal form (CNF), i.e., conjunctions of
+// disjunctions. The `OR` operator takes precedence over `AND` so the use of
+// parenthesis is not necessary when building CNF. The `OR` operator is only
+// supported to build disjunctions that apply to the same field, e.g.,
+// `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode
+// = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid
+// filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` *
+// `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` *
+// `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`
 func (c *VitalsErrorsReportsSearchCall) Filter(filter string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// IntervalEndTimeDay sets the optional parameter
-// "interval.endTime.day": Day of month. Must be from 1 to 31 and valid
-// for the year and month, or 0 if specifying a datetime without a day.
+// IntervalEndTimeDay sets the optional parameter "interval.endTime.day": Day
+// of month. Must be from 1 to 31 and valid for the year and month, or 0 if
+// specifying a datetime without a day.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeDay(intervalEndTimeDay int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.day", fmt.Sprint(intervalEndTimeDay))
 	return c
 }
 
-// IntervalEndTimeHours sets the optional parameter
-// "interval.endTime.hours": Hours of day in 24 hour format. Should be
-// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
-// the value "24:00:00" for scenarios like business closing time.
+// IntervalEndTimeHours sets the optional parameter "interval.endTime.hours":
+// Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0
+// (midnight). An API may choose to allow the value "24:00:00" for scenarios
+// like business closing time.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeHours(intervalEndTimeHours int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.hours", fmt.Sprint(intervalEndTimeHours))
 	return c
 }
 
 // IntervalEndTimeMinutes sets the optional parameter
-// "interval.endTime.minutes": Minutes of hour of day. Must be from 0 to
-// 59, defaults to 0.
+// "interval.endTime.minutes": Minutes of hour of day. Must be from 0 to 59,
+// defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeMinutes(intervalEndTimeMinutes int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.minutes", fmt.Sprint(intervalEndTimeMinutes))
 	return c
 }
 
-// IntervalEndTimeMonth sets the optional parameter
-// "interval.endTime.month": Month of year. Must be from 1 to 12, or 0
-// if specifying a datetime without a month.
+// IntervalEndTimeMonth sets the optional parameter "interval.endTime.month":
+// Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a
+// month.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeMonth(intervalEndTimeMonth int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.month", fmt.Sprint(intervalEndTimeMonth))
 	return c
 }
 
-// IntervalEndTimeNanos sets the optional parameter
-// "interval.endTime.nanos": Fractions of seconds in nanoseconds. Must
-// be from 0 to 999,999,999, defaults to 0.
+// IntervalEndTimeNanos sets the optional parameter "interval.endTime.nanos":
+// Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults
+// to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeNanos(intervalEndTimeNanos int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.nanos", fmt.Sprint(intervalEndTimeNanos))
 	return c
 }
 
 // IntervalEndTimeSeconds sets the optional parameter
-// "interval.endTime.seconds": Seconds of minutes of the time. Must
-// normally be from 0 to 59, defaults to 0. An API may allow the value
-// 60 if it allows leap-seconds.
+// "interval.endTime.seconds": Seconds of minutes of the time. Must normally be
+// from 0 to 59, defaults to 0. An API may allow the value 60 if it allows
+// leap-seconds.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeSeconds(intervalEndTimeSeconds int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.seconds", fmt.Sprint(intervalEndTimeSeconds))
 	return c
 }
 
 // IntervalEndTimeTimeZoneId sets the optional parameter
-// "interval.endTime.timeZone.id": IANA Time Zone Database time zone,
-// e.g. "America/New_York".
+// "interval.endTime.timeZone.id": IANA Time Zone Database time zone, e.g.
+// "America/New_York".
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeTimeZoneId(intervalEndTimeTimeZoneId string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.id", intervalEndTimeTimeZoneId)
 	return c
 }
 
 // IntervalEndTimeTimeZoneVersion sets the optional parameter
-// "interval.endTime.timeZone.version": IANA Time Zone Database version
-// number, e.g. "2019a".
+// "interval.endTime.timeZone.version": IANA Time Zone Database version number,
+// e.g. "2019a".
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeTimeZoneVersion(intervalEndTimeTimeZoneVersion string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.timeZone.version", intervalEndTimeTimeZoneVersion)
 	return c
 }
 
 // IntervalEndTimeUtcOffset sets the optional parameter
-// "interval.endTime.utcOffset": UTC offset. Must be whole seconds,
-// between -18 hours and +18 hours. For example, a UTC offset of -4:00
-// would be represented as { seconds: -14400 }.
+// "interval.endTime.utcOffset": UTC offset. Must be whole seconds, between -18
+// hours and +18 hours. For example, a UTC offset of -4:00 would be represented
+// as { seconds: -14400 }.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeUtcOffset(intervalEndTimeUtcOffset string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.utcOffset", intervalEndTimeUtcOffset)
 	return c
 }
 
-// IntervalEndTimeYear sets the optional parameter
-// "interval.endTime.year": Year of date. Must be from 1 to 9999, or 0
-// if specifying a datetime without a year.
+// IntervalEndTimeYear sets the optional parameter "interval.endTime.year":
+// Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without
+// a year.
 func (c *VitalsErrorsReportsSearchCall) IntervalEndTimeYear(intervalEndTimeYear int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.endTime.year", fmt.Sprint(intervalEndTimeYear))
 	return c
 }
 
-// IntervalStartTimeDay sets the optional parameter
-// "interval.startTime.day": Day of month. Must be from 1 to 31 and
-// valid for the year and month, or 0 if specifying a datetime without a
-// day.
+// IntervalStartTimeDay sets the optional parameter "interval.startTime.day":
+// Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if
+// specifying a datetime without a day.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeDay(intervalStartTimeDay int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.day", fmt.Sprint(intervalStartTimeDay))
 	return c
 }
 
 // IntervalStartTimeHours sets the optional parameter
-// "interval.startTime.hours": Hours of day in 24 hour format. Should be
-// from 0 to 23, defaults to 0 (midnight). An API may choose to allow
-// the value "24:00:00" for scenarios like business closing time.
+// "interval.startTime.hours": Hours of day in 24 hour format. Should be from 0
+// to 23, defaults to 0 (midnight). An API may choose to allow the value
+// "24:00:00" for scenarios like business closing time.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeHours(intervalStartTimeHours int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.hours", fmt.Sprint(intervalStartTimeHours))
 	return c
 }
 
 // IntervalStartTimeMinutes sets the optional parameter
-// "interval.startTime.minutes": Minutes of hour of day. Must be from 0
-// to 59, defaults to 0.
+// "interval.startTime.minutes": Minutes of hour of day. Must be from 0 to 59,
+// defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeMinutes(intervalStartTimeMinutes int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.minutes", fmt.Sprint(intervalStartTimeMinutes))
 	return c
 }
 
 // IntervalStartTimeMonth sets the optional parameter
-// "interval.startTime.month": Month of year. Must be from 1 to 12, or 0
-// if specifying a datetime without a month.
+// "interval.startTime.month": Month of year. Must be from 1 to 12, or 0 if
+// specifying a datetime without a month.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeMonth(intervalStartTimeMonth int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.month", fmt.Sprint(intervalStartTimeMonth))
 	return c
 }
 
 // IntervalStartTimeNanos sets the optional parameter
-// "interval.startTime.nanos": Fractions of seconds in nanoseconds. Must
-// be from 0 to 999,999,999, defaults to 0.
+// "interval.startTime.nanos": Fractions of seconds in nanoseconds. Must be
+// from 0 to 999,999,999, defaults to 0.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeNanos(intervalStartTimeNanos int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.nanos", fmt.Sprint(intervalStartTimeNanos))
 	return c
 }
 
 // IntervalStartTimeSeconds sets the optional parameter
-// "interval.startTime.seconds": Seconds of minutes of the time. Must
-// normally be from 0 to 59, defaults to 0. An API may allow the value
-// 60 if it allows leap-seconds.
+// "interval.startTime.seconds": Seconds of minutes of the time. Must normally
+// be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows
+// leap-seconds.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeSeconds(intervalStartTimeSeconds int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.seconds", fmt.Sprint(intervalStartTimeSeconds))
 	return c
 }
 
 // IntervalStartTimeTimeZoneId sets the optional parameter
-// "interval.startTime.timeZone.id": IANA Time Zone Database time zone,
-// e.g. "America/New_York".
+// "interval.startTime.timeZone.id": IANA Time Zone Database time zone, e.g.
+// "America/New_York".
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeTimeZoneId(intervalStartTimeTimeZoneId string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.id", intervalStartTimeTimeZoneId)
 	return c
 }
 
 // IntervalStartTimeTimeZoneVersion sets the optional parameter
-// "interval.startTime.timeZone.version": IANA Time Zone Database
-// version number, e.g. "2019a".
+// "interval.startTime.timeZone.version": IANA Time Zone Database version
+// number, e.g. "2019a".
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeTimeZoneVersion(intervalStartTimeTimeZoneVersion string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.timeZone.version", intervalStartTimeTimeZoneVersion)
 	return c
 }
 
 // IntervalStartTimeUtcOffset sets the optional parameter
-// "interval.startTime.utcOffset": UTC offset. Must be whole seconds,
-// between -18 hours and +18 hours. For example, a UTC offset of -4:00
-// would be represented as { seconds: -14400 }.
+// "interval.startTime.utcOffset": UTC offset. Must be whole seconds, between
+// -18 hours and +18 hours. For example, a UTC offset of -4:00 would be
+// represented as { seconds: -14400 }.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeUtcOffset(intervalStartTimeUtcOffset string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.utcOffset", intervalStartTimeUtcOffset)
 	return c
 }
 
-// IntervalStartTimeYear sets the optional parameter
-// "interval.startTime.year": Year of date. Must be from 1 to 9999, or 0
-// if specifying a datetime without a year.
+// IntervalStartTimeYear sets the optional parameter "interval.startTime.year":
+// Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without
+// a year.
 func (c *VitalsErrorsReportsSearchCall) IntervalStartTimeYear(intervalStartTimeYear int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("interval.startTime.year", fmt.Sprint(intervalStartTimeYear))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of reports to return. The service may return fewer than this value.
-// If unspecified, at most 50 reports will be returned. The maximum
-// value is 100; values above 100 will be coerced to 100.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// reports to return. The service may return fewer than this value. If
+// unspecified, at most 50 reports will be returned. The maximum value is 100;
+// values above 100 will be coerced to 100.
 func (c *VitalsErrorsReportsSearchCall) PageSize(pageSize int64) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `SearchErrorReports` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `SearchErrorReports` must match the call that provided
-// the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `SearchErrorReports` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `SearchErrorReports` must match the call that provided the page token.
 func (c *VitalsErrorsReportsSearchCall) PageToken(pageToken string) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsErrorsReportsSearchCall) Fields(s ...googleapi.Field) *VitalsErrorsReportsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsErrorsReportsSearchCall) IfNoneMatch(entityTag string) *VitalsErrorsReportsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsErrorsReportsSearchCall) Context(ctx context.Context) *VitalsErrorsReportsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsErrorsReportsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5597,12 +4490,7 @@ func (c *VitalsErrorsReportsSearchCall) Header() http.Header {
 }
 
 func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5623,15 +4511,11 @@ func (c *VitalsErrorsReportsSearchCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "playdeveloperreporting.vitals.errors.reports.search" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5662,164 +4546,6 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches all error reports received for an app.",
-	//   "flatPath": "v1beta1/apps/{appsId}/errorReports:search",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.errors.reports.search",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A selection predicate to retrieve only a subset of the reports. For filtering basics, please check [AIP-160](https://google.aip.dev/160). ** Supported field names:** * `apiLevel`: Matches error reports that occurred in the requested Android versions (specified as the numeric API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error reports that occurred in the requested app version codes only. Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that occurred in the requested devices. Example: `deviceModel = \"google/walleye\" OR deviceModel = \"google/marlin\"`. * `deviceBrand`: Matches error issues that occurred in the requested device brands. Example: `deviceBrand = \"Google\". * `deviceType`: Matches error reports that occurred in the requested device types. Example: `deviceType = \"PHONE\"`. * `errorIssueType`: Matches error reports of the requested types only. Valid candidates: `JAVA_CRASH`, `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports belonging to the requested error issue ids only. Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`: Matches error reports with the requested error report id. Example: `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`: Matches error reports on the process state of an app, indicating whether an app runs in the foreground (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error reports that are user-perceived. It is not accompanied by any operators. Example: `isUserPerceived`. ** Supported operators:** * Comparison operators: The only supported comparison operator is equality. The filtered field must appear on the left hand side of the comparison. * Logical Operators: Logical operators `AND` and `OR` can be used to build complex filters following a conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes precedence over `AND` so the use of parenthesis is not necessary when building CNF. The `OR` operator is only supported to build disjunctions that apply to the same field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.day": {
-	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.hours": {
-	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.minutes": {
-	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.month": {
-	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.nanos": {
-	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.seconds": {
-	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.endTime.timeZone.id": {
-	//       "description": "IANA Time Zone Database time zone, e.g. \"America/New_York\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.timeZone.version": {
-	//       "description": "Optional. IANA Time Zone Database version number, e.g. \"2019a\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.utcOffset": {
-	//       "description": "UTC offset. Must be whole seconds, between -18 hours and +18 hours. For example, a UTC offset of -4:00 would be represented as { seconds: -14400 }.",
-	//       "format": "google-duration",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.endTime.year": {
-	//       "description": "Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without a year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.day": {
-	//       "description": "Optional. Day of month. Must be from 1 to 31 and valid for the year and month, or 0 if specifying a datetime without a day.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.hours": {
-	//       "description": "Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to 0 (midnight). An API may choose to allow the value \"24:00:00\" for scenarios like business closing time.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.minutes": {
-	//       "description": "Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.month": {
-	//       "description": "Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime without a month.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.nanos": {
-	//       "description": "Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999, defaults to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.seconds": {
-	//       "description": "Optional. Seconds of minutes of the time. Must normally be from 0 to 59, defaults to 0. An API may allow the value 60 if it allows leap-seconds.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "interval.startTime.timeZone.id": {
-	//       "description": "IANA Time Zone Database time zone, e.g. \"America/New_York\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.startTime.timeZone.version": {
-	//       "description": "Optional. IANA Time Zone Database version number, e.g. \"2019a\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.startTime.utcOffset": {
-	//       "description": "UTC offset. Must be whole seconds, between -18 hours and +18 hours. For example, a UTC offset of -4:00 would be represented as { seconds: -14400 }.",
-	//       "format": "google-duration",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "interval.startTime.year": {
-	//       "description": "Optional. Year of date. Must be from 1 to 9999, or 0 if specifying a datetime without a year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of reports to return. The service may return fewer than this value. If unspecified, at most 50 reports will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `SearchErrorReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchErrorReports` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Parent resource of the reports, indicating the application for which they were received. Format: apps/{app}",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/errorReports:search",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5827,7 +4553,7 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 // The provided context supersedes any context provided to the Context method.
 func (c *VitalsErrorsReportsSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1SearchErrorReportsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5843,8 +4569,6 @@ func (c *VitalsErrorsReportsSearchCall) Pages(ctx context.Context, f func(*Googl
 	}
 }
 
-// method id "playdeveloperreporting.vitals.excessivewakeuprate.get":
-
 type VitalsExcessivewakeuprateGetCall struct {
 	s            *Service
 	name         string
@@ -5856,8 +4580,7 @@ type VitalsExcessivewakeuprateGetCall struct {
 
 // Get: Describes the properties of the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/excessiveWakeupRateMetricSet.
+// - name: The resource name. Format: apps/{app}/excessiveWakeupRateMetricSet.
 func (r *VitalsExcessivewakeuprateService) Get(name string) *VitalsExcessivewakeuprateGetCall {
 	c := &VitalsExcessivewakeuprateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5865,33 +4588,29 @@ func (r *VitalsExcessivewakeuprateService) Get(name string) *VitalsExcessivewake
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsExcessivewakeuprateGetCall) Fields(s ...googleapi.Field) *VitalsExcessivewakeuprateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsExcessivewakeuprateGetCall) IfNoneMatch(entityTag string) *VitalsExcessivewakeuprateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsExcessivewakeuprateGetCall) Context(ctx context.Context) *VitalsExcessivewakeuprateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsExcessivewakeuprateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5900,12 +4619,7 @@ func (c *VitalsExcessivewakeuprateGetCall) Header() http.Header {
 }
 
 func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5926,15 +4640,11 @@ func (c *VitalsExcessivewakeuprateGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "playdeveloperreporting.vitals.excessivewakeuprate.get" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsExcessivewakeuprateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5965,35 +4675,7 @@ func (c *VitalsExcessivewakeuprateGetCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/excessiveWakeupRateMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.excessivewakeuprate.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/excessiveWakeupRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/excessiveWakeupRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.excessivewakeuprate.query":
 
 type VitalsExcessivewakeuprateQueryCall struct {
 	s                                                                           *Service
@@ -6006,8 +4688,7 @@ type VitalsExcessivewakeuprateQueryCall struct {
 
 // Query: Queries the metrics in the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/excessiveWakeupRateMetricSet.
+// - name: The resource name. Format: apps/{app}/excessiveWakeupRateMetricSet.
 func (r *VitalsExcessivewakeuprateService) Query(name string, googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest) *VitalsExcessivewakeuprateQueryCall {
 	c := &VitalsExcessivewakeuprateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6016,23 +4697,21 @@ func (r *VitalsExcessivewakeuprateService) Query(name string, googleplaydevelope
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsExcessivewakeuprateQueryCall) Fields(s ...googleapi.Field) *VitalsExcessivewakeuprateQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsExcessivewakeuprateQueryCall) Context(ctx context.Context) *VitalsExcessivewakeuprateQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsExcessivewakeuprateQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6041,18 +4720,12 @@ func (c *VitalsExcessivewakeuprateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -6069,15 +4742,11 @@ func (c *VitalsExcessivewakeuprateQueryCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "playdeveloperreporting.vitals.excessivewakeuprate.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetR
-// esponse or error will be non-nil. Any non-2xx status code is an
-// error. Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetR
-// esponse.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse
+// .ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsExcessivewakeuprateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6108,35 +4777,6 @@ func (c *VitalsExcessivewakeuprateQueryCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/excessiveWakeupRateMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.excessivewakeuprate.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/excessiveWakeupRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/excessiveWakeupRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6146,7 +4786,7 @@ func (c *VitalsExcessivewakeuprateQueryCall) Pages(ctx context.Context, f func(*
 	c.ctx_ = ctx
 	defer func(pt string) {
 		c.googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest.PageToken = pt
-	}(c.googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest.PageToken) // reset paging to original point
+	}(c.googleplaydeveloperreportingv1beta1queryexcessivewakeupratemetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6162,8 +4802,6 @@ func (c *VitalsExcessivewakeuprateQueryCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "playdeveloperreporting.vitals.slowrenderingrate.get":
-
 type VitalsSlowrenderingrateGetCall struct {
 	s            *Service
 	name         string
@@ -6175,8 +4813,7 @@ type VitalsSlowrenderingrateGetCall struct {
 
 // Get: Describes the properties of the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/slowRenderingRateMetricSet.
+// - name: The resource name. Format: apps/{app}/slowRenderingRateMetricSet.
 func (r *VitalsSlowrenderingrateService) Get(name string) *VitalsSlowrenderingrateGetCall {
 	c := &VitalsSlowrenderingrateGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6184,33 +4821,29 @@ func (r *VitalsSlowrenderingrateService) Get(name string) *VitalsSlowrenderingra
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsSlowrenderingrateGetCall) Fields(s ...googleapi.Field) *VitalsSlowrenderingrateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsSlowrenderingrateGetCall) IfNoneMatch(entityTag string) *VitalsSlowrenderingrateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsSlowrenderingrateGetCall) Context(ctx context.Context) *VitalsSlowrenderingrateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsSlowrenderingrateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6219,12 +4852,7 @@ func (c *VitalsSlowrenderingrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6245,15 +4873,11 @@ func (c *VitalsSlowrenderingrateGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowrenderingrate.get" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsSlowrenderingrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6284,35 +4908,7 @@ func (c *VitalsSlowrenderingrateGetCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/slowRenderingRateMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.slowrenderingrate.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/slowRenderingRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/slowRenderingRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.slowrenderingrate.query":
 
 type VitalsSlowrenderingrateQueryCall struct {
 	s                                                                         *Service
@@ -6325,8 +4921,7 @@ type VitalsSlowrenderingrateQueryCall struct {
 
 // Query: Queries the metrics in the metric set.
 //
-//   - name: The resource name. Format:
-//     apps/{app}/slowRenderingRateMetricSet.
+// - name: The resource name. Format: apps/{app}/slowRenderingRateMetricSet.
 func (r *VitalsSlowrenderingrateService) Query(name string, googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest *GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest) *VitalsSlowrenderingrateQueryCall {
 	c := &VitalsSlowrenderingrateQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6335,23 +4930,21 @@ func (r *VitalsSlowrenderingrateService) Query(name string, googleplaydeveloperr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsSlowrenderingrateQueryCall) Fields(s ...googleapi.Field) *VitalsSlowrenderingrateQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsSlowrenderingrateQueryCall) Context(ctx context.Context) *VitalsSlowrenderingrateQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsSlowrenderingrateQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6360,18 +4953,12 @@ func (c *VitalsSlowrenderingrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -6388,15 +4975,11 @@ func (c *VitalsSlowrenderingrateQueryCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowrenderingrate.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRes
-// ponse or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRes
-// ponse.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse.S
+// erverResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsSlowrenderingrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6427,35 +5010,6 @@ func (c *VitalsSlowrenderingrateQueryCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/slowRenderingRateMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.slowrenderingrate.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/slowRenderingRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/slowRenderingRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QuerySlowRenderingRateMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6465,7 +5019,7 @@ func (c *VitalsSlowrenderingrateQueryCall) Pages(ctx context.Context, f func(*Go
 	c.ctx_ = ctx
 	defer func(pt string) {
 		c.googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest.PageToken = pt
-	}(c.googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest.PageToken) // reset paging to original point
+	}(c.googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6480,8 +5034,6 @@ func (c *VitalsSlowrenderingrateQueryCall) Pages(ctx context.Context, f func(*Go
 		c.googleplaydeveloperreportingv1beta1queryslowrenderingratemetricsetrequest.PageToken = x.NextPageToken
 	}
 }
-
-// method id "playdeveloperreporting.vitals.slowstartrate.get":
 
 type VitalsSlowstartrateGetCall struct {
 	s            *Service
@@ -6502,33 +5054,29 @@ func (r *VitalsSlowstartrateService) Get(name string) *VitalsSlowstartrateGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsSlowstartrateGetCall) Fields(s ...googleapi.Field) *VitalsSlowstartrateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsSlowstartrateGetCall) IfNoneMatch(entityTag string) *VitalsSlowstartrateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsSlowstartrateGetCall) Context(ctx context.Context) *VitalsSlowstartrateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsSlowstartrateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6537,12 +5085,7 @@ func (c *VitalsSlowstartrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6563,15 +5106,11 @@ func (c *VitalsSlowstartrateGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowstartrate.get" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet.ServerRespo
-// nse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet.ServerResponse.Hea
+// der or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsSlowstartrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6602,35 +5141,7 @@ func (c *VitalsSlowstartrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/slowStartRateMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.slowstartrate.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/slowStartRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/slowStartRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.slowstartrate.query":
 
 type VitalsSlowstartrateQueryCall struct {
 	s                                                                     *Service
@@ -6652,23 +5163,21 @@ func (r *VitalsSlowstartrateService) Query(name string, googleplaydeveloperrepor
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsSlowstartrateQueryCall) Fields(s ...googleapi.Field) *VitalsSlowstartrateQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsSlowstartrateQueryCall) Context(ctx context.Context) *VitalsSlowstartrateQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsSlowstartrateQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6677,18 +5186,12 @@ func (c *VitalsSlowstartrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1queryslowstartratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -6705,15 +5208,11 @@ func (c *VitalsSlowstartrateQueryCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "playdeveloperreporting.vitals.slowstartrate.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRespons
-// e or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRespons
-// e.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsSlowstartrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6744,35 +5243,6 @@ func (c *VitalsSlowstartrateQueryCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/slowStartRateMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.slowstartrate.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/slowStartRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/slowStartRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6782,7 +5252,7 @@ func (c *VitalsSlowstartrateQueryCall) Pages(ctx context.Context, f func(*Google
 	c.ctx_ = ctx
 	defer func(pt string) {
 		c.googleplaydeveloperreportingv1beta1queryslowstartratemetricsetrequest.PageToken = pt
-	}(c.googleplaydeveloperreportingv1beta1queryslowstartratemetricsetrequest.PageToken) // reset paging to original point
+	}(c.googleplaydeveloperreportingv1beta1queryslowstartratemetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6797,8 +5267,6 @@ func (c *VitalsSlowstartrateQueryCall) Pages(ctx context.Context, f func(*Google
 		c.googleplaydeveloperreportingv1beta1queryslowstartratemetricsetrequest.PageToken = x.NextPageToken
 	}
 }
-
-// method id "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.get":
 
 type VitalsStuckbackgroundwakelockrateGetCall struct {
 	s            *Service
@@ -6820,33 +5288,29 @@ func (r *VitalsStuckbackgroundwakelockrateService) Get(name string) *VitalsStuck
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsStuckbackgroundwakelockrateGetCall) Fields(s ...googleapi.Field) *VitalsStuckbackgroundwakelockrateGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *VitalsStuckbackgroundwakelockrateGetCall) IfNoneMatch(entityTag string) *VitalsStuckbackgroundwakelockrateGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsStuckbackgroundwakelockrateGetCall) Context(ctx context.Context) *VitalsStuckbackgroundwakelockrateGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsStuckbackgroundwakelockrateGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6855,12 +5319,7 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) Header() http.Header {
 }
 
 func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6881,15 +5340,11 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.get" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricS
-// et or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricS
-// et.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet.Serv
+// erResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsStuckbackgroundwakelockrateGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6920,35 +5375,7 @@ func (c *VitalsStuckbackgroundwakelockrateGetCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Describes the properties of the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/stuckBackgroundWakelockRateMetricSet",
-	//   "httpMethod": "GET",
-	//   "id": "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/stuckBackgroundWakelockRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/stuckBackgroundWakelockRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
-
-// method id "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.query":
 
 type VitalsStuckbackgroundwakelockrateQueryCall struct {
 	s                                                                                   *Service
@@ -6971,23 +5398,21 @@ func (r *VitalsStuckbackgroundwakelockrateService) Query(name string, googleplay
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) Fields(s ...googleapi.Field) *VitalsStuckbackgroundwakelockrateQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) Context(ctx context.Context) *VitalsStuckbackgroundwakelockrateQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6996,18 +5421,12 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Header() http.Header {
 }
 
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleplaydeveloperreportingv1beta1querystuckbackgroundwakelockratemetricsetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
@@ -7024,15 +5443,11 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.query" call.
-// Exactly one of
-// *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMe
-// tricSetResponse or error will be non-nil. Any non-2xx status code is
-// an error. Response headers are in either
-// *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMe
-// tricSetResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSet
+// Response.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *VitalsStuckbackgroundwakelockrateQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7063,35 +5478,6 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Queries the metrics in the metric set.",
-	//   "flatPath": "v1beta1/apps/{appsId}/stuckBackgroundWakelockRateMetricSet:query",
-	//   "httpMethod": "POST",
-	//   "id": "playdeveloperreporting.vitals.stuckbackgroundwakelockrate.query",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name. Format: apps/{app}/stuckBackgroundWakelockRateMetricSet",
-	//       "location": "path",
-	//       "pattern": "^apps/[^/]+/stuckBackgroundWakelockRateMetricSet$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}:query",
-	//   "request": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/playdeveloperreporting"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7101,7 +5487,7 @@ func (c *VitalsStuckbackgroundwakelockrateQueryCall) Pages(ctx context.Context, 
 	c.ctx_ = ctx
 	defer func(pt string) {
 		c.googleplaydeveloperreportingv1beta1querystuckbackgroundwakelockratemetricsetrequest.PageToken = pt
-	}(c.googleplaydeveloperreportingv1beta1querystuckbackgroundwakelockratemetricsetrequest.PageToken) // reset paging to original point
+	}(c.googleplaydeveloperreportingv1beta1querystuckbackgroundwakelockratemetricsetrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {

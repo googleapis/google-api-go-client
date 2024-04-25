@@ -125,6 +125,21 @@
               "location": "query",
               "type": "string"
             },
+            "product.productLine": {
+              "description": "The product line of the Product.",
+              "enum": [
+                "PRODUCT_LINE_UNSPECIFIED",
+                "GOOGLE_CLOUD",
+                "GOOGLE_MAPS"
+              ],
+              "enumDescriptions": [
+                "Unknown product type.",
+                "Google Cloud",
+                "Google Maps"
+              ],
+              "location": "query",
+              "type": "string"
+            },
             "query": {
               "description": "An expression used to filter case classifications. If it's an empty string, then no filtering happens. Otherwise, case classifications will be returned that match the filter.",
               "location": "query",
@@ -282,6 +297,21 @@
               "location": "path",
               "pattern": "^[^/]+/[^/]+$",
               "required": true,
+              "type": "string"
+            },
+            "productLine": {
+              "description": "The product line to request cases for. If unspecified, only Google Cloud cases will be returned.",
+              "enum": [
+                "PRODUCT_LINE_UNSPECIFIED",
+                "GOOGLE_CLOUD",
+                "GOOGLE_MAPS"
+              ],
+              "enumDescriptions": [
+                "Unknown product type.",
+                "Google Cloud",
+                "Google Maps"
+              ],
+              "location": "query",
               "type": "string"
             }
           },
@@ -548,7 +578,7 @@
       }
     }
   },
-  "revision": "20240403",
+  "revision": "20240424",
   "rootUrl": "https://cloudsupport.googleapis.com/",
   "schemas": {
     "Actor": {
@@ -783,6 +813,10 @@
         "id": {
           "description": "The unique ID for a classification. Must be specified for case creation. To retrieve valid classification IDs for case creation, use `caseClassifications.search`. Classification IDs returned by `caseClassifications.search` are guaranteed to be valid for at least 6 months. If a given classification is deactiveated, it will immediately stop being returned. After 6 months, `case.create` requests using the classification ID will fail.",
           "type": "string"
+        },
+        "product": {
+          "$ref": "Product",
+          "description": "The full product the classification corresponds to."
         }
       },
       "type": "object"
@@ -1324,6 +1358,27 @@
         },
         "objectName": {
           "description": "# gdata.* are outside protos with mising documentation",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Product": {
+      "description": "The product a case may be associated with.",
+      "id": "Product",
+      "properties": {
+        "productLine": {
+          "description": "The product line of the Product.",
+          "enum": [
+            "PRODUCT_LINE_UNSPECIFIED",
+            "GOOGLE_CLOUD",
+            "GOOGLE_MAPS"
+          ],
+          "enumDescriptions": [
+            "Unknown product type.",
+            "Google Cloud",
+            "Google Maps"
+          ],
           "type": "string"
         }
       },

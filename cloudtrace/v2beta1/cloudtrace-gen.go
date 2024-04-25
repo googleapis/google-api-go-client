@@ -101,8 +101,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Write Trace data for a project or application
@@ -190,141 +190,108 @@ type ProjectsTraceSinksService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // ListTraceSinksResponse: Result returned from `ListTraceSinks`.
 type ListTraceSinksResponse struct {
-	// NextPageToken: A paginated response where more pages might be
-	// available has `next_page_token` set. To get the next set of results,
-	// call the same method again using the value of `next_page_token` as
-	// `page_token`.
+	// NextPageToken: A paginated response where more pages might be available has
+	// `next_page_token` set. To get the next set of results, call the same method
+	// again using the value of `next_page_token` as `page_token`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Sinks: A list of sinks.
 	Sinks []*TraceSink `json:"sinks,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTraceSinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTraceSinksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// OutputConfig: OutputConfig contains a destination for writing trace
-// data.
+// OutputConfig: OutputConfig contains a destination for writing trace data.
 type OutputConfig struct {
-	// Destination: The destination for writing trace data. Supported
-	// formats include:
-	// "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
+	// Destination: The destination for writing trace data. Supported formats
+	// include: "bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]"
 	Destination string `json:"destination,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Destination") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Destination") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OutputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TraceSink: Describes a sink used to export traces to a BigQuery
-// dataset. The sink must be created within a project.
+// TraceSink: Describes a sink used to export traces to a BigQuery dataset. The
+// sink must be created within a project.
 type TraceSink struct {
-	// Name: Required. The canonical sink resource name, unique within the
-	// project. Must be of the form:
-	// projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
-	// "projects/12345/traceSinks/my-project-trace-sink". Sink identifiers
-	// are limited to 256 characters and can include only the following
-	// characters: upper and lower-case alphanumeric characters,
-	// underscores, hyphens, and periods.
+	// Name: Required. The canonical sink resource name, unique within the project.
+	// Must be of the form: projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]. E.g.:
+	// "projects/12345/traceSinks/my-project-trace-sink". Sink identifiers are
+	// limited to 256 characters and can include only the following characters:
+	// upper and lower-case alphanumeric characters, underscores, hyphens, and
+	// periods.
 	Name string `json:"name,omitempty"`
-
 	// OutputConfig: Required. The export destination.
 	OutputConfig *OutputConfig `json:"outputConfig,omitempty"`
-
-	// WriterIdentity: Output only. A service account name for exporting the
-	// data. This field is set by sinks.create and sinks.update. The service
-	// account will need to be granted write access to the destination
-	// specified in the output configuration, see Granting access for a
-	// resource
-	// (/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_ser
-	// vice_account_for_a_resource). To create tables and to write data,
-	// this account needs the `dataEditor` role. Read more about roles in
-	// the BigQuery documentation
-	// (https://cloud.google.com/bigquery/docs/access-control). E.g.:
+	// WriterIdentity: Output only. A service account name for exporting the data.
+	// This field is set by sinks.create and sinks.update. The service account will
+	// need to be granted write access to the destination specified in the output
+	// configuration, see Granting access for a resource
+	// (/iam/docs/granting-roles-to-service-accounts#granting_access_to_a_service_ac
+	// count_for_a_resource). To create tables and to write data, this account
+	// needs the `dataEditor` role. Read more about roles in the BigQuery
+	// documentation (https://cloud.google.com/bigquery/docs/access-control). E.g.:
 	// "service-00000001@00000002.iam.gserviceaccount.com"
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TraceSink) MarshalJSON() ([]byte, error) {
 	type NoMethod TraceSink
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudtrace.projects.traceSinks.create":
 
 type ProjectsTraceSinksCreateCall struct {
 	s          *Service
@@ -335,14 +302,13 @@ type ProjectsTraceSinksCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a sink that exports trace spans to a destination. The
-// export of newly-ingested traces begins immediately, unless the sink's
-// `writer_identity` is not permitted to write to the destination. A
-// sink can export traces only from the resource owning the sink (the
-// 'parent').
+// Create: Creates a sink that exports trace spans to a destination. The export
+// of newly-ingested traces begins immediately, unless the sink's
+// `writer_identity` is not permitted to write to the destination. A sink can
+// export traces only from the resource owning the sink (the 'parent').
 //
-//   - parent: The resource in which to create the sink (currently only
-//     project sinks are supported): "projects/[PROJECT_ID]" Examples:
+//   - parent: The resource in which to create the sink (currently only project
+//     sinks are supported): "projects/[PROJECT_ID]" Examples:
 //     "projects/my-trace-project", "projects/123456789".
 func (r *ProjectsTraceSinksService) Create(parent string, tracesink *TraceSink) *ProjectsTraceSinksCreateCall {
 	c := &ProjectsTraceSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -352,23 +318,21 @@ func (r *ProjectsTraceSinksService) Create(parent string, tracesink *TraceSink) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTraceSinksCreateCall) Fields(s ...googleapi.Field) *ProjectsTraceSinksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTraceSinksCreateCall) Context(ctx context.Context) *ProjectsTraceSinksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -377,18 +341,12 @@ func (c *ProjectsTraceSinksCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tracesink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/traceSinks")
@@ -405,12 +363,10 @@ func (c *ProjectsTraceSinksCreateCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "cloudtrace.projects.traceSinks.create" call.
-// Exactly one of *TraceSink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TraceSink.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TraceSink.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTraceSinksCreateCall) Do(opts ...googleapi.CallOption) (*TraceSink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -441,39 +397,7 @@ func (c *ProjectsTraceSinksCreateCall) Do(opts ...googleapi.CallOption) (*TraceS
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a sink that exports trace spans to a destination. The export of newly-ingested traces begins immediately, unless the sink's `writer_identity` is not permitted to write to the destination. A sink can export traces only from the resource owning the sink (the 'parent').",
-	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtrace.projects.traceSinks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The resource in which to create the sink (currently only project sinks are supported): \"projects/[PROJECT_ID]\" Examples: `\"projects/my-trace-project\"`, `\"projects/123456789\"`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/{+parent}/traceSinks",
-	//   "request": {
-	//     "$ref": "TraceSink"
-	//   },
-	//   "response": {
-	//     "$ref": "TraceSink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/trace.append"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtrace.projects.traceSinks.delete":
 
 type ProjectsTraceSinksDeleteCall struct {
 	s          *Service
@@ -485,8 +409,8 @@ type ProjectsTraceSinksDeleteCall struct {
 
 // Delete: Deletes a sink.
 //
-//   - name: The full resource name of the sink to delete, including the
-//     parent resource and the sink identifier:
+//   - name: The full resource name of the sink to delete, including the parent
+//     resource and the sink identifier:
 //     "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
 //     "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Delete(nameid string) *ProjectsTraceSinksDeleteCall {
@@ -496,23 +420,21 @@ func (r *ProjectsTraceSinksService) Delete(nameid string) *ProjectsTraceSinksDel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTraceSinksDeleteCall) Fields(s ...googleapi.Field) *ProjectsTraceSinksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTraceSinksDeleteCall) Context(ctx context.Context) *ProjectsTraceSinksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -521,12 +443,7 @@ func (c *ProjectsTraceSinksDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -544,12 +461,10 @@ func (c *ProjectsTraceSinksDeleteCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "cloudtrace.projects.traceSinks.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTraceSinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -580,36 +495,7 @@ func (c *ProjectsTraceSinksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a sink.",
-	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks/{traceSinksId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudtrace.projects.traceSinks.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The full resource name of the sink to delete, including the parent resource and the sink identifier: \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\" Example: `\"projects/12345/traceSinks/my-sink-id\"`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/traceSinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/trace.append"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtrace.projects.traceSinks.get":
 
 type ProjectsTraceSinksGetCall struct {
 	s            *Service
@@ -620,8 +506,7 @@ type ProjectsTraceSinksGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a trace sink by name under the parent resource (GCP
-// project).
+// Get: Get a trace sink by name under the parent resource (GCP project).
 //
 //   - name: The resource name of the sink:
 //     "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
@@ -633,33 +518,29 @@ func (r *ProjectsTraceSinksService) Get(name string) *ProjectsTraceSinksGetCall 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTraceSinksGetCall) Fields(s ...googleapi.Field) *ProjectsTraceSinksGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTraceSinksGetCall) IfNoneMatch(entityTag string) *ProjectsTraceSinksGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTraceSinksGetCall) Context(ctx context.Context) *ProjectsTraceSinksGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -668,12 +549,7 @@ func (c *ProjectsTraceSinksGetCall) Header() http.Header {
 }
 
 func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -694,12 +570,10 @@ func (c *ProjectsTraceSinksGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudtrace.projects.traceSinks.get" call.
-// Exactly one of *TraceSink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TraceSink.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TraceSink.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTraceSinksGetCall) Do(opts ...googleapi.CallOption) (*TraceSink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -730,36 +604,7 @@ func (c *ProjectsTraceSinksGetCall) Do(opts ...googleapi.CallOption) (*TraceSink
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a trace sink by name under the parent resource (GCP project).",
-	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks/{traceSinksId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtrace.projects.traceSinks.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the sink: \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\" Example: `\"projects/12345/traceSinks/my-sink-id\"`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/traceSinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/{+name}",
-	//   "response": {
-	//     "$ref": "TraceSink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/trace.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtrace.projects.traceSinks.list":
 
 type ProjectsTraceSinksListCall struct {
 	s            *Service
@@ -772,62 +617,57 @@ type ProjectsTraceSinksListCall struct {
 
 // List: List all sinks for the parent resource (GCP project).
 //
-//   - parent: The parent resource whose sinks are to be listed (currently
-//     only project parent resources are supported):
-//     "projects/[PROJECT_ID]".
+//   - parent: The parent resource whose sinks are to be listed (currently only
+//     project parent resources are supported): "projects/[PROJECT_ID]".
 func (r *ProjectsTraceSinksService) List(parent string) *ProjectsTraceSinksListCall {
 	c := &ProjectsTraceSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return from this request. Non-positive values are
-// ignored. The presence of `next_page_token` in the response indicates
-// that more results might be available.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return from this request. Non-positive values are ignored. The
+// presence of `next_page_token` in the response indicates that more results
+// might be available.
 func (c *ProjectsTraceSinksListCall) PageSize(pageSize int64) *ProjectsTraceSinksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": If present, then
-// retrieve the next batch of results from the preceding call to this
-// method. `page_token` must be the value of `next_page_token` from the
-// previous response. The values of other method parameters should be
-// identical to those in the previous call.
+// PageToken sets the optional parameter "pageToken": If present, then retrieve
+// the next batch of results from the preceding call to this method.
+// `page_token` must be the value of `next_page_token` from the previous
+// response. The values of other method parameters should be identical to those
+// in the previous call.
 func (c *ProjectsTraceSinksListCall) PageToken(pageToken string) *ProjectsTraceSinksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTraceSinksListCall) Fields(s ...googleapi.Field) *ProjectsTraceSinksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsTraceSinksListCall) IfNoneMatch(entityTag string) *ProjectsTraceSinksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTraceSinksListCall) Context(ctx context.Context) *ProjectsTraceSinksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTraceSinksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -836,12 +676,7 @@ func (c *ProjectsTraceSinksListCall) Header() http.Header {
 }
 
 func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -862,12 +697,11 @@ func (c *ProjectsTraceSinksListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "cloudtrace.projects.traceSinks.list" call.
-// Exactly one of *ListTraceSinksResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTraceSinksResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTraceSinksResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTraceSinksListCall) Do(opts ...googleapi.CallOption) (*ListTraceSinksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -898,44 +732,6 @@ func (c *ProjectsTraceSinksListCall) Do(opts ...googleapi.CallOption) (*ListTrac
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all sinks for the parent resource (GCP project).",
-	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtrace.projects.traceSinks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of `next_page_token` in the response indicates that more results might be available.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. `page_token` must be the value of `next_page_token` from the previous response. The values of other method parameters should be identical to those in the previous call.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent resource whose sinks are to be listed (currently only project parent resources are supported): \"projects/[PROJECT_ID]\"",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/{+parent}/traceSinks",
-	//   "response": {
-	//     "$ref": "ListTraceSinksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/trace.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -943,7 +739,7 @@ func (c *ProjectsTraceSinksListCall) Do(opts ...googleapi.CallOption) (*ListTrac
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsTraceSinksListCall) Pages(ctx context.Context, f func(*ListTraceSinksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -959,8 +755,6 @@ func (c *ProjectsTraceSinksListCall) Pages(ctx context.Context, f func(*ListTrac
 	}
 }
 
-// method id "cloudtrace.projects.traceSinks.patch":
-
 type ProjectsTraceSinksPatchCall struct {
 	s          *Service
 	nameid     string
@@ -970,12 +764,12 @@ type ProjectsTraceSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method updates fields in the existing
-// sink according to the provided update mask. The sink's name cannot be
-// changed nor any output-only fields (e.g. the writer_identity).
+// Patch: Updates a sink. This method updates fields in the existing sink
+// according to the provided update mask. The sink's name cannot be changed nor
+// any output-only fields (e.g. the writer_identity).
 //
-//   - name: The full resource name of the sink to update, including the
-//     parent resource and the sink identifier:
+//   - name: The full resource name of the sink to update, including the parent
+//     resource and the sink identifier:
 //     "projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]" Example:
 //     "projects/12345/traceSinks/my-sink-id".
 func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *ProjectsTraceSinksPatchCall {
@@ -985,12 +779,11 @@ func (r *ProjectsTraceSinksService) Patch(nameid string, tracesink *TraceSink) *
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field
-// mask that specifies the fields in `trace_sink` that are to be
-// updated. A sink field is overwritten if, and only if, it is in the
-// update mask. `name` and `writer_identity` fields cannot be updated.
-// An empty `update_mask` is considered an error. For a detailed
-// `FieldMask` definition, see
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask
+// that specifies the fields in `trace_sink` that are to be updated. A sink
+// field is overwritten if, and only if, it is in the update mask. `name` and
+// `writer_identity` fields cannot be updated. An empty `update_mask` is
+// considered an error. For a detailed `FieldMask` definition, see
 // https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
 // Example: `updateMask=output_config`.
 func (c *ProjectsTraceSinksPatchCall) UpdateMask(updateMask string) *ProjectsTraceSinksPatchCall {
@@ -999,23 +792,21 @@ func (c *ProjectsTraceSinksPatchCall) UpdateMask(updateMask string) *ProjectsTra
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTraceSinksPatchCall) Fields(s ...googleapi.Field) *ProjectsTraceSinksPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTraceSinksPatchCall) Context(ctx context.Context) *ProjectsTraceSinksPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1024,18 +815,12 @@ func (c *ProjectsTraceSinksPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tracesink)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
@@ -1052,12 +837,10 @@ func (c *ProjectsTraceSinksPatchCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "cloudtrace.projects.traceSinks.patch" call.
-// Exactly one of *TraceSink or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TraceSink.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TraceSink.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsTraceSinksPatchCall) Do(opts ...googleapi.CallOption) (*TraceSink, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1088,40 +871,4 @@ func (c *ProjectsTraceSinksPatchCall) Do(opts ...googleapi.CallOption) (*TraceSi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a sink. This method updates fields in the existing sink according to the provided update mask. The sink's name cannot be changed nor any output-only fields (e.g. the writer_identity).",
-	//   "flatPath": "v2beta1/projects/{projectsId}/traceSinks/{traceSinksId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudtrace.projects.traceSinks.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The full resource name of the sink to update, including the parent resource and the sink identifier: \"projects/[PROJECT_NUMBER]/traceSinks/[SINK_ID]\" Example: `\"projects/12345/traceSinks/my-sink-id\"`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/traceSinks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. Field mask that specifies the fields in `trace_sink` that are to be updated. A sink field is overwritten if, and only if, it is in the update mask. `name` and `writer_identity` fields cannot be updated. An empty `update_mask` is considered an error. For a detailed `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask Example: `updateMask=output_config`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/{+name}",
-	//   "request": {
-	//     "$ref": "TraceSink"
-	//   },
-	//   "response": {
-	//     "$ref": "TraceSink"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/trace.append"
-	//   ]
-	// }
-
 }

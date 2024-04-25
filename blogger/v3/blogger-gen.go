@@ -259,229 +259,172 @@ type UsersService struct {
 type Blog struct {
 	// CustomMetaData: The JSON custom meta-data for the Blog.
 	CustomMetaData string `json:"customMetaData,omitempty"`
-
-	// Description: The description of this blog. This is displayed
-	// underneath the title.
+	// Description: The description of this blog. This is displayed underneath the
+	// title.
 	Description string `json:"description,omitempty"`
-
 	// Id: The identifier for this resource.
 	Id string `json:"id,omitempty"`
-
 	// Kind: The kind of this entry. Always blogger#blog.
 	Kind string `json:"kind,omitempty"`
-
 	// Locale: The locale this Blog is set to.
 	Locale *BlogLocale `json:"locale,omitempty"`
-
 	// Name: The name of this blog. This is displayed as the title.
 	Name string `json:"name,omitempty"`
-
 	// Pages: The container of pages in this blog.
 	Pages *BlogPages `json:"pages,omitempty"`
-
 	// Posts: The container of posts in this blog.
 	Posts *BlogPosts `json:"posts,omitempty"`
-
 	// Published: RFC 3339 date-time when this blog was published.
 	Published string `json:"published,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// Status: The status of the blog.
 	//
 	// Possible values:
 	//   "LIVE"
 	//   "DELETED"
 	Status string `json:"status,omitempty"`
-
 	// Updated: RFC 3339 date-time when this blog was last updated.
 	Updated string `json:"updated,omitempty"`
-
 	// Url: The URL where this blog is published.
 	Url string `json:"url,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomMetaData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomMetaData") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomMetaData") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Blog) MarshalJSON() ([]byte, error) {
 	type NoMethod Blog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BlogLocale: The locale this Blog is set to.
 type BlogLocale struct {
 	// Country: The country this blog's locale is set to.
 	Country string `json:"country,omitempty"`
-
 	// Language: The language this blog is authored in.
 	Language string `json:"language,omitempty"`
-
 	// Variant: The language variant this blog is authored in.
 	Variant string `json:"variant,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Country") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Country") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Country") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlogLocale) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogLocale
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BlogPages: The container of pages in this blog.
 type BlogPages struct {
 	// SelfLink: The URL of the container for pages in this blog.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// TotalItems: The count of pages in this blog.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SelfLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SelfLink") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SelfLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlogPages) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogPages
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BlogPosts: The container of posts in this blog.
 type BlogPosts struct {
 	// Items: The List of Posts for this Blog.
 	Items []*Post `json:"items,omitempty"`
-
 	// SelfLink: The URL of the container for posts in this blog.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// TotalItems: The count of posts in this blog.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlogPosts) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogPosts
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogList struct {
 	// BlogUserInfos: Admin level list of blog per-user information.
 	BlogUserInfos []*BlogUserInfo `json:"blogUserInfos,omitempty"`
-
-	// Items: The list of Blogs this user has Authorship or Admin rights
-	// over.
+	// Items: The list of Blogs this user has Authorship or Admin rights over.
 	Items []*Blog `json:"items,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#blogList.
 	Kind string `json:"kind,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BlogUserInfos") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BlogUserInfos") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BlogUserInfos") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlogList) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogPerUserInfo struct {
 	// BlogId: ID of the Blog resource.
 	BlogId string `json:"blogId,omitempty"`
-
 	// HasAdminAccess: True if the user has Admin level access to the blog.
 	HasAdminAccess bool `json:"hasAdminAccess,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#blogPerUserInfo.
 	Kind string `json:"kind,omitempty"`
-
-	// PhotosAlbumKey: The Photo Album Key for the user when adding photos
-	// to the blog.
+	// PhotosAlbumKey: The Photo Album Key for the user when adding photos to the
+	// blog.
 	PhotosAlbumKey string `json:"photosAlbumKey,omitempty"`
-
-	// Role: Access permissions that the user has for the blog (ADMIN,
-	// AUTHOR, or READER).
+	// Role: Access permissions that the user has for the blog (ADMIN, AUTHOR, or
+	// READER).
 	//
 	// Possible values:
 	//   "VIEW_TYPE_UNSPECIFIED"
@@ -489,98 +432,73 @@ type BlogPerUserInfo struct {
 	//   "AUTHOR"
 	//   "ADMIN"
 	Role string `json:"role,omitempty"`
-
 	// UserId: ID of the User.
 	UserId string `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BlogId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BlogId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlogPerUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogPerUserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type BlogUserInfo struct {
 	// Blog: The Blog resource.
 	Blog *Blog `json:"blog,omitempty"`
-
 	// BlogUserInfo: Information about a User for the Blog.
 	BlogUserInfo *BlogPerUserInfo `json:"blog_user_info,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#blogUserInfo.
 	Kind string `json:"kind,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Blog") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Blog") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Blog") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Blog") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BlogUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod BlogUserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Comment struct {
 	// Author: The author of this Comment.
 	Author *CommentAuthor `json:"author,omitempty"`
-
 	// Blog: Data about the blog containing this comment.
 	Blog *CommentBlog `json:"blog,omitempty"`
-
 	// Content: The actual content of the comment. May include HTML markup.
 	Content string `json:"content,omitempty"`
-
 	// Id: The identifier for this resource.
 	Id string `json:"id,omitempty"`
-
 	// InReplyTo: Data about the comment this is in reply to.
 	InReplyTo *CommentInReplyTo `json:"inReplyTo,omitempty"`
-
 	// Kind: The kind of this entry. Always blogger#comment.
 	Kind string `json:"kind,omitempty"`
-
 	// Post: Data about the post containing this comment.
 	Post *CommentPost `json:"post,omitempty"`
-
 	// Published: RFC 3339 date-time when this comment was published.
 	Published string `json:"published,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// Status: The status of the comment (only populated for admin users).
 	//
 	// Possible values:
@@ -589,480 +507,364 @@ type Comment struct {
 	//   "PENDING"
 	//   "SPAM"
 	Status string `json:"status,omitempty"`
-
 	// Updated: RFC 3339 date-time when this comment was last updated.
 	Updated string `json:"updated,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Author") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Comment) MarshalJSON() ([]byte, error) {
 	type NoMethod Comment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentAuthor: The author of this Comment.
 type CommentAuthor struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Id: The identifier of the creator.
 	Id string `json:"id,omitempty"`
-
 	// Image: The creator's avatar.
 	Image *CommentAuthorImage `json:"image,omitempty"`
-
 	// Url: The URL of the creator's Profile page.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommentAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentAuthor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentAuthorImage: The creator's avatar.
 type CommentAuthorImage struct {
 	// Url: The creator's avatar URL.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommentAuthorImage) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentAuthorImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentBlog: Data about the blog containing this comment.
 type CommentBlog struct {
 	// Id: The identifier of the blog containing this comment.
 	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommentBlog) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentBlog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentInReplyTo: Data about the comment this is in reply to.
 type CommentInReplyTo struct {
 	// Id: The identified of the parent of this comment.
 	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommentInReplyTo) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentInReplyTo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CommentPost: Data about the post containing this comment.
 type CommentPost struct {
 	// Id: The identifier of the post containing this comment.
 	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommentPost) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentPost
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type CommentList struct {
 	// Etag: Etag of the response.
 	Etag string `json:"etag,omitempty"`
-
 	// Items: The List of Comments for a Post.
 	Items []*Comment `json:"items,omitempty"`
-
 	// Kind: The kind of this entry. Always blogger#commentList.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Pagination token to fetch the next page, if one
-	// exists.
+	// NextPageToken: Pagination token to fetch the next page, if one exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// PrevPageToken: Pagination token to fetch the previous page, if one
-	// exists.
+	// PrevPageToken: Pagination token to fetch the previous page, if one exists.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CommentList) MarshalJSON() ([]byte, error) {
 	type NoMethod CommentList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Page struct {
 	// Author: The author of this Page.
 	Author *PageAuthor `json:"author,omitempty"`
-
 	// Blog: Data about the blog containing this Page.
 	Blog *PageBlog `json:"blog,omitempty"`
-
 	// Content: The body content of this Page, in HTML.
 	Content string `json:"content,omitempty"`
-
 	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Id: The identifier for this resource.
 	Id string `json:"id,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#page.
 	Kind string `json:"kind,omitempty"`
-
 	// Published: RFC 3339 date-time when this Page was published.
 	Published string `json:"published,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Status: The status of the page for admin resources (either LIVE or
-	// DRAFT).
+	// Status: The status of the page for admin resources (either LIVE or DRAFT).
 	//
 	// Possible values:
 	//   "LIVE"
 	//   "DRAFT"
 	//   "SOFT_TRASHED"
 	Status string `json:"status,omitempty"`
-
-	// Title: The title of this entity. This is the name displayed in the
-	// Admin user interface.
+	// Title: The title of this entity. This is the name displayed in the Admin
+	// user interface.
 	Title string `json:"title,omitempty"`
-
 	// Trashed: RFC 3339 date-time when this Page was trashed.
 	Trashed string `json:"trashed,omitempty"`
-
 	// Updated: RFC 3339 date-time when this Page was last updated.
 	Updated string `json:"updated,omitempty"`
-
 	// Url: The URL that this Page is displayed at.
 	Url string `json:"url,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Author") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Page) MarshalJSON() ([]byte, error) {
 	type NoMethod Page
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PageAuthor: The author of this Page.
 type PageAuthor struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Id: The identifier of the creator.
 	Id string `json:"id,omitempty"`
-
 	// Image: The creator's avatar.
 	Image *PageAuthorImage `json:"image,omitempty"`
-
 	// Url: The URL of the creator's Profile page.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PageAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod PageAuthor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PageAuthorImage: The creator's avatar.
 type PageAuthorImage struct {
 	// Url: The creator's avatar URL.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PageAuthorImage) MarshalJSON() ([]byte, error) {
 	type NoMethod PageAuthorImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PageBlog: Data about the blog containing this Page.
 type PageBlog struct {
 	// Id: The identifier of the blog containing this page.
 	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PageBlog) MarshalJSON() ([]byte, error) {
 	type NoMethod PageBlog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PageList struct {
 	// Etag: Etag of the response.
 	Etag string `json:"etag,omitempty"`
-
 	// Items: The list of Pages for a Blog.
 	Items []*Page `json:"items,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#pageList.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Pagination token to fetch the next page, if one
-	// exists.
+	// NextPageToken: Pagination token to fetch the next page, if one exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PageList) MarshalJSON() ([]byte, error) {
 	type NoMethod PageList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Pageviews struct {
 	// BlogId: Blog Id.
 	BlogId string `json:"blogId,omitempty"`
-
 	// Counts: The container of posts in this blog.
 	Counts []*PageviewsCounts `json:"counts,omitempty"`
-
 	// Kind: The kind of this entry. Always blogger#page_views.
 	Kind string `json:"kind,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BlogId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BlogId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Pageviews) MarshalJSON() ([]byte, error) {
 	type NoMethod Pageviews
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PageviewsCounts struct {
 	// Count: Count of page views for the given time range.
 	Count int64 `json:"count,omitempty,string"`
-
 	// TimeRange: Time range the given count applies to.
 	//
 	// Possible values:
@@ -1070,79 +872,59 @@ type PageviewsCounts struct {
 	//   "THIRTY_DAYS"
 	//   "SEVEN_DAYS"
 	TimeRange string `json:"timeRange,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Count") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PageviewsCounts) MarshalJSON() ([]byte, error) {
 	type NoMethod PageviewsCounts
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Post struct {
 	// Author: The author of this Post.
 	Author *PostAuthor `json:"author,omitempty"`
-
 	// Blog: Data about the blog containing this Post.
 	Blog *PostBlog `json:"blog,omitempty"`
-
 	// Content: The content of the Post. May contain HTML markup.
 	Content string `json:"content,omitempty"`
-
 	// CustomMetaData: The JSON meta-data for the Post.
 	CustomMetaData string `json:"customMetaData,omitempty"`
-
 	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Id: The identifier of this Post.
 	Id string `json:"id,omitempty"`
-
 	// Images: Display image for the Post.
 	Images []*PostImages `json:"images,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#post.
 	Kind string `json:"kind,omitempty"`
-
 	// Labels: The list of labels this Post was tagged with.
 	Labels []string `json:"labels,omitempty"`
-
 	// Location: The location for geotagged posts.
 	Location *PostLocation `json:"location,omitempty"`
-
 	// Published: RFC 3339 date-time when this Post was published.
 	Published string `json:"published,omitempty"`
-
-	// ReaderComments: Comment control and display setting for readers of
-	// this post.
+	// ReaderComments: Comment control and display setting for readers of this
+	// post.
 	//
 	// Possible values:
 	//   "ALLOW"
 	//   "DONT_ALLOW_SHOW_EXISTING"
 	//   "DONT_ALLOW_HIDE_EXISTING"
 	ReaderComments string `json:"readerComments,omitempty"`
-
 	// Replies: The container of comments on this Post.
 	Replies *PostReplies `json:"replies,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// Status: Status of the post. Only set for admin-level requests.
 	//
 	// Possible values:
@@ -1151,204 +933,155 @@ type Post struct {
 	//   "SCHEDULED"
 	//   "SOFT_TRASHED"
 	Status string `json:"status,omitempty"`
-
 	// Title: The title of the Post.
 	Title string `json:"title,omitempty"`
-
 	// TitleLink: The title link URL, similar to atom's related link.
 	TitleLink string `json:"titleLink,omitempty"`
-
 	// Trashed: RFC 3339 date-time when this Post was last trashed.
 	Trashed string `json:"trashed,omitempty"`
-
 	// Updated: RFC 3339 date-time when this Post was last updated.
 	Updated string `json:"updated,omitempty"`
-
 	// Url: The URL where this Post is displayed.
 	Url string `json:"url,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Author") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Author") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Post) MarshalJSON() ([]byte, error) {
 	type NoMethod Post
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PostAuthor: The author of this Post.
 type PostAuthor struct {
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Id: The identifier of the creator.
 	Id string `json:"id,omitempty"`
-
 	// Image: The creator's avatar.
 	Image *PostAuthorImage `json:"image,omitempty"`
-
 	// Url: The URL of the creator's Profile page.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod PostAuthor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PostAuthorImage: The creator's avatar.
 type PostAuthorImage struct {
 	// Url: The creator's avatar URL.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostAuthorImage) MarshalJSON() ([]byte, error) {
 	type NoMethod PostAuthorImage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PostBlog: Data about the blog containing this Post.
 type PostBlog struct {
 	// Id: The identifier of the Blog that contains this Post.
 	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostBlog) MarshalJSON() ([]byte, error) {
 	type NoMethod PostBlog
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PostImages struct {
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Url") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Url") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Url") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostImages) MarshalJSON() ([]byte, error) {
 	type NoMethod PostImages
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PostLocation: The location for geotagged posts.
 type PostLocation struct {
 	// Lat: Location's latitude.
 	Lat float64 `json:"lat,omitempty"`
-
 	// Lng: Location's longitude.
 	Lng float64 `json:"lng,omitempty"`
-
 	// Name: Location name.
 	Name string `json:"name,omitempty"`
-
-	// Span: Location's viewport span. Can be used when rendering a map
-	// preview.
+	// Span: Location's viewport span. Can be used when rendering a map preview.
 	Span string `json:"span,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Lat") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Lat") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Lat") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Lat") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod PostLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PostLocation) UnmarshalJSON(data []byte) error {
@@ -1371,315 +1104,233 @@ func (s *PostLocation) UnmarshalJSON(data []byte) error {
 type PostReplies struct {
 	// Items: The List of Comments for this Post.
 	Items []*Comment `json:"items,omitempty"`
-
 	// SelfLink: The URL of the comments on this post.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// TotalItems: The count of comments on this post.
 	TotalItems int64 `json:"totalItems,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostReplies) MarshalJSON() ([]byte, error) {
 	type NoMethod PostReplies
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PostList struct {
 	// Etag: Etag of the response.
 	Etag string `json:"etag,omitempty"`
-
 	// Items: The list of Posts for this Blog.
 	Items []*Post `json:"items,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#postList.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Pagination token to fetch the next page, if one
-	// exists.
+	// NextPageToken: Pagination token to fetch the next page, if one exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// PrevPageToken: Pagination token to fetch the previous page, if one
-	// exists.
+	// PrevPageToken: Pagination token to fetch the previous page, if one exists.
 	PrevPageToken string `json:"prevPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostList) MarshalJSON() ([]byte, error) {
 	type NoMethod PostList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PostPerUserInfo struct {
 	// BlogId: ID of the Blog that the post resource belongs to.
 	BlogId string `json:"blogId,omitempty"`
-
 	// HasEditAccess: True if the user has Author level access to the post.
 	HasEditAccess bool `json:"hasEditAccess,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#postPerUserInfo.
 	Kind string `json:"kind,omitempty"`
-
 	// PostId: ID of the Post resource.
 	PostId string `json:"postId,omitempty"`
-
 	// UserId: ID of the User.
 	UserId string `json:"userId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BlogId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BlogId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostPerUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PostPerUserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PostUserInfo struct {
 	// Kind: The kind of this entity. Always blogger#postUserInfo.
 	Kind string `json:"kind,omitempty"`
-
 	// Post: The Post resource.
 	Post *Post `json:"post,omitempty"`
-
 	// PostUserInfo: Information about a User for the Post.
 	PostUserInfo *PostPerUserInfo `json:"post_user_info,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PostUserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type PostUserInfosList struct {
-	// Items: The list of Posts with User information for the post, for this
-	// Blog.
+	// Items: The list of Posts with User information for the post, for this Blog.
 	Items []*PostUserInfo `json:"items,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#postList.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Pagination token to fetch the next page, if one
-	// exists.
+	// NextPageToken: Pagination token to fetch the next page, if one exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PostUserInfosList) MarshalJSON() ([]byte, error) {
 	type NoMethod PostUserInfosList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type User struct {
 	// About: Profile summary information.
 	About string `json:"about,omitempty"`
-
 	// Blogs: The container of blogs for this user.
 	Blogs *UserBlogs `json:"blogs,omitempty"`
-
-	// Created: The timestamp of when this profile was created, in seconds
-	// since epoch.
+	// Created: The timestamp of when this profile was created, in seconds since
+	// epoch.
 	Created string `json:"created,omitempty"`
-
 	// DisplayName: The display name.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Id: The identifier for this User.
 	Id string `json:"id,omitempty"`
-
 	// Kind: The kind of this entity. Always blogger#user.
 	Kind string `json:"kind,omitempty"`
-
 	// Locale: This user's locale
 	Locale *UserLocale `json:"locale,omitempty"`
-
 	// SelfLink: The API REST URL to fetch this resource from.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// Url: The user's profile page.
 	Url string `json:"url,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "About") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "About") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "About") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *User) MarshalJSON() ([]byte, error) {
 	type NoMethod User
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UserBlogs: The container of blogs for this user.
 type UserBlogs struct {
 	// SelfLink: The URL of the Blogs for this user.
 	SelfLink string `json:"selfLink,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SelfLink") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SelfLink") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SelfLink") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserBlogs) MarshalJSON() ([]byte, error) {
 	type NoMethod UserBlogs
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UserLocale: This user's locale
 type UserLocale struct {
 	// Country: The country this blog's locale is set to.
 	Country string `json:"country,omitempty"`
-
 	// Language: The language this blog is authored in.
 	Language string `json:"language,omitempty"`
-
 	// Variant: The language variant this blog is authored in.
 	Variant string `json:"variant,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Country") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Country") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Country") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserLocale) MarshalJSON() ([]byte, error) {
 	type NoMethod UserLocale
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "blogger.blogUserInfos.get":
 
 type BlogUserInfosGetCall struct {
 	s            *Service
@@ -1709,33 +1360,29 @@ func (c *BlogUserInfosGetCall) MaxPosts(maxPosts int64) *BlogUserInfosGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BlogUserInfosGetCall) Fields(s ...googleapi.Field) *BlogUserInfosGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BlogUserInfosGetCall) IfNoneMatch(entityTag string) *BlogUserInfosGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BlogUserInfosGetCall) Context(ctx context.Context) *BlogUserInfosGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BlogUserInfosGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1744,12 +1391,7 @@ func (c *BlogUserInfosGetCall) Header() http.Header {
 }
 
 func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1771,12 +1413,10 @@ func (c *BlogUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.blogUserInfos.get" call.
-// Exactly one of *BlogUserInfo or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BlogUserInfo.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BlogUserInfo.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BlogUserInfosGetCall) Do(opts ...googleapi.CallOption) (*BlogUserInfo, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1807,45 +1447,7 @@ func (c *BlogUserInfosGetCall) Do(opts ...googleapi.CallOption) (*BlogUserInfo, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets one blog and user info pair by blog id and user id.",
-	//   "flatPath": "v3/users/{userId}/blogs/{blogId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.blogUserInfos.get",
-	//   "parameterOrder": [
-	//     "userId",
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxPosts": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "userId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/users/{userId}/blogs/{blogId}",
-	//   "response": {
-	//     "$ref": "BlogUserInfo"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.blogs.get":
 
 type BlogsGetCall struct {
 	s            *Service
@@ -1885,33 +1487,29 @@ func (c *BlogsGetCall) View(view string) *BlogsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BlogsGetCall) Fields(s ...googleapi.Field) *BlogsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BlogsGetCall) IfNoneMatch(entityTag string) *BlogsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BlogsGetCall) Context(ctx context.Context) *BlogsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BlogsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1920,12 +1518,7 @@ func (c *BlogsGetCall) Header() http.Header {
 }
 
 func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1946,12 +1539,10 @@ func (c *BlogsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.blogs.get" call.
-// Exactly one of *Blog or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Blog.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BlogsGetCall) Do(opts ...googleapi.CallOption) (*Blog, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1982,55 +1573,7 @@ func (c *BlogsGetCall) Do(opts ...googleapi.CallOption) (*Blog, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a blog by id.",
-	//   "flatPath": "v3/blogs/{blogId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.blogs.get",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxPosts": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}",
-	//   "response": {
-	//     "$ref": "Blog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.blogs.getByUrl":
 
 type BlogsGetByUrlCall struct {
 	s            *Service
@@ -2063,33 +1606,29 @@ func (c *BlogsGetByUrlCall) View(view string) *BlogsGetByUrlCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BlogsGetByUrlCall) Fields(s ...googleapi.Field) *BlogsGetByUrlCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BlogsGetByUrlCall) IfNoneMatch(entityTag string) *BlogsGetByUrlCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BlogsGetByUrlCall) Context(ctx context.Context) *BlogsGetByUrlCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BlogsGetByUrlCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2098,12 +1637,7 @@ func (c *BlogsGetByUrlCall) Header() http.Header {
 }
 
 func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2121,12 +1655,10 @@ func (c *BlogsGetByUrlCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.blogs.getByUrl" call.
-// Exactly one of *Blog or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Blog.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BlogsGetByUrlCall) Do(opts ...googleapi.CallOption) (*Blog, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2157,50 +1689,7 @@ func (c *BlogsGetByUrlCall) Do(opts ...googleapi.CallOption) (*Blog, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a blog by url.",
-	//   "flatPath": "v3/blogs/byurl",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.blogs.getByUrl",
-	//   "parameterOrder": [
-	//     "url"
-	//   ],
-	//   "parameters": {
-	//     "url": {
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/byurl",
-	//   "response": {
-	//     "$ref": "Blog"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.blogs.listByUser":
 
 type BlogsListByUserCall struct {
 	s            *Service
@@ -2239,8 +1728,8 @@ func (c *BlogsListByUserCall) Role(role ...string) *BlogsListByUserCall {
 	return c
 }
 
-// Status sets the optional parameter "status": Default value of status
-// is LIVE.
+// Status sets the optional parameter "status": Default value of status is
+// LIVE.
 //
 // Possible values:
 //
@@ -2265,33 +1754,29 @@ func (c *BlogsListByUserCall) View(view string) *BlogsListByUserCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BlogsListByUserCall) Fields(s ...googleapi.Field) *BlogsListByUserCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BlogsListByUserCall) IfNoneMatch(entityTag string) *BlogsListByUserCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BlogsListByUserCall) Context(ctx context.Context) *BlogsListByUserCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BlogsListByUserCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2300,12 +1785,7 @@ func (c *BlogsListByUserCall) Header() http.Header {
 }
 
 func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2326,12 +1806,10 @@ func (c *BlogsListByUserCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.blogs.listByUser" call.
-// Exactly one of *BlogList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *BlogList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BlogList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BlogsListByUserCall) Do(opts ...googleapi.CallOption) (*BlogList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2362,86 +1840,7 @@ func (c *BlogsListByUserCall) Do(opts ...googleapi.CallOption) (*BlogList, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists blogs by user.",
-	//   "flatPath": "v3/users/{userId}/blogs",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.blogs.listByUser",
-	//   "parameterOrder": [
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "fetchUserInfo": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "role": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "default": "LIVE",
-	//       "description": "Default value of status is LIVE.",
-	//       "enum": [
-	//         "LIVE",
-	//         "DELETED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/users/{userId}/blogs",
-	//   "response": {
-	//     "$ref": "BlogList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.comments.approve":
 
 type CommentsApproveCall struct {
 	s          *Service
@@ -2453,8 +1852,7 @@ type CommentsApproveCall struct {
 	header_    http.Header
 }
 
-// Approve: Marks a comment as not spam by blog id, post id and comment
-// id.
+// Approve: Marks a comment as not spam by blog id, post id and comment id.
 //
 // - blogId: .
 // - commentId: .
@@ -2468,23 +1866,21 @@ func (r *CommentsService) Approve(blogId string, postId string, commentId string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsApproveCall) Fields(s ...googleapi.Field) *CommentsApproveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsApproveCall) Context(ctx context.Context) *CommentsApproveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsApproveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2493,12 +1889,7 @@ func (c *CommentsApproveCall) Header() http.Header {
 }
 
 func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2518,12 +1909,10 @@ func (c *CommentsApproveCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.comments.approve" call.
-// Exactly one of *Comment or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Comment.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CommentsApproveCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2554,45 +1943,7 @@ func (c *CommentsApproveCall) Do(opts ...googleapi.CallOption) (*Comment, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Marks a comment as not spam by blog id, post id and comment id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.comments.approve",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId",
-	//     "commentId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "commentId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/approve",
-	//   "response": {
-	//     "$ref": "Comment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.comments.delete":
 
 type CommentsDeleteCall struct {
 	s          *Service
@@ -2618,23 +1969,21 @@ func (r *CommentsService) Delete(blogId string, postId string, commentId string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2643,12 +1992,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 }
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2679,42 +2023,7 @@ func (c *CommentsDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a comment by blog id, post id and comment id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "blogger.comments.delete",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId",
-	//     "commentId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "commentId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.comments.get":
 
 type CommentsGetCall struct {
 	s            *Service
@@ -2754,33 +2063,29 @@ func (c *CommentsGetCall) View(view string) *CommentsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CommentsGetCall) IfNoneMatch(entityTag string) *CommentsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2789,12 +2094,7 @@ func (c *CommentsGetCall) Header() http.Header {
 }
 
 func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2817,12 +2117,10 @@ func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.comments.get" call.
-// Exactly one of *Comment or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Comment.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2853,62 +2151,7 @@ func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a comment by id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.comments.get",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId",
-	//     "commentId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "commentId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}",
-	//   "response": {
-	//     "$ref": "Comment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.comments.list":
 
 type CommentsListCall struct {
 	s            *Service
@@ -2988,33 +2231,29 @@ func (c *CommentsListCall) View(view string) *CommentsListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CommentsListCall) IfNoneMatch(entityTag string) *CommentsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3023,12 +2262,7 @@ func (c *CommentsListCall) Header() http.Header {
 }
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3050,12 +2284,10 @@ func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.comments.list" call.
-// Exactly one of *CommentList or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CommentList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CommentList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3086,90 +2318,6 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentList, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists comments.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.comments.list",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "endDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "enum": [
-	//         "LIVE",
-	//         "EMPTIED",
-	//         "PENDING",
-	//         "SPAM"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/comments",
-	//   "response": {
-	//     "$ref": "CommentList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3177,7 +2325,7 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentList, error
 // The provided context supersedes any context provided to the Context method.
 func (c *CommentsListCall) Pages(ctx context.Context, f func(*CommentList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3192,8 +2340,6 @@ func (c *CommentsListCall) Pages(ctx context.Context, f func(*CommentList) error
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "blogger.comments.listByBlog":
 
 type CommentsListByBlogCall struct {
 	s            *Service
@@ -3257,33 +2403,29 @@ func (c *CommentsListByBlogCall) Status(status ...string) *CommentsListByBlogCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsListByBlogCall) Fields(s ...googleapi.Field) *CommentsListByBlogCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CommentsListByBlogCall) IfNoneMatch(entityTag string) *CommentsListByBlogCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsListByBlogCall) Context(ctx context.Context) *CommentsListByBlogCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsListByBlogCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3292,12 +2434,7 @@ func (c *CommentsListByBlogCall) Header() http.Header {
 }
 
 func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3318,12 +2455,10 @@ func (c *CommentsListByBlogCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.comments.listByBlog" call.
-// Exactly one of *CommentList or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CommentList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CommentList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CommentsListByBlogCall) Do(opts ...googleapi.CallOption) (*CommentList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3354,69 +2489,6 @@ func (c *CommentsListByBlogCall) Do(opts ...googleapi.CallOption) (*CommentList,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists comments by blog.",
-	//   "flatPath": "v3/blogs/{blogId}/comments",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.comments.listByBlog",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "endDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "enum": [
-	//         "LIVE",
-	//         "EMPTIED",
-	//         "PENDING",
-	//         "SPAM"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/comments",
-	//   "response": {
-	//     "$ref": "CommentList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3424,7 +2496,7 @@ func (c *CommentsListByBlogCall) Do(opts ...googleapi.CallOption) (*CommentList,
 // The provided context supersedes any context provided to the Context method.
 func (c *CommentsListByBlogCall) Pages(ctx context.Context, f func(*CommentList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3440,8 +2512,6 @@ func (c *CommentsListByBlogCall) Pages(ctx context.Context, f func(*CommentList)
 	}
 }
 
-// method id "blogger.comments.markAsSpam":
-
 type CommentsMarkAsSpamCall struct {
 	s          *Service
 	blogId     string
@@ -3452,8 +2522,7 @@ type CommentsMarkAsSpamCall struct {
 	header_    http.Header
 }
 
-// MarkAsSpam: Marks a comment as spam by blog id, post id and comment
-// id.
+// MarkAsSpam: Marks a comment as spam by blog id, post id and comment id.
 //
 // - blogId: .
 // - commentId: .
@@ -3467,23 +2536,21 @@ func (r *CommentsService) MarkAsSpam(blogId string, postId string, commentId str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsMarkAsSpamCall) Fields(s ...googleapi.Field) *CommentsMarkAsSpamCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsMarkAsSpamCall) Context(ctx context.Context) *CommentsMarkAsSpamCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsMarkAsSpamCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3492,12 +2559,7 @@ func (c *CommentsMarkAsSpamCall) Header() http.Header {
 }
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3517,12 +2579,10 @@ func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.comments.markAsSpam" call.
-// Exactly one of *Comment or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Comment.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CommentsMarkAsSpamCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3553,45 +2613,7 @@ func (c *CommentsMarkAsSpamCall) Do(opts ...googleapi.CallOption) (*Comment, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Marks a comment as spam by blog id, post id and comment id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.comments.markAsSpam",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId",
-	//     "commentId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "commentId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/spam",
-	//   "response": {
-	//     "$ref": "Comment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.comments.removeContent":
 
 type CommentsRemoveContentCall struct {
 	s          *Service
@@ -3603,8 +2625,8 @@ type CommentsRemoveContentCall struct {
 	header_    http.Header
 }
 
-// RemoveContent: Removes the content of a comment by blog id, post id
-// and comment id.
+// RemoveContent: Removes the content of a comment by blog id, post id and
+// comment id.
 //
 // - blogId: .
 // - commentId: .
@@ -3618,23 +2640,21 @@ func (r *CommentsService) RemoveContent(blogId string, postId string, commentId 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CommentsRemoveContentCall) Fields(s ...googleapi.Field) *CommentsRemoveContentCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CommentsRemoveContentCall) Context(ctx context.Context) *CommentsRemoveContentCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CommentsRemoveContentCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3643,12 +2663,7 @@ func (c *CommentsRemoveContentCall) Header() http.Header {
 }
 
 func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3668,12 +2683,10 @@ func (c *CommentsRemoveContentCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "blogger.comments.removeContent" call.
-// Exactly one of *Comment or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Comment.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CommentsRemoveContentCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3704,45 +2717,7 @@ func (c *CommentsRemoveContentCall) Do(opts ...googleapi.CallOption) (*Comment, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Removes the content of a comment by blog id, post id and comment id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.comments.removeContent",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId",
-	//     "commentId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "commentId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/comments/{commentId}/removecontent",
-	//   "response": {
-	//     "$ref": "Comment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pageViews.get":
 
 type PageViewsGetCall struct {
 	s            *Service
@@ -3775,33 +2750,29 @@ func (c *PageViewsGetCall) Range(range_ ...string) *PageViewsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PageViewsGetCall) Fields(s ...googleapi.Field) *PageViewsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PageViewsGetCall) IfNoneMatch(entityTag string) *PageViewsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PageViewsGetCall) Context(ctx context.Context) *PageViewsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PageViewsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3810,12 +2781,7 @@ func (c *PageViewsGetCall) Header() http.Header {
 }
 
 func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3836,12 +2802,10 @@ func (c *PageViewsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pageViews.get" call.
-// Exactly one of *Pageviews or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Pageviews.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Pageviews.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PageViewsGetCall) Do(opts ...googleapi.CallOption) (*Pageviews, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3872,48 +2836,7 @@ func (c *PageViewsGetCall) Do(opts ...googleapi.CallOption) (*Pageviews, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets page views by blog id.",
-	//   "flatPath": "v3/blogs/{blogId}/pageviews",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.pageViews.get",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "range": {
-	//       "enum": [
-	//         "all",
-	//         "30DAYS",
-	//         "7DAYS"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pageviews",
-	//   "response": {
-	//     "$ref": "Pageviews"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.delete":
 
 type PagesDeleteCall struct {
 	s          *Service
@@ -3935,31 +2858,28 @@ func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
 	return c
 }
 
-// UseTrash sets the optional parameter "useTrash": Move to Trash if
-// possible
+// UseTrash sets the optional parameter "useTrash": Move to Trash if possible
 func (c *PagesDeleteCall) UseTrash(useTrash bool) *PagesDeleteCall {
 	c.urlParams_.Set("useTrash", fmt.Sprint(useTrash))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesDeleteCall) Fields(s ...googleapi.Field) *PagesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesDeleteCall) Context(ctx context.Context) *PagesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3968,12 +2888,7 @@ func (c *PagesDeleteCall) Header() http.Header {
 }
 
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4003,41 +2918,7 @@ func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a page by blog id and page id.",
-	//   "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "blogger.pages.delete",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "pageId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "useTrash": {
-	//       "description": "Move to Trash if possible",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.get":
 
 type PagesGetCall struct {
 	s            *Service
@@ -4074,33 +2955,29 @@ func (c *PagesGetCall) View(view string) *PagesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesGetCall) Fields(s ...googleapi.Field) *PagesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PagesGetCall) IfNoneMatch(entityTag string) *PagesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesGetCall) Context(ctx context.Context) *PagesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4109,12 +2986,7 @@ func (c *PagesGetCall) Header() http.Header {
 }
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4136,12 +3008,10 @@ func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.get" call.
-// Exactly one of *Page or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Page.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4172,56 +3042,7 @@ func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a page by blog id and page id.",
-	//   "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.pages.get",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "pageId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "response": {
-	//     "$ref": "Page"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.insert":
 
 type PagesInsertCall struct {
 	s          *Service
@@ -4249,23 +3070,21 @@ func (c *PagesInsertCall) IsDraft(isDraft bool) *PagesInsertCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesInsertCall) Fields(s ...googleapi.Field) *PagesInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesInsertCall) Context(ctx context.Context) *PagesInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4274,18 +3093,12 @@ func (c *PagesInsertCall) Header() http.Header {
 }
 
 func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/blogs/{blogId}/pages")
@@ -4302,12 +3115,10 @@ func (c *PagesInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.insert" call.
-// Exactly one of *Page or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Page.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesInsertCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4338,40 +3149,7 @@ func (c *PagesInsertCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Inserts a page.",
-	//   "flatPath": "v3/blogs/{blogId}/pages",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.pages.insert",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "isDraft": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages",
-	//   "request": {
-	//     "$ref": "Page"
-	//   },
-	//   "response": {
-	//     "$ref": "Page"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.list":
 
 type PagesListCall struct {
 	s            *Service
@@ -4435,33 +3213,29 @@ func (c *PagesListCall) View(view string) *PagesListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesListCall) Fields(s ...googleapi.Field) *PagesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PagesListCall) IfNoneMatch(entityTag string) *PagesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesListCall) Context(ctx context.Context) *PagesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4470,12 +3244,7 @@ func (c *PagesListCall) Header() http.Header {
 }
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4496,12 +3265,10 @@ func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.list" call.
-// Exactly one of *PageList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *PageList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PageList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*PageList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4532,75 +3299,6 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*PageList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists pages.",
-	//   "flatPath": "v3/blogs/{blogId}/pages",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.pages.list",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "enum": [
-	//         "LIVE",
-	//         "DRAFT",
-	//         "SOFT_TRASHED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages",
-	//   "response": {
-	//     "$ref": "PageList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4608,7 +3306,7 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*PageList, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *PagesListCall) Pages(ctx context.Context, f func(*PageList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4623,8 +3321,6 @@ func (c *PagesListCall) Pages(ctx context.Context, f func(*PageList) error) erro
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "blogger.pages.patch":
 
 type PagesPatchCall struct {
 	s          *Service
@@ -4661,23 +3357,21 @@ func (c *PagesPatchCall) Revert(revert bool) *PagesPatchCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesPatchCall) Fields(s ...googleapi.Field) *PagesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesPatchCall) Context(ctx context.Context) *PagesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4686,18 +3380,12 @@ func (c *PagesPatchCall) Header() http.Header {
 }
 
 func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/blogs/{blogId}/pages/{pageId}")
@@ -4715,12 +3403,10 @@ func (c *PagesPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.patch" call.
-// Exactly one of *Page or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Page.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesPatchCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4751,50 +3437,7 @@ func (c *PagesPatchCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Patches a page.",
-	//   "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "blogger.pages.patch",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "pageId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "publish": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "revert": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "request": {
-	//     "$ref": "Page"
-	//   },
-	//   "response": {
-	//     "$ref": "Page"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.publish":
 
 type PagesPublishCall struct {
 	s          *Service
@@ -4817,23 +3460,21 @@ func (r *PagesService) Publish(blogId string, pageId string) *PagesPublishCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesPublishCall) Fields(s ...googleapi.Field) *PagesPublishCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesPublishCall) Context(ctx context.Context) *PagesPublishCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesPublishCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4842,12 +3483,7 @@ func (c *PagesPublishCall) Header() http.Header {
 }
 
 func (c *PagesPublishCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4866,12 +3502,10 @@ func (c *PagesPublishCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.publish" call.
-// Exactly one of *Page or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Page.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesPublishCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4902,39 +3536,7 @@ func (c *PagesPublishCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Publishes a page.",
-	//   "flatPath": "v3/blogs/{blogId}/pages/{pageId}/publish",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.pages.publish",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "pageId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages/{pageId}/publish",
-	//   "response": {
-	//     "$ref": "Page"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.revert":
 
 type PagesRevertCall struct {
 	s          *Service
@@ -4957,23 +3559,21 @@ func (r *PagesService) Revert(blogId string, pageId string) *PagesRevertCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesRevertCall) Fields(s ...googleapi.Field) *PagesRevertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesRevertCall) Context(ctx context.Context) *PagesRevertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesRevertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4982,12 +3582,7 @@ func (c *PagesRevertCall) Header() http.Header {
 }
 
 func (c *PagesRevertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5006,12 +3601,10 @@ func (c *PagesRevertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.revert" call.
-// Exactly one of *Page or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Page.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesRevertCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5042,39 +3635,7 @@ func (c *PagesRevertCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Reverts a published or scheduled page to draft state.",
-	//   "flatPath": "v3/blogs/{blogId}/pages/{pageId}/revert",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.pages.revert",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "pageId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages/{pageId}/revert",
-	//   "response": {
-	//     "$ref": "Page"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.pages.update":
 
 type PagesUpdateCall struct {
 	s          *Service
@@ -5111,23 +3672,21 @@ func (c *PagesUpdateCall) Revert(revert bool) *PagesUpdateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesUpdateCall) Fields(s ...googleapi.Field) *PagesUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesUpdateCall) Context(ctx context.Context) *PagesUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5136,18 +3695,12 @@ func (c *PagesUpdateCall) Header() http.Header {
 }
 
 func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.page)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/blogs/{blogId}/pages/{pageId}")
@@ -5165,12 +3718,10 @@ func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.pages.update" call.
-// Exactly one of *Page or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Page.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5201,50 +3752,7 @@ func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*Page, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a page by blog id and page id.",
-	//   "flatPath": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "httpMethod": "PUT",
-	//   "id": "blogger.pages.update",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "pageId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "publish": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "revert": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/pages/{pageId}",
-	//   "request": {
-	//     "$ref": "Page"
-	//   },
-	//   "response": {
-	//     "$ref": "Page"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.postUserInfos.get":
 
 type PostUserInfosGetCall struct {
 	s            *Service
@@ -5277,33 +3785,29 @@ func (c *PostUserInfosGetCall) MaxComments(maxComments int64) *PostUserInfosGetC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostUserInfosGetCall) Fields(s ...googleapi.Field) *PostUserInfosGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PostUserInfosGetCall) IfNoneMatch(entityTag string) *PostUserInfosGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostUserInfosGetCall) Context(ctx context.Context) *PostUserInfosGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostUserInfosGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5312,12 +3816,7 @@ func (c *PostUserInfosGetCall) Header() http.Header {
 }
 
 func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5340,12 +3839,10 @@ func (c *PostUserInfosGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.postUserInfos.get" call.
-// Exactly one of *PostUserInfo or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *PostUserInfo.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PostUserInfo.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostUserInfosGetCall) Do(opts ...googleapi.CallOption) (*PostUserInfo, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5376,51 +3873,7 @@ func (c *PostUserInfosGetCall) Do(opts ...googleapi.CallOption) (*PostUserInfo, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets one post and user info pair, by post_id and user_id.",
-	//   "flatPath": "v3/users/{userId}/blogs/{blogId}/posts/{postId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.postUserInfos.get",
-	//   "parameterOrder": [
-	//     "userId",
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxComments": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/users/{userId}/blogs/{blogId}/posts/{postId}",
-	//   "response": {
-	//     "$ref": "PostUserInfo"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.postUserInfos.list":
 
 type PostUserInfosListCall struct {
 	s            *Service
@@ -5518,33 +3971,29 @@ func (c *PostUserInfosListCall) View(view string) *PostUserInfosListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostUserInfosListCall) Fields(s ...googleapi.Field) *PostUserInfosListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PostUserInfosListCall) IfNoneMatch(entityTag string) *PostUserInfosListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostUserInfosListCall) Context(ctx context.Context) *PostUserInfosListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostUserInfosListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5553,12 +4002,7 @@ func (c *PostUserInfosListCall) Header() http.Header {
 }
 
 func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5580,12 +4024,11 @@ func (c *PostUserInfosListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.postUserInfos.list" call.
-// Exactly one of *PostUserInfosList or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PostUserInfosList.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PostUserInfosList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PostUserInfosListCall) Do(opts ...googleapi.CallOption) (*PostUserInfosList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5616,111 +4059,6 @@ func (c *PostUserInfosListCall) Do(opts ...googleapi.CallOption) (*PostUserInfos
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists post and user info pairs.",
-	//   "flatPath": "v3/users/{userId}/blogs/{blogId}/posts",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.postUserInfos.list",
-	//   "parameterOrder": [
-	//     "userId",
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "endDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "default": "false",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "labels": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "orderBy": {
-	//       "default": "PUBLISHED",
-	//       "enum": [
-	//         "ORDER_BY_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "UPDATED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "enum": [
-	//         "LIVE",
-	//         "DRAFT",
-	//         "SCHEDULED",
-	//         "SOFT_TRASHED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "userId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/users/{userId}/blogs/{blogId}/posts",
-	//   "response": {
-	//     "$ref": "PostUserInfosList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5728,7 +4066,7 @@ func (c *PostUserInfosListCall) Do(opts ...googleapi.CallOption) (*PostUserInfos
 // The provided context supersedes any context provided to the Context method.
 func (c *PostUserInfosListCall) Pages(ctx context.Context, f func(*PostUserInfosList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5743,8 +4081,6 @@ func (c *PostUserInfosListCall) Pages(ctx context.Context, f func(*PostUserInfos
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "blogger.posts.delete":
 
 type PostsDeleteCall struct {
 	s          *Service
@@ -5766,31 +4102,28 @@ func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
 	return c
 }
 
-// UseTrash sets the optional parameter "useTrash": Move to Trash if
-// possible
+// UseTrash sets the optional parameter "useTrash": Move to Trash if possible
 func (c *PostsDeleteCall) UseTrash(useTrash bool) *PostsDeleteCall {
 	c.urlParams_.Set("useTrash", fmt.Sprint(useTrash))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsDeleteCall) Fields(s ...googleapi.Field) *PostsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsDeleteCall) Context(ctx context.Context) *PostsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5799,12 +4132,7 @@ func (c *PostsDeleteCall) Header() http.Header {
 }
 
 func (c *PostsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5834,41 +4162,7 @@ func (c *PostsDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a post by blog id and post id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "blogger.posts.delete",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "useTrash": {
-	//       "description": "Move to Trash if possible",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.get":
 
 type PostsGetCall struct {
 	s            *Service
@@ -5923,33 +4217,29 @@ func (c *PostsGetCall) View(view string) *PostsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsGetCall) Fields(s ...googleapi.Field) *PostsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PostsGetCall) IfNoneMatch(entityTag string) *PostsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsGetCall) Context(ctx context.Context) *PostsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5958,12 +4248,7 @@ func (c *PostsGetCall) Header() http.Header {
 }
 
 func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5985,12 +4270,10 @@ func (c *PostsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.get" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsGetCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6021,70 +4304,7 @@ func (c *PostsGetCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a post by blog id and post id",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.posts.get",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBody": {
-	//       "default": "true",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "fetchImages": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxComments": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}",
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.getByPath":
 
 type PostsGetByPathCall struct {
 	s            *Service
@@ -6126,33 +4346,29 @@ func (c *PostsGetByPathCall) View(view string) *PostsGetByPathCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsGetByPathCall) Fields(s ...googleapi.Field) *PostsGetByPathCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PostsGetByPathCall) IfNoneMatch(entityTag string) *PostsGetByPathCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsGetByPathCall) Context(ctx context.Context) *PostsGetByPathCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsGetByPathCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6161,12 +4377,7 @@ func (c *PostsGetByPathCall) Header() http.Header {
 }
 
 func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6187,12 +4398,10 @@ func (c *PostsGetByPathCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.getByPath" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsGetByPathCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6223,61 +4432,7 @@ func (c *PostsGetByPathCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a post by path.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/bypath",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.posts.getByPath",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "path"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "maxComments": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "path": {
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/bypath",
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.insert":
 
 type PostsInsertCall struct {
 	s          *Service
@@ -6317,23 +4472,21 @@ func (c *PostsInsertCall) IsDraft(isDraft bool) *PostsInsertCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsInsertCall) Fields(s ...googleapi.Field) *PostsInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsInsertCall) Context(ctx context.Context) *PostsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6342,18 +4495,12 @@ func (c *PostsInsertCall) Header() http.Header {
 }
 
 func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/blogs/{blogId}/posts")
@@ -6370,12 +4517,10 @@ func (c *PostsInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.insert" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsInsertCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6406,49 +4551,7 @@ func (c *PostsInsertCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Inserts a post.",
-	//   "flatPath": "v3/blogs/{blogId}/posts",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.posts.insert",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBody": {
-	//       "default": "true",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "fetchImages": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "isDraft": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts",
-	//   "request": {
-	//     "$ref": "Post"
-	//   },
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.list":
 
 type PostsListCall struct {
 	s            *Service
@@ -6516,15 +4619,15 @@ func (c *PostsListCall) PageToken(pageToken string) *PostsListCall {
 	return c
 }
 
-// SortOption sets the optional parameter "sortOption": Sort direction
-// applied to post list.
+// SortOption sets the optional parameter "sortOption": Sort direction applied
+// to post list.
 //
 // Possible values:
 //
 //	"SORT_OPTION_UNSPECIFIED" - The unspecified sort option.
-//	"DESCENDING" (default) - The option to sort posts in descending
+//	"DESCENDING" (default) - The option to sort posts in descending order in
 //
-// order in time.
+// time.
 //
 //	"ASCENDING" - The option to sort posts in ascending order in time.
 func (c *PostsListCall) SortOption(sortOption string) *PostsListCall {
@@ -6565,33 +4668,29 @@ func (c *PostsListCall) View(view string) *PostsListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsListCall) Fields(s ...googleapi.Field) *PostsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PostsListCall) IfNoneMatch(entityTag string) *PostsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsListCall) Context(ctx context.Context) *PostsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6600,12 +4699,7 @@ func (c *PostsListCall) Header() http.Header {
 }
 
 func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6626,12 +4720,10 @@ func (c *PostsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.list" call.
-// Exactly one of *PostList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *PostList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PostList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6662,125 +4754,6 @@ func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists posts.",
-	//   "flatPath": "v3/blogs/{blogId}/posts",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.posts.list",
-	//   "parameterOrder": [
-	//     "blogId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "endDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "default": "true",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "fetchImages": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "labels": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "orderBy": {
-	//       "default": "PUBLISHED",
-	//       "enum": [
-	//         "ORDER_BY_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "UPDATED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "sortOption": {
-	//       "default": "DESCENDING",
-	//       "description": "Sort direction applied to post list.",
-	//       "enum": [
-	//         "SORT_OPTION_UNSPECIFIED",
-	//         "DESCENDING",
-	//         "ASCENDING"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The unspecified sort option.",
-	//         "The option to sort posts in descending order in time.",
-	//         "The option to sort posts in ascending order in time."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "status": {
-	//       "enum": [
-	//         "LIVE",
-	//         "DRAFT",
-	//         "SCHEDULED",
-	//         "SOFT_TRASHED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "view": {
-	//       "enum": [
-	//         "VIEW_TYPE_UNSPECIFIED",
-	//         "READER",
-	//         "AUTHOR",
-	//         "ADMIN"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts",
-	//   "response": {
-	//     "$ref": "PostList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6788,7 +4761,7 @@ func (c *PostsListCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *PostsListCall) Pages(ctx context.Context, f func(*PostList) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6803,8 +4776,6 @@ func (c *PostsListCall) Pages(ctx context.Context, f func(*PostList) error) erro
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "blogger.posts.patch":
 
 type PostsPatchCall struct {
 	s          *Service
@@ -6859,23 +4830,21 @@ func (c *PostsPatchCall) Revert(revert bool) *PostsPatchCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsPatchCall) Fields(s ...googleapi.Field) *PostsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsPatchCall) Context(ctx context.Context) *PostsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6884,18 +4853,12 @@ func (c *PostsPatchCall) Header() http.Header {
 }
 
 func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/blogs/{blogId}/posts/{postId}")
@@ -6913,12 +4876,10 @@ func (c *PostsPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.patch" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsPatchCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6949,64 +4910,7 @@ func (c *PostsPatchCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Patches a post.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "blogger.posts.patch",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBody": {
-	//       "default": "true",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "fetchImages": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxComments": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "publish": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "revert": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}",
-	//   "request": {
-	//     "$ref": "Post"
-	//   },
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.publish":
 
 type PostsPublishCall struct {
 	s          *Service
@@ -7035,23 +4939,21 @@ func (c *PostsPublishCall) PublishDate(publishDate string) *PostsPublishCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsPublishCall) Fields(s ...googleapi.Field) *PostsPublishCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsPublishCall) Context(ctx context.Context) *PostsPublishCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsPublishCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7060,12 +4962,7 @@ func (c *PostsPublishCall) Header() http.Header {
 }
 
 func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -7084,12 +4981,10 @@ func (c *PostsPublishCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.publish" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsPublishCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7120,43 +5015,7 @@ func (c *PostsPublishCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Publishes a post.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/publish",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.posts.publish",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "publishDate": {
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/publish",
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.revert":
 
 type PostsRevertCall struct {
 	s          *Service
@@ -7179,23 +5038,21 @@ func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsRevertCall) Fields(s ...googleapi.Field) *PostsRevertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsRevertCall) Context(ctx context.Context) *PostsRevertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsRevertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7204,12 +5061,7 @@ func (c *PostsRevertCall) Header() http.Header {
 }
 
 func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -7228,12 +5080,10 @@ func (c *PostsRevertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.revert" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsRevertCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7264,39 +5114,7 @@ func (c *PostsRevertCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Reverts a published or scheduled post to draft state.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}/revert",
-	//   "httpMethod": "POST",
-	//   "id": "blogger.posts.revert",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}/revert",
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.search":
 
 type PostsSearchCall struct {
 	s            *Service
@@ -7307,8 +5125,7 @@ type PostsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Searches for posts matching given query terms in the
-// specified blog.
+// Search: Searches for posts matching given query terms in the specified blog.
 //
 // - blogId: .
 // - q: .
@@ -7338,33 +5155,29 @@ func (c *PostsSearchCall) OrderBy(orderBy string) *PostsSearchCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsSearchCall) Fields(s ...googleapi.Field) *PostsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PostsSearchCall) IfNoneMatch(entityTag string) *PostsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsSearchCall) Context(ctx context.Context) *PostsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7373,12 +5186,7 @@ func (c *PostsSearchCall) Header() http.Header {
 }
 
 func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7399,12 +5207,10 @@ func (c *PostsSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.search" call.
-// Exactly one of *PostList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *PostList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PostList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsSearchCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7435,60 +5241,7 @@ func (c *PostsSearchCall) Do(opts ...googleapi.CallOption) (*PostList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Searches for posts matching given query terms in the specified blog.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/search",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.posts.search",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "q"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBodies": {
-	//       "default": "true",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "orderBy": {
-	//       "default": "PUBLISHED",
-	//       "enum": [
-	//         "ORDER_BY_UNSPECIFIED",
-	//         "PUBLISHED",
-	//         "UPDATED"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "q": {
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/search",
-	//   "response": {
-	//     "$ref": "PostList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.posts.update":
 
 type PostsUpdateCall struct {
 	s          *Service
@@ -7543,23 +5296,21 @@ func (c *PostsUpdateCall) Revert(revert bool) *PostsUpdateCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PostsUpdateCall) Fields(s ...googleapi.Field) *PostsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PostsUpdateCall) Context(ctx context.Context) *PostsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PostsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7568,18 +5319,12 @@ func (c *PostsUpdateCall) Header() http.Header {
 }
 
 func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.post)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/blogs/{blogId}/posts/{postId}")
@@ -7597,12 +5342,10 @@ func (c *PostsUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.posts.update" call.
-// Exactly one of *Post or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Post.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PostsUpdateCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7633,64 +5376,7 @@ func (c *PostsUpdateCall) Do(opts ...googleapi.CallOption) (*Post, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a post by blog id and post id.",
-	//   "flatPath": "v3/blogs/{blogId}/posts/{postId}",
-	//   "httpMethod": "PUT",
-	//   "id": "blogger.posts.update",
-	//   "parameterOrder": [
-	//     "blogId",
-	//     "postId"
-	//   ],
-	//   "parameters": {
-	//     "blogId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fetchBody": {
-	//       "default": "true",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "fetchImages": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "maxComments": {
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "postId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "publish": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "revert": {
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "v3/blogs/{blogId}/posts/{postId}",
-	//   "request": {
-	//     "$ref": "Post"
-	//   },
-	//   "response": {
-	//     "$ref": "Post"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger"
-	//   ]
-	// }
-
 }
-
-// method id "blogger.users.get":
 
 type UsersGetCall struct {
 	s            *Service
@@ -7711,33 +5397,29 @@ func (r *UsersService) Get(userId string) *UsersGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UsersGetCall) Fields(s ...googleapi.Field) *UsersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UsersGetCall) IfNoneMatch(entityTag string) *UsersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UsersGetCall) Context(ctx context.Context) *UsersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UsersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7746,12 +5428,7 @@ func (c *UsersGetCall) Header() http.Header {
 }
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7772,12 +5449,10 @@ func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "blogger.users.get" call.
-// Exactly one of *User or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *User.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7808,29 +5483,4 @@ func (c *UsersGetCall) Do(opts ...googleapi.CallOption) (*User, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets one user by user_id.",
-	//   "flatPath": "v3/users/{userId}",
-	//   "httpMethod": "GET",
-	//   "id": "blogger.users.get",
-	//   "parameterOrder": [
-	//     "userId"
-	//   ],
-	//   "parameters": {
-	//     "userId": {
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/users/{userId}",
-	//   "response": {
-	//     "$ref": "User"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/blogger",
-	//     "https://www.googleapis.com/auth/blogger.readonly"
-	//   ]
-	// }
-
 }

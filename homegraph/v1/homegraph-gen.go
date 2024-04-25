@@ -179,221 +179,170 @@ type DevicesService struct {
 type AgentDeviceId struct {
 	// Id: Third-party device ID.
 	Id string `json:"id,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AgentDeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentDeviceId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentOtherDeviceId: Alternate third-party device ID.
 type AgentOtherDeviceId struct {
 	// AgentId: Project ID for your smart home Action.
 	AgentId string `json:"agentId,omitempty"`
-
 	// DeviceId: Unique third-party device ID.
 	DeviceId string `json:"deviceId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AgentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentOtherDeviceId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Device: Third-party device definition.
 type Device struct {
 	// Attributes: Attributes for the traits supported by the device.
 	Attributes googleapi.RawMessage `json:"attributes,omitempty"`
-
-	// CustomData: Custom device attributes stored in Home Graph and
-	// provided to your smart home Action in each QUERY
+	// CustomData: Custom device attributes stored in Home Graph and provided to
+	// your smart home Action in each QUERY
 	// (https://developers.home.google.com/cloud-to-cloud/intents/query) and
-	// EXECUTE
-	// (https://developers.home.google.com/cloud-to-cloud/intents/execute)
-	// intent. Data in this object has a few constraints: No sensitive
-	// information, including but not limited to Personally Identifiable
-	// Information.
+	// EXECUTE (https://developers.home.google.com/cloud-to-cloud/intents/execute)
+	// intent. Data in this object has a few constraints: No sensitive information,
+	// including but not limited to Personally Identifiable Information.
 	CustomData googleapi.RawMessage `json:"customData,omitempty"`
-
-	// DeviceInfo: Device manufacturer, model, hardware version, and
-	// software version.
+	// DeviceInfo: Device manufacturer, model, hardware version, and software
+	// version.
 	DeviceInfo *DeviceInfo `json:"deviceInfo,omitempty"`
-
 	// Id: Third-party device ID.
 	Id string `json:"id,omitempty"`
-
 	// Name: Names given to this device by your smart home Action.
 	Name *DeviceNames `json:"name,omitempty"`
-
-	// NotificationSupportedByAgent: Indicates whether your smart home
-	// Action will report notifications to Google for this device via
-	// ReportStateAndNotification. If your smart home Action enables users
-	// to control device notifications, you should update this field and
-	// call RequestSyncDevices.
+	// NotificationSupportedByAgent: Indicates whether your smart home Action will
+	// report notifications to Google for this device via
+	// ReportStateAndNotification. If your smart home Action enables users to
+	// control device notifications, you should update this field and call
+	// RequestSyncDevices.
 	NotificationSupportedByAgent bool `json:"notificationSupportedByAgent,omitempty"`
-
-	// OtherDeviceIds: Alternate IDs associated with this device. This is
-	// used to identify cloud synced devices enabled for local fulfillment
+	// OtherDeviceIds: Alternate IDs associated with this device. This is used to
+	// identify cloud synced devices enabled for local fulfillment
 	// (https://developers.home.google.com/local-home/overview).
 	OtherDeviceIds []*AgentOtherDeviceId `json:"otherDeviceIds,omitempty"`
-
-	// RoomHint: Suggested name for the room where this device is installed.
-	// Google attempts to use this value during user setup.
+	// RoomHint: Suggested name for the room where this device is installed. Google
+	// attempts to use this value during user setup.
 	RoomHint string `json:"roomHint,omitempty"`
-
 	// StructureHint: Suggested name for the structure where this device is
 	// installed. Google attempts to use this value during user setup.
 	StructureHint string `json:"structureHint,omitempty"`
-
 	// Traits: Traits supported by the device. See device traits
 	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	Traits []string `json:"traits,omitempty"`
-
 	// Type: Hardware type of the device. See device types
 	// (https://developers.home.google.com/cloud-to-cloud/guides).
 	Type string `json:"type,omitempty"`
-
-	// WillReportState: Indicates whether your smart home Action will report
-	// state of this device to Google via ReportStateAndNotification.
+	// WillReportState: Indicates whether your smart home Action will report state
+	// of this device to Google via ReportStateAndNotification.
 	WillReportState bool `json:"willReportState,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceInfo: Device information.
 type DeviceInfo struct {
 	// HwVersion: Device hardware version.
 	HwVersion string `json:"hwVersion,omitempty"`
-
 	// Manufacturer: Device manufacturer.
 	Manufacturer string `json:"manufacturer,omitempty"`
-
 	// Model: Device model.
 	Model string `json:"model,omitempty"`
-
 	// SwVersion: Device software version.
 	SwVersion string `json:"swVersion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "HwVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HwVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "HwVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceNames: Identifiers used to describe the device.
 type DeviceNames struct {
-	// DefaultNames: List of names provided by the manufacturer rather than
-	// the user, such as serial numbers, SKUs, etc.
+	// DefaultNames: List of names provided by the manufacturer rather than the
+	// user, such as serial numbers, SKUs, etc.
 	DefaultNames []string `json:"defaultNames,omitempty"`
-
 	// Name: Primary name of the device, generally provided by the user.
 	Name string `json:"name,omitempty"`
-
 	// Nicknames: Additional names provided by the user for the device.
 	Nicknames []string `json:"nicknames,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DefaultNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DefaultNames") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DeviceNames) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceNames
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -402,287 +351,223 @@ type Empty struct {
 type QueryRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
-
-	// Inputs: Required. Inputs containing third-party device IDs for which
-	// to get the device states.
+	// Inputs: Required. Inputs containing third-party device IDs for which to get
+	// the device states.
 	Inputs []*QueryRequestInput `json:"inputs,omitempty"`
-
 	// RequestId: Request ID used for debugging.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequestInput: Device ID inputs to QueryRequest.
 type QueryRequestInput struct {
 	// Payload: Payload containing third-party device IDs.
 	Payload *QueryRequestPayload `json:"payload,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Payload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Payload") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryRequestInput) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequestInput
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryRequestPayload: Payload containing device IDs.
 type QueryRequestPayload struct {
 	// Devices: Third-party device IDs for which to get the device states.
 	Devices []*AgentDeviceId `json:"devices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Devices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Devices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Devices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Devices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryRequestPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryRequestPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResponse: Response type for the `Query`
-// (#google.home.graph.v1.HomeGraphApiService.Query) call. This should
-// follow the same format as the Google smart home
-// `action.devices.QUERY` response
-// (https://developers.home.google.com/cloud-to-cloud/intents/query).
-// Example: ```json { "requestId":
-// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": { "devices": {
-// "123": { "on": true, "online": true }, "456": { "on": true, "online":
-// true, "brightness": 80, "color": { "name": "cerulean", "spectrumRGB":
-// 31655 } } } } } ```
+// (#google.home.graph.v1.HomeGraphApiService.Query) call. This should follow
+// the same format as the Google smart home `action.devices.QUERY` response
+// (https://developers.home.google.com/cloud-to-cloud/intents/query). Example:
+// ```json { "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": {
+// "devices": { "123": { "on": true, "online": true }, "456": { "on": true,
+// "online": true, "brightness": 80, "color": { "name": "cerulean",
+// "spectrumRGB": 31655 } } } } } ```
 type QueryResponse struct {
 	// Payload: Device states for the devices given in the request.
 	Payload *QueryResponsePayload `json:"payload,omitempty"`
-
 	// RequestId: Request ID used for debugging. Copied from the request.
 	RequestId string `json:"requestId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Payload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Payload") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QueryResponsePayload: Payload containing device states information.
 type QueryResponsePayload struct {
-	// Devices: States of the devices. Map of third-party device ID to
-	// struct of device states.
+	// Devices: States of the devices. Map of third-party device ID to struct of
+	// device states.
 	Devices map[string]googleapi.RawMessage `json:"devices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Devices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Devices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Devices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Devices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryResponsePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponsePayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ReportStateAndNotificationDevice: The states and notifications
-// specific to a device.
+// ReportStateAndNotificationDevice: The states and notifications specific to a
+// device.
 type ReportStateAndNotificationDevice struct {
 	// Notifications: Notifications metadata for devices. See the **Device
 	// NOTIFICATIONS** section of the individual trait reference guides
 	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	Notifications googleapi.RawMessage `json:"notifications,omitempty"`
-
-	// States: States of devices to update. See the **Device STATES**
-	// section of the individual trait reference guides
+	// States: States of devices to update. See the **Device STATES** section of
+	// the individual trait reference guides
 	// (https://developers.home.google.com/cloud-to-cloud/traits).
 	States googleapi.RawMessage `json:"states,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Notifications") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Notifications") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Notifications") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportStateAndNotificationDevice) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStateAndNotificationDevice
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStateAndNotificationRequest: Request type for the
 // `ReportStateAndNotification`
-// (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification)
-//
-//	call. It may include states, notifications, or both. States and
-//
-// notifications are defined per `device_id` (for example, "123" and
-// "456" in the following example). Example: ```json { "requestId":
-// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "agentUserId": "1234",
-// "payload": { "devices": { "states": { "123": { "on": true }, "456": {
-// "on": true, "brightness": 10 } }, } } } ```
+// (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification) call.
+// It may include states, notifications, or both. States and notifications are
+// defined per `device_id` (for example, "123" and "456" in the following
+// example). Example: ```json { "requestId":
+// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "agentUserId": "1234", "payload": {
+// "devices": { "states": { "123": { "on": true }, "456": { "on": true,
+// "brightness": 10 } }, } } } ```
 type ReportStateAndNotificationRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
-
 	// EventId: Unique identifier per event (for example, a doorbell press).
 	EventId string `json:"eventId,omitempty"`
-
 	// FollowUpToken: Deprecated.
 	FollowUpToken string `json:"followUpToken,omitempty"`
-
-	// Payload: Required. State of devices to update and notification
-	// metadata for devices.
+	// Payload: Required. State of devices to update and notification metadata for
+	// devices.
 	Payload *StateAndNotificationPayload `json:"payload,omitempty"`
-
 	// RequestId: Request ID used for debugging.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStateAndNotificationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportStateAndNotificationResponse: Response type for the
 // `ReportStateAndNotification`
-// (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification)
-//
-//	call.
+// (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification) call.
 type ReportStateAndNotificationResponse struct {
 	// RequestId: Request ID copied from ReportStateAndNotificationRequest.
 	RequestId string `json:"requestId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportStateAndNotificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportStateAndNotificationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RequestSyncDevicesRequest: Request type for the `RequestSyncDevices`
@@ -690,74 +575,58 @@ func (s *ReportStateAndNotificationResponse) MarshalJSON() ([]byte, error) {
 type RequestSyncDevicesRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
-
-	// Async: Optional. If set, the request will be added to a queue and a
-	// response will be returned immediately. This enables concurrent
-	// requests for the given `agent_user_id`, but the caller will not
-	// receive any error responses.
+	// Async: Optional. If set, the request will be added to a queue and a response
+	// will be returned immediately. This enables concurrent requests for the given
+	// `agent_user_id`, but the caller will not receive any error responses.
 	Async bool `json:"async,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RequestSyncDevicesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestSyncDevicesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RequestSyncDevicesResponse: Response type for the
-// `RequestSyncDevices`
+// RequestSyncDevicesResponse: Response type for the `RequestSyncDevices`
 // (#google.home.graph.v1.HomeGraphApiService.RequestSyncDevices) call.
-// Intentionally empty upon success. An HTTP response code is returned
-// with more details upon failure.
+// Intentionally empty upon success. An HTTP response code is returned with
+// more details upon failure.
 type RequestSyncDevicesResponse struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// StateAndNotificationPayload: Payload containing the state and
-// notification information for devices.
+// StateAndNotificationPayload: Payload containing the state and notification
+// information for devices.
 type StateAndNotificationPayload struct {
 	// Devices: The devices for updating state and sending notifications.
 	Devices *ReportStateAndNotificationDevice `json:"devices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Devices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Devices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Devices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Devices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod StateAndNotificationPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncRequest: Request type for the `Sync`
@@ -765,114 +634,87 @@ func (s *StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
 type SyncRequest struct {
 	// AgentUserId: Required. Third-party user ID.
 	AgentUserId string `json:"agentUserId,omitempty"`
-
 	// RequestId: Request ID used for debugging.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SyncRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncResponse: Response type for the `Sync`
-// (#google.home.graph.v1.HomeGraphApiService.Sync) call. This should
-// follow the same format as the Google smart home `action.devices.SYNC`
-// response
-// (https://developers.home.google.com/cloud-to-cloud/intents/sync).
-// Example: ```json { "requestId":
-// "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": { "agentUserId":
-// "1836.15267389", "devices": [{ "id": "123", "type":
-// "action.devices.types.OUTLET", "traits": [
-// "action.devices.traits.OnOff" ], "name": { "defaultNames": ["My
-// Outlet 1234"], "name": "Night light", "nicknames": ["wall plug"] },
-// "willReportState": false, "deviceInfo": { "manufacturer":
-// "lights-out-inc", "model": "hs1234", "hwVersion": "3.2", "swVersion":
-// "11.4" }, "customData": { "fooValue": 74, "barValue": true,
+// (#google.home.graph.v1.HomeGraphApiService.Sync) call. This should follow
+// the same format as the Google smart home `action.devices.SYNC` response
+// (https://developers.home.google.com/cloud-to-cloud/intents/sync). Example:
+// ```json { "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf", "payload": {
+// "agentUserId": "1836.15267389", "devices": [{ "id": "123", "type":
+// "action.devices.types.OUTLET", "traits": [ "action.devices.traits.OnOff" ],
+// "name": { "defaultNames": ["My Outlet 1234"], "name": "Night light",
+// "nicknames": ["wall plug"] }, "willReportState": false, "deviceInfo": {
+// "manufacturer": "lights-out-inc", "model": "hs1234", "hwVersion": "3.2",
+// "swVersion": "11.4" }, "customData": { "fooValue": 74, "barValue": true,
 // "bazValue": "foo" } }] } } ```
 type SyncResponse struct {
 	// Payload: Devices associated with the third-party user.
 	Payload *SyncResponsePayload `json:"payload,omitempty"`
-
 	// RequestId: Request ID used for debugging. Copied from the request.
 	RequestId string `json:"requestId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Payload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Payload") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SyncResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SyncResponsePayload: Payload containing device information.
 type SyncResponsePayload struct {
 	// AgentUserId: Third-party user ID
 	AgentUserId string `json:"agentUserId,omitempty"`
-
 	// Devices: Devices associated with the third-party user.
 	Devices []*Device `json:"devices,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgentUserId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgentUserId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgentUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SyncResponsePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod SyncResponsePayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "homegraph.agentUsers.delete":
 
 type AgentUsersDeleteCall struct {
 	s           *Service
@@ -882,14 +724,13 @@ type AgentUsersDeleteCall struct {
 	header_     http.Header
 }
 
-// Delete: Unlinks the given third-party user from your smart home
-// Action. All data related to this user will be deleted. For more
-// details on how users link their accounts, see fulfillment and
-// authentication
-// (https://developers.home.google.com/cloud-to-cloud/primer/fulfillment).
-// The third-party user's identity is passed in via the `agent_user_id`
-// (see DeleteAgentUserRequest). This request must be authorized using
-// service account credentials from your Actions console project.
+// Delete: Unlinks the given third-party user from your smart home Action. All
+// data related to this user will be deleted. For more details on how users
+// link their accounts, see fulfillment and authentication
+// (https://developers.home.google.com/cloud-to-cloud/primer/fulfillment). The
+// third-party user's identity is passed in via the `agent_user_id` (see
+// DeleteAgentUserRequest). This request must be authorized using service
+// account credentials from your Actions console project.
 //
 // - agentUserId: Third-party user ID.
 func (r *AgentUsersService) Delete(agentUserId string) *AgentUsersDeleteCall {
@@ -898,31 +739,29 @@ func (r *AgentUsersService) Delete(agentUserId string) *AgentUsersDeleteCall {
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": Request ID used
-// for debugging.
+// RequestId sets the optional parameter "requestId": Request ID used for
+// debugging.
 func (c *AgentUsersDeleteCall) RequestId(requestId string) *AgentUsersDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AgentUsersDeleteCall) Fields(s ...googleapi.Field) *AgentUsersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AgentUsersDeleteCall) Context(ctx context.Context) *AgentUsersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AgentUsersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -931,12 +770,7 @@ func (c *AgentUsersDeleteCall) Header() http.Header {
 }
 
 func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -954,12 +788,10 @@ func (c *AgentUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "homegraph.agentUsers.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -990,40 +822,7 @@ func (c *AgentUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Unlinks the given third-party user from your smart home Action. All data related to this user will be deleted. For more details on how users link their accounts, see [fulfillment and authentication](https://developers.home.google.com/cloud-to-cloud/primer/fulfillment). The third-party user's identity is passed in via the `agent_user_id` (see DeleteAgentUserRequest). This request must be authorized using service account credentials from your Actions console project.",
-	//   "flatPath": "v1/agentUsers/{agentUsersId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "homegraph.agentUsers.delete",
-	//   "parameterOrder": [
-	//     "agentUserId"
-	//   ],
-	//   "parameters": {
-	//     "agentUserId": {
-	//       "description": "Required. Third-party user ID.",
-	//       "location": "path",
-	//       "pattern": "^agentUsers/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Request ID used for debugging.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+agentUserId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/homegraph"
-	//   ]
-	// }
-
 }
-
-// method id "homegraph.devices.query":
 
 type DevicesQueryCall struct {
 	s            *Service
@@ -1034,10 +833,9 @@ type DevicesQueryCall struct {
 }
 
 // Query: Gets the current states in Home Graph for the given set of the
-// third-party user's devices. The third-party user's identity is passed
-// in via the `agent_user_id` (see QueryRequest). This request must be
-// authorized using service account credentials from your Actions
-// console project.
+// third-party user's devices. The third-party user's identity is passed in via
+// the `agent_user_id` (see QueryRequest). This request must be authorized
+// using service account credentials from your Actions console project.
 func (r *DevicesService) Query(queryrequest *QueryRequest) *DevicesQueryCall {
 	c := &DevicesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryrequest = queryrequest
@@ -1045,23 +843,21 @@ func (r *DevicesService) Query(queryrequest *QueryRequest) *DevicesQueryCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DevicesQueryCall) Fields(s ...googleapi.Field) *DevicesQueryCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DevicesQueryCall) Context(ctx context.Context) *DevicesQueryCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DevicesQueryCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1070,18 +866,12 @@ func (c *DevicesQueryCall) Header() http.Header {
 }
 
 func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queryrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/devices:query")
@@ -1095,12 +885,10 @@ func (c *DevicesQueryCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "homegraph.devices.query" call.
-// Exactly one of *QueryResponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *QueryResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *QueryResponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *DevicesQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1131,28 +919,7 @@ func (c *DevicesQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the current states in Home Graph for the given set of the third-party user's devices. The third-party user's identity is passed in via the `agent_user_id` (see QueryRequest). This request must be authorized using service account credentials from your Actions console project.",
-	//   "flatPath": "v1/devices:query",
-	//   "httpMethod": "POST",
-	//   "id": "homegraph.devices.query",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/devices:query",
-	//   "request": {
-	//     "$ref": "QueryRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "QueryResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/homegraph"
-	//   ]
-	// }
-
 }
-
-// method id "homegraph.devices.reportStateAndNotification":
 
 type DevicesReportStateAndNotificationCall struct {
 	s                                 *Service
@@ -1162,19 +929,19 @@ type DevicesReportStateAndNotificationCall struct {
 	header_                           http.Header
 }
 
-// ReportStateAndNotification: Reports device state and optionally sends
-// device notifications. Called by your smart home Action when the state
-// of a third-party device changes or you need to send a notification
-// about the device. See Implement Report State
+// ReportStateAndNotification: Reports device state and optionally sends device
+// notifications. Called by your smart home Action when the state of a
+// third-party device changes or you need to send a notification about the
+// device. See Implement Report State
 // (https://developers.home.google.com/cloud-to-cloud/integration/report-state)
-// for more information. This method updates the device state according
-// to its declared traits
+// for more information. This method updates the device state according to its
+// declared traits
 // (https://developers.home.google.com/cloud-to-cloud/primer/device-types-and-traits).
-// Publishing a new state value outside of these traits will result in
-// an `INVALID_ARGUMENT` error response. The third-party user's identity
-// is passed in via the `agent_user_id` (see
-// ReportStateAndNotificationRequest). This request must be authorized
-// using service account credentials from your Actions console project.
+// Publishing a new state value outside of these traits will result in an
+// `INVALID_ARGUMENT` error response. The third-party user's identity is passed
+// in via the `agent_user_id` (see ReportStateAndNotificationRequest). This
+// request must be authorized using service account credentials from your
+// Actions console project.
 func (r *DevicesService) ReportStateAndNotification(reportstateandnotificationrequest *ReportStateAndNotificationRequest) *DevicesReportStateAndNotificationCall {
 	c := &DevicesReportStateAndNotificationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.reportstateandnotificationrequest = reportstateandnotificationrequest
@@ -1182,23 +949,21 @@ func (r *DevicesService) ReportStateAndNotification(reportstateandnotificationre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DevicesReportStateAndNotificationCall) Fields(s ...googleapi.Field) *DevicesReportStateAndNotificationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DevicesReportStateAndNotificationCall) Context(ctx context.Context) *DevicesReportStateAndNotificationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1207,18 +972,12 @@ func (c *DevicesReportStateAndNotificationCall) Header() http.Header {
 }
 
 func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reportstateandnotificationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/devices:reportStateAndNotification")
@@ -1232,13 +991,11 @@ func (c *DevicesReportStateAndNotificationCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "homegraph.devices.reportStateAndNotification" call.
-// Exactly one of *ReportStateAndNotificationResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ReportStateAndNotificationResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReportStateAndNotificationResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *DevicesReportStateAndNotificationCall) Do(opts ...googleapi.CallOption) (*ReportStateAndNotificationResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1269,28 +1026,7 @@ func (c *DevicesReportStateAndNotificationCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Reports device state and optionally sends device notifications. Called by your smart home Action when the state of a third-party device changes or you need to send a notification about the device. See [Implement Report State](https://developers.home.google.com/cloud-to-cloud/integration/report-state) for more information. This method updates the device state according to its declared [traits](https://developers.home.google.com/cloud-to-cloud/primer/device-types-and-traits). Publishing a new state value outside of these traits will result in an `INVALID_ARGUMENT` error response. The third-party user's identity is passed in via the `agent_user_id` (see ReportStateAndNotificationRequest). This request must be authorized using service account credentials from your Actions console project.",
-	//   "flatPath": "v1/devices:reportStateAndNotification",
-	//   "httpMethod": "POST",
-	//   "id": "homegraph.devices.reportStateAndNotification",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/devices:reportStateAndNotification",
-	//   "request": {
-	//     "$ref": "ReportStateAndNotificationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ReportStateAndNotificationResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/homegraph"
-	//   ]
-	// }
-
 }
-
-// method id "homegraph.devices.requestSync":
 
 type DevicesRequestSyncCall struct {
 	s                         *Service
@@ -1301,11 +1037,11 @@ type DevicesRequestSyncCall struct {
 }
 
 // RequestSync: Requests Google to send an `action.devices.SYNC` intent
-// (https://developers.home.google.com/cloud-to-cloud/intents/sync) to
-// your smart home Action to update device metadata for the given user.
-// The third-party user's identity is passed via the `agent_user_id`
-// (see RequestSyncDevicesRequest). This request must be authorized
-// using service account credentials from your Actions console project.
+// (https://developers.home.google.com/cloud-to-cloud/intents/sync) to your
+// smart home Action to update device metadata for the given user. The
+// third-party user's identity is passed via the `agent_user_id` (see
+// RequestSyncDevicesRequest). This request must be authorized using service
+// account credentials from your Actions console project.
 func (r *DevicesService) RequestSync(requestsyncdevicesrequest *RequestSyncDevicesRequest) *DevicesRequestSyncCall {
 	c := &DevicesRequestSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.requestsyncdevicesrequest = requestsyncdevicesrequest
@@ -1313,23 +1049,21 @@ func (r *DevicesService) RequestSync(requestsyncdevicesrequest *RequestSyncDevic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DevicesRequestSyncCall) Fields(s ...googleapi.Field) *DevicesRequestSyncCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DevicesRequestSyncCall) Context(ctx context.Context) *DevicesRequestSyncCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DevicesRequestSyncCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1338,18 +1072,12 @@ func (c *DevicesRequestSyncCall) Header() http.Header {
 }
 
 func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.requestsyncdevicesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/devices:requestSync")
@@ -1363,12 +1091,11 @@ func (c *DevicesRequestSyncCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "homegraph.devices.requestSync" call.
-// Exactly one of *RequestSyncDevicesResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *RequestSyncDevicesResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *RequestSyncDevicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *DevicesRequestSyncCall) Do(opts ...googleapi.CallOption) (*RequestSyncDevicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1399,28 +1126,7 @@ func (c *DevicesRequestSyncCall) Do(opts ...googleapi.CallOption) (*RequestSyncD
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Requests Google to send an `action.devices.SYNC` [intent](https://developers.home.google.com/cloud-to-cloud/intents/sync) to your smart home Action to update device metadata for the given user. The third-party user's identity is passed via the `agent_user_id` (see RequestSyncDevicesRequest). This request must be authorized using service account credentials from your Actions console project.",
-	//   "flatPath": "v1/devices:requestSync",
-	//   "httpMethod": "POST",
-	//   "id": "homegraph.devices.requestSync",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/devices:requestSync",
-	//   "request": {
-	//     "$ref": "RequestSyncDevicesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RequestSyncDevicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/homegraph"
-	//   ]
-	// }
-
 }
-
-// method id "homegraph.devices.sync":
 
 type DevicesSyncCall struct {
 	s           *Service
@@ -1430,10 +1136,10 @@ type DevicesSyncCall struct {
 	header_     http.Header
 }
 
-// Sync: Gets all the devices associated with the given third-party
-// user. The third-party user's identity is passed in via the
-// `agent_user_id` (see SyncRequest). This request must be authorized
-// using service account credentials from your Actions console project.
+// Sync: Gets all the devices associated with the given third-party user. The
+// third-party user's identity is passed in via the `agent_user_id` (see
+// SyncRequest). This request must be authorized using service account
+// credentials from your Actions console project.
 func (r *DevicesService) Sync(syncrequest *SyncRequest) *DevicesSyncCall {
 	c := &DevicesSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.syncrequest = syncrequest
@@ -1441,23 +1147,21 @@ func (r *DevicesService) Sync(syncrequest *SyncRequest) *DevicesSyncCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DevicesSyncCall) Fields(s ...googleapi.Field) *DevicesSyncCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DevicesSyncCall) Context(ctx context.Context) *DevicesSyncCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DevicesSyncCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1466,18 +1170,12 @@ func (c *DevicesSyncCall) Header() http.Header {
 }
 
 func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.syncrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/devices:sync")
@@ -1491,12 +1189,10 @@ func (c *DevicesSyncCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "homegraph.devices.sync" call.
-// Exactly one of *SyncResponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *SyncResponse.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SyncResponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *DevicesSyncCall) Do(opts ...googleapi.CallOption) (*SyncResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1527,23 +1223,4 @@ func (c *DevicesSyncCall) Do(opts ...googleapi.CallOption) (*SyncResponse, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets all the devices associated with the given third-party user. The third-party user's identity is passed in via the `agent_user_id` (see SyncRequest). This request must be authorized using service account credentials from your Actions console project.",
-	//   "flatPath": "v1/devices:sync",
-	//   "httpMethod": "POST",
-	//   "id": "homegraph.devices.sync",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/devices:sync",
-	//   "request": {
-	//     "$ref": "SyncRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "SyncResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/homegraph"
-	//   ]
-	// }
-
 }

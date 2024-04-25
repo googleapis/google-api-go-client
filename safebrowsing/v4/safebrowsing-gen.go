@@ -224,123 +224,99 @@ type ThreatMatchesService struct {
 	s *Service
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleSecuritySafebrowsingV4Checksum: The expected state of a
-// client's local database.
+// GoogleSecuritySafebrowsingV4Checksum: The expected state of a client's local
+// database.
 type GoogleSecuritySafebrowsingV4Checksum struct {
-	// Sha256: The SHA256 hash of the client state; that is, of the sorted
-	// list of all hashes present in the database.
+	// Sha256: The SHA256 hash of the client state; that is, of the sorted list of
+	// all hashes present in the database.
 	Sha256 string `json:"sha256,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Sha256") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Sha256") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Sha256") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4Checksum) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4Checksum
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ClientInfo: The client metadata
-// associated with Safe Browsing API requests.
+// GoogleSecuritySafebrowsingV4ClientInfo: The client metadata associated with
+// Safe Browsing API requests.
 type GoogleSecuritySafebrowsingV4ClientInfo struct {
 	// ClientId: A client ID that (hopefully) uniquely identifies the client
 	// implementation of the Safe Browsing API.
 	ClientId string `json:"clientId,omitempty"`
-
 	// ClientVersion: The version of the client implementation.
 	ClientVersion string `json:"clientVersion,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ClientInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ClientInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest: Describes
-// a Safe Browsing API update request. Clients can request updates for
-// multiple lists in a single request. The server may not respond to all
-// requests, if the server has no updates for that list. NOTE: Field
-// index 2 is unused. NEXT: 5
+// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest: Describes a Safe
+// Browsing API update request. Clients can request updates for multiple lists
+// in a single request. The server may not respond to all requests, if the
+// server has no updates for that list. NOTE: Field index 2 is unused. NEXT: 5
 type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest struct {
 	// Client: The client metadata.
 	Client *GoogleSecuritySafebrowsingV4ClientInfo `json:"client,omitempty"`
-
 	// ListUpdateRequests: The requested threat list updates.
 	ListUpdateRequests []*GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest `json:"listUpdateRequests,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Client") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Client") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Client") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateReq
-// uest: A single list update request.
+// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest:
+// A single list update request.
 type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest struct {
 	// Constraints: The constraints associated with this request.
 	Constraints *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints `json:"constraints,omitempty"`
-
-	// PlatformType: The type of platform at risk by entries present in the
-	// list.
+	// PlatformType: The type of platform at risk by entries present in the list.
 	//
 	// Possible values:
 	//   "PLATFORM_TYPE_UNSPECIFIED" - Unknown platform.
@@ -349,17 +325,13 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	//   "ANDROID" - Threat posed to Android.
 	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
-	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
-	// platforms.
+	//   "ANY_PLATFORM" - Threat posed to at least one of the defined platforms.
 	//   "ALL_PLATFORMS" - Threat posed to all defined platforms.
 	//   "CHROME" - Threat posed to Chrome.
 	PlatformType string `json:"platformType,omitempty"`
-
-	// State: The current state of the client for the requested list (the
-	// encrypted client state that was received from the last successful
-	// list update).
+	// State: The current state of the client for the requested list (the encrypted
+	// client state that was received from the last successful list update).
 	State string `json:"state,omitempty"`
-
 	// ThreatEntryType: The types of entries present in the list.
 	//
 	// Possible values:
@@ -371,7 +343,6 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	//   "FILENAME" - Filename.
 	//   "CERT" - CERT
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
-
 	// ThreatType: The type of threat posed by entries present in the list.
 	//
 	// Possible values:
@@ -379,79 +350,68 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type.
 	//   "SOCIAL_ENGINEERING_INTERNAL" - Social engineering threat type for
 	// internal use.
 	//   "API_ABUSE" - API abuse threat type.
 	//   "MALICIOUS_BINARY" - Malicious binary threat type.
 	//   "CSD_WHITELIST" - Client side detection whitelist threat type.
-	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist
-	// threat type.
+	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist threat
+	// type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
 	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
-	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter.
+	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the subresource
+	// filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
-	// to be safe.
-	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
-	// See https://jigsaw.google.com/.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely to be
+	// safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw. See
+	// https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Constraints") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Constraints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateReq
-// uestConstraints: The constraints for this update.
+// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestCon
+// straints: The constraints for this update.
 type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints struct {
-	// DeviceLocation: A client's physical location, expressed as a ISO
-	// 31166-1 alpha-2 region code.
+	// DeviceLocation: A client's physical location, expressed as a ISO 31166-1
+	// alpha-2 region code.
 	DeviceLocation string `json:"deviceLocation,omitempty"`
-
 	// Language: Requests the lists for a specific language. Expects ISO 639
 	// alpha-2 format.
 	Language string `json:"language,omitempty"`
-
-	// MaxDatabaseEntries: Sets the maximum number of entries that the
-	// client is willing to have in the local database for the specified
-	// list. This should be a power of 2 between 2**10 and 2**20. If zero,
-	// no database size limit is set.
+	// MaxDatabaseEntries: Sets the maximum number of entries that the client is
+	// willing to have in the local database for the specified list. This should be
+	// a power of 2 between 2**10 and 2**20. If zero, no database size limit is
+	// set.
 	MaxDatabaseEntries int64 `json:"maxDatabaseEntries,omitempty"`
-
-	// MaxUpdateEntries: The maximum size in number of entries. The update
-	// will not contain more entries than this value. This should be a power
-	// of 2 between 2**10 and 2**20. If zero, no update size limit is set.
+	// MaxUpdateEntries: The maximum size in number of entries. The update will not
+	// contain more entries than this value. This should be a power of 2 between
+	// 2**10 and 2**20. If zero, no update size limit is set.
 	MaxUpdateEntries int64 `json:"maxUpdateEntries,omitempty"`
-
-	// Region: Requests the list for a specific geographic location. If not
-	// set the server may pick that value based on the user's IP address.
-	// Expects ISO 3166-1 alpha-2 format.
+	// Region: Requests the list for a specific geographic location. If not set the
+	// server may pick that value based on the user's IP address. Expects ISO
+	// 3166-1 alpha-2 format.
 	Region string `json:"region,omitempty"`
-
 	// SupportedCompressions: The compression types supported by the client.
 	//
 	// Possible values:
@@ -459,89 +419,71 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestC
 	//   "RAW" - Raw, uncompressed data.
 	//   "RICE" - Rice-Golomb encoded data.
 	SupportedCompressions []string `json:"supportedCompressions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DeviceLocation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeviceLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DeviceLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestConstraints
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse struct {
-	// ListUpdateResponses: The list updates requested by the clients. The
-	// number of responses here may be less than the number of requests sent
-	// by clients. This is the case, for example, if the server has no
-	// updates for a particular list.
+	// ListUpdateResponses: The list updates requested by the clients. The number
+	// of responses here may be less than the number of requests sent by clients.
+	// This is the case, for example, if the server has no updates for a particular
+	// list.
 	ListUpdateResponses []*GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse `json:"listUpdateResponses,omitempty"`
-
 	// MinimumWaitDuration: The minimum duration the client must wait before
-	// issuing any update request. If this field is not set clients may
-	// update as soon as they want.
+	// issuing any update request. If this field is not set clients may update as
+	// soon as they want.
 	MinimumWaitDuration string `json:"minimumWaitDuration,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ListUpdateResponses")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ListUpdateResponses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ListUpdateResponses") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ListUpdateResponses") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRe
-// sponse: An update to an individual list.
+// GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse:
+//
+//	An update to an individual list.
 type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse struct {
-	// Additions: A set of entries to add to a local threat type's list.
-	// Repeated to allow for a combination of compressed and raw data to be
-	// sent in a single response.
+	// Additions: A set of entries to add to a local threat type's list. Repeated
+	// to allow for a combination of compressed and raw data to be sent in a single
+	// response.
 	Additions []*GoogleSecuritySafebrowsingV4ThreatEntrySet `json:"additions,omitempty"`
-
-	// Checksum: The expected SHA256 hash of the client state; that is, of
-	// the sorted list of all hashes present in the database after applying
-	// the provided update. If the client state doesn't match the expected
-	// state, the client must disregard this update and retry later.
+	// Checksum: The expected SHA256 hash of the client state; that is, of the
+	// sorted list of all hashes present in the database after applying the
+	// provided update. If the client state doesn't match the expected state, the
+	// client must disregard this update and retry later.
 	Checksum *GoogleSecuritySafebrowsingV4Checksum `json:"checksum,omitempty"`
-
 	// NewClientState: The new client state, in encrypted format. Opaque to
 	// clients.
 	NewClientState string `json:"newClientState,omitempty"`
-
 	// PlatformType: The platform type for which data is returned.
 	//
 	// Possible values:
@@ -551,29 +493,24 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	//   "ANDROID" - Threat posed to Android.
 	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
-	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
-	// platforms.
+	//   "ANY_PLATFORM" - Threat posed to at least one of the defined platforms.
 	//   "ALL_PLATFORMS" - Threat posed to all defined platforms.
 	//   "CHROME" - Threat posed to Chrome.
 	PlatformType string `json:"platformType,omitempty"`
-
-	// Removals: A set of entries to remove from a local threat type's list.
-	// In practice, this field is empty or contains exactly one
-	// ThreatEntrySet.
+	// Removals: A set of entries to remove from a local threat type's list. In
+	// practice, this field is empty or contains exactly one ThreatEntrySet.
 	Removals []*GoogleSecuritySafebrowsingV4ThreatEntrySet `json:"removals,omitempty"`
-
-	// ResponseType: The type of response. This may indicate that an action
-	// is required by the client when the response is received.
+	// ResponseType: The type of response. This may indicate that an action is
+	// required by the client when the response is received.
 	//
 	// Possible values:
 	//   "RESPONSE_TYPE_UNSPECIFIED" - Unknown.
-	//   "PARTIAL_UPDATE" - Partial updates are applied to the client's
-	// existing local database.
-	//   "FULL_UPDATE" - Full updates replace the client's entire local
-	// database. This means that either the client was seriously out-of-date
-	// or the client is believed to be corrupt.
+	//   "PARTIAL_UPDATE" - Partial updates are applied to the client's existing
+	// local database.
+	//   "FULL_UPDATE" - Full updates replace the client's entire local database.
+	// This means that either the client was seriously out-of-date or the client is
+	// believed to be corrupt.
 	ResponseType string `json:"responseType,omitempty"`
-
 	// ThreatEntryType: The format of the threats.
 	//
 	// Possible values:
@@ -585,7 +522,6 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	//   "FILENAME" - Filename.
 	//   "CERT" - CERT
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
-
 	// ThreatType: The threat type for which data is returned.
 	//
 	// Possible values:
@@ -593,449 +529,354 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type.
 	//   "SOCIAL_ENGINEERING_INTERNAL" - Social engineering threat type for
 	// internal use.
 	//   "API_ABUSE" - API abuse threat type.
 	//   "MALICIOUS_BINARY" - Malicious binary threat type.
 	//   "CSD_WHITELIST" - Client side detection whitelist threat type.
-	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist
-	// threat type.
+	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist threat
+	// type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
 	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
-	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter.
+	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the subresource
+	// filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
-	// to be safe.
-	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
-	// See https://jigsaw.google.com/.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely to be
+	// safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw. See
+	// https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Additions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Additions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Additions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4FindFullHashesRequest: Request to return
-// full hashes matched by the provided hash prefixes.
+// GoogleSecuritySafebrowsingV4FindFullHashesRequest: Request to return full
+// hashes matched by the provided hash prefixes.
 type GoogleSecuritySafebrowsingV4FindFullHashesRequest struct {
-	// ApiClient: Client metadata associated with callers of higher-level
-	// APIs built on top of the client's implementation.
+	// ApiClient: Client metadata associated with callers of higher-level APIs
+	// built on top of the client's implementation.
 	ApiClient *GoogleSecuritySafebrowsingV4ClientInfo `json:"apiClient,omitempty"`
-
 	// Client: The client metadata.
 	Client *GoogleSecuritySafebrowsingV4ClientInfo `json:"client,omitempty"`
-
-	// ClientStates: The current client states for each of the client's
-	// local threat lists.
+	// ClientStates: The current client states for each of the client's local
+	// threat lists.
 	ClientStates []string `json:"clientStates,omitempty"`
-
 	// ThreatInfo: The lists and hashes to be checked.
 	ThreatInfo *GoogleSecuritySafebrowsingV4ThreatInfo `json:"threatInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiClient") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiClient") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiClient") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FindFullHashesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindFullHashesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4FindFullHashesResponse struct {
 	// Matches: The full hashes that matched the requested prefixes.
 	Matches []*GoogleSecuritySafebrowsingV4ThreatMatch `json:"matches,omitempty"`
-
 	// MinimumWaitDuration: The minimum duration the client must wait before
-	// issuing any find hashes request. If this field is not set, clients
-	// can issue a request as soon as they want.
+	// issuing any find hashes request. If this field is not set, clients can issue
+	// a request as soon as they want.
 	MinimumWaitDuration string `json:"minimumWaitDuration,omitempty"`
-
-	// NegativeCacheDuration: For requested entities that did not match the
-	// threat list, how long to cache the response.
+	// NegativeCacheDuration: For requested entities that did not match the threat
+	// list, how long to cache the response.
 	NegativeCacheDuration string `json:"negativeCacheDuration,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Matches") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Matches") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Matches") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Matches") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FindFullHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindFullHashesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4FindThreatMatchesRequest: Request to
-// check entries against lists.
+// GoogleSecuritySafebrowsingV4FindThreatMatchesRequest: Request to check
+// entries against lists.
 type GoogleSecuritySafebrowsingV4FindThreatMatchesRequest struct {
 	// Client: The client metadata.
 	Client *GoogleSecuritySafebrowsingV4ClientInfo `json:"client,omitempty"`
-
 	// ThreatInfo: The lists and entries to be checked for matches.
 	ThreatInfo *GoogleSecuritySafebrowsingV4ThreatInfo `json:"threatInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Client") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Client") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Client") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FindThreatMatchesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindThreatMatchesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4FindThreatMatchesResponse struct {
 	// Matches: The threat list matches.
 	Matches []*GoogleSecuritySafebrowsingV4ThreatMatch `json:"matches,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Matches") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Matches") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Matches") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Matches") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4FindThreatMatchesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4FindThreatMatchesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4ListThreatListsResponse struct {
 	// ThreatLists: The lists available for download by the client.
 	ThreatLists []*GoogleSecuritySafebrowsingV4ThreatListDescriptor `json:"threatLists,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ThreatLists") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ThreatLists") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ThreatLists") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ListThreatListsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ListThreatListsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4RawHashes: The uncompressed threat
-// entries in hash format of a particular prefix length. Hashes can be
-// anywhere from 4 to 32 bytes in size. A large majority are 4 bytes,
-// but some hashes are lengthened if they collide with the hash of a
-// popular URL. Used for sending ThreatEntrySet to clients that do not
-// support compression, or when sending non-4-byte hashes to clients
-// that do support compression.
+// GoogleSecuritySafebrowsingV4RawHashes: The uncompressed threat entries in
+// hash format of a particular prefix length. Hashes can be anywhere from 4 to
+// 32 bytes in size. A large majority are 4 bytes, but some hashes are
+// lengthened if they collide with the hash of a popular URL. Used for sending
+// ThreatEntrySet to clients that do not support compression, or when sending
+// non-4-byte hashes to clients that do support compression.
 type GoogleSecuritySafebrowsingV4RawHashes struct {
-	// PrefixSize: The number of bytes for each prefix encoded below. This
-	// field can be anywhere from 4 (shortest prefix) to 32 (full SHA256
-	// hash).
+	// PrefixSize: The number of bytes for each prefix encoded below. This field
+	// can be anywhere from 4 (shortest prefix) to 32 (full SHA256 hash).
 	PrefixSize int64 `json:"prefixSize,omitempty"`
-
-	// RawHashes: The hashes, in binary format, concatenated into one long
-	// string. Hashes are sorted in lexicographic order. For JSON API users,
-	// hashes are base64-encoded.
+	// RawHashes: The hashes, in binary format, concatenated into one long string.
+	// Hashes are sorted in lexicographic order. For JSON API users, hashes are
+	// base64-encoded.
 	RawHashes string `json:"rawHashes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PrefixSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrefixSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PrefixSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4RawHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4RawHashes
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4RawIndices: A set of raw indices to
-// remove from a local list.
+// GoogleSecuritySafebrowsingV4RawIndices: A set of raw indices to remove from
+// a local list.
 type GoogleSecuritySafebrowsingV4RawIndices struct {
-	// Indices: The indices to remove from a lexicographically-sorted local
-	// list.
+	// Indices: The indices to remove from a lexicographically-sorted local list.
 	Indices []int64 `json:"indices,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Indices") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Indices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Indices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Indices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4RawIndices) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4RawIndices
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4RiceDeltaEncoding: The Rice-Golomb
-// encoded data. Used for sending compressed 4-byte hashes or compressed
-// removal indices.
+// GoogleSecuritySafebrowsingV4RiceDeltaEncoding: The Rice-Golomb encoded data.
+// Used for sending compressed 4-byte hashes or compressed removal indices.
 type GoogleSecuritySafebrowsingV4RiceDeltaEncoding struct {
-	// EncodedData: The encoded deltas that are encoded using the
-	// Golomb-Rice coder.
+	// EncodedData: The encoded deltas that are encoded using the Golomb-Rice
+	// coder.
 	EncodedData string `json:"encodedData,omitempty"`
-
-	// FirstValue: The offset of the first entry in the encoded data, or, if
-	// only a single integer was encoded, that single integer's value. If
-	// the field is empty or missing, assume zero.
+	// FirstValue: The offset of the first entry in the encoded data, or, if only a
+	// single integer was encoded, that single integer's value. If the field is
+	// empty or missing, assume zero.
 	FirstValue int64 `json:"firstValue,omitempty,string"`
-
-	// NumEntries: The number of entries that are delta encoded in the
-	// encoded data. If only a single integer was encoded, this will be zero
-	// and the single value will be stored in `first_value`.
+	// NumEntries: The number of entries that are delta encoded in the encoded
+	// data. If only a single integer was encoded, this will be zero and the single
+	// value will be stored in `first_value`.
 	NumEntries int64 `json:"numEntries,omitempty"`
-
-	// RiceParameter: The Golomb-Rice parameter, which is a number between 2
-	// and 28. This field is missing (that is, zero) if `num_entries` is
-	// zero.
+	// RiceParameter: The Golomb-Rice parameter, which is a number between 2 and
+	// 28. This field is missing (that is, zero) if `num_entries` is zero.
 	RiceParameter int64 `json:"riceParameter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EncodedData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EncodedData") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EncodedData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4RiceDeltaEncoding) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4RiceDeltaEncoding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatEntry: An individual threat; for
-// example, a malicious URL or its hash representation. Only one of
-// these fields should be set.
+// GoogleSecuritySafebrowsingV4ThreatEntry: An individual threat; for example,
+// a malicious URL or its hash representation. Only one of these fields should
+// be set.
 type GoogleSecuritySafebrowsingV4ThreatEntry struct {
-	// Digest: The digest of an executable in SHA256 format. The API
-	// supports both binary and hex digests. For JSON requests, digests are
-	// base64-encoded.
+	// Digest: The digest of an executable in SHA256 format. The API supports both
+	// binary and hex digests. For JSON requests, digests are base64-encoded.
 	Digest string `json:"digest,omitempty"`
-
-	// Hash: A hash prefix, consisting of the most significant 4-32 bytes of
-	// a SHA256 hash. This field is in binary format. For JSON requests,
-	// hashes are base64-encoded.
+	// Hash: A hash prefix, consisting of the most significant 4-32 bytes of a
+	// SHA256 hash. This field is in binary format. For JSON requests, hashes are
+	// base64-encoded.
 	Hash string `json:"hash,omitempty"`
-
 	// Url: A URL.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Digest") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Digest") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Digest") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatEntryMetadata: The metadata
-// associated with a specific threat entry. The client is expected to
-// know the metadata key/value pairs associated with each threat type.
+// GoogleSecuritySafebrowsingV4ThreatEntryMetadata: The metadata associated
+// with a specific threat entry. The client is expected to know the metadata
+// key/value pairs associated with each threat type.
 type GoogleSecuritySafebrowsingV4ThreatEntryMetadata struct {
 	// Entries: The metadata entries.
 	Entries []*GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry `json:"entries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Entries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Entries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Entries") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Entries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatEntryMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntryMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry: A
-// single metadata entry.
+// GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry: A single
+// metadata entry.
 type GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry struct {
-	// Key: The metadata entry key. For JSON requests, the key is
-	// base64-encoded.
+	// Key: The metadata entry key. For JSON requests, the key is base64-encoded.
 	Key string `json:"key,omitempty"`
-
 	// Value: The metadata entry value. For JSON requests, the value is
 	// base64-encoded.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatEntrySet: A set of threats that
-// should be added or removed from a client's local database.
+// GoogleSecuritySafebrowsingV4ThreatEntrySet: A set of threats that should be
+// added or removed from a client's local database.
 type GoogleSecuritySafebrowsingV4ThreatEntrySet struct {
 	// CompressionType: The compression type for the entries in this set.
 	//
@@ -1044,57 +885,43 @@ type GoogleSecuritySafebrowsingV4ThreatEntrySet struct {
 	//   "RAW" - Raw, uncompressed data.
 	//   "RICE" - Rice-Golomb encoded data.
 	CompressionType string `json:"compressionType,omitempty"`
-
 	// RawHashes: The raw SHA256-formatted entries.
 	RawHashes *GoogleSecuritySafebrowsingV4RawHashes `json:"rawHashes,omitempty"`
-
 	// RawIndices: The raw removal indices for a local list.
 	RawIndices *GoogleSecuritySafebrowsingV4RawIndices `json:"rawIndices,omitempty"`
-
-	// RiceHashes: The encoded 4-byte prefixes of SHA256-formatted entries,
-	// using a Golomb-Rice encoding. The hashes are converted to uint32,
-	// sorted in ascending order, then delta encoded and stored as
-	// encoded_data.
+	// RiceHashes: The encoded 4-byte prefixes of SHA256-formatted entries, using a
+	// Golomb-Rice encoding. The hashes are converted to uint32, sorted in
+	// ascending order, then delta encoded and stored as encoded_data.
 	RiceHashes *GoogleSecuritySafebrowsingV4RiceDeltaEncoding `json:"riceHashes,omitempty"`
-
-	// RiceIndices: The encoded local, lexicographically-sorted list
-	// indices, using a Golomb-Rice encoding. Used for sending compressed
-	// removal indices. The removal indices (uint32) are sorted in ascending
-	// order, then delta encoded and stored as encoded_data.
+	// RiceIndices: The encoded local, lexicographically-sorted list indices, using
+	// a Golomb-Rice encoding. Used for sending compressed removal indices. The
+	// removal indices (uint32) are sorted in ascending order, then delta encoded
+	// and stored as encoded_data.
 	RiceIndices *GoogleSecuritySafebrowsingV4RiceDeltaEncoding `json:"riceIndices,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CompressionType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompressionType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CompressionType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatEntrySet) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatEntrySet
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	// ClientInfo: Client-reported identification.
 	ClientInfo *GoogleSecuritySafebrowsingV4ClientInfo `json:"clientInfo,omitempty"`
-
 	// Entry: The threat entry responsible for the hit. Full hash should be
 	// reported for hash-based hits.
 	Entry *GoogleSecuritySafebrowsingV4ThreatEntry `json:"entry,omitempty"`
-
 	// PlatformType: The platform type reported.
 	//
 	// Possible values:
@@ -1104,15 +931,12 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	//   "ANDROID" - Threat posed to Android.
 	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
-	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
-	// platforms.
+	//   "ANY_PLATFORM" - Threat posed to at least one of the defined platforms.
 	//   "ALL_PLATFORMS" - Threat posed to all defined platforms.
 	//   "CHROME" - Threat posed to Chrome.
 	PlatformType string `json:"platformType,omitempty"`
-
 	// Resources: The resources related to the threat hit.
 	Resources []*GoogleSecuritySafebrowsingV4ThreatHitThreatSource `json:"resources,omitempty"`
-
 	// ThreatType: The threat type reported.
 	//
 	// Possible values:
@@ -1120,66 +944,56 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type.
 	//   "SOCIAL_ENGINEERING_INTERNAL" - Social engineering threat type for
 	// internal use.
 	//   "API_ABUSE" - API abuse threat type.
 	//   "MALICIOUS_BINARY" - Malicious binary threat type.
 	//   "CSD_WHITELIST" - Client side detection whitelist threat type.
-	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist
-	// threat type.
+	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist threat
+	// type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
 	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
-	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter.
+	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the subresource
+	// filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
-	// to be safe.
-	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
-	// See https://jigsaw.google.com/.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely to be
+	// safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw. See
+	// https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
-
 	// UserInfo: Details about the user that encountered the threat.
 	UserInfo *GoogleSecuritySafebrowsingV4ThreatHitUserInfo `json:"userInfo,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatHit) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatHit
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatHitThreatSource: A single resource
-// related to a threat hit.
+// GoogleSecuritySafebrowsingV4ThreatHitThreatSource: A single resource related
+// to a threat hit.
 type GoogleSecuritySafebrowsingV4ThreatHitThreatSource struct {
-	// Referrer: Referrer of the resource. Only set if the referrer is
-	// available.
+	// Referrer: Referrer of the resource. Only set if the referrer is available.
 	Referrer string `json:"referrer,omitempty"`
-
-	// RemoteIp: The remote IP of the resource in ASCII format. Either IPv4
-	// or IPv6.
+	// RemoteIp: The remote IP of the resource in ASCII format. Either IPv4 or
+	// IPv6.
 	RemoteIp string `json:"remoteIp,omitempty"`
-
 	// Type: The type of source reported.
 	//
 	// Possible values:
@@ -1188,73 +1002,58 @@ type GoogleSecuritySafebrowsingV4ThreatHitThreatSource struct {
 	// GetFullHash returned a valid hash).
 	//   "TAB_URL" - The final top-level URL of the tab that the client was
 	// browsing when the match occurred.
-	//   "TAB_REDIRECT" - A redirect URL that was fetched before hitting the
-	// final TAB_URL.
+	//   "TAB_REDIRECT" - A redirect URL that was fetched before hitting the final
+	// TAB_URL.
 	//   "TAB_RESOURCE" - A resource loaded within the final TAB_URL.
 	Type string `json:"type,omitempty"`
-
 	// Url: The URL of the resource.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Referrer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Referrer") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Referrer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatHitThreatSource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatHitThreatSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatHitUserInfo: Details about the user
-// that encountered the threat.
+// GoogleSecuritySafebrowsingV4ThreatHitUserInfo: Details about the user that
+// encountered the threat.
 type GoogleSecuritySafebrowsingV4ThreatHitUserInfo struct {
-	// RegionCode: The UN M.49 region code associated with the user's
-	// location.
+	// RegionCode: The UN M.49 region code associated with the user's location.
 	RegionCode string `json:"regionCode,omitempty"`
-
 	// UserId: Unique user identifier defined by the client.
 	UserId string `json:"userId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "RegionCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RegionCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RegionCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatHitUserInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatHitUserInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatInfo: The information regarding one
-// or more threats that a client submits when checking for matches in
-// threat lists.
+// GoogleSecuritySafebrowsingV4ThreatInfo: The information regarding one or
+// more threats that a client submits when checking for matches in threat
+// lists.
 type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	// PlatformTypes: The platform types to be checked.
 	//
@@ -1265,15 +1064,12 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	//   "ANDROID" - Threat posed to Android.
 	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
-	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
-	// platforms.
+	//   "ANY_PLATFORM" - Threat posed to at least one of the defined platforms.
 	//   "ALL_PLATFORMS" - Threat posed to all defined platforms.
 	//   "CHROME" - Threat posed to Chrome.
 	PlatformTypes []string `json:"platformTypes,omitempty"`
-
 	// ThreatEntries: The threat entries to be checked.
 	ThreatEntries []*GoogleSecuritySafebrowsingV4ThreatEntry `json:"threatEntries,omitempty"`
-
 	// ThreatEntryTypes: The entry types to be checked.
 	//
 	// Possible values:
@@ -1285,7 +1081,6 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	//   "FILENAME" - Filename.
 	//   "CERT" - CERT
 	ThreatEntryTypes []string `json:"threatEntryTypes,omitempty"`
-
 	// ThreatTypes: The threat types to be checked.
 	//
 	// Possible values:
@@ -1293,56 +1088,50 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type.
 	//   "SOCIAL_ENGINEERING_INTERNAL" - Social engineering threat type for
 	// internal use.
 	//   "API_ABUSE" - API abuse threat type.
 	//   "MALICIOUS_BINARY" - Malicious binary threat type.
 	//   "CSD_WHITELIST" - Client side detection whitelist threat type.
-	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist
-	// threat type.
+	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist threat
+	// type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
 	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
-	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter.
+	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the subresource
+	// filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
-	// to be safe.
-	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
-	// See https://jigsaw.google.com/.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely to be
+	// safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw. See
+	// https://jigsaw.google.com/.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PlatformTypes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PlatformTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatListDescriptor: Describes an
-// individual threat list. A list is defined by three parameters: the
-// type of threat posed, the type of platform targeted by the threat,
-// and the type of entries in the list.
+// GoogleSecuritySafebrowsingV4ThreatListDescriptor: Describes an individual
+// threat list. A list is defined by three parameters: the type of threat
+// posed, the type of platform targeted by the threat, and the type of entries
+// in the list.
 type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	// PlatformType: The platform type targeted by the list's entries.
 	//
@@ -1353,12 +1142,10 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	//   "ANDROID" - Threat posed to Android.
 	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
-	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
-	// platforms.
+	//   "ANY_PLATFORM" - Threat posed to at least one of the defined platforms.
 	//   "ALL_PLATFORMS" - Threat posed to all defined platforms.
 	//   "CHROME" - Threat posed to Chrome.
 	PlatformType string `json:"platformType,omitempty"`
-
 	// ThreatEntryType: The entry types contained in the list.
 	//
 	// Possible values:
@@ -1370,7 +1157,6 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	//   "FILENAME" - Filename.
 	//   "CERT" - CERT
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
-
 	// ThreatType: The threat type posed by the list's entries.
 	//
 	// Possible values:
@@ -1378,60 +1164,52 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type.
 	//   "SOCIAL_ENGINEERING_INTERNAL" - Social engineering threat type for
 	// internal use.
 	//   "API_ABUSE" - API abuse threat type.
 	//   "MALICIOUS_BINARY" - Malicious binary threat type.
 	//   "CSD_WHITELIST" - Client side detection whitelist threat type.
-	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist
-	// threat type.
+	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist threat
+	// type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
 	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
-	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter.
+	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the subresource
+	// filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
-	// to be safe.
-	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
-	// See https://jigsaw.google.com/.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely to be
+	// safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw. See
+	// https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PlatformType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PlatformType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatListDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatListDescriptor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV4ThreatMatch: A match when checking a
-// threat entry in the Safe Browsing threat lists.
+// GoogleSecuritySafebrowsingV4ThreatMatch: A match when checking a threat
+// entry in the Safe Browsing threat lists.
 type GoogleSecuritySafebrowsingV4ThreatMatch struct {
-	// CacheDuration: The cache lifetime for the returned match. Clients
-	// must not cache this response for more than this duration to avoid
-	// false positives.
+	// CacheDuration: The cache lifetime for the returned match. Clients must not
+	// cache this response for more than this duration to avoid false positives.
 	CacheDuration string `json:"cacheDuration,omitempty"`
-
 	// PlatformType: The platform type matching this threat.
 	//
 	// Possible values:
@@ -1441,18 +1219,14 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	//   "ANDROID" - Threat posed to Android.
 	//   "OSX" - Threat posed to OS X.
 	//   "IOS" - Threat posed to iOS.
-	//   "ANY_PLATFORM" - Threat posed to at least one of the defined
-	// platforms.
+	//   "ANY_PLATFORM" - Threat posed to at least one of the defined platforms.
 	//   "ALL_PLATFORMS" - Threat posed to all defined platforms.
 	//   "CHROME" - Threat posed to Chrome.
 	PlatformType string `json:"platformType,omitempty"`
-
 	// Threat: The threat matching this threat.
 	Threat *GoogleSecuritySafebrowsingV4ThreatEntry `json:"threat,omitempty"`
-
 	// ThreatEntryMetadata: Optional metadata associated with this threat.
 	ThreatEntryMetadata *GoogleSecuritySafebrowsingV4ThreatEntryMetadata `json:"threatEntryMetadata,omitempty"`
-
 	// ThreatEntryType: The threat entry type matching this threat.
 	//
 	// Possible values:
@@ -1464,7 +1238,6 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	//   "FILENAME" - Filename.
 	//   "CERT" - CERT
 	ThreatEntryType string `json:"threatEntryType,omitempty"`
-
 	// ThreatType: The threat type matching this threat.
 	//
 	// Possible values:
@@ -1472,53 +1245,45 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type.
 	//   "SOCIAL_ENGINEERING_INTERNAL" - Social engineering threat type for
 	// internal use.
 	//   "API_ABUSE" - API abuse threat type.
 	//   "MALICIOUS_BINARY" - Malicious binary threat type.
 	//   "CSD_WHITELIST" - Client side detection whitelist threat type.
-	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist
-	// threat type.
+	//   "CSD_DOWNLOAD_WHITELIST" - Client side download detection whitelist threat
+	// type.
 	//   "CLIENT_INCIDENT" - Client incident threat type.
 	//   "CLIENT_INCIDENT_WHITELIST" - Whitelist used when detecting client
 	// incident threats.
 	//   "APK_MALWARE_OFFLINE" - List used for offline APK checks in PAM.
-	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the
-	// subresource filter.
+	//   "SUBRESOURCE_FILTER" - Patterns to be used for activating the subresource
+	// filter.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat type.
-	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely
-	// to be safe.
-	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw.
-	// See https://jigsaw.google.com/.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - URL expressions that are very likely to be
+	// safe.
+	//   "ACCURACY_TIPS" - An experimental threat type related to Jigsaw. See
+	// https://jigsaw.google.com/.
 	ThreatType string `json:"threatType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CacheDuration") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CacheDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV4ThreatMatch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV4ThreatMatch
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "safebrowsing.encodedFullHashes.get":
 
 type EncodedFullHashesGetCall struct {
 	s              *Service
@@ -1546,41 +1311,37 @@ func (c *EncodedFullHashesGetCall) ClientId(clientId string) *EncodedFullHashesG
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": The
-// version of the client implementation.
+// ClientVersion sets the optional parameter "clientVersion": The version of
+// the client implementation.
 func (c *EncodedFullHashesGetCall) ClientVersion(clientVersion string) *EncodedFullHashesGetCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *EncodedFullHashesGetCall) Fields(s ...googleapi.Field) *EncodedFullHashesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *EncodedFullHashesGetCall) IfNoneMatch(entityTag string) *EncodedFullHashesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *EncodedFullHashesGetCall) Context(ctx context.Context) *EncodedFullHashesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *EncodedFullHashesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1589,12 +1350,7 @@ func (c *EncodedFullHashesGetCall) Header() http.Header {
 }
 
 func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1615,14 +1371,11 @@ func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "safebrowsing.encodedFullHashes.get" call.
-// Exactly one of *GoogleSecuritySafebrowsingV4FindFullHashesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleSecuritySafebrowsingV4FindFullHashesResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV4FindFullHashesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *EncodedFullHashesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV4FindFullHashesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1653,42 +1406,7 @@ func (c *EncodedFullHashesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecu
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "",
-	//   "flatPath": "v4/encodedFullHashes/{encodedRequest}",
-	//   "httpMethod": "GET",
-	//   "id": "safebrowsing.encodedFullHashes.get",
-	//   "parameterOrder": [
-	//     "encodedRequest"
-	//   ],
-	//   "parameters": {
-	//     "clientId": {
-	//       "description": "A client ID that (hopefully) uniquely identifies the client implementation of the Safe Browsing API.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "clientVersion": {
-	//       "description": "The version of the client implementation.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encodedRequest": {
-	//       "description": "A serialized FindFullHashesRequest proto.",
-	//       "format": "byte",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v4/encodedFullHashes/{encodedRequest}",
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FindFullHashesResponse"
-	//   }
-	// }
-
 }
-
-// method id "safebrowsing.encodedUpdates.get":
 
 type EncodedUpdatesGetCall struct {
 	s              *Service
@@ -1708,49 +1426,44 @@ func (r *EncodedUpdatesService) Get(encodedRequest string) *EncodedUpdatesGetCal
 	return c
 }
 
-// ClientId sets the optional parameter "clientId": A client ID that
-// uniquely identifies the client implementation of the Safe Browsing
-// API.
+// ClientId sets the optional parameter "clientId": A client ID that uniquely
+// identifies the client implementation of the Safe Browsing API.
 func (c *EncodedUpdatesGetCall) ClientId(clientId string) *EncodedUpdatesGetCall {
 	c.urlParams_.Set("clientId", clientId)
 	return c
 }
 
-// ClientVersion sets the optional parameter "clientVersion": The
-// version of the client implementation.
+// ClientVersion sets the optional parameter "clientVersion": The version of
+// the client implementation.
 func (c *EncodedUpdatesGetCall) ClientVersion(clientVersion string) *EncodedUpdatesGetCall {
 	c.urlParams_.Set("clientVersion", clientVersion)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *EncodedUpdatesGetCall) Fields(s ...googleapi.Field) *EncodedUpdatesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *EncodedUpdatesGetCall) IfNoneMatch(entityTag string) *EncodedUpdatesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *EncodedUpdatesGetCall) Context(ctx context.Context) *EncodedUpdatesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *EncodedUpdatesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1759,12 +1472,7 @@ func (c *EncodedUpdatesGetCall) Header() http.Header {
 }
 
 func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1785,15 +1493,11 @@ func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "safebrowsing.encodedUpdates.get" call.
-// Exactly one of
-// *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *EncodedUpdatesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1824,42 +1528,7 @@ func (c *EncodedUpdatesGetCall) Do(opts ...googleapi.CallOption) (*GoogleSecurit
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "",
-	//   "flatPath": "v4/encodedUpdates/{encodedRequest}",
-	//   "httpMethod": "GET",
-	//   "id": "safebrowsing.encodedUpdates.get",
-	//   "parameterOrder": [
-	//     "encodedRequest"
-	//   ],
-	//   "parameters": {
-	//     "clientId": {
-	//       "description": "A client ID that uniquely identifies the client implementation of the Safe Browsing API.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "clientVersion": {
-	//       "description": "The version of the client implementation.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "encodedRequest": {
-	//       "description": "A serialized FetchThreatListUpdatesRequest proto.",
-	//       "format": "byte",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v4/encodedUpdates/{encodedRequest}",
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse"
-	//   }
-	// }
-
 }
-
-// method id "safebrowsing.fullHashes.find":
 
 type FullHashesFindCall struct {
 	s                                                 *Service
@@ -1877,23 +1546,21 @@ func (r *FullHashesService) Find(googlesecuritysafebrowsingv4findfullhashesreque
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FullHashesFindCall) Fields(s ...googleapi.Field) *FullHashesFindCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FullHashesFindCall) Context(ctx context.Context) *FullHashesFindCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FullHashesFindCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1902,18 +1569,12 @@ func (c *FullHashesFindCall) Header() http.Header {
 }
 
 func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4findfullhashesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/fullHashes:find")
@@ -1927,14 +1588,11 @@ func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "safebrowsing.fullHashes.find" call.
-// Exactly one of *GoogleSecuritySafebrowsingV4FindFullHashesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleSecuritySafebrowsingV4FindFullHashesResponse.ServerResponse.Hea
-// der or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV4FindFullHashesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FullHashesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV4FindFullHashesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1965,25 +1623,7 @@ func (c *FullHashesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySa
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Finds the full hashes that match the requested hash prefixes.",
-	//   "flatPath": "v4/fullHashes:find",
-	//   "httpMethod": "POST",
-	//   "id": "safebrowsing.fullHashes.find",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v4/fullHashes:find",
-	//   "request": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FindFullHashesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FindFullHashesResponse"
-	//   }
-	// }
-
 }
-
-// method id "safebrowsing.threatHits.create":
 
 type ThreatHitsCreateCall struct {
 	s                                     *Service
@@ -1993,8 +1633,8 @@ type ThreatHitsCreateCall struct {
 	header_                               http.Header
 }
 
-// Create: Reports a Safe Browsing threat list hit to Google. Only
-// projects with TRUSTED_REPORTER visibility can use this method.
+// Create: Reports a Safe Browsing threat list hit to Google. Only projects
+// with TRUSTED_REPORTER visibility can use this method.
 func (r *ThreatHitsService) Create(googlesecuritysafebrowsingv4threathit *GoogleSecuritySafebrowsingV4ThreatHit) *ThreatHitsCreateCall {
 	c := &ThreatHitsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlesecuritysafebrowsingv4threathit = googlesecuritysafebrowsingv4threathit
@@ -2002,23 +1642,21 @@ func (r *ThreatHitsService) Create(googlesecuritysafebrowsingv4threathit *Google
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ThreatHitsCreateCall) Fields(s ...googleapi.Field) *ThreatHitsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ThreatHitsCreateCall) Context(ctx context.Context) *ThreatHitsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ThreatHitsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2027,18 +1665,12 @@ func (c *ThreatHitsCreateCall) Header() http.Header {
 }
 
 func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4threathit)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/threatHits")
@@ -2052,12 +1684,11 @@ func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "safebrowsing.threatHits.create" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ThreatHitsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2088,25 +1719,7 @@ func (c *ThreatHitsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Reports a Safe Browsing threat list hit to Google. Only projects with TRUSTED_REPORTER visibility can use this method.",
-	//   "flatPath": "v4/threatHits",
-	//   "httpMethod": "POST",
-	//   "id": "safebrowsing.threatHits.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v4/threatHits",
-	//   "request": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4ThreatHit"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   }
-	// }
-
 }
-
-// method id "safebrowsing.threatListUpdates.fetch":
 
 type ThreatListUpdatesFetchCall struct {
 	s                                                         *Service
@@ -2116,8 +1729,8 @@ type ThreatListUpdatesFetchCall struct {
 	header_                                                   http.Header
 }
 
-// Fetch: Fetches the most recent threat list updates. A client can
-// request updates for multiple lists at once.
+// Fetch: Fetches the most recent threat list updates. A client can request
+// updates for multiple lists at once.
 func (r *ThreatListUpdatesService) Fetch(googlesecuritysafebrowsingv4fetchthreatlistupdatesrequest *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest) *ThreatListUpdatesFetchCall {
 	c := &ThreatListUpdatesFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googlesecuritysafebrowsingv4fetchthreatlistupdatesrequest = googlesecuritysafebrowsingv4fetchthreatlistupdatesrequest
@@ -2125,23 +1738,21 @@ func (r *ThreatListUpdatesService) Fetch(googlesecuritysafebrowsingv4fetchthreat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ThreatListUpdatesFetchCall) Fields(s ...googleapi.Field) *ThreatListUpdatesFetchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ThreatListUpdatesFetchCall) Context(ctx context.Context) *ThreatListUpdatesFetchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2150,18 +1761,12 @@ func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 }
 
 func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4fetchthreatlistupdatesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/threatListUpdates:fetch")
@@ -2175,15 +1780,11 @@ func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "safebrowsing.threatListUpdates.fetch" call.
-// Exactly one of
-// *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse.ServerResp
-// onse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse.ServerResponse.He
+// ader or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ThreatListUpdatesFetchCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2214,25 +1815,7 @@ func (c *ThreatListUpdatesFetchCall) Do(opts ...googleapi.CallOption) (*GoogleSe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Fetches the most recent threat list updates. A client can request updates for multiple lists at once.",
-	//   "flatPath": "v4/threatListUpdates:fetch",
-	//   "httpMethod": "POST",
-	//   "id": "safebrowsing.threatListUpdates.fetch",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v4/threatListUpdates:fetch",
-	//   "request": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse"
-	//   }
-	// }
-
 }
-
-// method id "safebrowsing.threatLists.list":
 
 type ThreatListsListCall struct {
 	s            *Service
@@ -2249,33 +1832,29 @@ func (r *ThreatListsService) List() *ThreatListsListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ThreatListsListCall) Fields(s ...googleapi.Field) *ThreatListsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ThreatListsListCall) IfNoneMatch(entityTag string) *ThreatListsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ThreatListsListCall) Context(ctx context.Context) *ThreatListsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ThreatListsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2284,12 +1863,7 @@ func (c *ThreatListsListCall) Header() http.Header {
 }
 
 func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2307,14 +1881,11 @@ func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "safebrowsing.threatLists.list" call.
-// Exactly one of *GoogleSecuritySafebrowsingV4ListThreatListsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleSecuritySafebrowsingV4ListThreatListsResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV4ListThreatListsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ThreatListsListCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV4ListThreatListsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2345,22 +1916,7 @@ func (c *ThreatListsListCall) Do(opts ...googleapi.CallOption) (*GoogleSecurityS
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the Safe Browsing threat lists available for download.",
-	//   "flatPath": "v4/threatLists",
-	//   "httpMethod": "GET",
-	//   "id": "safebrowsing.threatLists.list",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v4/threatLists",
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4ListThreatListsResponse"
-	//   }
-	// }
-
 }
-
-// method id "safebrowsing.threatMatches.find":
 
 type ThreatMatchesFindCall struct {
 	s                                                    *Service
@@ -2378,23 +1934,21 @@ func (r *ThreatMatchesService) Find(googlesecuritysafebrowsingv4findthreatmatche
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ThreatMatchesFindCall) Fields(s ...googleapi.Field) *ThreatMatchesFindCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ThreatMatchesFindCall) Context(ctx context.Context) *ThreatMatchesFindCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ThreatMatchesFindCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2403,18 +1957,12 @@ func (c *ThreatMatchesFindCall) Header() http.Header {
 }
 
 func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesecuritysafebrowsingv4findthreatmatchesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/threatMatches:find")
@@ -2428,14 +1976,11 @@ func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "safebrowsing.threatMatches.find" call.
-// Exactly one of *GoogleSecuritySafebrowsingV4FindThreatMatchesResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleSecuritySafebrowsingV4FindThreatMatchesResponse.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV4FindThreatMatchesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ThreatMatchesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV4FindThreatMatchesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2466,20 +2011,4 @@ func (c *ThreatMatchesFindCall) Do(opts ...googleapi.CallOption) (*GoogleSecurit
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Finds the threat entries that match the Safe Browsing lists.",
-	//   "flatPath": "v4/threatMatches:find",
-	//   "httpMethod": "POST",
-	//   "id": "safebrowsing.threatMatches.find",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v4/threatMatches:find",
-	//   "request": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FindThreatMatchesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV4FindThreatMatchesResponse"
-	//   }
-	// }
-
 }

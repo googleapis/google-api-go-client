@@ -56964,4 +56964,3 @@ func (s *ZoneSetPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ZoneSetPolicyRequest
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-

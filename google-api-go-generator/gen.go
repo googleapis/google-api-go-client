@@ -360,7 +360,11 @@ func writeFile(file, pkg string, contents []byte) error {
 		if i == 0 {
 			// For the base case, use the provided inputs as is
 			name = file
-			newB = b
+			var err error
+			newB, err = format.Source(b)
+			if err != nil {
+				return err
+			}
 		} else {
 			// determine the new file name
 			base := filepath.Dir(file)
@@ -376,7 +380,10 @@ func writeFile(file, pkg string, contents []byte) error {
 			if err != nil {
 				return err
 			}
-			newB = buf.Bytes()
+			newB, err = format.Source(buf.Bytes())
+			if err != nil {
+				return err
+			}
 		}
 		if err := os.WriteFile(name, newB, 0644); err != nil {
 			return err

@@ -12,7 +12,7 @@
           "description": "Import spaces, messages, and memberships into Google Chat."
         },
         "https://www.googleapis.com/auth/chat.memberships": {
-          "description": "View, add, update, and remove members from conversations in Google Chat"
+          "description": "View, add, and remove members from conversations in Google Chat"
         },
         "https://www.googleapis.com/auth/chat.memberships.app": {
           "description": "Add and remove itself from conversations in Google Chat"
@@ -634,7 +634,7 @@
         "messages": {
           "methods": {
             "create": {
-              "description": "Creates a message in a Google Chat space. For an example, see [Send a message](https://developers.google.com/workspace/chat/create-messages). Calling this method requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize) and supports the following authentication types: - For text messages, user authentication or app authentication are supported. - For card messages, only app authentication is supported. (Only Chat apps can create card messages.)",
+              "description": "Creates a message in a Google Chat space. The maximum message size, including text and cards, is 32,000 bytes. For an example, see [Send a message](https://developers.google.com/workspace/chat/create-messages). Calling this method requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize) and supports the following authentication types: - For text messages, user authentication or app authentication are supported. - For card messages, only app authentication is supported. (Only Chat apps can create card messages.)",
               "flatPath": "v1/spaces/{spacesId}/messages",
               "httpMethod": "POST",
               "id": "chat.spaces.messages.create",
@@ -1215,7 +1215,7 @@
       }
     }
   },
-  "revision": "20240420",
+  "revision": "20240423",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessoryWidget": {
@@ -1835,7 +1835,7 @@
           "type": "string"
         },
         "isDialogEvent": {
-          "description": "For `CARD_CLICKED` interaction events, whether the user interacted with a [dialog](https://developers.google.com/workspace/chat/dialogs).",
+          "description": "For `CARD_CLICKED` and `MESSAGE` interaction events, whether the user is interacting with or about to interact with a [dialog](https://developers.google.com/workspace/chat/dialogs).",
           "type": "boolean"
         },
         "message": {

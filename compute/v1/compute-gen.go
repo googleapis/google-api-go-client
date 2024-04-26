@@ -2919,7 +2919,7 @@ func (s *AllocationSpecificSKUAllocationReservedInstanceProperties) MarshalJSON(
 }
 
 // AllocationSpecificSKUReservation: This reservation type allows to pre
-// allocate specific instance configuration. Next ID: 6
+// allocate specific instance configuration.
 type AllocationSpecificSKUReservation struct {
 	// AssuredCount: [Output Only] Indicates how many instances are actually usable
 	// currently.
@@ -11298,6 +11298,15 @@ type ForwardingRule struct {
 	// Id: [Output Only] The unique identifier for the resource. This identifier is
 	// defined by the server.
 	Id uint64 `json:"id,omitempty,string"`
+	// IpCollection: Resource reference of a PublicDelegatedPrefix. The PDP must be
+	// a sub-PDP in EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode. Use one of the
+	// following formats to specify a sub-PDP when creating an IPv6 NetLB
+	// forwarding rule using BYOIP: Full resource URL, as in
+	// https://www.googleapis.com/compute/v1/projects/project_id/regions/region
+	// /publicDelegatedPrefixes/sub-pdp-name Partial URL, as in: -
+	// projects/project_id/regions/region/publicDelegatedPrefixes/sub-pdp-name -
+	// regions/region/publicDelegatedPrefixes/sub-pdp-name
+	IpCollection string `json:"ipCollection,omitempty"`
 	// IpVersion: The IP Version that will be used by this forwarding rule. Valid
 	// options are IPV4 or IPV6.
 	//
@@ -27664,6 +27673,21 @@ type NodeGroup struct {
 	// The location hint here on the NodeGroup overrides any location_hint present
 	// in the NodeTemplate.
 	LocationHint string `json:"locationHint,omitempty"`
+	// MaintenanceInterval: Specifies the frequency of planned maintenance events.
+	// The accepted values are: `AS_NEEDED` and `RECURRENT`.
+	//
+	// Possible values:
+	//   "AS_NEEDED" - VMs are eligible to receive infrastructure and hypervisor
+	// updates as they become available. This may result in more maintenance
+	// operations (live migrations or terminations) for the VM than the PERIODIC
+	// and RECURRENT options.
+	//   "RECURRENT" - VMs receive infrastructure and hypervisor updates on a
+	// periodic basis, minimizing the number of maintenance operations (live
+	// migrations or terminations) on an individual VM. This may mean a VM will
+	// take longer to receive an update than if it was configured for AS_NEEDED.
+	// Security updates will still be applied as soon as they are available.
+	// RECURRENT is used for GEN3 and Slice of Hardware VMs.
+	MaintenanceInterval string `json:"maintenanceInterval,omitempty"`
 	// MaintenancePolicy: Specifies how to handle instances when a node in the
 	// group undergoes maintenance. Set to one of: DEFAULT, RESTART_IN_PLACE, or
 	// MIGRATE_WITHIN_NODE_GROUP. The default value is DEFAULT. For more
@@ -28138,6 +28162,9 @@ type NodeGroupNode struct {
 	Status string `json:"status,omitempty"`
 	// TotalResources: Total amount of available resources on the node.
 	TotalResources *InstanceConsumptionInfo `json:"totalResources,omitempty"`
+	// UpcomingMaintenance: [Output Only] The information about an upcoming
+	// maintenance event.
+	UpcomingMaintenance *UpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -28350,6 +28377,30 @@ type NodeGroupsListNodesWarningData struct {
 
 func (s *NodeGroupsListNodesWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeGroupsListNodesWarningData
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type NodeGroupsPerformMaintenanceRequest struct {
+	// Nodes: [Required] List of nodes affected by the call.
+	Nodes []string `json:"nodes,omitempty"`
+	// StartTime: The start time of the schedule. The timestamp is an RFC3339
+	// string.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nodes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nodes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeGroupsPerformMaintenanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeGroupsPerformMaintenanceRequest
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -30763,7 +30814,7 @@ type PacketMirroring struct {
 	//   "FALSE"
 	//   "TRUE"
 	Enable string `json:"enable,omitempty"`
-	// Filter: Filter for mirrored traffic. If unspecified, all traffic is
+	// Filter: Filter for mirrored traffic. If unspecified, all IPv4 traffic is
 	// mirrored.
 	Filter *PacketMirroringFilter `json:"filter,omitempty"`
 	// Id: [Output Only] The unique identifier for the resource. This identifier is
@@ -30981,11 +31032,11 @@ type PacketMirroringFilter struct {
 	// is mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4
 	// traffic is mirrored.
 	IPProtocols []string `json:"IPProtocols,omitempty"`
-	// CidrRanges: One or more IPv4 or IPv6 CIDR ranges that apply as filter on the
-	// source (ingress) or destination (egress) IP in the IP header. If no ranges
-	// are specified, all IPv4 traffic that matches the specified IPProtocols is
-	// mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4
-	// traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use
+	// CidrRanges: One or more IPv4 or IPv6 CIDR ranges that apply as filters on
+	// the source (ingress) or destination (egress) IP in the IP header. If no
+	// ranges are specified, all IPv4 traffic that matches the specified
+	// IPProtocols is mirrored. If neither cidrRanges nor IPProtocols is specified,
+	// all IPv4 traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use
 	// "0.0.0.0/0,::/0".
 	CidrRanges []string `json:"cidrRanges,omitempty"`
 	// Direction: Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH.
@@ -32419,6 +32470,11 @@ func (s *PublicAdvertisedPrefixPublicDelegatedPrefix) MarshalJSON() ([]byte, err
 // resources within that scope. Public delegated prefixes may be further broken
 // up into smaller IP blocks in the same scope as the parent block.
 type PublicDelegatedPrefix struct {
+	// AllocatablePrefixLength: The allocatable prefix length supported by this
+	// public delegated prefix. This field is optional and cannot be set for
+	// prefixes in DELEGATION mode. It cannot be set for IPv4 prefixes either, and
+	// it always defaults to 32.
+	AllocatablePrefixLength int64 `json:"allocatablePrefixLength,omitempty"`
 	// ByoipApiVersion: [Output Only] The version of BYOIP API.
 	//
 	// Possible values:
@@ -32452,6 +32508,15 @@ type PublicDelegatedPrefix struct {
 	// Kind: [Output Only] Type of the resource. Always
 	// compute#publicDelegatedPrefix for public delegated prefixes.
 	Kind string `json:"kind,omitempty"`
+	// Mode: The public delegated prefix mode for IPv6 only.
+	//
+	// Possible values:
+	//   "DELEGATION" - The public delegated prefix is used for further
+	// sub-delegation only. Such prefixes cannot set allocatablePrefixLength.
+	//   "EXTERNAL_IPV6_FORWARDING_RULE_CREATION" - The public delegated prefix is
+	// used for creating forwarding rules only. Such prefixes cannot set
+	// publicDelegatedSubPrefixes.
+	Mode string `json:"mode,omitempty"`
 	// Name: Name of the resource. Provided by the client when the resource is
 	// created. The name must be 1-63 characters long, and comply with RFC1035.
 	// Specifically, the name must be 1-63 characters long and match the regular
@@ -32494,15 +32559,15 @@ type PublicDelegatedPrefix struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ByoipApiVersion") to
+	// ForceSendFields is a list of field names (e.g. "AllocatablePrefixLength") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ByoipApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllocatablePrefixLength") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -32826,6 +32891,9 @@ func (s *PublicDelegatedPrefixListWarningData) MarshalJSON() ([]byte, error) {
 // PublicDelegatedPrefixPublicDelegatedSubPrefix: Represents a sub
 // PublicDelegatedPrefix.
 type PublicDelegatedPrefixPublicDelegatedSubPrefix struct {
+	// AllocatablePrefixLength: The allocatable prefix length supported by this
+	// PublicDelegatedSubPrefix.
+	AllocatablePrefixLength int64 `json:"allocatablePrefixLength,omitempty"`
 	// DelegateeProject: Name of the project scoping this PublicDelegatedSubPrefix.
 	DelegateeProject string `json:"delegateeProject,omitempty"`
 	// Description: An optional description of this resource. Provide this property
@@ -32837,6 +32905,15 @@ type PublicDelegatedPrefixPublicDelegatedSubPrefix struct {
 	// IsAddress: Whether the sub prefix is delegated to create Address resources
 	// in the delegatee project.
 	IsAddress bool `json:"isAddress,omitempty"`
+	// Mode: The PublicDelegatedSubPrefix mode for IPv6 only.
+	//
+	// Possible values:
+	//   "DELEGATION" - The public delegated prefix is used for further
+	// sub-delegation only. Such prefixes cannot set allocatablePrefixLength.
+	//   "EXTERNAL_IPV6_FORWARDING_RULE_CREATION" - The public delegated prefix is
+	// used for creating forwarding rules only. Such prefixes cannot set
+	// publicDelegatedSubPrefixes.
+	Mode string `json:"mode,omitempty"`
 	// Name: The name of the sub public delegated prefix.
 	Name string `json:"name,omitempty"`
 	// Region: [Output Only] The region of the sub public delegated prefix if it is
@@ -32848,15 +32925,15 @@ type PublicDelegatedPrefixPublicDelegatedSubPrefix struct {
 	//   "ACTIVE"
 	//   "INACTIVE"
 	Status string `json:"status,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DelegateeProject") to
+	// ForceSendFields is a list of field names (e.g. "AllocatablePrefixLength") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DelegateeProject") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllocatablePrefixLength") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -33156,6 +33233,7 @@ type Quota struct {
 	//   "SNAPSHOTS" - The total number of snapshots allowed for a single project.
 	//   "SSD_TOTAL_GB"
 	//   "SSL_CERTIFICATES"
+	//   "SSL_POLICIES"
 	//   "STATIC_ADDRESSES"
 	//   "STATIC_BYOIP_ADDRESSES"
 	//   "STATIC_EXTERNAL_IPV6_ADDRESS_RANGES"
@@ -37596,6 +37674,12 @@ type RouterBgp struct {
 	// resource. All VPN tunnels that link to this router will have the same local
 	// ASN.
 	Asn int64 `json:"asn,omitempty"`
+	// IdentifierRange: Explicitly specifies a range of valid BGP Identifiers for
+	// this Router. It is provided as a link-local IPv4 range (from
+	// 169.254.0.0/16), of size at least /30, even if the BGP sessions are over
+	// IPv6. It must not overlap with any IPv4 BGP session ranges. Other vendors
+	// commonly call this "router ID".
+	IdentifierRange string `json:"identifierRange,omitempty"`
 	// KeepaliveInterval: The interval in seconds between BGP keepalive messages
 	// that are sent to the peer. Hold time is three times the interval at which
 	// keepalive messages are sent, and the hold time is the maximum number of
@@ -37673,14 +37757,29 @@ type RouterBgpPeer struct {
 	//   "FALSE"
 	//   "TRUE"
 	Enable string `json:"enable,omitempty"`
-	// EnableIpv6: Enable IPv6 traffic over BGP Peer. If not specified, it is
-	// disabled by default.
+	// EnableIpv4: Enable IPv4 traffic over BGP Peer. It is enabled by default if
+	// the peerIpAddress is version 4.
+	EnableIpv4 bool `json:"enableIpv4,omitempty"`
+	// EnableIpv6: Enable IPv6 traffic over BGP Peer. It is enabled by default if
+	// the peerIpAddress is version 6.
 	EnableIpv6 bool `json:"enableIpv6,omitempty"`
+	// ExportPolicies: List of export policies applied to this peer, in the order
+	// they must be evaluated. The name must correspond to an existing policy that
+	// has ROUTE_POLICY_TYPE_EXPORT type. Note that Route Policies are currently
+	// available in preview. Please use Beta API to use Route Policies.
+	ExportPolicies []string `json:"exportPolicies,omitempty"`
+	// ImportPolicies: List of import policies applied to this peer, in the order
+	// they must be evaluated. The name must correspond to an existing policy that
+	// has ROUTE_POLICY_TYPE_IMPORT type. Note that Route Policies are currently
+	// available in preview. Please use Beta API to use Route Policies.
+	ImportPolicies []string `json:"importPolicies,omitempty"`
 	// InterfaceName: Name of the interface the BGP peer is associated with.
 	InterfaceName string `json:"interfaceName,omitempty"`
-	// IpAddress: IP address of the interface inside Google Cloud Platform. Only
-	// IPv4 is supported.
+	// IpAddress: IP address of the interface inside Google Cloud Platform.
 	IpAddress string `json:"ipAddress,omitempty"`
+	// Ipv4NexthopAddress: IPv4 address of the interface inside Google Cloud
+	// Platform.
+	Ipv4NexthopAddress string `json:"ipv4NexthopAddress,omitempty"`
 	// Ipv6NexthopAddress: IPv6 address of the interface inside Google Cloud
 	// Platform.
 	Ipv6NexthopAddress string `json:"ipv6NexthopAddress,omitempty"`
@@ -37718,8 +37817,11 @@ type RouterBgpPeer struct {
 	// a different value.
 	PeerAsn int64 `json:"peerAsn,omitempty"`
 	// PeerIpAddress: IP address of the BGP interface outside Google Cloud
-	// Platform. Only IPv4 is supported.
+	// Platform.
 	PeerIpAddress string `json:"peerIpAddress,omitempty"`
+	// PeerIpv4NexthopAddress: IPv4 address of the BGP interface outside Google
+	// Cloud Platform.
+	PeerIpv4NexthopAddress string `json:"peerIpv4NexthopAddress,omitempty"`
 	// PeerIpv6NexthopAddress: IPv6 address of the BGP interface outside Google
 	// Cloud Platform.
 	PeerIpv6NexthopAddress string `json:"peerIpv6NexthopAddress,omitempty"`
@@ -37818,11 +37920,23 @@ func (s *RouterBgpPeerCustomLearnedIpRange) MarshalJSON() ([]byte, error) {
 }
 
 type RouterInterface struct {
-	// IpRange: IP address and range of the interface. The IP range must be in the
-	// RFC3927 link-local IP address space. The value must be a CIDR-formatted
-	// string, for example: 169.254.0.1/30. NOTE: Do not truncate the address as it
-	// represents the IP address of the interface.
+	// IpRange: IP address and range of the interface. - For Internet Protocol
+	// version 4 (IPv4), the IP range must be in the RFC3927 link-local IP address
+	// space. The value must be a CIDR-formatted string, for example,
+	// 169.254.0.1/30. Note: Do not truncate the IP address, as it represents the
+	// IP address of the interface. - For Internet Protocol version 6 (IPv6), the
+	// value must be a unique local address (ULA) range from fdff:1::/64 with a
+	// mask length of 126 or less. This value should be a CIDR-formatted string,
+	// for example, fc00:0:1:1::1/112. Within the router's VPC, this IPv6 prefix
+	// will be reserved exclusively for this connection and cannot be used for any
+	// other purpose.
 	IpRange string `json:"ipRange,omitempty"`
+	// IpVersion: IP version of this interface.
+	//
+	// Possible values:
+	//   "IPV4"
+	//   "IPV6"
+	IpVersion string `json:"ipVersion,omitempty"`
 	// LinkedInterconnectAttachment: URI of the linked Interconnect attachment. It
 	// must be in the same region as the router. Each interface can have one linked
 	// resource, which can be a VPN tunnel, an Interconnect attachment, or a
@@ -38396,11 +38510,16 @@ type RouterStatusBgpPeerStatus struct {
 	// AdvertisedRoutes: Routes that were advertised to the remote BGP peer
 	AdvertisedRoutes []*Route   `json:"advertisedRoutes,omitempty"`
 	BfdStatus        *BfdStatus `json:"bfdStatus,omitempty"`
-	// EnableIpv6: Enable IPv6 traffic over BGP Peer. If not specified, it is
-	// disabled by default.
+	// EnableIpv4: Enable IPv4 traffic over BGP Peer. It is enabled by default if
+	// the peerIpAddress is version 4.
+	EnableIpv4 bool `json:"enableIpv4,omitempty"`
+	// EnableIpv6: Enable IPv6 traffic over BGP Peer. It is enabled by default if
+	// the peerIpAddress is version 6.
 	EnableIpv6 bool `json:"enableIpv6,omitempty"`
 	// IpAddress: IP address of the local BGP interface.
 	IpAddress string `json:"ipAddress,omitempty"`
+	// Ipv4NexthopAddress: IPv4 address of the local BGP interface.
+	Ipv4NexthopAddress string `json:"ipv4NexthopAddress,omitempty"`
 	// Ipv6NexthopAddress: IPv6 address of the local BGP interface.
 	Ipv6NexthopAddress string `json:"ipv6NexthopAddress,omitempty"`
 	// LinkedVpnTunnel: URL of the VPN tunnel that this BGP peer controls.
@@ -38414,6 +38533,8 @@ type RouterStatusBgpPeerStatus struct {
 	NumLearnedRoutes int64 `json:"numLearnedRoutes,omitempty"`
 	// PeerIpAddress: IP address of the remote BGP interface.
 	PeerIpAddress string `json:"peerIpAddress,omitempty"`
+	// PeerIpv4NexthopAddress: IPv4 address of the remote BGP interface.
+	PeerIpv4NexthopAddress string `json:"peerIpv4NexthopAddress,omitempty"`
 	// PeerIpv6NexthopAddress: IPv6 address of the remote BGP interface.
 	PeerIpv6NexthopAddress string `json:"peerIpv6NexthopAddress,omitempty"`
 	// RouterApplianceInstance: [Output only] URI of the VM instance that is used
@@ -38434,6 +38555,10 @@ type RouterStatusBgpPeerStatus struct {
 	// StatusReason: Indicates why particular status was returned.
 	//
 	// Possible values:
+	//   "IPV4_PEER_ON_IPV6_ONLY_CONNECTION" - BGP peer disabled because it
+	// requires IPv4 but the underlying connection is IPv6-only.
+	//   "IPV6_PEER_ON_IPV4_ONLY_CONNECTION" - BGP peer disabled because it
+	// requires IPv6 but the underlying connection is IPv4-only.
 	//   "MD5_AUTH_INTERNAL_PROBLEM" - Indicates internal problems with
 	// configuration of MD5 authentication. This particular reason can only be
 	// returned when md5AuthEnabled is true and status is DOWN.

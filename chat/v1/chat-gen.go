@@ -111,7 +111,7 @@ const (
 	// Import spaces, messages, and memberships into Google Chat.
 	ChatImportScope = "https://www.googleapis.com/auth/chat.import"
 
-	// View, add, update, and remove members from conversations in Google Chat
+	// View, add, and remove members from conversations in Google Chat
 	ChatMembershipsScope = "https://www.googleapis.com/auth/chat.memberships"
 
 	// Add and remove itself from conversations in Google Chat
@@ -1250,8 +1250,8 @@ type DeprecatedEvent struct {
 	DialogEventType string `json:"dialogEventType,omitempty"`
 	// EventTime: The timestamp indicating when the interaction event occurred.
 	EventTime string `json:"eventTime,omitempty"`
-	// IsDialogEvent: For `CARD_CLICKED` interaction events, whether the user
-	// interacted with a dialog
+	// IsDialogEvent: For `CARD_CLICKED` and `MESSAGE` interaction events, whether
+	// the user is interacting with or about to interact with a dialog
 	// (https://developers.google.com/workspace/chat/dialogs).
 	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 	// Message: The message that triggered the interaction event, if applicable.
@@ -7261,7 +7261,8 @@ type SpacesMessagesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a message in a Google Chat space. For an example, see Send a
+// Create: Creates a message in a Google Chat space. The maximum message size,
+// including text and cards, is 32,000 bytes. For an example, see Send a
 // message (https://developers.google.com/workspace/chat/create-messages).
 // Calling this method requires authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize) and

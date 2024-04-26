@@ -326,13 +326,14 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	//   "DENY" - Indicate that all values are denied for list constraints.
 	// Indicate that enforcement is on for boolean constraints.
 	ConstraintDefault string `json:"constraintDefault,omitempty"`
-	// CustomConstraint: Defines this constraint as being a CustomConstraint.
-	CustomConstraint *GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint `json:"customConstraint,omitempty"`
 	// Description: Detailed description of what this constraint controls as well
 	// as how and where it is enforced. Mutable.
 	Description string `json:"description,omitempty"`
 	// DisplayName: The human readable name. Mutable.
 	DisplayName string `json:"displayName,omitempty"`
+	// GoogleManagedConstraint: Defines this constraint as being a
+	// GoogleManagedConstraint.
+	GoogleManagedConstraint *GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint `json:"googleManagedConstraint,omitempty"`
 	// ListConstraint: Defines this constraint as being a ListConstraint.
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
 	// Name: Immutable. The resource name of the constraint. Must be in one of the
@@ -368,10 +369,10 @@ func (s *GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
 type GoogleCloudOrgpolicyV2ConstraintBooleanConstraint struct {
 }
 
-// GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint: A Google
-// defined custom constraint. This represents a subset of fields missing from
-// Constraint proto that are required to describe CustomConstraint
-type GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint struct {
+// GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint: A Google managed
+// constraint. This represents a subset of fields missing from Constraint proto
+// that are required to describe CustomConstraint
+type GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint struct {
 	// ActionType: Allow or deny type.
 	//
 	// Possible values:
@@ -410,8 +411,8 @@ type GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint
+func (s *GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2ConstraintGoogleManagedConstraint
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -478,6 +479,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//   "UPDATE" - Constraint applied when updating the resource.
 	//   "DELETE" - Constraint applied when deleting the resource. Not supported
 	// yet.
+	//   "REMOVE_GRANT" - Constraint applied when removing an IAM grant.
 	MethodTypes []string `json:"methodTypes,omitempty"`
 	// Name: Immutable. Name of the constraint. This is unique within the
 	// organization. Format of the name should be *

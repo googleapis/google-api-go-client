@@ -22,6 +22,7 @@ import (
 	"go.opencensus.io/plugin/ochttp"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"golang.org/x/net/http2"
+	"golang.org/x/net/nettest"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/internal"
@@ -266,6 +267,14 @@ func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source, dia
 	if trans == nil {
 		trans = fallbackBaseTransport()
 	}
+	trans.DialContext = func(ctx context.Context, network string, addr string) (net.Conn, error) {
+		// Don't try IPv6 if it's not supported.
+		// https://github.com/golang/go/issues/25321
+		if !nettest.SupportsIPv6() {
+			return baseDialContext(ctx, "tcp4", addr)
+		}
+		return baseDialContext(ctx, network, addr)
+	}
 	trans.MaxIdleConnsPerHost = 100
 
 	if clientCertSource != nil {
@@ -275,7 +284,14 @@ func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source, dia
 	}
 	if dialTLSContext != nil {
 		// If DialTLSContext is set, TLSClientConfig wil be ignored
-		trans.DialTLSContext = dialTLSContext
+		trans.DialTLSContext = func(ctx context.Context, network string, addr string) (net.Conn, error) {
+			// Don't try IPv6 if it's not supported.
+			// https://github.com/golang/go/issues/25321
+			if !nettest.SupportsIPv6() {
+				return dialTLSContext(ctx, "tcp4", addr)
+			}
+			return dialTLSContext(ctx, network, addr)
+		}
 	}
 
 	configureHTTP2(trans)

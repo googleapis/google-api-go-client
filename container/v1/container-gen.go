@@ -510,19 +510,22 @@ func (s *AdvancedDatapathObservabilityConfig) MarshalJSON() ([]byte, error) {
 // AdvancedMachineFeatures: Specifies options for controlling advanced machine
 // features.
 type AdvancedMachineFeatures struct {
+	// EnableNestedVirtualization: Whether or not to enable nested virtualization
+	// (defaults to false).
+	EnableNestedVirtualization bool `json:"enableNestedVirtualization,omitempty"`
 	// ThreadsPerCore: The number of threads per physical core. To disable
 	// simultaneous multithreading (SMT) set this to 1. If unset, the maximum
 	// number of threads supported per core by the underlying processor is assumed.
 	ThreadsPerCore int64 `json:"threadsPerCore,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "ThreadsPerCore") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableNestedVirtualization")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ThreadsPerCore") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EnableNestedVirtualization") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3615,7 +3618,8 @@ type NetworkConfig struct {
 	// GatewayApiConfig: GatewayAPIConfig contains the desired config of Gateway
 	// API on this cluster.
 	GatewayApiConfig *GatewayAPIConfig `json:"gatewayApiConfig,omitempty"`
-	// InTransitEncryptionConfig: Specify the details of in-transit encryption.
+	// InTransitEncryptionConfig: Specify the details of in-transit encryption. Now
+	// named inter-node transparent encryption.
 	//
 	// Possible values:
 	//   "IN_TRANSIT_ENCRYPTION_CONFIG_UNSPECIFIED" - Unspecified, will be inferred
@@ -5456,6 +5460,8 @@ type SecurityPostureConfig struct {
 	//   "MODE_UNSPECIFIED" - Default value not specified.
 	//   "DISABLED" - Disables Security Posture features on the cluster.
 	//   "BASIC" - Applies Security Posture features on the cluster.
+	//   "ENTERPRISE" - Applies the Security Posture off cluster Enterprise level
+	// features.
 	Mode string `json:"mode,omitempty"`
 	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
 	//

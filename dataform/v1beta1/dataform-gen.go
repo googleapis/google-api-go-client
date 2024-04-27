@@ -298,16 +298,19 @@ func (s *Assertion) MarshalJSON() ([]byte, error) {
 
 // BigQueryAction: Represents a workflow action that will run against BigQuery.
 type BigQueryAction struct {
+	// JobId: Output only. The ID of the BigQuery job that executed the SQL in
+	// sql_script. Only set once the job has started to run.
+	JobId string `json:"jobId,omitempty"`
 	// SqlScript: Output only. The generated BigQuery SQL script that will be
 	// executed.
 	SqlScript string `json:"sqlScript,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SqlScript") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SqlScript") to include in API
+	// NullFields is a list of field names (e.g. "JobId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -436,7 +439,8 @@ type CodeCompilationConfig struct {
 	// DefaultLocation: Optional. The default BigQuery location to use. Defaults to
 	// "US". See the BigQuery docs for a full list of locations:
 	// https://cloud.google.com/bigquery/docs/locations.
-	DefaultLocation string `json:"defaultLocation,omitempty"`
+	DefaultLocation               string                  `json:"defaultLocation,omitempty"`
+	DefaultNotebookRuntimeOptions *NotebookRuntimeOptions `json:"defaultNotebookRuntimeOptions,omitempty"`
 	// DefaultSchema: Optional. The default schema (BigQuery dataset ID).
 	DefaultSchema string `json:"defaultSchema,omitempty"`
 	// SchemaSuffix: Optional. The suffix that should be appended to all schema
@@ -720,6 +724,8 @@ type CompilationResultAction struct {
 	// FilePath: The full path including filename in which this action is located,
 	// relative to the workspace root.
 	FilePath string `json:"filePath,omitempty"`
+	// Notebook: The notebook executed by this action.
+	Notebook *Notebook `json:"notebook,omitempty"`
 	// Operations: The database operations executed by this action.
 	Operations *Operations `json:"operations,omitempty"`
 	// Relation: The database relation created/updated by this action.
@@ -1598,6 +1604,82 @@ func (s *MoveFileRequest) MarshalJSON() ([]byte, error) {
 type MoveFileResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+type Notebook struct {
+	// Contents: The contents of the notebook.
+	Contents string `json:"contents,omitempty"`
+	// DependencyTargets: A list of actions that this action depends on.
+	DependencyTargets []*Target `json:"dependencyTargets,omitempty"`
+	// Disabled: Whether this action is disabled (i.e. should not be run).
+	Disabled bool `json:"disabled,omitempty"`
+	// Tags: Arbitrary, user-defined tags on this action.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *Notebook) MarshalJSON() ([]byte, error) {
+	type NoMethod Notebook
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// NotebookAction: Represents a workflow action that will run against a
+// Notebook runtime.
+type NotebookAction struct {
+	// Contents: Output only. The code contents of a Notebook to be run.
+	Contents string `json:"contents,omitempty"`
+	// JobId: Output only. The ID of the Vertex job that executed the notebook in
+	// contents and also the ID used for the outputs created in GCS buckets. Only
+	// set once the job has started to run.
+	JobId string `json:"jobId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotebookAction) MarshalJSON() ([]byte, error) {
+	type NoMethod NotebookAction
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type NotebookRuntimeOptions struct {
+	// GcsOutputBucket: Optional. The GCS location to upload the result to. Format:
+	// `gs://bucket-name`.
+	GcsOutputBucket string `json:"gcsOutputBucket,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GcsOutputBucket") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GcsOutputBucket") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotebookRuntimeOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod NotebookRuntimeOptions
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // OperationMetadata: Represents the metadata of the long-running operation.
@@ -2675,6 +2757,8 @@ type WorkflowInvocationAction struct {
 	// state. `end_time` will be set if the action is in [SUCCEEDED, CANCELLED,
 	// FAILED] state.
 	InvocationTiming *Interval `json:"invocationTiming,omitempty"`
+	// NotebookAction: Output only. The workflow action's notebook action details.
+	NotebookAction *NotebookAction `json:"notebookAction,omitempty"`
 	// State: Output only. This action's current state.
 	//
 	// Possible values:
@@ -5338,6 +5422,15 @@ func (r *ProjectsLocationsRepositoriesCompilationResultsService) List(parent str
 // Filter sets the optional parameter "filter": Filter for the returned list.
 func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) Filter(filter string) *ProjectsLocationsRepositoriesCompilationResultsListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": This field only supports
+// ordering by `name` and `create_time`. If unspecified, the server will choose
+// the ordering. If specified, the default order is ascending for the `name`
+// field.
+func (c *ProjectsLocationsRepositoriesCompilationResultsListCall) OrderBy(orderBy string) *ProjectsLocationsRepositoriesCompilationResultsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 

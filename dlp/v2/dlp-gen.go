@@ -4291,8 +4291,13 @@ func (s *GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
 // persisted to the location of your choice whenever updated.
 type GooglePrivacyDlpV2Export struct {
 	// ProfileTable: Store all table and column profiles in an existing table or a
-	// new table in an existing dataset. Each re-generation will result in a new
-	// row in BigQuery.
+	// new table in an existing dataset. Each re-generation will result in new rows
+	// in BigQuery. Data is inserted using streaming insert
+	// (https://cloud.google.com/blog/products/bigquery/life-of-a-bigquery-streaming-insert)
+	// and so data may be in the buffer for a period of time after the profile has
+	// finished. The Pub/Sub notification is sent before the streaming buffer is
+	// guaranteed to be written, so data may not be instantly visible to queries by
+	// the time your topic receives the Pub/Sub notification.
 	ProfileTable *GooglePrivacyDlpV2BigQueryTable `json:"profileTable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProfileTable") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7860,6 +7865,9 @@ type GooglePrivacyDlpV2Result struct {
 	// InfoTypeStats: Statistics of how many instances of each info type were found
 	// during inspect job.
 	InfoTypeStats []*GooglePrivacyDlpV2InfoTypeStats `json:"infoTypeStats,omitempty"`
+	// NumRowsProcessed: Number of rows scanned post sampling and time filtering
+	// (Applicable for row based stores such as BigQuery).
+	NumRowsProcessed int64 `json:"numRowsProcessed,omitempty,string"`
 	// ProcessedBytes: Total size in bytes that were processed.
 	ProcessedBytes int64 `json:"processedBytes,omitempty,string"`
 	// TotalEstimatedBytes: Estimate of the number of bytes to process.

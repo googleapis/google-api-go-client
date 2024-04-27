@@ -238,6 +238,8 @@ type AbortInfo struct {
 	// tests.
 	//   "UNKNOWN_IP" - Aborted because no endpoint with the packet's destination
 	// IP address is found.
+	//   "GOOGLE_MANAGED_SERVICE_UNKNOWN_IP" - Aborted because no endpoint with the
+	// packet's destination IP is found in the Google-managed project.
 	//   "SOURCE_IP_ADDRESS_NOT_IN_SOURCE_NETWORK" - Aborted because the source IP
 	// address doesn't belong to any of the subnets of the source VPC network.
 	//   "PERMISSION_DENIED" - Aborted because user lacks permission to access all
@@ -712,7 +714,7 @@ type ConnectivityTest struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Labels: Resource labels to represent user-provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Required. Unique name of the resource using the form:
+	// Name: Identifier. Unique name of the resource using the form:
 	// `projects/{project_id}/locations/global/connectivityTests/{test_id}`
 	Name string `json:"name,omitempty"`
 	// ProbingDetails: Output only. The probing details of this test from the
@@ -3695,7 +3697,7 @@ type ProjectsLocationsGlobalConnectivityTestsPatchCall struct {
 // returns a value of `AMBIGUOUS`. See the documentation in `ConnectivityTest`
 // for more details.
 //
-//   - name: Unique name of the resource using the form:
+//   - name: Identifier. Unique name of the resource using the form:
 //     `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
 func (r *ProjectsLocationsGlobalConnectivityTestsService) Patch(name string, connectivitytest *ConnectivityTest) *ProjectsLocationsGlobalConnectivityTestsPatchCall {
 	c := &ProjectsLocationsGlobalConnectivityTestsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

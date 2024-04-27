@@ -901,6 +901,32 @@ func (s *PromptFeedback) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// RagResource: The definition of the Rag resource.
+type RagResource struct {
+	// RagCorpus: Optional. RagCorpora resource name. Format:
+	// `projects/{project}/locations/{location}/ragCorpora/{rag_corpus}`
+	RagCorpus string `json:"ragCorpus,omitempty"`
+	// RagFileIds: Optional. rag_file_id. The files should be in the same
+	// rag_corpus set in rag_corpus field.
+	RagFileIds []string `json:"ragFileIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RagCorpus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RagCorpus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RagResource) MarshalJSON() ([]byte, error) {
+	type NoMethod RagResource
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // Retrieval: Defines a retrieval tool that model can call to access external
 // knowledge.
 type Retrieval struct {
@@ -1288,11 +1314,13 @@ func (s *VertexAISearch) MarshalJSON() ([]byte, error) {
 
 // VertexRagStore: Retrieve from Vertex RAG Store for grounding.
 type VertexRagStore struct {
-	// RagCorpora: Required. Vertex RAG Store corpus resource name:
-	// `projects/{project}/locations/{location}/ragCorpora/{ragCorpus}` Currently
-	// only one corpus is allowed. In the future we may open up multiple corpora
-	// support. However, they should be from the same project and location.
+	// RagCorpora: Optional. Deprecated. Please use rag_resources instead.
 	RagCorpora []string `json:"ragCorpora,omitempty"`
+	// RagResources: Optional. The representation of the rag source. It can be used
+	// to specify corpus only or ragfiles. Currently only support one corpus or
+	// multiple files from one corpus. In the future we may open up multiple
+	// corpora support.
+	RagResources []*RagResource `json:"ragResources,omitempty"`
 	// SimilarityTopK: Optional. Number of top k results to return from the
 	// selected corpora.
 	SimilarityTopK int64 `json:"similarityTopK,omitempty"`

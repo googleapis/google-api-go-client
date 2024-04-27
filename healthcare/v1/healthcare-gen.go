@@ -1929,13 +1929,13 @@ type ExportMessagesRequest struct {
 	// (exclusive) are exported.
 	EndTime string `json:"endTime,omitempty"`
 	// Filter: Restricts messages exported to those matching a filter, only
-	// applicable to PubsubDestination. The following syntax is available: * A
-	// string field value can be written as text inside quotation marks, for
-	// example "query text". The only valid relational operation for text fields
-	// is equality (`=`), where text is searched within the field, rather than
-	// having the field be equal to the text. For example, "Comment = great"
-	// returns messages with `great` in the comment field. * A number field value
-	// can be written as an integer, a decimal, or an exponential. The valid
+	// applicable to PubsubDestination and GcsDestination. The following syntax is
+	// available: * A string field value can be written as text inside quotation
+	// marks, for example "query text". The only valid relational operation for
+	// text fields is equality (`=`), where text is searched within the field,
+	// rather than having the field be equal to the text. For example, "Comment =
+	// great" returns messages with `great` in the comment field. * A number field
+	// value can be written as an integer, a decimal, or an exponential. The valid
 	// relational operators for number fields are the equality operator (`=`),
 	// along with the less than/greater than operators (`<`, `<=`, `>`, `>=`). Note
 	// that there is no inequality (`!=`) operator. You can prepend the `NOT`
@@ -2299,7 +2299,8 @@ type FhirStore struct {
 	// given store.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. Identifier. Resource name of the FHIR store, of the form
-	// `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.
+	// `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhirStores/
+	// {fhir_store_id}`.
 	Name string `json:"name,omitempty"`
 	// NotificationConfig: Deprecated. Use `notification_configs` instead. If
 	// non-empty, publish all resource modifications of this FHIR store to this
@@ -15924,7 +15925,8 @@ type ProjectsLocationsDatasetsFhirStoresPatchCall struct {
 //
 //   - name: Output only. Identifier. Resource name of the FHIR store, of the
 //     form
-//     `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.
+//     `projects/{project_id}/locations/{location}/datasets/{dataset_id}/fhirStore
+//     s/{fhir_store_id}`.
 func (r *ProjectsLocationsDatasetsFhirStoresService) Patch(name string, fhirstore *FhirStore) *ProjectsLocationsDatasetsFhirStoresPatchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

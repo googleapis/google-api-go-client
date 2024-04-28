@@ -259,9 +259,12 @@ type AvailabilityConfiguration struct {
 	//   "REGIONAL" - Regional available instance.
 	//   "MULTI_REGIONAL" - Multi regional instance
 	//   "AVAILABILITY_TYPE_OTHER" - For rest of the other category
-	AvailabilityType            string `json:"availabilityType,omitempty"`
-	ExternalReplicaConfigured   bool   `json:"externalReplicaConfigured,omitempty"`
-	PromotableReplicaConfigured bool   `json:"promotableReplicaConfigured,omitempty"`
+	AvailabilityType string `json:"availabilityType,omitempty"`
+	// CrossRegionReplicaConfigured: Checks for resources that are configured to
+	// have redundancy, and ongoing replication across regions
+	CrossRegionReplicaConfigured bool `json:"crossRegionReplicaConfigured,omitempty"`
+	ExternalReplicaConfigured    bool `json:"externalReplicaConfigured,omitempty"`
+	PromotableReplicaConfigured  bool `json:"promotableReplicaConfigured,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailabilityType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1349,7 +1352,6 @@ type Entitlement struct {
 	//
 	// Possible values:
 	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
-	//   "DUET_AI" - The root entitlement representing Duet AI package ownership.
 	//   "GEMINI" - The root entitlement representing Gemini package ownership.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EntitlementState") to

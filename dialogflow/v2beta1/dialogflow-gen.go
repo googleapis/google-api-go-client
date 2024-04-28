@@ -2679,6 +2679,49 @@ func (s *GoogleCloudDialogflowCxV3KnowledgeConnectorSettings) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3LanguageInfo: Represents the language information
+// of the request.
+type GoogleCloudDialogflowCxV3LanguageInfo struct {
+	// ConfidenceScore: The confidence score of the detected language between 0 and
+	// 1.
+	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
+	// InputLanguageCode: The language code specified in the original request.
+	InputLanguageCode string `json:"inputLanguageCode,omitempty"`
+	// ResolvedLanguageCode: The language code detected for this request based on
+	// the user conversation.
+	ResolvedLanguageCode string `json:"resolvedLanguageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfidenceScore") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3LanguageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3LanguageInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3LanguageInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3LanguageInfo
+	var s1 struct {
+		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConfidenceScore = float64(s1.ConfidenceScore)
+	return nil
+}
+
 // GoogleCloudDialogflowCxV3Page: A Dialogflow CX conversation (session) can be
 // described and visualized as a state machine. The states of a CX session are
 // represented by pages. For each flow, you define many pages, where your
@@ -3908,6 +3951,8 @@ type GoogleCloudDialogflowCxV3WebhookRequest struct {
 	IntentInfo *GoogleCloudDialogflowCxV3WebhookRequestIntentInfo `json:"intentInfo,omitempty"`
 	// LanguageCode: The language code specified in the original request.
 	LanguageCode string `json:"languageCode,omitempty"`
+	// LanguageInfo: Information about the language of the request.
+	LanguageInfo *GoogleCloudDialogflowCxV3LanguageInfo `json:"languageInfo,omitempty"`
 	// Messages: The list of rich message responses to present to the user. Webhook
 	// can choose to append or replace this list in
 	// WebhookResponse.fulfillment_response;
@@ -6068,6 +6113,49 @@ func (s *GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1LanguageInfo: Represents the language
+// information of the request.
+type GoogleCloudDialogflowCxV3beta1LanguageInfo struct {
+	// ConfidenceScore: The confidence score of the detected language between 0 and
+	// 1.
+	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
+	// InputLanguageCode: The language code specified in the original request.
+	InputLanguageCode string `json:"inputLanguageCode,omitempty"`
+	// ResolvedLanguageCode: The language code detected for this request based on
+	// the user conversation.
+	ResolvedLanguageCode string `json:"resolvedLanguageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfidenceScore") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1LanguageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1LanguageInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1LanguageInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowCxV3beta1LanguageInfo
+	var s1 struct {
+		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConfidenceScore = float64(s1.ConfidenceScore)
+	return nil
+}
+
 // GoogleCloudDialogflowCxV3beta1Page: A Dialogflow CX conversation (session)
 // can be described and visualized as a state machine. The states of a CX
 // session are represented by pages. For each flow, you define many pages,
@@ -7291,6 +7379,8 @@ type GoogleCloudDialogflowCxV3beta1WebhookRequest struct {
 	IntentInfo *GoogleCloudDialogflowCxV3beta1WebhookRequestIntentInfo `json:"intentInfo,omitempty"`
 	// LanguageCode: The language code specified in the original request.
 	LanguageCode string `json:"languageCode,omitempty"`
+	// LanguageInfo: Information about the language of the request.
+	LanguageInfo *GoogleCloudDialogflowCxV3beta1LanguageInfo `json:"languageInfo,omitempty"`
 	// Messages: The list of rich message responses to present to the user. Webhook
 	// can choose to append or replace this list in
 	// WebhookResponse.fulfillment_response;

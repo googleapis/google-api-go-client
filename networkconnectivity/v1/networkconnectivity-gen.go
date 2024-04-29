@@ -172,6 +172,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.InternalRanges = NewProjectsLocationsInternalRangesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.RegionalEndpoints = NewProjectsLocationsRegionalEndpointsService(s)
 	rs.ServiceClasses = NewProjectsLocationsServiceClassesService(s)
 	rs.ServiceConnectionMaps = NewProjectsLocationsServiceConnectionMapsService(s)
 	rs.ServiceConnectionPolicies = NewProjectsLocationsServiceConnectionPoliciesService(s)
@@ -188,6 +189,8 @@ type ProjectsLocationsService struct {
 	InternalRanges *ProjectsLocationsInternalRangesService
 
 	Operations *ProjectsLocationsOperationsService
+
+	RegionalEndpoints *ProjectsLocationsRegionalEndpointsService
 
 	ServiceClasses *ProjectsLocationsServiceClassesService
 
@@ -284,6 +287,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRegionalEndpointsService(s *Service) *ProjectsLocationsRegionalEndpointsService {
+	rs := &ProjectsLocationsRegionalEndpointsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRegionalEndpointsService struct {
 	s *Service
 }
 
@@ -574,6 +586,9 @@ type ConsumerPscConfig struct {
 	// ConsumerPscConfig.project in the case of SharedVPC. Example:
 	// projects/{projectNumOrId}/global/networks/{networkId}.
 	Network string `json:"network,omitempty"`
+	// ProducerInstanceId: Immutable. An immutable identifier for the producer
+	// instance.
+	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
 	// Project: The consumer project where PSC connections are allowed to be
 	// created in.
 	Project string `json:"project,omitempty"`
@@ -639,6 +654,9 @@ type ConsumerPscConnection struct {
 	// service attachments in this service connection map. Note that the network
 	// could be on a different project (shared VPC).
 	Network string `json:"network,omitempty"`
+	// ProducerInstanceId: Immutable. An immutable identifier for the producer
+	// instance.
+	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
 	// Project: The consumer project whose PSC forwarding rule is connected to the
 	// service attachments in this service connection map.
 	Project string `json:"project,omitempty"`
@@ -872,13 +890,13 @@ type GoogleRpcErrorInfo struct {
 	// unique value that identifies the infrastructure. For Google API
 	// infrastructure, the error domain is "googleapis.com".
 	Domain string `json:"domain,omitempty"`
-	// Metadata: Additional structured details about this error. Keys should match
-	// /[a-zA-Z0-9-_]/ and be limited to 64 characters in length. When identifying
-	// the current value of an exceeded limit, the units should be contained in the
-	// key, not the value. For example, rather than {"instanceLimit":
-	// "100/request"}, should be returned as, {"instanceLimitPerRequest": "100"},
-	// if the client exceeds the number of instances that can be created in a
-	// single (batch) request.
+	// Metadata: Additional structured details about this error. Keys must match
+	// /a-z+/ but should ideally be lowerCamelCase. Also they must be limited to 64
+	// characters in length. When identifying the current value of an exceeded
+	// limit, the units should be contained in the key, not the value. For example,
+	// rather than {"instanceLimit": "100/request"}, should be returned as,
+	// {"instanceLimitPerRequest": "100"}, if the client exceeds the number of
+	// instances that can be created in a single (batch) request.
 	Metadata map[string]string `json:"metadata,omitempty"`
 	// Reason: The reason of the error. This is a constant value that identifies
 	// the proximate cause of the error. Error reasons are unique within a
@@ -1110,9 +1128,10 @@ type InternalRange struct {
 	Name string `json:"name,omitempty"`
 	// Network: The URL or resource ID of the network in which to reserve the
 	// internal range. The network cannot be deleted if there are any reserved
-	// internal ranges referring to it. Legacy networks are not supported. This can
-	// only be specified for a global internal address. Example: - URL:
-	// /compute/v1/projects/{project}/global/networks/{resourceId} - ID: network123
+	// internal ranges referring to it. Legacy networks are not supported. For
+	// example:
+	// https://www.googleapis.com/compute/v1/projects/{project}/locations/global/networks/{network}
+	// projects/{project}/locations/global/networks/{network} {network}
 	Network string `json:"network,omitempty"`
 	// Overlaps: Optional. Types of resources that are allowed to overlap with the
 	// current internal range.
@@ -1508,6 +1527,37 @@ type ListPolicyBasedRoutesResponse struct {
 
 func (s *ListPolicyBasedRoutesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPolicyBasedRoutesResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ListRegionalEndpointsResponse: Response for ListRegionalEndpoints.
+type ListRegionalEndpointsResponse struct {
+	// NextPageToken: The next pagination token in the List response. It should be
+	// used as page_token for the following request. An empty value means no more
+	// result.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RegionalEndpoints: Regional endpoints to be returned.
+	RegionalEndpoints []*RegionalEndpoint `json:"regionalEndpoints,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRegionalEndpointsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRegionalEndpointsResponse
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2103,6 +2153,9 @@ type PscConnection struct {
 	ErrorType string `json:"errorType,omitempty"`
 	// GceOperation: The last Compute Engine operation to setup PSC connection.
 	GceOperation string `json:"gceOperation,omitempty"`
+	// ProducerInstanceId: Immutable. An immutable identifier for the producer
+	// instance.
+	ProducerInstanceId string `json:"producerInstanceId,omitempty"`
 	// PscConnectionId: The PSC connection id of the PSC forwarding rule.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
 	// SelectedSubnetwork: Output only. The URI of the subnetwork selected to
@@ -2133,6 +2186,76 @@ type PscConnection struct {
 
 func (s *PscConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConnection
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// RegionalEndpoint: The RegionalEndpoint resource.
+type RegionalEndpoint struct {
+	// AccessType: Required. The access type of this regional endpoint. This field
+	// is reflected in the PSC Forwarding Rule configuration to enable global
+	// access.
+	//
+	// Possible values:
+	//   "ACCESS_TYPE_UNSPECIFIED" - An invalid type as the default case.
+	//   "GLOBAL" - This regional endpoint is accessible from all regions.
+	//   "REGIONAL" - This regional endpoint is only accessible from the same
+	// region where it resides.
+	AccessType string `json:"accessType,omitempty"`
+	// Address: Optional. The IP Address of the Regional Endpoint. When no address
+	// is provided, an IP from the subnetwork is allocated. Use one of the
+	// following formats: * IPv4 address as in `10.0.0.1` * Address resource URI as
+	// in `projects/{project}/regions/{region}/addresses/{address_name}`
+	Address string `json:"address,omitempty"`
+	// CreateTime: Output only. Time when the RegionalEndpoint was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A description of this resource.
+	Description string `json:"description,omitempty"`
+	// IpAddress: Output only. The literal IP address of the PSC Forwarding Rule
+	// created on behalf of the customer. This field is deprecated. Use address
+	// instead.
+	IpAddress string `json:"ipAddress,omitempty"`
+	// Labels: User-defined labels.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Output only. The name of a RegionalEndpoint. Format:
+	// `projects/{project}/locations/{location}/regionalEndpoints/{regional_endpoint
+	// }`.
+	Name string `json:"name,omitempty"`
+	// Network: The name of the VPC network for this private regional endpoint.
+	// Format: `projects/{project}/global/networks/{network}`
+	Network string `json:"network,omitempty"`
+	// PscForwardingRule: Output only. The resource reference of the PSC Forwarding
+	// Rule created on behalf of the customer. Format:
+	// `//compute.googleapis.com/projects/{project}/regions/{region}/forwardingRules
+	// /{forwarding_rule_name}`
+	PscForwardingRule string `json:"pscForwardingRule,omitempty"`
+	// Subnetwork: The name of the subnetwork from which the IP address will be
+	// allocated. Format:
+	// `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
+	Subnetwork string `json:"subnetwork,omitempty"`
+	// TargetGoogleApi: Required. The service endpoint this private regional
+	// endpoint connects to. Format: `{apiname}.{region}.p.rep.googleapis.com`
+	// Example: "cloudkms.us-central1.p.rep.googleapis.com".
+	TargetGoogleApi string `json:"targetGoogleApi,omitempty"`
+	// UpdateTime: Output only. Time when the RegionalEndpoint was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalEndpoint
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7702,6 +7825,510 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRegionalEndpointsCreateCall struct {
+	s                *Service
+	parent           string
+	regionalendpoint *RegionalEndpoint
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new RegionalEndpoint in a given project and location.
+//
+// - parent: The parent resource's name of the RegionalEndpoint.
+func (r *ProjectsLocationsRegionalEndpointsService) Create(parent string, regionalendpoint *RegionalEndpoint) *ProjectsLocationsRegionalEndpointsCreateCall {
+	c := &ProjectsLocationsRegionalEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.regionalendpoint = regionalendpoint
+	return c
+}
+
+// RegionalEndpointId sets the optional parameter "regionalEndpointId":
+// Required. Unique id of the Regional Endpoint to be created.
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) RegionalEndpointId(regionalEndpointId string) *ProjectsLocationsRegionalEndpointsCreateCall {
+	c.urlParams_.Set("regionalEndpointId", regionalEndpointId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) RequestId(requestId string) *ProjectsLocationsRegionalEndpointsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegionalEndpointsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) Context(ctx context.Context) *ProjectsLocationsRegionalEndpointsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionalendpoint)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/regionalEndpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.regionalEndpoints.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegionalEndpointsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRegionalEndpointsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single RegionalEndpoint.
+//
+// - name: The name of the RegionalEndpoint to delete.
+func (r *ProjectsLocationsRegionalEndpointsService) Delete(name string) *ProjectsLocationsRegionalEndpointsDeleteCall {
+	c := &ProjectsLocationsRegionalEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsRegionalEndpointsDeleteCall) RequestId(requestId string) *ProjectsLocationsRegionalEndpointsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegionalEndpointsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegionalEndpointsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegionalEndpointsDeleteCall) Context(ctx context.Context) *ProjectsLocationsRegionalEndpointsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegionalEndpointsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegionalEndpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.regionalEndpoints.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegionalEndpointsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRegionalEndpointsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single RegionalEndpoint.
+//
+//   - name: Name of the RegionalEndpoint resource to get. Format:
+//     `projects/{project}/locations/{location}/regionalEndpoints/{regional_endpoi
+//     nt}`.
+func (r *ProjectsLocationsRegionalEndpointsService) Get(name string) *ProjectsLocationsRegionalEndpointsGetCall {
+	c := &ProjectsLocationsRegionalEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegionalEndpointsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegionalEndpointsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRegionalEndpointsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRegionalEndpointsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegionalEndpointsGetCall) Context(ctx context.Context) *ProjectsLocationsRegionalEndpointsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegionalEndpointsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegionalEndpointsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.regionalEndpoints.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RegionalEndpoint.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRegionalEndpointsGetCall) Do(opts ...googleapi.CallOption) (*RegionalEndpoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RegionalEndpoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+type ProjectsLocationsRegionalEndpointsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists RegionalEndpoints in a given project and location.
+//
+// - parent: The parent resource's name of the RegionalEndpoint.
+func (r *ProjectsLocationsRegionalEndpointsService) List(parent string) *ProjectsLocationsRegionalEndpointsListCall {
+	c := &ProjectsLocationsRegionalEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the results listed in the response.
+func (c *ProjectsLocationsRegionalEndpointsListCall) Filter(filter string) *ProjectsLocationsRegionalEndpointsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sort the results by a certain
+// order.
+func (c *ProjectsLocationsRegionalEndpointsListCall) OrderBy(orderBy string) *ProjectsLocationsRegionalEndpointsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsRegionalEndpointsListCall) PageSize(pageSize int64) *ProjectsLocationsRegionalEndpointsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token.
+func (c *ProjectsLocationsRegionalEndpointsListCall) PageToken(pageToken string) *ProjectsLocationsRegionalEndpointsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRegionalEndpointsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegionalEndpointsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRegionalEndpointsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRegionalEndpointsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRegionalEndpointsListCall) Context(ctx context.Context) *ProjectsLocationsRegionalEndpointsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRegionalEndpointsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegionalEndpointsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/regionalEndpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkconnectivity.projects.locations.regionalEndpoints.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRegionalEndpointsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegionalEndpointsListCall) Do(opts ...googleapi.CallOption) (*ListRegionalEndpointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRegionalEndpointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRegionalEndpointsListCall) Pages(ctx context.Context, f func(*ListRegionalEndpointsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

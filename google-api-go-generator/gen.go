@@ -2224,6 +2224,10 @@ func (meth *Method) generateCode() {
 		contentType = `"application/json"`
 	}
 	pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_ )`, contentType)
+	apiVersion := meth.m.APIVersion
+	if apiVersion != "" {
+		pn(`reqHeaders.Set("x-goog-api-version", %q)`, apiVersion)
+	}
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)

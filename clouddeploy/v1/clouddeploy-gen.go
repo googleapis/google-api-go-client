@@ -4355,6 +4355,36 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// SkaffoldGCBRepoSource: Cloud Build V2 Repository containing Skaffold
+// Configs.
+type SkaffoldGCBRepoSource struct {
+	// Path: Optional. Relative path from the repository root to the Skaffold
+	// Config file.
+	Path string `json:"path,omitempty"`
+	// Ref: Optional. Branch or tag to use when cloning the repository.
+	Ref string `json:"ref,omitempty"`
+	// Repository: Required. Name of the Cloud Build V2 Repository. Format is
+	// projects/{project}/locations/{location}/connections/{connection}/repositories
+	// /{repository}.
+	Repository string `json:"repository,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldGCBRepoSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldGCBRepoSource
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // SkaffoldGCSSource: Cloud Storage bucket containing Skaffold Config modules.
 type SkaffoldGCSSource struct {
 	// Path: Optional. Relative path from the source to the Skaffold file.
@@ -4386,7 +4416,7 @@ func (s *SkaffoldGCSSource) MarshalJSON() ([]byte, error) {
 type SkaffoldGitSource struct {
 	// Path: Optional. Relative path from the repository root to the Skaffold file.
 	Path string `json:"path,omitempty"`
-	// Ref: Optional. Git ref the package should be cloned from.
+	// Ref: Optional. Git branch or tag to use when cloning the repository.
 	Ref string `json:"ref,omitempty"`
 	// Repo: Required. Git repository the package should be cloned from.
 	Repo string `json:"repo,omitempty"`
@@ -4415,6 +4445,9 @@ type SkaffoldModules struct {
 	Configs []string `json:"configs,omitempty"`
 	// Git: Remote git repository containing the Skaffold Config modules.
 	Git *SkaffoldGitSource `json:"git,omitempty"`
+	// GoogleCloudBuildRepo: Cloud Build V2 repository containing the Skaffold
+	// Config modules.
+	GoogleCloudBuildRepo *SkaffoldGCBRepoSource `json:"googleCloudBuildRepo,omitempty"`
 	// GoogleCloudStorage: Cloud Storage bucket containing the Skaffold Config
 	// modules.
 	GoogleCloudStorage *SkaffoldGCSSource `json:"googleCloudStorage,omitempty"`

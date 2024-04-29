@@ -793,7 +793,11 @@ func (s *Document) MarshalJSON() ([]byte, error) {
 // DocumentChange: A Document has changed. May be the result of multiple
 // writes, including deletes, that ultimately resulted in a new value for the
 // Document. Multiple DocumentChange messages may be returned for the same
-// logical change, if multiple targets are affected.
+// logical change, if multiple targets are affected. For PipelineQueryTargets,
+// `document` will be in the new pipeline format, For a Listen stream with both
+// QueryTargets and PipelineQueryTargets present, if a document matches both
+// types of queries, then a separate DocumentChange messages will be sent out
+// one for each set.
 type DocumentChange struct {
 	// Document: The new state of the Document. If `mask` is set, contains only
 	// fields that were updated or added.
@@ -1281,7 +1285,7 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 
 // FindNearest: Nearest Neighbors search config.
 type FindNearest struct {
-	// DistanceMeasure: Required. The Distance Measure to use, required.
+	// DistanceMeasure: Required. The distance measure to use, required.
 	//
 	// Possible values:
 	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
@@ -2569,7 +2573,7 @@ type StructuredQuery struct {
 	// rather than the start position. Requires: * The number of values cannot be
 	// greater than the number of fields specified in the `ORDER BY` clause.
 	EndAt *Cursor `json:"endAt,omitempty"`
-	// FindNearest: Optional. A potential Nearest Neighbors Search. Applies after
+	// FindNearest: Optional. A potential nearest neighbors search. Applies after
 	// all other filters and ordering. Finds the closest vector embeddings to the
 	// given query vector.
 	FindNearest *FindNearest `json:"findNearest,omitempty"`
@@ -2842,7 +2846,7 @@ func (s *UnaryFilter) MarshalJSON() ([]byte, error) {
 // Value: A message that can hold any of the supported value types.
 type Value struct {
 	// ArrayValue: An array value. Cannot directly contain another array value,
-	// though can contain an map which contains another array.
+	// though can contain a map which contains another array.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 	// BooleanValue: A boolean value.
 	BooleanValue bool `json:"booleanValue,omitempty"`

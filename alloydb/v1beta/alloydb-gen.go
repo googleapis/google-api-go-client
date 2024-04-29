@@ -580,7 +580,7 @@ type Cluster struct {
 	// Etag: For Resource freshness validation (https://google.aip.dev/154)
 	Etag string `json:"etag,omitempty"`
 	// GeminiConfig: Optional. Configuration parameters related to the Gemini in
-	// Databases add-on. See go/prd-enable-duet-ai-databases for more details.
+	// Databases add-on.
 	GeminiConfig *GeminiClusterConfig `json:"geminiConfig,omitempty"`
 	// InitialUser: Input only. Initial user to setup during cluster creation.
 	// Required. If used in `RestoreCluster` this is ignored.
@@ -933,8 +933,7 @@ func (s *FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GeminiClusterConfig: Cluster level configuration parameters related to the
-// Gemini in Databases add-on. See go/prd-enable-duet-ai-databases for more
-// details.
+// Gemini in Databases add-on.
 type GeminiClusterConfig struct {
 	// Entitled: Output only. Whether the Gemini in Databases add-on is enabled for
 	// the cluster. It will be true only if the add-on has been enabled for the
@@ -960,8 +959,7 @@ func (s *GeminiClusterConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GeminiInstanceConfig: Instance level configuration parameters related to the
-// Gemini in Databases add-on. See go/prd-enable-duet-ai-databases for more
-// details.
+// Gemini in Databases add-on.
 type GeminiInstanceConfig struct {
 	// Entitled: Output only. Whether the Gemini in Databases add-on is enabled for
 	// the instance. It will be true only if the add-on has been enabled for the
@@ -1175,7 +1173,7 @@ type Instance struct {
 	// in a random zone with available capacity.
 	GceZone string `json:"gceZone,omitempty"`
 	// GeminiConfig: Optional. Configuration parameters related to the Gemini in
-	// Databases add-on. See go/prd-enable-duet-ai-databases for more details.
+	// Databases add-on.
 	GeminiConfig *GeminiInstanceConfig `json:"geminiConfig,omitempty"`
 	// InstanceType: Required. The type of the instance. Specified at creation
 	// time.
@@ -2290,9 +2288,12 @@ type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
 	//   "REGIONAL" - Regional available instance.
 	//   "MULTI_REGIONAL" - Multi regional instance
 	//   "AVAILABILITY_TYPE_OTHER" - For rest of the other category
-	AvailabilityType            string `json:"availabilityType,omitempty"`
-	ExternalReplicaConfigured   bool   `json:"externalReplicaConfigured,omitempty"`
-	PromotableReplicaConfigured bool   `json:"promotableReplicaConfigured,omitempty"`
+	AvailabilityType string `json:"availabilityType,omitempty"`
+	// CrossRegionReplicaConfigured: Checks for resources that are configured to
+	// have redundancy, and ongoing replication across regions
+	CrossRegionReplicaConfigured bool `json:"crossRegionReplicaConfigured,omitempty"`
+	ExternalReplicaConfigured    bool `json:"externalReplicaConfigured,omitempty"`
+	PromotableReplicaConfigured  bool `json:"promotableReplicaConfigured,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailabilityType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3144,7 +3145,6 @@ type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
 	//
 	// Possible values:
 	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
-	//   "DUET_AI" - The root entitlement representing Duet AI package ownership.
 	//   "GEMINI" - The root entitlement representing Gemini package ownership.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EntitlementState") to

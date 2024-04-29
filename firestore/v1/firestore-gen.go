@@ -865,7 +865,11 @@ func (s *Document) MarshalJSON() ([]byte, error) {
 // DocumentChange: A Document has changed. May be the result of multiple
 // writes, including deletes, that ultimately resulted in a new value for the
 // Document. Multiple DocumentChange messages may be returned for the same
-// logical change, if multiple targets are affected.
+// logical change, if multiple targets are affected. For PipelineQueryTargets,
+// `document` will be in the new pipeline format, For a Listen stream with both
+// QueryTargets and PipelineQueryTargets present, if a document matches both
+// types of queries, then a separate DocumentChange messages will be sent out
+// one for each set.
 type DocumentChange struct {
 	// Document: The new state of the Document. If `mask` is set, contains only
 	// fields that were updated or added.
@@ -1353,7 +1357,7 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 
 // FindNearest: Nearest Neighbors search config.
 type FindNearest struct {
-	// DistanceMeasure: Required. The Distance Measure to use, required.
+	// DistanceMeasure: Required. The distance measure to use, required.
 	//
 	// Possible values:
 	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
@@ -1457,7 +1461,7 @@ type GoogleFirestoreAdminV1BackupSchedule struct {
 	// created and effective since. No backups will be created for this schedule
 	// before this time.
 	CreateTime string `json:"createTime,omitempty"`
-	// DailyRecurrence: For a schedule that runs daily at a specified time.
+	// DailyRecurrence: For a schedule that runs daily.
 	DailyRecurrence *GoogleFirestoreAdminV1DailyRecurrence `json:"dailyRecurrence,omitempty"`
 	// Name: Output only. The unique backup schedule identifier across all
 	// locations and databases for the given project. This will be auto-assigned.
@@ -1471,8 +1475,7 @@ type GoogleFirestoreAdminV1BackupSchedule struct {
 	// most recently updated. When a backup schedule is first created, this is the
 	// same as create_time.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// WeeklyRecurrence: For a schedule that runs weekly on a specific day and
-	// time.
+	// WeeklyRecurrence: For a schedule that runs weekly on a specific day.
 	WeeklyRecurrence *GoogleFirestoreAdminV1WeeklyRecurrence `json:"weeklyRecurrence,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1538,7 +1541,7 @@ type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
 }
 
 // GoogleFirestoreAdminV1DailyRecurrence: Represents a recurring schedule that
-// runs at a specific time every day. The time zone is UTC.
+// runs every day. The time zone is UTC.
 type GoogleFirestoreAdminV1DailyRecurrence struct {
 }
 
@@ -2196,7 +2199,7 @@ type GoogleFirestoreAdminV1IndexField struct {
 	//   "ASCENDING" - The field is ordered by ascending field value.
 	//   "DESCENDING" - The field is ordered by descending field value.
 	Order string `json:"order,omitempty"`
-	// VectorConfig: Indicates that this field supports nearest neighbors and
+	// VectorConfig: Indicates that this field supports nearest neighbor and
 	// distance operations on vector.
 	VectorConfig *GoogleFirestoreAdminV1VectorConfig `json:"vectorConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayConfig") to
@@ -3580,7 +3583,7 @@ type StructuredQuery struct {
 	// rather than the start position. Requires: * The number of values cannot be
 	// greater than the number of fields specified in the `ORDER BY` clause.
 	EndAt *Cursor `json:"endAt,omitempty"`
-	// FindNearest: Optional. A potential Nearest Neighbors Search. Applies after
+	// FindNearest: Optional. A potential nearest neighbors search. Applies after
 	// all other filters and ordering. Finds the closest vector embeddings to the
 	// given query vector.
 	FindNearest *FindNearest `json:"findNearest,omitempty"`
@@ -3853,7 +3856,7 @@ func (s *UnaryFilter) MarshalJSON() ([]byte, error) {
 // Value: A message that can hold any of the supported value types.
 type Value struct {
 	// ArrayValue: An array value. Cannot directly contain another array value,
-	// though can contain an map which contains another array.
+	// though can contain a map which contains another array.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 	// BooleanValue: A boolean value.
 	BooleanValue bool `json:"booleanValue,omitempty"`
@@ -4949,9 +4952,8 @@ type ProjectsDatabasesBackupSchedulesCreateCall struct {
 }
 
 // Create: Creates a backup schedule on a database. At most two backup
-// schedules can be configured on a database, one daily backup schedule with
-// retention up to 7 days and one weekly backup schedule with retention up to
-// 14 weeks.
+// schedules can be configured on a database, one daily backup schedule and one
+// weekly backup schedule.
 //
 //   - parent: The parent database. Format
 //     `projects/{project}/databases/{database}`.
@@ -5609,7 +5611,7 @@ func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *Pr
 // results. Currently, FirestoreAdmin.ListFields only supports listing fields
 // that have been explicitly overridden. To issue this query, call
 // FirestoreAdmin.ListFields with a filter that includes
-// `indexConfig.usesAncestorConfig:false` .
+// `indexConfig.usesAncestorConfig:false` or `ttlConfig:*`.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Filter(filter string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

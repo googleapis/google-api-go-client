@@ -143,3 +143,5 @@
 //		 // Do something with the response
 //		 fmt.Println(op.Response)
 package api
+
+import _ "cloud.google.com/go/civil"

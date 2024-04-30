@@ -1,5 +1,23 @@
 # Changes
 
+## [0.177.0](https://github.com/googleapis/google-api-go-client/compare/v0.176.1...v0.177.0) (2024-04-30)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2548](https://github.com/googleapis/google-api-go-client/issues/2548)) ([32a5d10](https://github.com/googleapis/google-api-go-client/commit/32a5d10b1870bacb93fdf065e5ce7923c04039e8))
+* **all:** Auto-regenerate discovery clients ([#2550](https://github.com/googleapis/google-api-go-client/issues/2550)) ([f9bf96d](https://github.com/googleapis/google-api-go-client/commit/f9bf96df3a9a7ee9eb5b4b01c60d50f4c70e45c9))
+* **all:** Auto-regenerate discovery clients ([#2551](https://github.com/googleapis/google-api-go-client/issues/2551)) ([4418f5f](https://github.com/googleapis/google-api-go-client/commit/4418f5fc551ce9a1edda277ddf483f3dd596d9aa))
+* **all:** Auto-regenerate discovery clients ([#2553](https://github.com/googleapis/google-api-go-client/issues/2553)) ([2f46e14](https://github.com/googleapis/google-api-go-client/commit/2f46e14ff3836ec2ed0e9b08c33b3ec3d29e707b))
+* **all:** Auto-regenerate discovery clients ([#2556](https://github.com/googleapis/google-api-go-client/issues/2556)) ([fb153c0](https://github.com/googleapis/google-api-go-client/commit/fb153c030eb62f149abff30e6948ea1933a9034c))
+* Reduce code size by 29% ([#2544](https://github.com/googleapis/google-api-go-client/issues/2544)) ([2f2505b](https://github.com/googleapis/google-api-go-client/commit/2f2505b83d909fafc4dcf24aff9bb6eb3b7333d7))
+
+
+### Bug Fixes
+
+* Split large compute file up ([#2546](https://github.com/googleapis/google-api-go-client/issues/2546)) ([1b6db6c](https://github.com/googleapis/google-api-go-client/commit/1b6db6c4446668599f8db8edda2dde85d7b6015d))
+* Temp patch cloud.google.com/go ambiguity ([#2560](https://github.com/googleapis/google-api-go-client/issues/2560)) ([3eb92f1](https://github.com/googleapis/google-api-go-client/commit/3eb92f1acf25ec8ac4eeb0fa75dbb04a10db36e0)), refs [#2543](https://github.com/googleapis/google-api-go-client/issues/2543) [#2559](https://github.com/googleapis/google-api-go-client/issues/2559)
+
 ## [0.176.1](https://github.com/googleapis/google-api-go-client/compare/v0.176.0...v0.176.1) (2024-04-23)
 
 

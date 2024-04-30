@@ -1335,7 +1335,7 @@ type TrustConfig struct {
 	// AllowlistedCertificates: Optional. A certificate matching an allowlisted
 	// certificate is always considered valid as long as the certificate is
 	// parseable, proof of private key possession is established, and constraints
-	// on the certificate’s SAN field are met.
+	// on the certificate's SAN field are met.
 	AllowlistedCertificates []*AllowlistedCertificate `json:"allowlistedCertificates,omitempty"`
 	// CreateTime: Output only. The creation timestamp of a TrustConfig.
 	CreateTime string `json:"createTime,omitempty"`

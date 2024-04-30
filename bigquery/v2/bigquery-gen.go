@@ -1797,8 +1797,13 @@ type CsvOptions struct {
 	// part of the field. BigQuery also supports the escape sequence "\t" (U+0009)
 	// to specify a tab separator. The default value is comma (",", U+002C).
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
-	// NullMarker: [Optional] A custom string that will represent a NULL value in
-	// CSV import data.
+	// NullMarker: Optional. Specifies a string that represents a null value in a
+	// CSV file. For example, if you specify "\N", BigQuery interprets "\N" as a
+	// null value when querying a CSV file. The default value is the empty string.
+	// If you set this property to a custom value, BigQuery throws an error if an
+	// empty string is present for all data types except for STRING and BYTE. For
+	// STRING and BYTE columns, BigQuery interprets the empty string as an empty
+	// value.
 	NullMarker string `json:"nullMarker,omitempty"`
 	// PreserveAsciiControlCharacters: Optional. Indicates if the embedded ASCII
 	// control characters (the first 32 characters in the ASCII-table, from '\x00'
@@ -2043,6 +2048,11 @@ type Dataset struct {
 	// value can be from 48 to 168 hours (2 to 7 days). The default value is 168
 	// hours if this is not set.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
+	// Restrictions: Optional. Output only. Restriction config for all tables and
+	// dataset. If set, restrict certain accesses on the dataset and all its tables
+	// based on the config. See Data egress
+	// (/bigquery/docs/analytics-hub-introduction#data_egress) for more details.
+	Restrictions *RestrictionConfig `json:"restrictions,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -2063,9 +2073,7 @@ type Dataset struct {
 	// Type: Output only. Same as `type` in `ListFormatDataset`. The type of the
 	// dataset, one of: * DEFAULT - only accessible by owner and authorized
 	// accounts, * PUBLIC - accessible by everyone, * LINKED - linked dataset, *
-	// EXTERNAL - dataset with definition in external metadata catalog. --
-	// *BIGLAKE_METASTORE - dataset that references a database created in
-	// BigLakeMetastore service. --
+	// EXTERNAL - dataset with definition in external metadata catalog.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2372,6 +2380,12 @@ type DifferentialPrivacyPolicy struct {
 	// only be updated via ALTER VIEW or circumvented by creating a new view that
 	// can be queried with a fresh budget.
 	DeltaBudget float64 `json:"deltaBudget,omitempty"`
+	// DeltaBudgetRemaining: Output only. The delta budget remaining. If budget is
+	// exhausted, no more queries are allowed. Note that the budget for queries
+	// that are in progress is deducted before the query executes. If the query
+	// fails or is cancelled then the budget is refunded. In this case the amount
+	// of budget remaining can increase.
+	DeltaBudgetRemaining float64 `json:"deltaBudgetRemaining,omitempty"`
 	// DeltaPerQuery: Optional. The delta value that is used per query. Delta
 	// represents the probability that any row will fail to be epsilon
 	// differentially private. Indicates the risk associated with exposing
@@ -2389,6 +2403,12 @@ type DifferentialPrivacyPolicy struct {
 	// policy and can only be updated via ALTER VIEW or circumvented by creating a
 	// new view that can be queried with a fresh budget.
 	EpsilonBudget float64 `json:"epsilonBudget,omitempty"`
+	// EpsilonBudgetRemaining: Output only. The epsilon budget remaining. If budget
+	// is exhausted, no more queries are allowed. Note that the budget for queries
+	// that are in progress is deducted before the query executes. If the query
+	// fails or is cancelled then the budget is refunded. In this case the amount
+	// of budget remaining can increase.
+	EpsilonBudgetRemaining float64 `json:"epsilonBudgetRemaining,omitempty"`
 	// MaxEpsilonPerQuery: Optional. The maximum epsilon value that a query can
 	// consume. If the subscriber specifies epsilon as a parameter in a SELECT
 	// query, it must be less than or equal to this value. The epsilon parameter
@@ -2426,10 +2446,12 @@ func (s *DifferentialPrivacyPolicy) MarshalJSON() ([]byte, error) {
 func (s *DifferentialPrivacyPolicy) UnmarshalJSON(data []byte) error {
 	type NoMethod DifferentialPrivacyPolicy
 	var s1 struct {
-		DeltaBudget        gensupport.JSONFloat64 `json:"deltaBudget"`
-		DeltaPerQuery      gensupport.JSONFloat64 `json:"deltaPerQuery"`
-		EpsilonBudget      gensupport.JSONFloat64 `json:"epsilonBudget"`
-		MaxEpsilonPerQuery gensupport.JSONFloat64 `json:"maxEpsilonPerQuery"`
+		DeltaBudget            gensupport.JSONFloat64 `json:"deltaBudget"`
+		DeltaBudgetRemaining   gensupport.JSONFloat64 `json:"deltaBudgetRemaining"`
+		DeltaPerQuery          gensupport.JSONFloat64 `json:"deltaPerQuery"`
+		EpsilonBudget          gensupport.JSONFloat64 `json:"epsilonBudget"`
+		EpsilonBudgetRemaining gensupport.JSONFloat64 `json:"epsilonBudgetRemaining"`
+		MaxEpsilonPerQuery     gensupport.JSONFloat64 `json:"maxEpsilonPerQuery"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -2437,8 +2459,10 @@ func (s *DifferentialPrivacyPolicy) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.DeltaBudget = float64(s1.DeltaBudget)
+	s.DeltaBudgetRemaining = float64(s1.DeltaBudgetRemaining)
 	s.DeltaPerQuery = float64(s1.DeltaPerQuery)
 	s.EpsilonBudget = float64(s1.EpsilonBudget)
+	s.EpsilonBudgetRemaining = float64(s1.EpsilonBudgetRemaining)
 	s.MaxEpsilonPerQuery = float64(s1.MaxEpsilonPerQuery)
 	return nil
 }
@@ -3335,6 +3359,34 @@ func (s *FeatureValue) UnmarshalJSON(data []byte) error {
 	}
 	s.NumericalValue = float64(s1.NumericalValue)
 	return nil
+}
+
+// ForeignTypeInfo: Metadata about the foreign data type definition such as the
+// system in which the type is defined.
+type ForeignTypeInfo struct {
+	// TypeSystem: Required. Specifies the system which defines the foreign data
+	// type.
+	//
+	// Possible values:
+	//   "TYPE_SYSTEM_UNSPECIFIED" - TypeSystem not specified.
+	//   "HIVE" - Represents Hive data types.
+	TypeSystem string `json:"typeSystem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TypeSystem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TypeSystem") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ForeignTypeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ForeignTypeInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
@@ -4267,16 +4319,15 @@ type JobConfigurationLoad struct {
 	// load job behavior. Currently, only the 'session_id' connection property is
 	// supported, and is used to resolve _SESSION appearing as the dataset id.
 	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
-	// CopyFilesOnly: Optional. [Experimental] Configures the load job to only copy
-	// files to the destination BigLake managed table with an external storage_uri,
-	// without reading file content and writing them to new files. Copying files
-	// only is supported when: * source_uris are in the same external storage
-	// system as the destination table but they do not overlap with storage_uri of
-	// the destination table. * source_format is the same file format as the
-	// destination table. * destination_table is an existing BigLake managed table.
-	// Its schema does not have default value expression. It schema does not have
-	// type parameters other than precision and scale. * No options other than the
-	// above are specified.
+	// CopyFilesOnly: Optional. [Experimental] Configures the load job to copy
+	// files directly to the destination BigLake managed table, bypassing file
+	// content reading and rewriting. Copying files only is supported when all the
+	// following are true: * `source_uris` are located in the same Cloud Storage
+	// location as the destination table's `storage_uri` location. *
+	// `source_format` is `PARQUET`. * `destination_table` is an existing BigLake
+	// managed table. The table's schema does not have flexible column names. The
+	// table's columns do not have type parameters other than precision and scale.
+	// * No options other than the above are specified.
 	CopyFilesOnly bool `json:"copyFilesOnly,omitempty"`
 	// CreateDisposition: Optional. Specifies whether the job is allowed to create
 	// new tables. The following values are supported: * CREATE_IF_NEEDED: If the
@@ -5004,7 +5055,8 @@ func (s *JobStatistics) UnmarshalJSON(data []byte) error {
 
 // JobStatisticsReservationUsage: Job resource usage breakdown by reservation.
 type JobStatisticsReservationUsage struct {
-	// Name: Reservation name or "unreserved" for on-demand resources usage.
+	// Name: Reservation name or "unreserved" for on-demand resource usage and
+	// multi-statement queries.
 	Name string `json:"name,omitempty"`
 	// SlotMs: Total slot milliseconds used by the reservation for a particular
 	// job.
@@ -5261,7 +5313,8 @@ func (s *JobStatistics2) MarshalJSON() ([]byte, error) {
 
 // JobStatistics2ReservationUsage: Job resource usage breakdown by reservation.
 type JobStatistics2ReservationUsage struct {
-	// Name: Reservation name or "unreserved" for on-demand resources usage.
+	// Name: Reservation name or "unreserved" for on-demand resource usage and
+	// multi-statement queries.
 	Name string `json:"name,omitempty"`
 	// SlotMs: Total slot milliseconds used by the reservation for a particular
 	// job.
@@ -5721,7 +5774,8 @@ type MaterializedView struct {
 	//   "BASE_TABLE_FINE_GRAINED_SECURITY_POLICY" - View is inaccessible to the
 	// user because of a fine-grained security policy on one of its base tables.
 	//   "BASE_TABLE_TOO_STALE" - One of the view's base tables is too stale. For
-	// example, the cached metadata of a biglake table needs to be updated.
+	// example, the cached metadata of a BigLake external table needs to be
+	// updated.
 	RejectedReason string `json:"rejectedReason,omitempty"`
 	// TableReference: The candidate materialized view.
 	TableReference *TableReference `json:"tableReference,omitempty"`
@@ -5746,9 +5800,8 @@ func (s *MaterializedView) MarshalJSON() ([]byte, error) {
 // MaterializedViewDefinition: Definition and configuration of a materialized
 // view.
 type MaterializedViewDefinition struct {
-	// AllowNonIncrementalDefinition: Optional. This option declares authors
-	// intention to construct a materialized view that will not be refreshed
-	// incrementally.
+	// AllowNonIncrementalDefinition: Optional. This option declares the intention
+	// to construct a materialized view that isn't refreshed incrementally.
 	AllowNonIncrementalDefinition bool `json:"allowNonIncrementalDefinition,omitempty"`
 	// EnableRefresh: Optional. Enable automatic refresh of the materialized view
 	// when the base table is updated. The default value is "true".
@@ -5903,6 +5956,8 @@ type MlStatistics struct {
 	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
 	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
 	//   "ONNX" - An imported ONNX model.
+	//   "TRANSFORM_ONLY" - Model to capture the manual preprocessing logic in the
+	// transform clause.
 	ModelType string `json:"modelType,omitempty"`
 	// TrainingType: Output only. Training type of the job.
 	//
@@ -6018,6 +6073,8 @@ type Model struct {
 	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
 	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
 	//   "ONNX" - An imported ONNX model.
+	//   "TRANSFORM_ONLY" - Model to capture the manual preprocessing logic in the
+	// transform clause.
 	ModelType string `json:"modelType,omitempty"`
 	// OptimalTrialIds: Output only. For single-objective hyperparameter tuning
 	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overvie
@@ -6191,6 +6248,16 @@ type ParquetOptions struct {
 	// EnumAsString: Optional. Indicates whether to infer Parquet ENUM logical type
 	// as STRING instead of BYTES by default.
 	EnumAsString bool `json:"enumAsString,omitempty"`
+	// MapTargetType: Optional. Will indicate how to represent a parquet map if
+	// present.
+	//
+	// Possible values:
+	//   "MAP_TARGET_TYPE_UNSPECIFIED" - In this mode, we fall back to the default.
+	// Currently (3/24) we represent the map as: struct map_field_name { repeated
+	// struct key_value { key value } }
+	//   "ARRAY_OF_STRUCT" - In this mode, we omit parquet's key_value struct and
+	// represent the map as: repeated struct map_field_name { key value }
+	MapTargetType string `json:"mapTargetType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableListInference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7248,6 +7315,33 @@ type RemoteModelInfo struct {
 
 func (s *RemoteModelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoteModelInfo
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+type RestrictionConfig struct {
+	// Type: Output only. Specifies the type of dataset/table restriction.
+	//
+	// Possible values:
+	//   "RESTRICTION_TYPE_UNSPECIFIED" - Should never be used.
+	//   "RESTRICTED_DATA_EGRESS" - Restrict data egress. See [Data
+	// egress](/bigquery/docs/analytics-hub-introduction#data_egress) for more
+	// details.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestrictionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RestrictionConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8412,6 +8506,10 @@ type Table struct {
 	// id. The value is the friendly short name of the tag value, e.g.
 	// "production".
 	ResourceTags map[string]string `json:"resourceTags,omitempty"`
+	// Restrictions: Optional. Output only. Restriction config for table. If set,
+	// restrict certain accesses on the table based on the config. See Data egress
+	// (/bigquery/docs/analytics-hub-introduction#data_egress) for more details.
+	Restrictions *RestrictionConfig `json:"restrictions,omitempty"`
 	// Schema: Optional. Describes the schema of this table.
 	Schema *TableSchema `json:"schema,omitempty"`
 	// SelfLink: Output only. A URL that can be used to access this resource again.
@@ -8788,6 +8886,10 @@ type TableFieldSchema struct {
 	// Fields: Optional. Describes the nested schema fields if the type property is
 	// set to RECORD.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
+	// ForeignTypeDefinition: Optional. Definition of the foreign data type. Only
+	// valid for top-level schema fields (not nested fields). If the type is
+	// FOREIGN, this field is required.
+	ForeignTypeDefinition string `json:"foreignTypeDefinition,omitempty"`
 	// MaxLength: Optional. Maximum length of values of this field for STRINGS or
 	// BYTES. If max_length is not specified, no maximum length constraint is
 	// imposed on this field. If type = "STRING", then max_length represents the
@@ -9190,6 +9292,9 @@ func (s *TableRow) MarshalJSON() ([]byte, error) {
 type TableSchema struct {
 	// Fields: Describes the fields in a table.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
+	// ForeignTypeInfo: Optional. Specifies metadata of the foreign data type
+	// definition in field schema (TableFieldSchema.foreign_type_definition).
+	ForeignTypeInfo *ForeignTypeInfo `json:"foreignTypeInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -10474,8 +10579,8 @@ func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
 // results of the request by label. The syntax is \"labels.<name>[:<value>]\".
 // Multiple filters can be ANDed together by connecting with a space. Example:
 // \"labels.department:receiving labels.active\". See Filtering datasets using
-// labels (/bigquery/docs/labeling-datasets#filtering_datasets_using_labels)
-// for details.
+// labels (/bigquery/docs/filtering-labels#filtering_datasets_using_labels) for
+// details.
 func (c *DatasetsListCall) Filter(filter string) *DatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

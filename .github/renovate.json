@@ -16,7 +16,10 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["^github.com/google/go-github/v"],
+      "matchPackagePatterns": [
+        "^github.com/google/go-github/v",
+        "^go.opentelemetry.io/contrib/instrumentation/",
+      ],
       "enabled": false
     }
   ],

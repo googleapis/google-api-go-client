@@ -666,6 +666,8 @@ func (s *Connection) MarshalJSON() ([]byte, error) {
 // ConnectorConfiguration: Represents concrete parameter values for Connector
 // Configuration.
 type ConnectorConfiguration struct {
+	// Asset: Optional. Data asset.
+	Asset *ConnectorConfigurationAsset `json:"asset,omitempty"`
 	// Authentication: Client authentication.
 	Authentication *ConnectorConfigurationAuthentication `json:"authentication,omitempty"`
 	// ConnectorId: Required. Immutable. The ID of the Connector these parameters
@@ -676,21 +678,49 @@ type ConnectorConfiguration struct {
 	Endpoint *ConnectorConfigurationEndpoint `json:"endpoint,omitempty"`
 	// Network: Networking configuration.
 	Network *ConnectorConfigurationNetwork `json:"network,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Authentication") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Authentication") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Asset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ConnectorConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfiguration
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationAsset: Data Asset - a resource within instance of the
+// system, reachable under specified endpoint. For example a database name in a
+// SQL DB.
+type ConnectorConfigurationAsset struct {
+	// Database: Optional. Name of the database.
+	Database string `json:"database,omitempty"`
+	// GoogleCloudResource: Full Google Cloud resource name -
+	// https://cloud.google.com/apis/design/resource_names#full_resource_name.
+	// Example: `//library.googleapis.com/shelves/shelf1/books/book2`
+	GoogleCloudResource string `json:"googleCloudResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationAsset
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

@@ -772,6 +772,43 @@ func (s *DownloadParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// EmailMessage: An email associated with a support case.
+type EmailMessage struct {
+	// Actor: Output only. The user or Google Support agent that created this email
+	// message. This is inferred from the headers on the email message.
+	Actor *Actor `json:"actor,omitempty"`
+	// BodyContent: Output only. The full email message body in both plaintext and
+	// richtext. The plaintext field of body_content will be elided in a
+	// best-effort attempt to remove extraneous reply threads.
+	BodyContent *TextContent `json:"bodyContent,omitempty"`
+	// CcEmailAddresses: Output only. Email addresses CCed on the email.
+	CcEmailAddresses []string `json:"ccEmailAddresses,omitempty"`
+	// CreateTime: Output only. Time when this email message object was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. Resource name for the email message.
+	Name string `json:"name,omitempty"`
+	// RecipientEmailAddresses: Output only. Email addresses the email was sent to.
+	RecipientEmailAddresses []string `json:"recipientEmailAddresses,omitempty"`
+	// Subject: Output only. Subject of the email.
+	Subject string `json:"subject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Actor") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Actor") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *EmailMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod EmailMessage
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // EscalateCaseRequest: The request message for the EscalateCase endpoint.
 type EscalateCaseRequest struct {
 	// Escalation: The escalation information to be sent with the escalation
@@ -825,6 +862,37 @@ type Escalation struct {
 
 func (s *Escalation) MarshalJSON() ([]byte, error) {
 	type NoMethod Escalation
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// FeedItem: A feed item associated with a support case.
+type FeedItem struct {
+	// Attachment: Output only. An attachment attached to the case.
+	Attachment *Attachment `json:"attachment,omitempty"`
+	// Comment: Output only. A comment added to the case.
+	Comment *Comment `json:"comment,omitempty"`
+	// DeletedAttachment: Output only. A deleted attachment that used to be
+	// associated with the support case.
+	DeletedAttachment *Attachment `json:"deletedAttachment,omitempty"`
+	// EmailMessage: Output only. An email message received in reply to the case.
+	EmailMessage *EmailMessage `json:"emailMessage,omitempty"`
+	// EventTime: Output only. Time corresponding to the event of this item.
+	EventTime string `json:"eventTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attachment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attachment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *FeedItem) MarshalJSON() ([]byte, error) {
+	type NoMethod FeedItem
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1132,6 +1200,66 @@ type SearchCasesResponse struct {
 
 func (s *SearchCasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchCasesResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ShowFeedResponse: The response message for the ShowFeed endpoint.
+type ShowFeedResponse struct {
+	// FeedItems: The list of feed items associated with the given Case.
+	FeedItems []*FeedItem `json:"feedItems,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results. This should be
+	// set in the `page_token` field of subsequent `ShowFeedRequests`. If
+	// unspecified, there are no more results to retrieve.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FeedItems") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FeedItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ShowFeedResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ShowFeedResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// TextContent: Used for content on cases/comments/etc. On input either
+// plain_text or rich_text should be supplied but not both.
+type TextContent struct {
+	// PlainText: Content in this field should be rendered and interpreted as-is.
+	// If not provided on input, then rich_text must be provided and this field
+	// will contain the plain text extracted from the rich_text input.
+	PlainText string `json:"plainText,omitempty"`
+	// RichText: Content in this field should be rendered and interpreted as HTML.
+	// If not provided on input, then plain_text must be provided and this field
+	// will contain the escaped plain text content. Only a subset of HTML tags and
+	// styles are allowed on input, all other tags will be stripped/sanitized.
+	// Output will always contain safe and valid HTML.
+	RichText string `json:"richText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PlainText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlainText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextContent) MarshalJSON() ([]byte, error) {
+	type NoMethod TextContent
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2288,6 +2416,161 @@ func (c *CasesSearchCall) Do(opts ...googleapi.CallOption) (*SearchCasesResponse
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *CasesSearchCall) Pages(ctx context.Context, f func(*SearchCasesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CasesShowFeedCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ShowFeed: Show items in the feed of this case, including case emails,
+// attachments, and comments.
+//
+//   - parent: The resource name of the case for which feed items should be
+//     listed.
+func (r *CasesService) ShowFeed(parent string) *CasesShowFeedCall {
+	c := &CasesShowFeedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to order feed items by,
+// followed by `asc` or `desc` postfix. The only valid field is
+// `creation_time`. This list is case-insensitive, default sorting order is
+// ascending, and the redundant space characters are insignificant. Example:
+// `creation_time desc`
+func (c *CasesShowFeedCall) OrderBy(orderBy string) *CasesShowFeedCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of feed
+// items fetched with each request.
+func (c *CasesShowFeedCall) PageSize(pageSize int64) *CasesShowFeedCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. If unspecified, the first page is retrieved.
+func (c *CasesShowFeedCall) PageToken(pageToken string) *CasesShowFeedCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CasesShowFeedCall) Fields(s ...googleapi.Field) *CasesShowFeedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CasesShowFeedCall) IfNoneMatch(entityTag string) *CasesShowFeedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CasesShowFeedCall) Context(ctx context.Context) *CasesShowFeedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CasesShowFeedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CasesShowFeedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+parent}:showFeed")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsupport.cases.showFeed" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ShowFeedResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CasesShowFeedCall) Do(opts ...googleapi.CallOption) (*ShowFeedResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ShowFeedResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CasesShowFeedCall) Pages(ctx context.Context, f func(*ShowFeedResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

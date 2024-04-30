@@ -1714,7 +1714,7 @@ func (c *ProjectsLocationsNamespacesListCall) OrderBy(orderBy string) *ProjectsL
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of items
-// to return.
+// to return. The default value is 100.
 func (c *ProjectsLocationsNamespacesListCall) PageSize(pageSize int64) *ProjectsLocationsNamespacesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2627,7 +2627,7 @@ func (c *ProjectsLocationsNamespacesServicesListCall) OrderBy(orderBy string) *P
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of items
-// to return.
+// to return. The default value is 100.
 func (c *ProjectsLocationsNamespacesServicesListCall) PageSize(pageSize int64) *ProjectsLocationsNamespacesServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3543,7 +3543,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) OrderBy(orderBy s
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of items
-// to return.
+// to return. The default value is 100.
 func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) PageSize(pageSize int64) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

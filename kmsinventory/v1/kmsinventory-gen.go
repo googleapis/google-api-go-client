@@ -536,6 +536,8 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// curve is only supported for HSM protection level. Other hash functions can
 	// also be used:
 	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.
@@ -713,6 +715,8 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	// curve is only supported for HSM protection level. Other hash functions can
 	// also be used:
 	// https://cloud.google.com/kms/docs/create-validate-signatures#ecdsa_support_for_other_hash_algorithms
+	//   "EC_SIGN_ED25519" - EdDSA on the Curve25519 in pure mode (taking data as
+	// input).
 	//   "HMAC_SHA256" - HMAC-SHA256 signing with a 256 bit key.
 	//   "HMAC_SHA1" - HMAC-SHA1 signing with a 160 bit key.
 	//   "HMAC_SHA384" - HMAC-SHA384 signing with a 384 bit key.

@@ -2083,6 +2083,10 @@ type DeviceConnectivityManagement struct {
 	// nonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13.
 	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
+	// WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
+	// Note that this does not affect which networks can be configured on the
+	// device. Supported on company-owned devices running Android 13 and above.
+	WifiSsidPolicy *WifiSsidPolicy `json:"wifiSsidPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfigureWifi") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5041,7 +5045,12 @@ type Policy struct {
 	StayOnPluggedModes []string `json:"stayOnPluggedModes,omitempty"`
 	// SystemUpdate: The system update policy, which controls how OS updates are
 	// applied. If the update type is WINDOWED, the update window will
-	// automatically apply to Play app updates as well.
+	// automatically apply to Play app updates as well.Note: Google Play system
+	// updates (https://source.android.com/docs/core/ota/modular-system) (also
+	// called Mainline updates) are automatically downloaded and require a device
+	// reboot to be installed. Refer to the mainline section in Manage system
+	// updates (https://developer.android.com/work/dpc/system-updates#mainline) for
+	// further details.
 	SystemUpdate *SystemUpdate `json:"systemUpdate,omitempty"`
 	// TetheringConfigDisabled: Whether configuring tethering and portable hotspots
 	// is disabled. If tetheringSettings is set to anything other than
@@ -5807,7 +5816,13 @@ func (s *StopLostModeUserAttemptEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SystemUpdate: Configuration for managing system updates
+// SystemUpdate: Configuration for managing system updatesNote: Google Play
+// system updates (https://source.android.com/docs/core/ota/modular-system)
+// (also called Mainline updates) are automatically downloaded but require a
+// device reboot to be installed. Refer to the mainline section in Manage
+// system updates
+// (https://developer.android.com/work/dpc/system-updates#mainline) for further
+// details.
 type SystemUpdate struct {
 	// EndMinutes: If the type is WINDOWED, the end of the maintenance window,
 	// measured as the number of minutes after midnight in device's local time.
@@ -6099,10 +6114,6 @@ type UsageLogEvent struct {
 	// has been set.
 	//   "LOST_MODE_LOCATION" - Indicates lostModeLocationEvent has been set.
 	//   "ENROLLMENT_COMPLETE" - Indicates enrollment_complete_event has been set.
-	//   "MAX_DEVICES_REGISTRATION_QUOTA_WARNING" - Indicates
-	// max_devices_registration_quota_warning_event has been set.
-	//   "MAX_DEVICES_REGISTRATION_QUOTA_EXHAUSTED" - Indicates
-	// max_devices_registration_quota_exhausted_event has been set.
 	EventType string `json:"eventType,omitempty"`
 	// FilePulledEvent: A file was downloaded from the device. Part of
 	// SECURITY_LOGS.
@@ -6378,6 +6389,69 @@ type WebToken struct {
 
 func (s *WebToken) MarshalJSON() ([]byte, error) {
 	type NoMethod WebToken
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// WifiSsid: Represents a Wi-Fi SSID.
+type WifiSsid struct {
+	// WifiSsid: Required. Wi-Fi SSID represented as a string.
+	WifiSsid string `json:"wifiSsid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WifiSsid") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WifiSsid") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *WifiSsid) MarshalJSON() ([]byte, error) {
+	type NoMethod WifiSsid
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
+// Note that this does not affect which networks can be configured on the
+// device. Supported on company-owned devices running Android 13 and above.
+type WifiSsidPolicy struct {
+	// WifiSsidPolicyType: Type of the Wi-Fi SSID policy to be applied.
+	//
+	// Possible values:
+	//   "WIFI_SSID_POLICY_TYPE_UNSPECIFIED" - Defaults to WIFI_SSID_DENYLIST.
+	// wifiSsids must not be set. There are no restrictions on which SSID the
+	// device can connect to.
+	//   "WIFI_SSID_DENYLIST" - The device cannot connect to any Wi-Fi network
+	// whose SSID is in wifiSsids, but can connect to other networks.
+	//   "WIFI_SSID_ALLOWLIST" - The device can make Wi-Fi connections only to the
+	// SSIDs in wifiSsids. wifiSsids must not be empty. The device will not be able
+	// to connect to any other Wi-Fi network.
+	WifiSsidPolicyType string `json:"wifiSsidPolicyType,omitempty"`
+	// WifiSsids: Optional. List of Wi-Fi SSIDs that should be applied in the
+	// policy. This field must be non-empty when WifiSsidPolicyType is set to
+	// WIFI_SSID_ALLOWLIST. If this is set to a non-empty list, then a
+	// nonComplianceDetail detail with API_LEVEL is reported if the Android version
+	// is less than 13 and a nonComplianceDetail with MANAGEMENT_MODE is reported
+	// for non-company-owned devices.
+	WifiSsids []*WifiSsid `json:"wifiSsids,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "WifiSsidPolicyType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "WifiSsidPolicyType") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *WifiSsidPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod WifiSsidPolicy
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

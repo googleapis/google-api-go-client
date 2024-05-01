@@ -218,6 +218,7 @@ func NewProjectsLocationsRepositoriesService(s *Service) *ProjectsLocationsRepos
 	rs.AptArtifacts = NewProjectsLocationsRepositoriesAptArtifactsService(s)
 	rs.DockerImages = NewProjectsLocationsRepositoriesDockerImagesService(s)
 	rs.Files = NewProjectsLocationsRepositoriesFilesService(s)
+	rs.GenericArtifacts = NewProjectsLocationsRepositoriesGenericArtifactsService(s)
 	rs.GoModules = NewProjectsLocationsRepositoriesGoModulesService(s)
 	rs.GoogetArtifacts = NewProjectsLocationsRepositoriesGoogetArtifactsService(s)
 	rs.KfpArtifacts = NewProjectsLocationsRepositoriesKfpArtifactsService(s)
@@ -237,6 +238,8 @@ type ProjectsLocationsRepositoriesService struct {
 	DockerImages *ProjectsLocationsRepositoriesDockerImagesService
 
 	Files *ProjectsLocationsRepositoriesFilesService
+
+	GenericArtifacts *ProjectsLocationsRepositoriesGenericArtifactsService
 
 	GoModules *ProjectsLocationsRepositoriesGoModulesService
 
@@ -279,6 +282,15 @@ func NewProjectsLocationsRepositoriesFilesService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsRepositoriesFilesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRepositoriesGenericArtifactsService(s *Service) *ProjectsLocationsRepositoriesGenericArtifactsService {
+	rs := &ProjectsLocationsRepositoriesGenericArtifactsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRepositoriesGenericArtifactsService struct {
 	s *Service
 }
 
@@ -869,6 +881,37 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GenericArtifact: GenericArtifact represents a generic artifact
+type GenericArtifact struct {
+	// CreateTime: Output only. The time when the Generic module is created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Resource name of the generic artifact. project, location, repository,
+	// package_id and version_id create a unique generic artifact. i.e.
+	// "projects/test-project/locations/us-west4/repositories/test-repo/
+	// genericArtifacts/package_id:version_id"
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The time when the Generic module is updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Version: The version of the generic artifact.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenericArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod GenericArtifact
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2406,6 +2449,7 @@ type Repository struct {
 	//   "PYTHON" - Python package format.
 	//   "KFP" - Kubeflow Pipelines package format.
 	//   "GO" - Go package format.
+	//   "GENERIC" - Generic package format.
 	Format string `json:"format,omitempty"`
 	// KmsKeyName: The Cloud KMS resource name of the customer managed encryption
 	// key that's used to encrypt the contents of the Repository. Has the form:
@@ -2669,6 +2713,83 @@ type UploadAptArtifactResponse struct {
 
 func (s *UploadAptArtifactResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadAptArtifactResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadGenericArtifactMediaResponse: The response to upload a generic
+// artifact.
+type UploadGenericArtifactMediaResponse struct {
+	// Operation: Operation that will be returned to the user.
+	Operation *Operation `json:"operation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Operation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadGenericArtifactMediaResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadGenericArtifactMediaResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// UploadGenericArtifactMetadata: The operation metadata for uploading generic
+// artifacts.
+type UploadGenericArtifactMetadata struct {
+}
+
+// UploadGenericArtifactRequest: The request to upload a generic artifact. The
+// created GenericArtifact will have the resource name
+// {parent}/genericArtifacts/package_id:version_id. The created file will have
+// the resource name {parent}/files/package_id:version_id:filename.
+type UploadGenericArtifactRequest struct {
+	// Filename: The name of the file of the generic artifact to be uploaded. E.g.
+	// "example-file.zip" The filename should only include letters, numbers, and
+	// url safe characters, i.e. [a-zA-Z0-9-_.~@].
+	Filename string `json:"filename,omitempty"`
+	// Name: Deprecated. Use package_id, version_id and filename instead. The
+	// resource name of the generic artifact. E.g.
+	// "projects/math/locations/us/repositories/operations/genericArtifacts/addition
+	// /1.0.0/add.py"
+	Name string `json:"name,omitempty"`
+	// PackageId: The ID of the package of the generic artifact. If the package
+	// does not exist, a new package will be created. E.g. "pkg-1" The package_id
+	// must start with a letter, end with a letter or number, only contain letters,
+	// numbers, hyphens and periods i.e. [a-z0-9-.], and cannot exceed 256
+	// characters.
+	PackageId string `json:"packageId,omitempty"`
+	// VersionId: The ID of the version of the generic artifact. If the version
+	// does not exist, a new version will be created. E.g."1.0.0" The version_id
+	// must start and end with a letter or number, can only contain lowercase
+	// letters, numbers, hyphens and periods, i.e. [a-z0-9-.] and cannot exceed a
+	// total of 128 characters. While "latest" is a well-known name for the latest
+	// version of a package, it is not yet supported and is reserved for future
+	// use. Creating a version called "latest" is not allowed.
+	VersionId string `json:"versionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filename") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filename") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *UploadGenericArtifactRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UploadGenericArtifactRequest
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5753,6 +5874,179 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRepositoriesGenericArtifactsUploadCall struct {
+	s                            *Service
+	parent                       string
+	uploadgenericartifactrequest *UploadGenericArtifactRequest
+	urlParams_                   gensupport.URLParams
+	mediaInfo_                   *gensupport.MediaInfo
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Upload: Directly uploads a Generic artifact. The returned Operation will
+// complete once the resources are uploaded. Package, Version, and File
+// resources are created based on the uploaded artifact. Uploaded artifacts
+// that conflict with existing resources will raise an ALREADY_EXISTS error.
+//
+//   - parent: The resource name of the repository where the generic artifact
+//     will be uploaded.
+func (r *ProjectsLocationsRepositoriesGenericArtifactsService) Upload(parent string, uploadgenericartifactrequest *UploadGenericArtifactRequest) *ProjectsLocationsRepositoriesGenericArtifactsUploadCall {
+	c := &ProjectsLocationsRepositoriesGenericArtifactsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.uploadgenericartifactrequest = uploadgenericartifactrequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsRepositoriesGenericArtifactsUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsRepositoriesGenericArtifactsUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsRepositoriesGenericArtifactsUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesGenericArtifactsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesGenericArtifactsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadgenericartifactrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/genericArtifacts:create")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/{+parent}/genericArtifacts:create")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	if body == nil {
+		body = new(bytes.Buffer)
+		reqHeaders.Set("Content-Type", "application/json")
+	}
+	body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.genericArtifacts.upload" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UploadGenericArtifactMediaResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesGenericArtifactsUploadCall) Do(opts ...googleapi.CallOption) (*UploadGenericArtifactMediaResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &UploadGenericArtifactMediaResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
 }
 
 type ProjectsLocationsRepositoriesGoModulesUploadCall struct {

@@ -3183,7 +3183,7 @@ func (s *GenericClassListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GenericObject: Generic Object Next ID: 121
+// GenericObject: Generic Object
 type GenericObject struct {
 	// AppLinkData: Information about the partner app link. The maximum number of
 	// these fields displayed is 10.

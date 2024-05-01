@@ -2228,6 +2228,88 @@ func (s *BubbleChartSpec) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CancelDataSourceRefreshRequest: Cancels one or multiple refreshes of data
+// source objects in the spreadsheet by the specified references.
+type CancelDataSourceRefreshRequest struct {
+	// DataSourceId: Reference to a DataSource. If specified, cancels all
+	// associated data source object refreshes for this data source.
+	DataSourceId string `json:"dataSourceId,omitempty"`
+	// IsAll: Cancels all existing data source object refreshes for all data
+	// sources in the spreadsheet.
+	IsAll bool `json:"isAll,omitempty"`
+	// References: References to data source objects whose refreshes are to be
+	// cancelled.
+	References *DataSourceObjectReferences `json:"references,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataSourceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelDataSourceRefreshRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelDataSourceRefreshRequest
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelDataSourceRefreshResponse: The response from cancelling one or
+// multiple data source object refreshes.
+type CancelDataSourceRefreshResponse struct {
+	// Statuses: The cancellation statuses of refreshes of all data source objects
+	// specified in the request. If is_all is specified, the field contains only
+	// those in failure status. Refreshing and canceling refresh the same data
+	// source object is also not allowed in the same `batchUpdate`.
+	Statuses []*CancelDataSourceRefreshStatus `json:"statuses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Statuses") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Statuses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelDataSourceRefreshResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelDataSourceRefreshResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelDataSourceRefreshStatus: The status of cancelling a single data source
+// object refresh.
+type CancelDataSourceRefreshStatus struct {
+	// Reference: Reference to the data source object whose refresh is being
+	// cancelled.
+	Reference *DataSourceObjectReference `json:"reference,omitempty"`
+	// RefreshCancellationStatus: The cancellation status.
+	RefreshCancellationStatus *RefreshCancellationStatus `json:"refreshCancellationStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reference") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reference") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelDataSourceRefreshStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelDataSourceRefreshStatus
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // CandlestickChartSpec: A candlestick chart.
 type CandlestickChartSpec struct {
 	// Data: The Candlestick chart data. Only one CandlestickData is supported.
@@ -6851,6 +6933,51 @@ func (s *RandomizeRangeRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// RefreshCancellationStatus: The status of a refresh cancellation. You can
+// send cancel request to explicitly cancel one or multiple data source object
+// refreshes.
+type RefreshCancellationStatus struct {
+	// ErrorCode: The error code.
+	//
+	// Possible values:
+	//   "REFRESH_CANCELLATION_ERROR_CODE_UNSPECIFIED" - Default value, do not use.
+	//   "EXECUTION_NOT_FOUND" - Execution to be cancelled not found in the query
+	// engine or in Sheets.
+	//   "CANCEL_PERMISSION_DENIED" - The user does not have permission to cancel
+	// the query.
+	//   "QUERY_EXECUTION_COMPLETED" - The query execution has already completed
+	// and thus could not be cancelled.
+	//   "CONCURRENT_CANCELLATION" - There is already another cancellation in
+	// process.
+	//   "CANCEL_OTHER_ERROR" - All other errors.
+	ErrorCode string `json:"errorCode,omitempty"`
+	// State: The state of a call to cancel a refresh in Sheets.
+	//
+	// Possible values:
+	//   "REFRESH_CANCELLATION_STATE_UNSPECIFIED" - Default value, do not use.
+	//   "CANCEL_SUCCEEDED" - The API call to Sheets to cancel a refresh has
+	// succeeded. This does not mean that the cancel happened successfully, but
+	// that the call has been made successfully.
+	//   "CANCEL_FAILED" - The API call to Sheets to cancel a refresh has failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *RefreshCancellationStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RefreshCancellationStatus
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // RefreshDataSourceObjectExecutionStatus: The execution status of refreshing
 // one data source object.
 type RefreshDataSourceObjectExecutionStatus struct {
@@ -7004,6 +7131,9 @@ type Request struct {
 	// AutoResizeDimensions: Automatically resizes one or more dimensions based on
 	// the contents of the cells in that dimension.
 	AutoResizeDimensions *AutoResizeDimensionsRequest `json:"autoResizeDimensions,omitempty"`
+	// CancelDataSourceRefresh: Cancels refreshes of one or multiple data sources
+	// and associated dbobjects.
+	CancelDataSourceRefresh *CancelDataSourceRefreshRequest `json:"cancelDataSourceRefresh,omitempty"`
 	// ClearBasicFilter: Clears the basic filter on a sheet.
 	ClearBasicFilter *ClearBasicFilterRequest `json:"clearBasicFilter,omitempty"`
 	// CopyPaste: Copies data from one area and pastes it to another.
@@ -7150,6 +7280,9 @@ type Response struct {
 	AddSheet *AddSheetResponse `json:"addSheet,omitempty"`
 	// AddSlicer: A reply from adding a slicer.
 	AddSlicer *AddSlicerResponse `json:"addSlicer,omitempty"`
+	// CancelDataSourceRefresh: A reply from cancelling data source object
+	// refreshes.
+	CancelDataSourceRefresh *CancelDataSourceRefreshResponse `json:"cancelDataSourceRefresh,omitempty"`
 	// CreateDeveloperMetadata: A reply from creating a developer metadata entry.
 	CreateDeveloperMetadata *CreateDeveloperMetadataResponse `json:"createDeveloperMetadata,omitempty"`
 	// DeleteConditionalFormatRule: A reply from deleting a conditional format

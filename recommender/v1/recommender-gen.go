@@ -668,7 +668,7 @@ type GoogleCloudRecommenderV1InsightTypeConfig struct {
 	// InsightTypeGenerationConfig: InsightTypeGenerationConfig which configures
 	// the generation of insights for this insight type.
 	InsightTypeGenerationConfig *GoogleCloudRecommenderV1InsightTypeGenerationConfig `json:"insightTypeGenerationConfig,omitempty"`
-	// Name: Name of insight type config. Eg,
+	// Name: Identifier. Name of insight type config. Eg,
 	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]
 	// /config
 	Name string `json:"name,omitempty"`
@@ -1200,7 +1200,7 @@ type GoogleCloudRecommenderV1RecommenderConfig struct {
 	// Etag: Fingerprint of the RecommenderConfig. Provides optimistic locking when
 	// updating.
 	Etag string `json:"etag,omitempty"`
-	// Name: Name of recommender config. Eg,
+	// Name: Identifier. Name of recommender config. Eg,
 	// projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]/
 	// config
 	Name string `json:"name,omitempty"`
@@ -1540,7 +1540,7 @@ type BillingAccountsLocationsInsightTypesUpdateConfigCall struct {
 // UpdateConfig: Updates an InsightTypeConfig change. This will create a new
 // revision of the config.
 //
-//   - name: Name of insight type config. Eg,
+//   - name: Identifier. Name of insight type config. Eg,
 //     projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
 //     D]/config.
 func (r *BillingAccountsLocationsInsightTypesService) UpdateConfig(name string, googlecloudrecommenderv1insighttypeconfig *GoogleCloudRecommenderV1InsightTypeConfig) *BillingAccountsLocationsInsightTypesUpdateConfigCall {
@@ -2168,7 +2168,7 @@ type BillingAccountsLocationsRecommendersUpdateConfigCall struct {
 // UpdateConfig: Updates a Recommender Config. This will create a new revision
 // of the config.
 //
-//   - name: Name of recommender config. Eg,
+//   - name: Identifier. Name of recommender config. Eg,
 //     projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
 //     ]/config.
 func (r *BillingAccountsLocationsRecommendersService) UpdateConfig(name string, googlecloudrecommenderv1recommenderconfig *GoogleCloudRecommenderV1RecommenderConfig) *BillingAccountsLocationsRecommendersUpdateConfigCall {
@@ -4226,7 +4226,7 @@ type OrganizationsLocationsInsightTypesUpdateConfigCall struct {
 // UpdateConfig: Updates an InsightTypeConfig change. This will create a new
 // revision of the config.
 //
-//   - name: Name of insight type config. Eg,
+//   - name: Identifier. Name of insight type config. Eg,
 //     projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
 //     D]/config.
 func (r *OrganizationsLocationsInsightTypesService) UpdateConfig(name string, googlecloudrecommenderv1insighttypeconfig *GoogleCloudRecommenderV1InsightTypeConfig) *OrganizationsLocationsInsightTypesUpdateConfigCall {
@@ -4854,7 +4854,7 @@ type OrganizationsLocationsRecommendersUpdateConfigCall struct {
 // UpdateConfig: Updates a Recommender Config. This will create a new revision
 // of the config.
 //
-//   - name: Name of recommender config. Eg,
+//   - name: Identifier. Name of recommender config. Eg,
 //     projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
 //     ]/config.
 func (r *OrganizationsLocationsRecommendersService) UpdateConfig(name string, googlecloudrecommenderv1recommenderconfig *GoogleCloudRecommenderV1RecommenderConfig) *OrganizationsLocationsRecommendersUpdateConfigCall {
@@ -5805,7 +5805,7 @@ type ProjectsLocationsInsightTypesUpdateConfigCall struct {
 // UpdateConfig: Updates an InsightTypeConfig change. This will create a new
 // revision of the config.
 //
-//   - name: Name of insight type config. Eg,
+//   - name: Identifier. Name of insight type config. Eg,
 //     projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_I
 //     D]/config.
 func (r *ProjectsLocationsInsightTypesService) UpdateConfig(name string, googlecloudrecommenderv1insighttypeconfig *GoogleCloudRecommenderV1InsightTypeConfig) *ProjectsLocationsInsightTypesUpdateConfigCall {
@@ -6433,7 +6433,7 @@ type ProjectsLocationsRecommendersUpdateConfigCall struct {
 // UpdateConfig: Updates a Recommender Config. This will create a new revision
 // of the config.
 //
-//   - name: Name of recommender config. Eg,
+//   - name: Identifier. Name of recommender config. Eg,
 //     projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID
 //     ]/config.
 func (r *ProjectsLocationsRecommendersService) UpdateConfig(name string, googlecloudrecommenderv1recommenderconfig *GoogleCloudRecommenderV1RecommenderConfig) *ProjectsLocationsRecommendersUpdateConfigCall {

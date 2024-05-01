@@ -10606,7 +10606,7 @@ type GoogleCloudAiplatformV1FindNeighborsResponseNeighbor struct {
 	// returned only when "return_full_datapoint" is set to true. Otherwise, only
 	// the "datapoint_id" and "crowding_tag" fields are populated.
 	Datapoint *GoogleCloudAiplatformV1IndexDatapoint `json:"datapoint,omitempty"`
-	// Distance: The distance between the neighbor and the query vector.
+	// Distance: The distance between the neighbor and the dense embedding query.
 	Distance float64 `json:"distance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Datapoint") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11098,16 +11098,19 @@ func (s *GoogleCloudAiplatformV1GenieSource) MarshalJSON() ([]byte, error) {
 // GoogleCloudAiplatformV1GroundingMetadata: Metadata returned to client when
 // grounding is enabled.
 type GoogleCloudAiplatformV1GroundingMetadata struct {
+	// SearchEntryPoint: Optional. Google search entry for the following-up web
+	// searches.
+	SearchEntryPoint *GoogleCloudAiplatformV1SearchEntryPoint `json:"searchEntryPoint,omitempty"`
 	// WebSearchQueries: Optional. Web search queries for the following-up web
 	// search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WebSearchQueries") to
+	// ForceSendFields is a list of field names (e.g. "SearchEntryPoint") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WebSearchQueries") to include in
+	// NullFields is a list of field names (e.g. "SearchEntryPoint") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -11606,8 +11609,8 @@ type GoogleCloudAiplatformV1IndexDatapoint struct {
 	CrowdingTag *GoogleCloudAiplatformV1IndexDatapointCrowdingTag `json:"crowdingTag,omitempty"`
 	// DatapointId: Required. Unique identifier of the datapoint.
 	DatapointId string `json:"datapointId,omitempty"`
-	// FeatureVector: Required. Feature embedding vector. An array of numbers with
-	// the length of [NearestNeighborSearchConfig.dimensions].
+	// FeatureVector: Required. Feature embedding vector for dense index. An array
+	// of numbers with the length of [NearestNeighborSearchConfig.dimensions].
 	FeatureVector []float64 `json:"featureVector,omitempty"`
 	// NumericRestricts: Optional. List of Restrict of the datapoint, used to
 	// perform "restricted searches" where boolean rule are used to filter the
@@ -11882,7 +11885,7 @@ func (s *GoogleCloudAiplatformV1IndexPrivateEndpoints) MarshalJSON() ([]byte, er
 type GoogleCloudAiplatformV1IndexStats struct {
 	// ShardsCount: Output only. The number of shards in the Index.
 	ShardsCount int64 `json:"shardsCount,omitempty"`
-	// VectorsCount: Output only. The number of vectors in the Index.
+	// VectorsCount: Output only. The number of dense vectors in the Index.
 	VectorsCount int64 `json:"vectorsCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ShardsCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13552,6 +13555,7 @@ type GoogleCloudAiplatformV1MachineSpec struct {
 	//   "TPU_V2" - TPU v2.
 	//   "TPU_V3" - TPU v3.
 	//   "TPU_V4_POD" - TPU v4.
+	//   "TPU_V5_LITEPOD" - TPU v5.
 	AcceleratorType string `json:"acceleratorType,omitempty"`
 	// MachineType: Immutable. The type of the machine. See the list of machine
 	// types supported for prediction
@@ -16481,8 +16485,8 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError st
 	//   "INVALID_CSV_SYNTAX" - Invalid csv format.
 	//   "INVALID_AVRO_SYNTAX" - Invalid avro format.
 	//   "INVALID_EMBEDDING_ID" - The embedding id is not valid.
-	//   "EMBEDDING_SIZE_MISMATCH" - The size of the embedding vectors does not
-	// match with the specified dimension.
+	//   "EMBEDDING_SIZE_MISMATCH" - The size of the dense embedding vectors does
+	// not match with the specified dimension.
 	//   "NAMESPACE_MISSING" - The `namespace` field is missing.
 	//   "PARSING_ERROR" - Generic catch-all error. Only used for validation
 	// failure where the root cause cannot be easily retrieved programmatically.
@@ -16493,6 +16497,7 @@ type GoogleCloudAiplatformV1NearestNeighborSearchOperationMetadataRecordError st
 	//   "INVALID_NUMERIC_VALUE" - Numeric restrict has invalid numeric value
 	// specified.
 	//   "INVALID_ENCODING" - File is not in UTF_8 format.
+	//   "INVALID_TOKEN_VALUE" - Token restrict value is invalid.
 	ErrorType string `json:"errorType,omitempty"`
 	// RawRecord: The original content of this record.
 	RawRecord string `json:"rawRecord,omitempty"`
@@ -18170,6 +18175,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToAction struct {
 	Deploy *GoogleCloudAiplatformV1PublisherModelCallToActionDeploy `json:"deploy,omitempty"`
 	// DeployGke: Optional. Deploy PublisherModel to Google Kubernetes Engine.
 	DeployGke *GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke `json:"deployGke,omitempty"`
+	// FineTune: Optional. Fine tune the PublisherModel with the third-party model
+	// tuning UI.
+	FineTune *GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences `json:"fineTune,omitempty"`
 	// OpenEvaluationPipeline: Optional. Open evaluation pipeline of the
 	// PublisherModel.
 	OpenEvaluationPipeline *GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences `json:"openEvaluationPipeline,omitempty"`
@@ -18227,6 +18235,9 @@ type GoogleCloudAiplatformV1PublisherModelCallToActionDeploy struct {
 	// DedicatedResources: A description of resources that are dedicated to the
 	// DeployedModel, and that need a higher degree of manual configuration.
 	DedicatedResources *GoogleCloudAiplatformV1DedicatedResources `json:"dedicatedResources,omitempty"`
+	// DeployTaskName: Optional. The name of the deploy task (e.g., "text to image
+	// generation").
+	DeployTaskName string `json:"deployTaskName,omitempty"`
 	// LargeModelReference: Optional. Large model reference. When this is set,
 	// model_artifact_spec is not needed.
 	LargeModelReference *GoogleCloudAiplatformV1LargeModelReference `json:"largeModelReference,omitempty"`
@@ -23265,6 +23276,9 @@ type GoogleCloudAiplatformV1SchemaTextPromptDatasetMetadata struct {
 	PromptType string `json:"promptType,omitempty"`
 	// StopSequences: Customized stop sequences.
 	StopSequences []string `json:"stopSequences,omitempty"`
+	// SystemInstructionGcsUri: The Google Cloud Storage URI that stores the system
+	// instruction, starting with gs://.
+	SystemInstructionGcsUri string `json:"systemInstructionGcsUri,omitempty"`
 	// Temperature: Temperature value used for sampling set when the dataset was
 	// saved. This value is used to tune the degree of randomness.
 	Temperature float64 `json:"temperature,omitempty"`
@@ -26333,6 +26347,31 @@ type GoogleCloudAiplatformV1SearchDataItemsResponse struct {
 
 func (s *GoogleCloudAiplatformV1SearchDataItemsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SearchDataItemsResponse
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1SearchEntryPoint: Google search entry point.
+type GoogleCloudAiplatformV1SearchEntryPoint struct {
+	// RenderedContent: Optional. Web content snippet that can be embedded in a web
+	// page or an app webview.
+	RenderedContent string `json:"renderedContent,omitempty"`
+	// SdkBlob: Optional. Base64 encoded JSON representing array of tuple.
+	SdkBlob string `json:"sdkBlob,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RenderedContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RenderedContent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAiplatformV1SearchEntryPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1SearchEntryPoint
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -31547,7 +31586,9 @@ func (s *LanguageLabsAidaTrustRecitationProtoRecitationResult) MarshalJSON() ([]
 // LanguageLabsAidaTrustRecitationProtoSegmentResult: The recitation result for
 // each segment in a given input.
 type LanguageLabsAidaTrustRecitationProtoSegmentResult struct {
-	// AttributionDataset: The dataset the segment came from.
+	// AttributionDataset: The dataset the segment came from. Datasets change often
+	// as model evolves. Treat this field as informational only and avoid depending
+	// on it directly.
 	//
 	// Possible values:
 	//   "DATASET_UNSPECIFIED"
@@ -31998,9 +32039,8 @@ type LanguageLabsAidaTrustRecitationProtoSegmentResult struct {
 	AttributionDataset string `json:"attributionDataset,omitempty"`
 	// DisplayAttributionMessage: human-friendly string that contains information
 	// from doc_attribution which could be shown by clients
-	DisplayAttributionMessage string `json:"displayAttributionMessage,omitempty"`
-	// DocAttribution: populated when recitation_action == CITE
-	DocAttribution *LanguageLabsAidaTrustRecitationProtoDocAttribution `json:"docAttribution,omitempty"`
+	DisplayAttributionMessage string                                              `json:"displayAttributionMessage,omitempty"`
+	DocAttribution            *LanguageLabsAidaTrustRecitationProtoDocAttribution `json:"docAttribution,omitempty"`
 	// DocOccurrences: number of documents that contained this segment
 	DocOccurrences int64 `json:"docOccurrences,omitempty"`
 	EndIndex       int64 `json:"endIndex,omitempty"`
@@ -32016,6 +32056,20 @@ type LanguageLabsAidaTrustRecitationProtoSegmentResult struct {
 	//   "EXEMPT_FOUND_IN_PROMPT" - The recitation was found in prompt and is
 	// exempted from overall results
 	SegmentRecitationAction string `json:"segmentRecitationAction,omitempty"`
+	// SourceCategory: The category of the source dataset where the segment came
+	// from. This is more stable than Dataset.
+	//
+	// Possible values:
+	//   "SOURCE_CATEGORY_UNSPECIFIED"
+	//   "SOURCE_CATEGORY_WIKIPEDIA"
+	//   "SOURCE_CATEGORY_WEBDOCS"
+	//   "SOURCE_CATEGORY_GITHUB"
+	//   "SOURCE_CATEGORY_ARXIV"
+	//   "SOURCE_CATEGORY_PRIVATE_BOOKS"
+	//   "SOURCE_CATEGORY_OTHERS"
+	//   "SOURCE_CATEGORY_PUBLIC_BOOKS"
+	//   "SOURCE_CATEGORY_GNEWS"
+	SourceCategory string `json:"sourceCategory,omitempty"`
 	// StartIndex: The segment boundary start (inclusive) and end index (exclusive)
 	// in the given text. In the streaming RPC, the indexes always start from the
 	// beginning of the first text in the entire stream. The indexes are measured
@@ -32659,7 +32713,9 @@ func (s *LearningGenaiRecitationRecitationResult) MarshalJSON() ([]byte, error) 
 // LearningGenaiRecitationSegmentResult: The recitation result for each segment
 // in a given input.
 type LearningGenaiRecitationSegmentResult struct {
-	// AttributionDataset: The dataset the segment came from.
+	// AttributionDataset: The dataset the segment came from. Datasets change often
+	// as model evolves. Treat this field as informational only and avoid depending
+	// on it directly.
 	//
 	// Possible values:
 	//   "DATASET_UNSPECIFIED"
@@ -33110,9 +33166,8 @@ type LearningGenaiRecitationSegmentResult struct {
 	AttributionDataset string `json:"attributionDataset,omitempty"`
 	// DisplayAttributionMessage: human-friendly string that contains information
 	// from doc_attribution which could be shown by clients
-	DisplayAttributionMessage string `json:"displayAttributionMessage,omitempty"`
-	// DocAttribution: populated when recitation_action == CITE
-	DocAttribution *LearningGenaiRecitationDocAttribution `json:"docAttribution,omitempty"`
+	DisplayAttributionMessage string                                 `json:"displayAttributionMessage,omitempty"`
+	DocAttribution            *LearningGenaiRecitationDocAttribution `json:"docAttribution,omitempty"`
 	// DocOccurrences: number of documents that contained this segment
 	DocOccurrences int64 `json:"docOccurrences,omitempty"`
 	EndIndex       int64 `json:"endIndex,omitempty"`
@@ -33128,6 +33183,20 @@ type LearningGenaiRecitationSegmentResult struct {
 	//   "EXEMPT_FOUND_IN_PROMPT" - The recitation was found in prompt and is
 	// exempted from overall results
 	SegmentRecitationAction string `json:"segmentRecitationAction,omitempty"`
+	// SourceCategory: The category of the source dataset where the segment came
+	// from. This is more stable than Dataset.
+	//
+	// Possible values:
+	//   "SOURCE_CATEGORY_UNSPECIFIED"
+	//   "SOURCE_CATEGORY_WIKIPEDIA"
+	//   "SOURCE_CATEGORY_WEBDOCS"
+	//   "SOURCE_CATEGORY_GITHUB"
+	//   "SOURCE_CATEGORY_ARXIV"
+	//   "SOURCE_CATEGORY_PRIVATE_BOOKS"
+	//   "SOURCE_CATEGORY_OTHERS"
+	//   "SOURCE_CATEGORY_PUBLIC_BOOKS"
+	//   "SOURCE_CATEGORY_GNEWS"
+	SourceCategory string `json:"sourceCategory,omitempty"`
 	// StartIndex: The segment boundary start (inclusive) and end index (exclusive)
 	// in the given text. In the streaming RPC, the indexes always start from the
 	// beginning of the first text in the entire stream. The indexes are measured
@@ -34964,9 +35033,9 @@ type LearningServingLlmMessageMetadata struct {
 	// StreamTerminated: Whether the response is terminated during streaming
 	// return. Only used for streaming requests.
 	StreamTerminated bool `json:"streamTerminated,omitempty"`
-	// TotalDecodedTokenCount: NOT YET IMPLEMENTED. Aggregated number of total
-	// tokens decoded so far. For streaming, this is sum of all the tokens decoded
-	// so far i.e. aggregated count.
+	// TotalDecodedTokenCount: Total tokens decoded so far per response_candidate.
+	// For streaming: Count of all the tokens decoded so far (aggregated count).
+	// For unary: Count of all the tokens decoded per response_candidate.
 	TotalDecodedTokenCount int64 `json:"totalDecodedTokenCount,omitempty"`
 	// TranslatedUserPrompts: Translated user-prompt used for RAI post processing.
 	// This is for internal processing only. We will translate in pre-processor and
@@ -47467,7 +47536,7 @@ type ProjectsLocationsFeatureGroupsCreateCall struct {
 // Create: Creates a new FeatureGroup in a given project and location.
 //
 //   - parent: The resource name of the Location to create FeatureGroups. Format:
-//     `projects/{project}/locations/{location}'`.
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsFeatureGroupsService) Create(parent string, googlecloudaiplatformv1featuregroup *GoogleCloudAiplatformV1FeatureGroup) *ProjectsLocationsFeatureGroupsCreateCall {
 	c := &ProjectsLocationsFeatureGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

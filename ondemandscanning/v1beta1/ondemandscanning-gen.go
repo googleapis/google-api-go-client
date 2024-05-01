@@ -886,6 +886,8 @@ func (s *Completeness) MarshalJSON() ([]byte, error) {
 type ComplianceOccurrence struct {
 	NonComplianceReason string              `json:"nonComplianceReason,omitempty"`
 	NonCompliantFiles   []*NonCompliantFile `json:"nonCompliantFiles,omitempty"`
+	// Version: The OS and config version the benchmark was run on.
+	Version *ComplianceVersion `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NonComplianceReason") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -901,6 +903,36 @@ type ComplianceOccurrence struct {
 
 func (s *ComplianceOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceOccurrence
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// ComplianceVersion: Describes the CIS benchmark version that is applicable to
+// a given OS and os version.
+type ComplianceVersion struct {
+	// BenchmarkDocument: The name of the document that defines this benchmark,
+	// e.g. "CIS Container-Optimized OS".
+	BenchmarkDocument string `json:"benchmarkDocument,omitempty"`
+	// CpeUri: The CPE URI (https://cpe.mitre.org/specification/) this benchmark is
+	// applicable to.
+	CpeUri string `json:"cpeUri,omitempty"`
+	// Version: The version of the benchmark. This is set to the version of the
+	// OS-specific CIS document the benchmark is defined in.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BenchmarkDocument") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BenchmarkDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComplianceVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod ComplianceVersion
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 

@@ -777,9 +777,8 @@ type EmailMessage struct {
 	// Actor: Output only. The user or Google Support agent that created this email
 	// message. This is inferred from the headers on the email message.
 	Actor *Actor `json:"actor,omitempty"`
-	// BodyContent: Output only. The full email message body in both plaintext and
-	// richtext. The plaintext field of body_content will be elided in a
-	// best-effort attempt to remove extraneous reply threads.
+	// BodyContent: Output only. The full email message body. A best-effort attempt
+	// is made to remove extraneous reply threads.
 	BodyContent *TextContent `json:"bodyContent,omitempty"`
 	// CcEmailAddresses: Output only. Email addresses CCed on the email.
 	CcEmailAddresses []string `json:"ccEmailAddresses,omitempty"`
@@ -1232,19 +1231,10 @@ func (s *ShowFeedResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TextContent: Used for content on cases/comments/etc. On input either
-// plain_text or rich_text should be supplied but not both.
+// TextContent: Stores text attached to a support object.
 type TextContent struct {
 	// PlainText: Content in this field should be rendered and interpreted as-is.
-	// If not provided on input, then rich_text must be provided and this field
-	// will contain the plain text extracted from the rich_text input.
 	PlainText string `json:"plainText,omitempty"`
-	// RichText: Content in this field should be rendered and interpreted as HTML.
-	// If not provided on input, then plain_text must be provided and this field
-	// will contain the escaped plain text content. Only a subset of HTML tags and
-	// styles are allowed on input, all other tags will be stripped/sanitized.
-	// Output will always contain safe and valid HTML.
-	RichText string `json:"richText,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlainText") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2471,7 +2461,7 @@ func (c *CasesShowFeedCall) PageSize(pageSize int64) *CasesShowFeedCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A token identifying the
-// page of results to return. If unspecified, the first page is retrieved.
+// page of results to return. If unspecified, it retrieves the first page.
 func (c *CasesShowFeedCall) PageToken(pageToken string) *CasesShowFeedCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

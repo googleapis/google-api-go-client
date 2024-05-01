@@ -3686,7 +3686,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the Location to create FeatureGroups. Format: `projects/{project}/locations/{location}'`",
+                      "description": "Required. The resource name of the Location to create FeatureGroups. Format: `projects/{project}/locations/{location}`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -16204,7 +16204,7 @@
       }
     }
   },
-  "revision": "20240424",
+  "revision": "20240429",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionEmbedVideoResponse": {
@@ -22707,7 +22707,7 @@
           "description": "The datapoint of the neighbor. Note that full datapoints are returned only when \"return_full_datapoint\" is set to true. Otherwise, only the \"datapoint_id\" and \"crowding_tag\" fields are populated."
         },
         "distance": {
-          "description": "The distance between the neighbor and the query vector.",
+          "description": "The distance between the neighbor and the dense embedding query.",
           "format": "double",
           "type": "number"
         }
@@ -23033,6 +23033,10 @@
       "description": "Metadata returned to client when grounding is enabled.",
       "id": "GoogleCloudAiplatformV1GroundingMetadata",
       "properties": {
+        "searchEntryPoint": {
+          "$ref": "GoogleCloudAiplatformV1SearchEntryPoint",
+          "description": "Optional. Google search entry for the following-up web searches."
+        },
         "webSearchQueries": {
           "description": "Optional. Web search queries for the following-up web search.",
           "items": {
@@ -23480,7 +23484,7 @@
           "type": "string"
         },
         "featureVector": {
-          "description": "Required. Feature embedding vector. An array of numbers with the length of [NearestNeighborSearchConfig.dimensions].",
+          "description": "Required. Feature embedding vector for dense index. An array of numbers with the length of [NearestNeighborSearchConfig.dimensions].",
           "items": {
             "format": "float",
             "type": "number"
@@ -23701,7 +23705,7 @@
           "type": "integer"
         },
         "vectorsCount": {
-          "description": "Output only. The number of vectors in the Index.",
+          "description": "Output only. The number of dense vectors in the Index.",
           "format": "int64",
           "readOnly": true,
           "type": "string"
@@ -24720,7 +24724,8 @@
             "NVIDIA_H100_80GB",
             "TPU_V2",
             "TPU_V3",
-            "TPU_V4_POD"
+            "TPU_V4_POD",
+            "TPU_V5_LITEPOD"
           ],
           "enumDescriptions": [
             "Unspecified accelerator type, which means no accelerator.",
@@ -24735,7 +24740,8 @@
             "Nvidia H100 80Gb GPU.",
             "TPU v2.",
             "TPU v3.",
-            "TPU v4."
+            "TPU v4.",
+            "TPU v5."
           ],
           "type": "string"
         },
@@ -26840,7 +26846,8 @@
             "OP_IN_DATAPOINT",
             "MULTIPLE_VALUES",
             "INVALID_NUMERIC_VALUE",
-            "INVALID_ENCODING"
+            "INVALID_ENCODING",
+            "INVALID_TOKEN_VALUE"
           ],
           "enumDescriptions": [
             "Default, shall not be used.",
@@ -26849,14 +26856,15 @@
             "Invalid csv format.",
             "Invalid avro format.",
             "The embedding id is not valid.",
-            "The size of the embedding vectors does not match with the specified dimension.",
+            "The size of the dense embedding vectors does not match with the specified dimension.",
             "The `namespace` field is missing.",
             "Generic catch-all error. Only used for validation failure where the root cause cannot be easily retrieved programmatically.",
             "There are multiple restricts with the same `namespace` value.",
             "Numeric restrict has operator specified in datapoint.",
             "Numeric restrict has multiple values specified.",
             "Numeric restrict has invalid numeric value specified.",
-            "File is not in UTF_8 format."
+            "File is not in UTF_8 format.",
+            "Token restrict value is invalid."
           ],
           "type": "string"
         },
@@ -28260,6 +28268,10 @@
           "$ref": "GoogleCloudAiplatformV1PublisherModelCallToActionDeployGke",
           "description": "Optional. Deploy PublisherModel to Google Kubernetes Engine."
         },
+        "fineTune": {
+          "$ref": "GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences",
+          "description": "Optional. Fine tune the PublisherModel with the third-party model tuning UI."
+        },
         "openEvaluationPipeline": {
           "$ref": "GoogleCloudAiplatformV1PublisherModelCallToActionRegionalResourceReferences",
           "description": "Optional. Open evaluation pipeline of the PublisherModel."
@@ -28322,6 +28334,10 @@
         "dedicatedResources": {
           "$ref": "GoogleCloudAiplatformV1DedicatedResources",
           "description": "A description of resources that are dedicated to the DeployedModel, and that need a higher degree of manual configuration."
+        },
+        "deployTaskName": {
+          "description": "Optional. The name of the deploy task (e.g., \"text to image generation\").",
+          "type": "string"
         },
         "largeModelReference": {
           "$ref": "GoogleCloudAiplatformV1LargeModelReference",
@@ -31569,6 +31585,10 @@
           },
           "type": "array"
         },
+        "systemInstructionGcsUri": {
+          "description": "The Google Cloud Storage URI that stores the system instruction, starting with gs://.",
+          "type": "string"
+        },
         "temperature": {
           "description": "Temperature value used for sampling set when the dataset was saved. This value is used to tune the degree of randomness.",
           "format": "float",
@@ -33408,6 +33428,22 @@
         },
         "nextPageToken": {
           "description": "A token to retrieve next page of results. Pass to SearchDataItemsRequest.page_token to obtain that page.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1SearchEntryPoint": {
+      "description": "Google search entry point.",
+      "id": "GoogleCloudAiplatformV1SearchEntryPoint",
+      "properties": {
+        "renderedContent": {
+          "description": "Optional. Web content snippet that can be embedded in a web page or an app webview.",
+          "type": "string"
+        },
+        "sdkBlob": {
+          "description": "Optional. Base64 encoded JSON representing array of tuple.",
+          "format": "byte",
           "type": "string"
         }
       },
@@ -37339,7 +37375,7 @@
       "id": "LanguageLabsAidaTrustRecitationProtoSegmentResult",
       "properties": {
         "attributionDataset": {
-          "description": "The dataset the segment came from.",
+          "description": "The dataset the segment came from. Datasets change often as model evolves. Treat this field as informational only and avoid depending on it directly.",
           "enum": [
             "DATASET_UNSPECIFIED",
             "WIKIPEDIA",
@@ -38047,8 +38083,7 @@
           "type": "string"
         },
         "docAttribution": {
-          "$ref": "LanguageLabsAidaTrustRecitationProtoDocAttribution",
-          "description": "populated when recitation_action == CITE"
+          "$ref": "LanguageLabsAidaTrustRecitationProtoDocAttribution"
         },
         "docOccurrences": {
           "description": "number of documents that contained this segment",
@@ -38077,6 +38112,32 @@
             "indicate that a Segment should be blocked from being used",
             "for tagging high-frequency code snippets",
             "The recitation was found in prompt and is exempted from overall results"
+          ],
+          "type": "string"
+        },
+        "sourceCategory": {
+          "description": "The category of the source dataset where the segment came from. This is more stable than Dataset.",
+          "enum": [
+            "SOURCE_CATEGORY_UNSPECIFIED",
+            "SOURCE_CATEGORY_WIKIPEDIA",
+            "SOURCE_CATEGORY_WEBDOCS",
+            "SOURCE_CATEGORY_GITHUB",
+            "SOURCE_CATEGORY_ARXIV",
+            "SOURCE_CATEGORY_PRIVATE_BOOKS",
+            "SOURCE_CATEGORY_OTHERS",
+            "SOURCE_CATEGORY_PUBLIC_BOOKS",
+            "SOURCE_CATEGORY_GNEWS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
           ],
           "type": "string"
         },
@@ -38978,7 +39039,7 @@
       "id": "LearningGenaiRecitationSegmentResult",
       "properties": {
         "attributionDataset": {
-          "description": "The dataset the segment came from.",
+          "description": "The dataset the segment came from. Datasets change often as model evolves. Treat this field as informational only and avoid depending on it directly.",
           "enum": [
             "DATASET_UNSPECIFIED",
             "WIKIPEDIA",
@@ -39686,8 +39747,7 @@
           "type": "string"
         },
         "docAttribution": {
-          "$ref": "LearningGenaiRecitationDocAttribution",
-          "description": "populated when recitation_action == CITE"
+          "$ref": "LearningGenaiRecitationDocAttribution"
         },
         "docOccurrences": {
           "description": "number of documents that contained this segment",
@@ -39716,6 +39776,32 @@
             "indicate that a Segment should be blocked from being used",
             "for tagging high-frequency code snippets",
             "The recitation was found in prompt and is exempted from overall results"
+          ],
+          "type": "string"
+        },
+        "sourceCategory": {
+          "description": "The category of the source dataset where the segment came from. This is more stable than Dataset.",
+          "enum": [
+            "SOURCE_CATEGORY_UNSPECIFIED",
+            "SOURCE_CATEGORY_WIKIPEDIA",
+            "SOURCE_CATEGORY_WEBDOCS",
+            "SOURCE_CATEGORY_GITHUB",
+            "SOURCE_CATEGORY_ARXIV",
+            "SOURCE_CATEGORY_PRIVATE_BOOKS",
+            "SOURCE_CATEGORY_OTHERS",
+            "SOURCE_CATEGORY_PUBLIC_BOOKS",
+            "SOURCE_CATEGORY_GNEWS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
           ],
           "type": "string"
         },
@@ -41309,7 +41395,7 @@
           "type": "boolean"
         },
         "totalDecodedTokenCount": {
-          "description": "NOT YET IMPLEMENTED. Aggregated number of total tokens decoded so far. For streaming, this is sum of all the tokens decoded so far i.e. aggregated count.",
+          "description": "Total tokens decoded so far per response_candidate. For streaming: Count of all the tokens decoded so far (aggregated count). For unary: Count of all the tokens decoded per response_candidate.",
           "format": "int32",
           "type": "integer"
         },

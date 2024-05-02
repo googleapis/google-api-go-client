@@ -368,6 +368,7 @@ type Method struct {
 	Scopes                []string
 	MediaUpload           *MediaUpload
 	SupportsMediaDownload bool
+	APIVersion            string
 
 	JSONMap map[string]interface{} `json:"-"`
 }

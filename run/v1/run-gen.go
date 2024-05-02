@@ -1775,6 +1775,8 @@ type GoogleDevtoolsCloudbuildV1Build struct {
 	// The difference between finish_time and start_time is the duration of the
 	// build's execution.
 	FinishTime string `json:"finishTime,omitempty"`
+	// GitConfig: Optional. Configuration for git operations.
+	GitConfig *GoogleDevtoolsCloudbuildV1GitConfig `json:"gitConfig,omitempty"`
 	// Id: Output only. Unique identifier of the build.
 	Id string `json:"id,omitempty"`
 	// Images: A list of images to be pushed upon the successful completion of all
@@ -2239,6 +2241,36 @@ func (s *GoogleDevtoolsCloudbuildV1ConnectedRepository) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsCloudbuildV1DeveloperConnectConfig: This config defines the
+// location of a source through Developer Connect.
+type GoogleDevtoolsCloudbuildV1DeveloperConnectConfig struct {
+	// Dir: Required. Directory, relative to the source root, in which to run the
+	// build.
+	Dir string `json:"dir,omitempty"`
+	// GitRepositoryLink: Required. The Developer Connect Git repository link,
+	// formatted as `projects/*/locations/*/connections/*/gitRepositoryLink/*`.
+	GitRepositoryLink string `json:"gitRepositoryLink,omitempty"`
+	// Revision: Required. The revision to fetch from the Git repository such as a
+	// branch, a tag, a commit SHA, or any Git ref.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dir") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dir") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsCloudbuildV1DeveloperConnectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1DeveloperConnectConfig
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsCloudbuildV1FailureInfo: A fatal problem encountered during
 // the execution of the build.
 type GoogleDevtoolsCloudbuildV1FailureInfo struct {
@@ -2294,6 +2326,29 @@ type GoogleDevtoolsCloudbuildV1FileHashes struct {
 
 func (s *GoogleDevtoolsCloudbuildV1FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1FileHashes
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1GitConfig: GitConfig is a configuration for git
+// operations.
+type GoogleDevtoolsCloudbuildV1GitConfig struct {
+	// Http: Configuration for HTTP related git operations.
+	Http *GoogleDevtoolsCloudbuildV1HttpConfig `json:"http,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Http") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Http") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsCloudbuildV1GitConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1GitConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2360,6 +2415,30 @@ type GoogleDevtoolsCloudbuildV1Hash struct {
 
 func (s *GoogleDevtoolsCloudbuildV1Hash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1Hash
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1HttpConfig: HttpConfig is a configuration for HTTP
+// related git operations.
+type GoogleDevtoolsCloudbuildV1HttpConfig struct {
+	// ProxySecretVersionName: SecretVersion resource of the HTTP proxy URL. The
+	// proxy URL should be in format protocol://@]proxyhost[:port].
+	ProxySecretVersionName string `json:"proxySecretVersionName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProxySecretVersionName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProxySecretVersionName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsCloudbuildV1HttpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1HttpConfig
 	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2706,6 +2785,9 @@ type GoogleDevtoolsCloudbuildV1Source struct {
 	// ConnectedRepository: Optional. If provided, get the source from this 2nd-gen
 	// Google Cloud Build repository resource.
 	ConnectedRepository *GoogleDevtoolsCloudbuildV1ConnectedRepository `json:"connectedRepository,omitempty"`
+	// DeveloperConnectConfig: If provided, get the source from this Developer
+	// Connect config.
+	DeveloperConnectConfig *GoogleDevtoolsCloudbuildV1DeveloperConnectConfig `json:"developerConnectConfig,omitempty"`
 	// GitSource: If provided, get the source from this Git repository.
 	GitSource *GoogleDevtoolsCloudbuildV1GitSource `json:"gitSource,omitempty"`
 	// RepoSource: If provided, get the source from this location in a Cloud Source
@@ -4223,6 +4305,9 @@ type RevisionSpec struct {
 	EnableServiceLinks bool `json:"enableServiceLinks,omitempty"`
 	// ImagePullSecrets: Not supported by Cloud Run.
 	ImagePullSecrets []*LocalObjectReference `json:"imagePullSecrets,omitempty"`
+	// NodeSelector: Optional. The Node Selector configuration. Map of selector key
+	// to a value which matches a node.
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 	// ServiceAccountName: Email address of the IAM service account associated with
 	// the revision of the service. The service account represents the identity of
 	// the running revision, and determines what permissions the revision has. If

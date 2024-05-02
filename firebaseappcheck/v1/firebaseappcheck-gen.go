@@ -599,6 +599,9 @@ type GoogleFirebaseAppcheckV1DebugToken struct {
 	// revoke it. For security reasons, this field will never be populated in any
 	// response.
 	Token string `json:"token,omitempty"`
+	// UpdateTime: Output only. Timestamp when this debug token was most recently
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

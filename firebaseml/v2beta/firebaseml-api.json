@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240425",
+  "revision": "20240429",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Blob": {
@@ -1150,6 +1150,7 @@
       "id": "VertexRagStore",
       "properties": {
         "ragCorpora": {
+          "deprecated": true,
           "description": "Optional. Deprecated. Please use rag_resources instead.",
           "items": {
             "type": "string"

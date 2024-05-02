@@ -2223,10 +2223,11 @@ func (meth *Method) generateCode() {
 	if !meth.IsRawRequest() && args.bodyArg() != nil && httpMethod != "GET" {
 		contentType = `"application/json"`
 	}
-	pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_ )`, contentType)
 	apiVersion := meth.m.APIVersion
-	if apiVersion != "" {
-		pn(`reqHeaders.Set("x-goog-api-version", %q)`, apiVersion)
+	if apiVersion == "" {
+		pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_)`, contentType)
+	} else {
+		pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_, "x-goog-api-version", %q)`, contentType, apiVersion)
 	}
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)
